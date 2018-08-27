@@ -1,0 +1,100 @@
+package module.infosolutions.others.fragments;
+
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.infosolutions.evita.R;
+
+import ren.qinc.numberbutton.NumberButton;
+
+
+public class ReceivedFragment extends Fragment {
+
+
+    public ReceivedFragment() {
+        // Required empty public constructor
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_truck,container,false);
+        TextView view14Kg = (TextView) rootView.findViewById(R.id.tv14Kg);
+        TextView view19Kg = (TextView) rootView.findViewById(R.id.tv19Kg);
+
+        Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Ubuntu-M.ttf");
+        view14Kg.setTypeface(custom_font);
+        view19Kg.setTypeface(custom_font);
+
+        numberButton(rootView);
+        return rootView;
+    }
+
+
+
+    private void numberButton(View rootView){
+        //Click Listner
+        NumberButton numberButton14KgSound = (NumberButton) rootView.findViewById(R.id.nb14Saound);
+        numberButton14KgSound.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
+            @Override
+            public void onWarningForInventory(int inventory) {
+
+            }
+
+            @Override
+            public void onWarningForBuyMax(int max) {
+
+            }
+        });
+
+        NumberButton numberButton14KgDeffective = (NumberButton) rootView.findViewById(R.id.nb14Deffective);
+        numberButton14KgDeffective.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
+            @Override
+            public void onWarningForInventory(int inventory) {
+
+            }
+
+            @Override
+            public void onWarningForBuyMax(int max) {
+
+            }
+        });
+
+
+
+        NumberButton numberButton19KgSound = (NumberButton) rootView.findViewById(R.id.nb19Sound);
+        numberButton19KgSound.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
+            @Override
+            public void onWarningForInventory(int inventory) {
+
+            }
+
+            @Override
+            public void onWarningForBuyMax(int max) {
+
+            }
+        });
+
+
+        NumberButton numberButton19KgDeffective = (NumberButton) rootView.findViewById(R.id.nb19Deffective);
+        numberButton19KgDeffective.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
+            @Override
+            public void onWarningForInventory(int inventory) {
+
+            }
+
+            @Override
+            public void onWarningForBuyMax(int max) {
+
+            }
+        });
+    }
+
+}

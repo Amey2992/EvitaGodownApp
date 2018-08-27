@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightGrey"
+    android:orientation="vertical"
+    tools:context="com.infosolutions.ui.user.commercial.CommercialActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar_toolbar"/>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="250dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <!--RecyclerView product list-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_chip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layout_cylinder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:padding="@dimen/appbar_padding_top">
+
+                    <TextView
+                        android:id="@+id/tv_available_cyl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@color/colorBlack"
+                        android:text="Available Cylinders: "/>
+
+
+                    <com.daasuu.cat.CountAnimationTextView
+                        android:id="@+id/cyl_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="right"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/black"
+                        tools:ignore="SpUsage" />
+
+                </RelativeLayout>
+
+
+                <!--Deliveryman button -->
+                <Button
+                    android:id="@+id/btnDeliveryMan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/load_delivery_man"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:visibility="gone"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:background="@drawable/custom_btn"/>
+
+                <!--Delivery Man Name-->
+                <TextView
+                    android:id="@+id/tvDeliveryMan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:text="Please select delivery man"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:visibility="invisible" />
+
+
+                <co.ceryle.segmentedbutton.SegmentedButtonGroup
+                    android:id="@+id/segmentedButtonGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:visibility="gone"
+                    app:sbg_animateSelector="anticipate"
+                    app:sbg_animateSelectorDuration="000"
+                    app:sbg_backgroundColor="@color/white"
+                    app:sbg_dividerColor="@color/colorPrimary"
+                    app:sbg_dividerPadding="10dp"
+                    app:sbg_dividerRadius="10dp"
+                    app:sbg_dividerSize="0dp"
+                    app:sbg_position="1"
+                    app:sbg_radius="2dp"
+                    app:sbg_rippleColor="@color/colorPrimaryDark"
+                    app:sbg_selectorColor="@color/colorPrimary"
+                    app:sbg_selectorTextColor="@color/white"
+                    app:sbg_shadow="true"
+                    app:sbg_shadowElevation="3dp"
+                    app:sbg_shadowMargin="4dp">
+
+                    <Button
+                        android:id="@+id/btnEmpty"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="10dp"
+                        android:text="@string/out"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/btnReturn"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="sans-serif-condensed"
+                        android:minHeight="10dp"
+                        android:text="@string/in"
+                        android:textAllCaps="false" />
+
+
+                </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+                <!--Fresh Trip -->
+                <LinearLayout
+                    android:id="@+id/layout_fresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvFreshTrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/activity_vertical_margin"
+                        android:textStyle="bold"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:text="@string/out"/>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_full_cylinder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_full_cylinder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/full"
+                            android:maxLength="3"
+                            android:selectAllOnFocus="true"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                </LinearLayout>
+
+                <!-- Return Trip -->
+                <LinearLayout
+                    android:id="@+id/layout_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvReturnTrip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:text="@string/in"/>
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_empty_cylinder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_empty_cylinder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:hint="@string/empty_clndr"
+                            android:selectAllOnFocus="true"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:padding="10dp" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_sv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_sv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:selectAllOnFocus="true"
+                            android:hint="@string/sv"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_defective"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_defective"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:selectAllOnFocus="true"
+                            android:hint="@string/defective"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_dbc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_dbc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:hint="@string/dbc"
+                            android:selectAllOnFocus="true"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_lost_cylinder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_lost"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:selectAllOnFocus="true"
+                            android:hint="@string/lost_cylinder"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_return_full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_full"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:selectAllOnFocus="true"
+                            android:hint="@string/return_full"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_credit_given"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_credit_given"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fix_value"
+                            android:selectAllOnFocus="true"
+                            android:hint="@string/credit_given"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"
+                            android:maxLength="3"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:visibility="gone"
+        android:textAllCaps="true"
+        android:background="@drawable/btn_background"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:text="TAP TO SUBMIT" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

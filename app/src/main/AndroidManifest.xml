@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.infosolutions.evita">
+
+    <uses-permission
+        android:name="android.permission.AUTHENTICATE_ACCOUNTS"
+        android:maxSdkVersion="19" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="19" />
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:maxSdkVersion="19" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name="com.infosolutions.core.EvitaApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_evita_launcher_round"
+        android:label="@string/app_name"
+        android:protectionLevel="signature"
+        android:roundIcon="@drawable/evita_logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <!-- Broadcast receiver declaration in manifest file and make sure to enable it -->
+
+        <service android:name="com.infosolutions.network.UploadService" />
+
+        <activity
+            android:name="com.infosolutions.ui.splash.SplashActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.infosolutions.ui.login.LoginActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.MainActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.setting.SettingsActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.domestic.DomesticActivity"
+            android:label="@string/title_empty"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.infosolutions.ui.user.commercial.CommercialActivity"
+            android:label="@string/title_empty"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="module.infosolutions.others.DomesticScreen"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.CommercialScreen"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.reports.ReportListItemsActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.tvdetails.TVDetailsActivity"
+            android:label="@string/title_empty"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="module.infosolutions.others.InOutActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.NotificationActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.DomesticScrollActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.DeliveryActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.MechanicLoginActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.MechanicSignUpActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.MechNotificationActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.LoginCommercialActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.AddNewCustomerActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="module.infosolutions.others.AddDeliveryActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.truckdelivery.TruckDeliveryActivity"
+            android:label="@string/title_empty"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="com.infosolutions.ui.user.reports.ReportDetailsActivity"
+            android:label="@string/title_empty"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name="com.infosolutions.ui.user.stock.StockListActivity"
+            android:label="@string/title_empty"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name="com.infosolutions.ui.owner.OwnerDashboardActivity"
+            android:label="" />
+        <activity
+            android:name="com.infosolutions.ui.owner.OwnerDetailingActivity"
+            android:label="@string/title_empty" />
+        <activity
+            android:name="com.infosolutions.ui.user.reports.NewReportDetailsActivity"
+            android:label="" />
+        <activity android:name="com.infosolutions.ui.user.stock.StockTransferActivity"
+            android:label=""></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="37cffa83d2734d9b5a16366e880711962dcf1391" />
+
+        <!-- Job Scheduler -->
+        <!-- Define your service, make sure to add the permision! -->
+        <!--
+        <service
+            android:name="com.infosolutions.service.TestJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true" />
+        -->
+
+        <receiver android:name=".AlarmReceiver">
+            <intent-filter>
+                <action android:name="NOTIFICATION_SERVICE" />
+            </intent-filter>
+        </receiver>
+
+
+    </application>
+
+</manifest>

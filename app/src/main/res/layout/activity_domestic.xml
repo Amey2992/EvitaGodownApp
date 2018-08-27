@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightGrey"
+    android:orientation="vertical"
+    tools:context="com.infosolutions.ui.user.domestic.DomesticActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/actionbar_toolbar"/>
+
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="200dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <!--List of project in horizontal product-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_chip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layout_cylinder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:padding="@dimen/appbar_padding_top">
+
+                    <TextView
+                        android:id="@+id/tv_available_cyl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textColor="@color/colorBlack"
+                        android:text="Available Cylinders: "/>
+
+
+                    <com.daasuu.cat.CountAnimationTextView
+                        android:id="@+id/cyl_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="right"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textColor="@android:color/black"
+                        tools:ignore="SpUsage" />
+
+                </RelativeLayout>
+
+
+
+
+
+                <!--Delivery Man Button, Please select delivery-->
+                <Button
+                    android:id="@+id/btnDeliveryMan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/load_delivery_man"
+                    android:visibility="gone"
+                    android:fontFamily="sans-serif-condensed"
+                    android:background="@drawable/custom_btn"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:textAppearance="?android:textAppearanceMedium" />
+
+                <!--Delivery Man TextView-->
+                <TextView
+                    android:id="@+id/tvDeliveryMan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/appbar_padding_top"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/appbar_padding_top"
+                    android:paddingRight="@dimen/appbar_padding_top"
+                    android:text="Please select delivery man"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:visibility="invisible" />
+
+                <!--Fresh layout-->
+                <LinearLayout
+                    android:id="@+id/layout_fresh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvFreshTrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:textAllCaps="true"
+                        android:textStyle="bold"
+                        android:text="@string/fresh"/>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_fresh_trip_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_fresh_trip_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/trip_no"
+                            android:enabled="false"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_fresh_full_cylinder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_fresh_full_cylinder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/full"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                </LinearLayout>
+
+                <!--Return layout-->
+                <LinearLayout
+                    android:id="@+id/layout_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tvReturnTrip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        android:text="@string/return_trip"/>
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_return_trip"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_trip_no"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/trip_no"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_return_full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_full"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/full"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_empty_clndr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+
+
+                        <EditText
+                            android:id="@+id/input_empty_cylinder"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/empty_clndr"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_retun_sv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_sv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/sv"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_retun_defective"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_defective"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:selectAllOnFocus="true"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/defective"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:maxLength="3"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_retun_lost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_lost"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/lost_cylinder"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_retun_dbc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_dbc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/dbc"
+                            android:selectAllOnFocus="true"
+                            android:maxLength="3"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_retun_full"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/input_return_full"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="3"
+                            android:selectAllOnFocus="true"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:hint="@string/return_full"
+                            android:drawablePadding="@dimen/activity_vertical_margin"
+                            android:inputType="number"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+
+
+
+                </LinearLayout>
+
+
+                <!--<Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:elevation="10dp"
+                    android:background="@drawable/custom_btn"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textAllCaps="true"
+                    android:text="TAP TO SUBMIT" />-->
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:elevation="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_background"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textAllCaps="true"
+        android:text="TAP TO SUBMIT" />
+
+
+</RelativeLayout>
+
+
+
+

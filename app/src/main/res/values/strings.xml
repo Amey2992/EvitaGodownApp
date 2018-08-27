@@ -1,0 +1,227 @@
+<resources>
+
+    <string name="app_name">Evita </string>
+    <string name="app_version">Version: v1.0 </string>
+
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="userId">UserId</string>
+    <string name="btn_login">Login</string>
+    <string name="err_msg_email">Invalid Email</string>
+    <string name="err_msg_password">Invalid password</string>
+    <string name="password">Password</string>
+    <string name="load_list">Load Domestic Users</string>
+    <string name="trip_no">Trip Number</string>
+    <string name="full">Full Cylinder</string>
+    <string name="empty">Empty</string>
+    <string name="sv">SV Cylinder</string>
+    <string name="dbc">DBC</string>
+    <string name="return_full">Return Full Cylinder</string>
+    <string name="defective">Defective Cylinder</string>
+    <string name="btn_submit">Submit</string>
+    <string name="title_activity_commercial">Commercial</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="Complete">Login Successful</string>
+    <string name="Error">Error Login</string>
+    <string name="Upload">Loading...</string>
+    <string name="credit_given">Credit Given</string>
+    <string name="load_all_list">Load Users</string>
+    <string name="godown">Evita Godown</string>
+    <string name="add">Add</string>
+    <string name="invoice_no">Invoice Number</string>
+    <string name="sound">Sound</string>
+    <string name="customerId">Customer Id</string>
+    <string name="erv_no">ERV Number</string>
+    <string name="kg19">19 KG</string>
+    <string name="kg14Kg">14.2 KG</string>
+    <string name="evita_login">Evita Login</string>
+    <string name="notification">Notification</string>
+    <string name="inword_outword">Inword-Outword</string>
+    <string name="title_activity_domestic_scroll">DomesticScrollActivity</string>
+    <string name="received_truck">Received Truck</string>
+    <string name="send_truck">Send Truck</string>
+    <string name="select_godown">Select Godown</string>
+    <string name="delivery">Delivery</string>
+    <string name="cyldr_type">Cylinder Type</string>
+    <string name="no_of_cylinder">No Of Cylinder</string>
+    <string name="pco">PCO</string>
+    <string name="own">OWN</string>
+    <string name="empty_cylnr">Empty Cylinder</string>
+    <string name="enter_trip_number">Please do check with the trip number, Perhaps you have not processed with Empty Cylinders. Fresh trip is not done</string>
+    <string name="enter_full_cylnr">Enter Full Cylinder</string>
+    <string name="enter_cylnr_type">Enter Cylinder Type</string>
+    <string name="enter_return_empty_cylndr">Enter Return Cylinder</string>
+    <string name="enter_sv">Enter SV</string>
+    <string name="enter_defective">Defective </string>
+    <string name="enter_bc">Enter BC</string>
+    <string name="fresh">Fresh Trip</string>
+    <string name="return_string">Return</string>
+    <string name="signup_mechanical">Don\'t have account ? Signup</string>
+    <string name="btn_signup">SignUp</string>
+    <string name="consumer_no">Consumer Number</string>
+    <string name="customer_name">Consumer Name</string>
+    <string name="address">Address</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="mechanic_login">Mechanic Login</string>
+    <string name="signup_mechanical_title">Mechanical SignUp</string>
+    <string name="load_delivery_man">Select Deliveryman</string>
+    <string name="select_truck">Select Truck Number</string>
+    <string name="no_network_available">No Network Available</string>
+    <string name="key_shared_pref_module_list">moduleList</string>
+    <string name="sp_default_value">No Preference Found</string>
+    <string name="invalid_user">Invalid User</string>
+    <string name="went_something_wrong">Went Something Wrong, Please try later</string>
+    <string name="server_not_responding">Seems, Internet connection is slow. Please try again latter</string>
+    <string name="title_activity_settings">Setting</string>
+    <string name="storage">Offline Storage</string>
+    <string name="logout">Logout</string>
+    <string name="title_empty"> </string>
+    <string name="select_complaint_type">Select Complaint Type</string>
+    <string name="action_normal_leakage_complaint">Normal Leakage Complaint</string>
+    <string name="action_stove_ckecking">Stove Checking</string>
+    <string name="close">Close</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="email_address">E-Mail address</string>
+    <string name="discount">Discount</string>
+    <string name="gstin">GSTIN</string>
+    <string name="add_delivery">Add Delivery</string>
+    <string name="add_new_customer">Add New Customer</string>
+    <string name="transaction_code">Transaction Code</string>
+    <string name="delivery_man">Delivery Man</string>
+    <string name="select_customer">Select Customer</string>
+    <string name="chalan_no">Chalan Number</string>
+    <string name="delivery_mode">Delivery Mode</string>
+    <string name="rate_bpcl">Rate(BPCL)</string>
+    <string name="rate_for_party">Rate For Party</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="empty_clndr">Empty Cylinder</string>
+    <string name="credit_clndr">Credit Cylinder</string>
+    <string name="amnt_of_credit_cylinr">Amount Of Credit Cylnr</string>
+    <string name="total_credit_clndr">Total Credit Cylnr</string>
+    <string name="total_credit_amount">Total Credit Amount</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="commercial_login">Commercial Login</string>
+    <string name="get_sync_data_from_server">Get Sync Data From Server</string>
+    <string name="sync_data_to_server">Manual Sync Data With Server</string>
+    <string name="failed">Failed</string>
+    <string name="successful">Successful :)</string>
+    <string name="error_occured">Error Occurred , Please try again later</string>
+    <string name="invalid_data">Invalid data received</string>
+    <string name="could_not_store">Error while saving data</string>
+    <string name="fresh_trip_no">Fresh Trip No</string>
+    <string name="return_trip_no">Return Trip No</string>
+    <string name="return_trip">Return Trip</string>
+    <string name="enter_credit_given_feild">Enter Credit Given Feild</string>
+    <string name="enter_credit_given">Credit Given</string>
+    <string name="permis_sd_card">Permission has been granted by user</string>
+    <string name="permis_denied">Permission has been denied by user</string>
+    <string name="no_data_to_sync">No data to sync</string>
+    <string name="data_to_sync_server">Data sync to server successfully.</string>
+    <string name="could_not_sync">Failed ! Sorry, Data Could not sync data</string>
+    <string name="select_language">Select Language</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="search_select_consumer">Search / Select Comsumer</string>
+    <string name="cylinder_type">Cylinder Type</string>
+    <string name="search_select_truck">Search and Select Truck</string>
+    <string name="quantity">Quantity</string>
+    <string name="enter_truck_number">Enter Truck Number</string>
+    <string name="bottom_sheet_title">Please Select Your Godown</string>
+    <string name="lost_cylinder">Lost Cylinder</string>
+    <string name="offline_storage">Offline Storage</string>
+    <string name="fix_value">0</string>
+    <string name="enter_lost_cyl">Lost</string>
+    <string name="version">Beta verion 1.0.0</string>
+    <string name="out">OUT</string>
+    <string name="in">IN</string>
+    <string name="zero_not_allowed">Invalid ! Zero Is Not Allowed</string>
+    <string name="proceed_msg">Do you really want to save data ?</string>
+    <string name="save">SAVE</string>
+    <string name="cancel">Cancle</string>
+    <string name="error_while_exporing_data">Error while exporting file</string>
+    <string name="export_data">Export SV File</string>
+    <string name="data_saved_to_local_disk">SV File has been saved to File System</string>
+    <string name="select_deliveryman">Select Deliveryman</string>
+    <string name="saved_success_msg">Saved Successfully</string>
+    <string name="proide_username">Please provide username</string>
+    <string name="empty_password">Password can not leave empty</string>
+    <string name="header_col1"> </string>
+    <string name="header_col2">Full</string>
+    <string name="header_col3">Empty</string>
+    <string name="header_col4">Defective</string>
+    <string name="no_data">No data found in the table</string>
+    <string name="header_defective">Defective</string>
+    <string name="header_sound">Sound</string>
+    <string name="header_lost">Lost</string>
+    <string name="header_send">Send</string>
+    <string name="header_received">Received</string>
+
+    <string-array name="delivery_man">
+        <item> Select Delivery Man</item>
+        <item> Shailesh Mishra</item>
+    </string-array>
+
+    <string-array name="complaint_type">
+        <item>Select Complaint Type</item>
+        <item>Burner Issue</item>
+    </string-array>
+
+    <string-array name="product_type">
+        <item>14.2 KG</item>
+        <item>05 KG</item>
+        <item>19 KG</item>
+    </string-array>
+
+    <string-array name="app_language">
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Gujarati</item>
+        <item>Telugu</item>
+    </string-array>
+
+
+    <string name="order_id_mock" translatable="false"># 1234–5678</string>
+    <string name="price_mock" translatable="false">$25</string>
+    <string name="requests_count_mock" translatable="false">5</string>
+    <string name="requests_count_badge" translatable="false">REQUESTS</string>
+    <string name="weight_mock" translatable="false">50 oz</string>
+    <string name="weight_badge" translatable="false">WEIGHT</string>
+    <string name="pledge_mock" translatable="false">$150</string>
+    <string name="pledge_badge" translatable="false">PLEDGE</string>
+    <string name="sender_badge" translatable="false">SENDER</string>
+    <string name="client_name_mock" translatable="false">Edward Norton</string>
+    <string name="rating_mock" translatable="false">(26)</string>
+    <string name="from_badge" translatable="false">FROM</string>
+    <string name="to_badge" translatable="false">TO</string>
+    <string name="delivery_date_badge" translatable="false">DELIVERY DATE</string>
+    <string name="delivery_time_mock" translatable="false">6:30 pm</string>
+    <string name="delivery_date_mock" translatable="false">May 16, 2016</string>
+    <string name="deadline_badge" translatable="false">REQUEST DEADLINE</string>
+    <string name="deadline_time_mock" translatable="false">24 minutes</string>
+    <string name="request_btn_text" translatable="false">REQUEST</string>
+    <string name="btn_annotation_mock" translatable="false">5 people have sent a request</string>
+    <string name="content_from1_mock">W 90th St</string>
+    <string name="content_from2_mock">New York, NY 10025</string>
+    <string name="content_to1_mock">46th Ave</string>
+    <string name="content_to2_mock">Woodside, NY 11101</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="owner">SUMMARY REPORT</string>
+    <string name="title_activity_scrolling_owner">ScrollingOwnerActivity</string>
+    <string name="opening">OPENING</string>
+    <string name="title_logout">Logout</string>
+    <string name="invalid_data_received">Invalid Data Received</string>
+    <string name="no_record_found">No Record Found</string>
+    <string name="taken_from_different_godown">You have taken full cylinder from different godown</string>
+    <string name="account_type">Account type</string>
+    <string name="action_sync">Sync</string>
+    <string name="test">Test</string>
+    <string name="notificationtext">Evita Synced data to server</string>
+    <string name="notificationtitle">Synced Successfully</string>
+    <string name="exception_message">Hi User, We have received invalid response from the server, Please contact to server administrator</string>
+    <string name="select_product_type">Please Select Product Type</string>
+    <string name="no_data_available">No data available</string>
+    <string name="RecordError">Record already available</string>
+
+
+</resources>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar_toolbar" />
+
+
+        <ScrollView
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:fillViewport="true"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="horizontal|vertical">
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/fab_margin"
+                android:layout_marginTop="5dp"
+                android:scrollbars="horizontal|vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:id="@+id/opening_stock_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@drawable/devider_list"
+                        android:showDividers="middle"
+                        android:stretchColumns="*">
+
+                    </TableLayout>
+                    <TextView
+                        android:id="@+id/loadsTextview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:background="@color/colorLightGrey"
+                        android:paddingTop="20dp"
+                        android:paddingBottom="20dp"
+                        android:paddingLeft="35dp"
+                        android:paddingRight="15dp"
+                        android:visibility="gone"
+                        android:textAllCaps="true"
+                        android:text="LOADS"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TableLayout
+                            android:id="@+id/left_table_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_weight="1"
+                            android:divider="@drawable/devider_list"
+                            android:showDividers="middle"
+                            android:stretchColumns="*" />
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="1dp"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:background="@color/colorPrimary"></View>
+
+                        <TableLayout
+                            android:id="@+id/right_table_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_weight="1"
+                            android:divider="@drawable/devider_list"
+                            android:showDividers="middle"
+                            android:stretchColumns="*" />
+                    </LinearLayout>
+
+                    <TableLayout
+                        android:id="@+id/delivery_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@drawable/devider_list"
+                        android:showDividers="middle"
+                        android:stretchColumns="*">
+
+                    </TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/closing_stock_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@drawable/devider_list"
+                        android:showDividers="middle"
+                        android:stretchColumns="*">
+
+                    </TableLayout>
+
+                    <TableLayout
+                        android:id="@+id/other_stock_table"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@drawable/devider_list"
+                        android:showDividers="middle"
+                        android:stretchColumns="*">
+
+                    </TableLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

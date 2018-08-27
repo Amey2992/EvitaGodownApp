@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="builtio.com.evita.delivery.builtio.module.CommercialActivity">
+    <item
+        android:id="@+id/action_normal_leakage_complaint"
+        android:orderInCategory="100"
+        android:title="@string/action_normal_leakage_complaint"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_stove_checking"
+        android:orderInCategory="100"
+        android:title="@string/action_stove_ckecking"
+        app:showAsAction="never" />
+</menu>

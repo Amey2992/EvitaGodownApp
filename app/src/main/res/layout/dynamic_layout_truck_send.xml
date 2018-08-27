@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:textSize="13sp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/etQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:text="0"
+            android:selectAllOnFocus="true"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:digits="0123456789"
+            android:maxLength="3"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textSize="13sp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    <EditText
+        android:id="@+id/etDefective"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Defective"
+        android:inputType="number"
+        android:text="0"
+        android:selectAllOnFocus="true"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-condensed"
+        android:digits="0123456789"
+        android:maxLength="3"
+        android:padding="10dp"
+        android:textSize="13sp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="30sp"
+        android:layout_height="30sp"
+        android:background="@android:drawable/ic_delete" />
+
+</LinearLayout>

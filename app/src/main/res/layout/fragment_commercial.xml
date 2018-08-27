@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:padding="10sp"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnDeliveryMan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60sp"
+        android:text="@string/load_delivery_man"/>
+
+
+    <co.ceryle.segmentedbutton.SegmentedButtonGroup
+        android:id="@+id/segmentedButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:sbg_animateSelector="anticipate"
+        app:sbg_animateSelectorDuration="000"
+        app:sbg_backgroundColor="@color/white"
+        app:sbg_dividerColor="@color/colorPrimary"
+        app:sbg_dividerPadding="10dp"
+        app:sbg_dividerRadius="10dp"
+        app:sbg_dividerSize="0dp"
+        app:sbg_position="1"
+        app:sbg_radius="2dp"
+        app:sbg_rippleColor="@color/colorPrimaryDark"
+        app:sbg_selectorColor="@color/colorPrimary"
+        app:sbg_selectorTextColor="@color/white"
+        app:sbg_shadow="true"
+        android:layout_marginTop="@dimen/app_title_size"
+        app:sbg_shadowElevation="3dp"
+        app:sbg_shadowMargin="4dp">
+
+        <Button
+            android:id="@+id/btnReturn"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="10dp"
+            android:text="@string/return_string"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnEmpty"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="10dp"
+            android:text="@string/empty"
+            android:textAllCaps="false" />
+
+    </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/layout_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_fresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etFreshTripno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:hint="@string/trip_no"/>
+
+                <EditText
+                    android:id="@+id/etFreshCylnrType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:hint="@string/full"/>
+
+                <Button
+                    android:id="@+id/btnFreshSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:layout_marginTop="20sp"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:background="@drawable/btn_round_corner"
+                    android:textAllCaps="true"
+                    android:text="@string/btn_submit"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/layout_return"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <EditText
+                        android:id="@+id/etReturnTripno"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/trip_no"/>
+
+                    <EditText
+                        android:id="@+id/etReturnCylnrType"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/full"/>
+
+                    <EditText
+                        android:id="@+id/etReturnEmptyClynr"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/empty_cylnr"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etReturnSV"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/sv"/>
+
+                    <EditText
+                        android:id="@+id/etReturnDefective"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/defective"/>
+
+                    <EditText
+                        android:id="@+id/etReturnDBC"
+                        android:layout_width="0sp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:hint="@string/dbc"/>
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/etReturnFull"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:hint="@string/return_full"/>
+
+                <Button
+                    android:id="@+id/btnReturnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="35sp"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginBottom="20sp"
+                    android:background="@drawable/btn_round_corner"
+                    android:text="@string/btn_submit"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

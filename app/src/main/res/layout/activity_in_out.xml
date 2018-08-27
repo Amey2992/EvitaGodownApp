@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="tv.builtio.module.InOutActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/designActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <include layout="@layout/actionbar_toolbar" />
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="40sp"
+        android:gravity="center"
+        android:layout_below="@+id/designActionBar"
+        android:orientation="vertical">
+
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/btnIN"
+            android:layout_width="180sp"
+            android:layout_height="180sp"
+            android:src="@drawable/ic_vertical_in"
+            app:cb_color="@color/colorPrimary"
+            app:cb_pressedRingWidth="8dip" />
+
+
+        <at.markushi.ui.CircleButton
+            android:id="@+id/btnOUT"
+            android:layout_width="180sp"
+            android:layout_height="180sp"
+            android:src="@drawable/ic_vertical_out"
+            app:cb_color="@color/colorPrimary"
+            app:cb_pressedRingWidth="8dip" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

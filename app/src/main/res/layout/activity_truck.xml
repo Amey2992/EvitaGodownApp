@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/layout_send_receive">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSend"
+            android:layout_height="35sp"
+            android:layout_width="0sp"
+            android:text="@string/send_truck"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_corner"
+            android:layout_weight="1"/>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnReceive"
+            android:layout_height="35sp"
+            android:layout_width="0sp"
+            android:text="@string/received_truck"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_corner"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/fab_margin"
+        tools:ignore="UselessParent"
+        android:layout_below="@+id/layout_send_receive">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnSeachSelectTruck"
+            android:layout_height="35sp"
+            android:layout_width="match_parent"
+            android:text="@string/search_select_truck"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_corner"/>
+
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="16sp"
+            android:id="@+id/layout_invoice">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="0sp"
+                android:text="@string/invoice_no"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <EditText android:layout_height="wrap_content"
+                android:id="@+id/input_invoice"
+                android:layout_width="0sp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:hint="@string/invoice_no"
+                android:padding="8sp"/>
+
+        </LinearLayout>
+
+
+        -<LinearLayout android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="8sp"
+        android:id="@+id/layout_cylinder_type">
+
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="0sp"
+            android:text="@string/cylinder_type"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceSmall"/>
+
+        <EditText
+            android:id="@+id/input_cylinder_type"
+            android:layout_height="wrap_content"
+            android:layout_width="0sp"
+            android:background="@drawable/edittext_background"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:hint="@string/cyldr_type"
+            android:padding="8sp"/>
+
+    </LinearLayout>
+
+
+        <LinearLayout android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8sp"
+            android:id="@+id/no_of_cylinder">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="0sp"
+                android:text="@string/no_of_cylinder"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <EditText
+                android:id="@+id/etNumberOfCylinder"
+                android:layout_height="wrap_content"
+                android:layout_width="0sp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:hint="@string/no_of_cylinder"
+                android:padding="8sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="8sp"
+            android:id="@+id/input_layout_defective">
+
+            <TextView android:layout_height="wrap_content"
+                android:layout_width="0sp"
+                android:text="@string/defective"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"/>
+
+            <EditText
+                android:id="@+id/input_defective"
+                android:layout_height="wrap_content"
+                android:layout_width="0sp"
+                android:background="@drawable/edittext_background"
+                android:layout_weight="1"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:hint="@string/defective"
+                android:padding="8sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/fab_margin"
+        android:id="@+id/button_layout"
+        android:layout_alignParentBottom="true">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnUpdate"
+            android:layout_height="35sp"
+            android:layout_width="0sp"
+            android:text="@string/update"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_corner"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceSmall"/>
+
+        <View android:layout_height="35sp"
+            android:layout_width="8sp"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btnDelete"
+            android:layout_height="35sp"
+            android:layout_width="0sp"
+            android:text="@string/delete"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_round_corner"
+            android:layout_weight="1"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:padding="8sp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
