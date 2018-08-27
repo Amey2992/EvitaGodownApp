@@ -37,7 +37,6 @@ public class StockTransferActivity extends AppCompatActivity {
     String godownJson;
     private String[] godownArr, productArr;
     private DatabaseHelper databaseHelper;
-    String test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
