@@ -2,6 +2,9 @@ package com.infosolutions.database;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -14,7 +17,7 @@ public class CommercialDeliveryCreditDB implements Serializable {
     public CommercialDeliveryCreditDB() {
     }
 
-    public CommercialDeliveryCreditDB(int product_id, int delivery_id, String credit_given, String godown_id, String date_time) {
+    public CommercialDeliveryCreditDB(int product_id, int delivery_id, int credit_given, int godown_id, String date_time) {
         this.product_id = product_id;
         this.delivery_id = delivery_id;
         this.credit_given = credit_given;
@@ -22,14 +25,25 @@ public class CommercialDeliveryCreditDB implements Serializable {
         this.date_time = date_time;
     }
 
+    public CommercialDeliveryCreditDB(JSONObject jsonObject) {
+        if (jsonObject != null) {
+            product_id = Integer.parseInt(jsonObject.optString("Id_Product"));
+            delivery_id = Integer.parseInt(jsonObject.optString("Emp_Id"));
+            godown_id = Integer.parseInt(jsonObject.optString("GODOWN_CODE"));
+            credit_given = Integer.parseInt(jsonObject.optString("Crdit"));
+            //date_time = jsonObject.optString("DATE_TIME");
+
+        }
+    }
+
     @DatabaseField(generatedId = true, columnName = "product_id")
     public int product_id;
     @DatabaseField
     public int delivery_id;
     @DatabaseField
-    public String credit_given;
+    public int credit_given;
     @DatabaseField
-    public String godown_id;
+    public int godown_id;
     @DatabaseField
     public String date_time;
 
@@ -45,3 +59,4 @@ public class CommercialDeliveryCreditDB implements Serializable {
                 '}';
     }
 }
+

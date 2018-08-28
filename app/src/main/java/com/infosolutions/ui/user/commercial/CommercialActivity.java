@@ -110,6 +110,9 @@ public class CommercialActivity extends BaseActivity {
 
     private DatabaseHelper databaseHelper = null;
     private List<ChipModel> chipListModel = new ArrayList<>();
+    private String productCategory;
+    private RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> commercialCreditDB;
+
     public int getPRODUCT_CODE() {
         return PRODUCT_CODE;
     }
@@ -218,6 +221,7 @@ public class CommercialActivity extends BaseActivity {
             @Override
             public void onClick(View view, int position) {
                 String productCode = chipListModel.get(position).getChipTitleId();
+                 productCategory = chipListModel.get(position).getProductCategory();
                 setPRODUCT_CODE(Integer.parseInt(productCode));
                 getAvailableCYL();
                 btnDeliveryMan.setVisibility(View.VISIBLE);
@@ -250,17 +254,17 @@ public class CommercialActivity extends BaseActivity {
                         String log = cn.employee_id+": "+cn.full_name;
                         if (cn.ID_DESIGNATION.equalsIgnoreCase("30")){
                             listNames.add(log);
-                            listCrditCount.add(cn.CREDIT_GIVEN);
+                           // listCrditCount.add(cn.CREDIT_GIVEN);
                         }
                     }
 
 
 
-                    RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> commercialCreditDB = getHelper().getCommercialCreditExceptionDao();
+                     commercialCreditDB = getHelper().getCommercialCreditExceptionDao();
                     List<CommercialDeliveryCreditDB> commercialList = commercialCreditDB.queryForAll();
                     for (CommercialDeliveryCreditDB cn : commercialList) {
                         String log = cn.product_id+": "+cn.delivery_id+": "+cn.credit_given;
-                        if (cn.credit_given.equalsIgnoreCase("30")){
+                        if (Integer.toString( cn.credit_given).equalsIgnoreCase("30")){
                             listNames.add(log);
                         }
                     }
@@ -286,14 +290,26 @@ public class CommercialActivity extends BaseActivity {
                             String deliveryManKEY = splitNameValue[0];
                             String DeliveryManVALUE = splitNameValue[1];
                             //String CREDIT_GIVEN = splitNameValue[2];
-                            String CREDIT_GIVEN = listCrditCount.get(position);
+                            //String CREDIT_GIVEN = listCrditCount.get(position);
                             Log.e(deliveryManKEY, DeliveryManVALUE);
                             setSelectedDeliveryManId(parseInt(deliveryManKEY));
 
-                            //tvDeliveryMan.setText(DeliveryManVALUE);
-                            tvDeliveryMan.setText(DeliveryManVALUE+"\nCredit Cyl- "+CREDIT_GIVEN.trim());
-                            tvDeliveryMan.setAllCaps(true);
-                            tvDeliveryMan.setVisibility(View.VISIBLE);
+
+                            //Amey
+                            try {
+                              List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB  =  commercialCreditDB.queryBuilder().where().eq("product_id", Integer.parseInt(productCategory)).and().eq("delivery_id",Integer.parseInt(deliveryManKEY)).query();
+                                tvDeliveryMan.setText(DeliveryManVALUE);
+                                if(commercialDeliveryCreditDB.size() > 0) {
+                                    tvDeliveryMan.setText(DeliveryManVALUE + "\nCredit Cyl- " + commercialDeliveryCreditDB.get(0).credit_given);
+                                }
+                                tvDeliveryMan.setAllCaps(true);
+                                tvDeliveryMan.setVisibility(View.VISIBLE);
+
+                            } catch (java.sql.SQLException e) {
+                                e.printStackTrace();
+                            }
+
+
 
                             switchView();
 

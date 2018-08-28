@@ -115,6 +115,7 @@ public class LoginActivity extends BaseActivity {
         initIds();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
+        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
     }
 
     @Override
@@ -270,6 +271,7 @@ public class LoginActivity extends BaseActivity {
 
                 responseMsg = jsonResult.getString("responseMessage");
                 if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
+                    AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
                     AppSettings.getInstance(this).updateLocalFromServer(this);
                     /*updateDatabase();
 
@@ -307,6 +309,25 @@ public class LoginActivity extends BaseActivity {
             }
 
 
+
+            AppSettings.getInstance(this).updateDatabase(this);
+        }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
+            RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
+                    getHelper().getCommercialCreditExceptionDao();
+
+            try {
+                daoDatabase.deleteBuilder().delete();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            JSONArray jsonArray = jsonResult.optJSONArray("Table");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.optJSONObject(i);
+                CommercialDeliveryCreditDB commercialDeliveryCreditDB = new CommercialDeliveryCreditDB(jsonObject);
+                daoDatabase.create(commercialDeliveryCreditDB);
+            }
 
             AppSettings.getInstance(this).updateDatabase(this);
         }
@@ -544,7 +565,7 @@ public class LoginActivity extends BaseActivity {
             String CREDIT_GIVEN = objectProduct.getString("CREDIT_GIVEN");
             String DATE_TIME = objectProduct.getString("DATE_TIME");
 
-            ccCreditDB.create(new CommercialDeliveryCreditDB(PRODUCT_ID, DELIVERY_ID, CREDIT_GIVEN, GODOWN_ID, DATE_TIME));
+            //ccCreditDB.create(new CommercialDeliveryCreditDB(PRODUCT_ID, DELIVERY_ID, CREDIT_GIVEN, GODOWN_ID, DATE_TIME));
         }
     }
 

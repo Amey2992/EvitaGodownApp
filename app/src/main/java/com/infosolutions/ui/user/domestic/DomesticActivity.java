@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -150,20 +149,20 @@ public class DomesticActivity extends BaseActivity {
         mTitle.setText("Domestic");
         setSupportActionBar(toolbar);
 
-        Log.e("onCreate:","In On create toolbar setup done");
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
         setProductModel();
 
-        Log.e("onCreate:","In On create toolbar setup done!");
+
 
         productSelectionChipView();
     }
 
     private void setProductModel() {
 
-        Log.e("setProductModel:","starting in product model!");
+
 
         RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
         List<ProductDB> product = productDB.queryForAll();
@@ -178,14 +177,14 @@ public class DomesticActivity extends BaseActivity {
         }
 
 
-        Log.e("setProductModel","on chip list model added!");
+
 
         chipAdapter = new ChipSelectionAdapter(this, chipListModel);
         recycler_view_chip.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         recycler_view_chip.setItemAnimator(new DefaultItemAnimator());
         recycler_view_chip.setAdapter(chipAdapter);
 
-        Log.e("setProductModel","Adapter Notified");
+
 
     }
 
@@ -198,7 +197,6 @@ public class DomesticActivity extends BaseActivity {
         recycler_view_chip.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recycler_view_chip, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Log.e("productSelection","Clicked at position: "+position);
                 chipSelector(position);
             }
 
@@ -219,12 +217,12 @@ public class DomesticActivity extends BaseActivity {
 
         productId = chipListModel.get(position).getChipTitleId();
         setProductId(productId);
-        Log.e("chipSelector","productId: "+productId);
+
 
         getAvailableCYL(); /* Check available Cylinder */
         selectedProductName = chipListModel.get(position).getChipTitle();
         setSelectedProductName(selectedProductName);
-        Log.e("chipSelector","ProductName: "+selectedProductName);
+
 
 
         /* Hide All Layout */
@@ -232,7 +230,6 @@ public class DomesticActivity extends BaseActivity {
 
         if (productId != null && !productId.equalsIgnoreCase("")) {
             btnDeliveryMan.setVisibility(View.VISIBLE);
-            Log.e("chipSelector","Show delivery man list");
             showSpinnerDialog();
 
         }else {
@@ -303,7 +300,7 @@ public class DomesticActivity extends BaseActivity {
         KEY_LAYOUT_TYPE = "view_type";
 
         String dynamicIds = getGoDownId()+productId+deliveryManKEY;
-        Log.e("dynamicIds",dynamicIds);
+
 
         //String dynamicIds = selectedDeliveryMan+getSelectedProductName();
 
@@ -311,9 +308,6 @@ public class DomesticActivity extends BaseActivity {
         KEY_DOMESTIC_FULL_CYLINDER = KEY_DOMESTIC_FULL_CYLINDER+dynamicIds;
         KEY_LAYOUT_TYPE = KEY_LAYOUT_TYPE+dynamicIds;
 
-        Log.e("KEY_TRIP_NO", KEY_DOMESTIC_TRIP_NO);
-        Log.e("KEY_FULL_CYLINDER", KEY_DOMESTIC_FULL_CYLINDER);
-        Log.e("KEY_LAYOUT_TYPE", KEY_LAYOUT_TYPE);
 
         tvDeliveryMan.setText(DeliveryManVALUE/*+"\nAvailable Cyl- "+CREDIT_GIVEN.trim()*/);
         tvDeliveryMan.setAllCaps(true);
@@ -495,7 +489,7 @@ public class DomesticActivity extends BaseActivity {
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedDate = df.format(c.getTime());*/
 
-            Log.d("Timestamp ........ ",getDate());
+
             DatabaseHelper databaseHelper = new DatabaseHelper(DomesticActivity.this);
 
             /*if(!databaseHelper.CheckIsDataAlreadyInDBorNot(getDate()))
@@ -855,7 +849,6 @@ public class DomesticActivity extends BaseActivity {
 
         String USER_TRIP_NO = getSharedPrefWithKEY(getApplicationContext(), KEY_DOMESTIC_TRIP_NO);
         if (USER_TRIP_NO.equalsIgnoreCase("No Preference Found")){
-            Log.d(TAG, USER_TRIP_NO);
             saveWithSharedPreferences(getApplicationContext(), KEY_DOMESTIC_TRIP_NO, String.valueOf(1));
             saveWithSharedPreferences(getApplicationContext(), KEY_LAYOUT_TYPE, "FRESH");
             USER_TRIP_NO = getSharedPrefWithKEY(getApplicationContext(), KEY_DOMESTIC_TRIP_NO);
@@ -891,7 +884,7 @@ public class DomesticActivity extends BaseActivity {
     }
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
-        Log.e("Response:", response);
+
 
         try {
             JSONObject objectResult = new JSONObject(response);

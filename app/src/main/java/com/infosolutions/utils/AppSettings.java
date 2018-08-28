@@ -110,6 +110,10 @@ public class AppSettings {
         VolleySingleton.getInstance(context.getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
     }
 
+    public void getCommercialDeliveryCreditCount(Context context){
+        VolleySingleton.getInstance(context.getApplicationContext()).getCommercialDeliveryCount(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, Constants.COMMERCIAL_DELIVERY_COUNT);
+    }
+
     public void manualSyncAndroidDataToServer(Context context, JSONObject jsonObject) {
 
 
