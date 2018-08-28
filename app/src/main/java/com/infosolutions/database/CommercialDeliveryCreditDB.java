@@ -27,16 +27,19 @@ public class CommercialDeliveryCreditDB implements Serializable {
 
     public CommercialDeliveryCreditDB(JSONObject jsonObject) {
         if (jsonObject != null) {
-            product_id = Integer.parseInt(jsonObject.optString("Id_Product"));
-            delivery_id = Integer.parseInt(jsonObject.optString("Emp_Id"));
-            godown_id = Integer.parseInt(jsonObject.optString("GODOWN_CODE"));
-            credit_given = Integer.parseInt(jsonObject.optString("Crdit"));
+            product_id = jsonObject.optInt("Id_Product");
+            delivery_id = jsonObject.optInt("Emp_Id");
+            godown_id = jsonObject.optInt("GODOWN_CODE");
+            credit_given = jsonObject.optInt("Crdit");
             //date_time = jsonObject.optString("DATE_TIME");
 
         }
     }
 
-    @DatabaseField(generatedId = true, columnName = "product_id")
+    @DatabaseField(generatedId = true, columnName = "id")
+    public int id;
+
+    @DatabaseField()
     public int product_id;
     @DatabaseField
     public int delivery_id;
