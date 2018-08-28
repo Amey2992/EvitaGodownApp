@@ -177,9 +177,6 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
                     finish();
 */
                 } else {
-                    progress_bar.setVisibility(View.GONE);
-                    hideProgressDialog();
-                    ivSync.setEnabled(true);
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
