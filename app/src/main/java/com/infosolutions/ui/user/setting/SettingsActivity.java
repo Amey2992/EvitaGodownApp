@@ -410,11 +410,9 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
                         startActivity(next);
                         finish();
                     case 1:
-
                 }
             }
         });
-
 
     }
 

@@ -55,7 +55,6 @@ public class Constants {
 
     /**/
 
-
     public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url ="http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
