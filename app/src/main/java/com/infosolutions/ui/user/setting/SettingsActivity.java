@@ -22,6 +22,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
+import com.infosolutions.database.CommercialDeliveryCreditDB;
 import com.infosolutions.database.CommercialDeliveryDB;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.DomesticDeliveryDB;
@@ -121,6 +122,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_OTHERS, this);
+        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT,this);
 
         ivSync.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +169,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
                 responseMsg = jsonResult.getString("responseMessage");
                 if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
                     //updateLocalFromServer();
-                    AppSettings.getInstance(this).updateLocalFromServer(this);
+                    AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
+
                     /*updateDatabase();
 
                     EvitaEvent.EventDataSyncToServer eventDataSyncToServer = new EventDataSyncToServer();
@@ -216,6 +219,26 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
             hideProgressDialog();
             finish();
 
+
+        }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
+            RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
+                    getHelper().getCommercialCreditExceptionDao();
+
+            try {
+                daoDatabase.deleteBuilder().delete();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
+            JSONArray jsonArray = jsonResult.optJSONArray("Table");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.optJSONObject(i);
+                CommercialDeliveryCreditDB commercialDeliveryCreditDB = new CommercialDeliveryCreditDB(jsonObject);
+                daoDatabase.createOrUpdate(commercialDeliveryCreditDB);
+            }
+
+            AppSettings.getInstance(this).updateLocalFromServer(this);
 
         }
     }

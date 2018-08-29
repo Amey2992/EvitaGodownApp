@@ -112,6 +112,7 @@ public class CommercialActivity extends BaseActivity {
     private List<ChipModel> chipListModel = new ArrayList<>();
     private String productCategory;
     private RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> commercialCreditDB;
+    private String productCode;
 
     public int getPRODUCT_CODE() {
         return PRODUCT_CODE;
@@ -220,8 +221,8 @@ public class CommercialActivity extends BaseActivity {
         recycler_view_chip.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recycler_view_chip, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String productCode = chipListModel.get(position).getChipTitleId();
-                 productCategory = chipListModel.get(position).getProductCategory();
+                 productCode = chipListModel.get(position).getChipTitleId();
+                 productCategory = chipListModel.get(position).getChipTitleId();
                 setPRODUCT_CODE(Integer.parseInt(productCode));
                 getAvailableCYL();
                 btnDeliveryMan.setVisibility(View.VISIBLE);
@@ -297,7 +298,7 @@ public class CommercialActivity extends BaseActivity {
 
                             //Amey
                             try {
-                              List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB  =  commercialCreditDB.queryBuilder().where().eq("product_id", Integer.parseInt(productCategory)).and().eq("delivery_id",Integer.parseInt(deliveryManKEY)).query();
+                              List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB  =  commercialCreditDB.queryBuilder().where().eq("delivery_id",Integer.parseInt(deliveryManKEY)).and().eq("product_id",getPRODUCT_CODE()).and().eq("godown_id",getGoDownId()).query();
                                 tvDeliveryMan.setText(DeliveryManVALUE);
                                 if(commercialDeliveryCreditDB.size() > 0) {
                                     tvDeliveryMan.setText(DeliveryManVALUE + "\nCredit Cyl- " + commercialDeliveryCreditDB.get(0).credit_given);

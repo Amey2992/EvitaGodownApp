@@ -271,7 +271,7 @@ public class LoginActivity extends BaseActivity {
 
                 responseMsg = jsonResult.getString("responseMessage");
                 if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
-                    AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
+
                     AppSettings.getInstance(this).updateLocalFromServer(this);
                     /*updateDatabase();
 
@@ -326,10 +326,11 @@ public class LoginActivity extends BaseActivity {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
                 CommercialDeliveryCreditDB commercialDeliveryCreditDB = new CommercialDeliveryCreditDB(jsonObject);
-                daoDatabase.create(commercialDeliveryCreditDB);
+                daoDatabase.createOrUpdate(commercialDeliveryCreditDB);
             }
 
-            AppSettings.getInstance(this).updateDatabase(this);
+
+            AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
         }
         if (type.equals(VolleySingleton.CallType.AGENCY_NAME)) {
             try {
