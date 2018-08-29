@@ -32,8 +32,8 @@ public class CommercialScreen extends AppCompatActivity {
 
     private void setToolbarHost()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Commercial");
         setSupportActionBar(toolbar);
 
@@ -45,7 +45,7 @@ public class CommercialScreen extends AppCompatActivity {
         //tabLayout.setupWithViewPager(mViewPager);
 
 
-        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

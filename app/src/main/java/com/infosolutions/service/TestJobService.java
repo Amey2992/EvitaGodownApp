@@ -304,7 +304,7 @@ public class TestJobService extends JobService implements ResponseListener {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date) formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -318,7 +318,7 @@ public class TestJobService extends JobService implements ResponseListener {
         Intent intent = new Intent(this, SplashActivity.class);
         intent.putExtra("title", "");
         PendingIntent pIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(this).setSmallIcon(R.drawable.evita_logo).setContentTitle(getString(R.string.notificationtitle)).setContentText(stringContent).setContentIntent(pIntent).setAutoCancel(true);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.evita_logo).setContentTitle(getString(R.string.notificationtitle)).setContentText(stringContent).setContentIntent(pIntent).setAutoCancel(true);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationmanager.notify(0, builder.build());
     }

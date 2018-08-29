@@ -35,8 +35,8 @@ public class FullCylinderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_fullcylinder, container, false);
-        buttonLoadUsers = (Button) rootView.findViewById(R.id.buttonLoadData);
-        mCountAnimationTextView = (CountAnimationTextView) rootView.findViewById(R.id.count_animation_textView);
+        buttonLoadUsers = rootView.findViewById(R.id.buttonLoadData);
+        mCountAnimationTextView = rootView.findViewById(R.id.count_animation_textView);
 
         btnClickHandler();
         return rootView;

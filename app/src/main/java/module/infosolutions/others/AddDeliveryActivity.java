@@ -18,8 +18,8 @@ public class AddDeliveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_delivery);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.add_delivery);
         setSupportActionBar(toolbar);
 

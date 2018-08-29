@@ -58,13 +58,13 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
         headerTitle = intent.getStringExtra("header");
         setRequestType(requestType);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(headerTitle);
         setSupportActionBar(toolbar);
-        tableLayout = (TableLayout) findViewById(R.id.table_layout);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar) ;
+        tableLayout = findViewById(R.id.table_layout);
+        progressBar = findViewById(R.id.progressBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
 
@@ -186,12 +186,12 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
             }else {
 
                 Toast.makeText(this, respMessage, Toast.LENGTH_SHORT).show();
-                LinearLayout layoutError = (LinearLayout) findViewById(R.id.errorMsg);
+                LinearLayout layoutError = findViewById(R.id.errorMsg);
                 layoutError.setVisibility(View.VISIBLE);
-                TextView tvNoDataFound = (TextView) findViewById(R.id.tvNoDataFound);
+                TextView tvNoDataFound = findViewById(R.id.tvNoDataFound);
                 tvNoDataFound.setText(respMessage);
 
-                Button btnRetry = (Button) findViewById(R.id.btnRetry);
+                Button btnRetry = findViewById(R.id.btnRetry);
                 btnRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

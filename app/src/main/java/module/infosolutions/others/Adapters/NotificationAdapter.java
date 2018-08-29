@@ -65,7 +65,7 @@ public class NotificationAdapter extends
         TextView tvNotiLabel;
         public NotificationViewHolder(View itemView) {
             super(itemView);
-            tvNotiLabel = (TextView) itemView.findViewById(R.id.tvNotificationLabel);
+            tvNotiLabel = itemView.findViewById(R.id.tvNotificationLabel);
         }
     }
 }

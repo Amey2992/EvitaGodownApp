@@ -32,13 +32,9 @@ public class InternetConnectorReceiver extends BroadcastReceiver{
                 NetworkInfo networkInfo = connectivityManager
                         .getActiveNetworkInfo();
 
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    Constants.isNetworkAvailable = true;
-                    //new SplashActivity().changeTextStatus(true);
-                } else {
-                    Constants.isNetworkAvailable = false;
-                    //new SplashActivity().changeTextStatus(false);
-                }
+                //new SplashActivity().changeTextStatus(true);
+//new SplashActivity().changeTextStatus(false);
+                Constants.isNetworkAvailable = networkInfo != null && networkInfo.isConnected();
             }
         } catch (Exception e) {
             e.printStackTrace();

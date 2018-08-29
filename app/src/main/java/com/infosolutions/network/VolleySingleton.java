@@ -145,7 +145,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d("module", Constants.LOGIN_API_VALUE);
@@ -217,7 +217,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "in getParams LoginModule ==> " + Constants.LOGIN_API_VALUE);
@@ -297,7 +297,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "In Get Params Sync Module ==> " + Constants.SYNC_ANDROID_DATA_VALUE);
@@ -464,7 +464,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "module_type ==> " + MODULE_KEY);
@@ -534,7 +534,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "in getParams LoginModule ==> " + Constants.LOGIN_API_VALUE);
@@ -604,7 +604,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
 
@@ -677,7 +677,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "in getParams LoginModule ==> " + Constants.MODULE_AGENCY_NAME);
@@ -749,7 +749,7 @@ public class VolleySingleton {
         }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() {
                 Map<String, String> params = new HashMap<String, String>();
 
                 Log.d(TAG, "in getParams Module ==> " + Constants.LOGIN_API_VALUE);

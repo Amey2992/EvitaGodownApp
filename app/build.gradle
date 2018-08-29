@@ -49,7 +49,7 @@ dependencies {
     })
 
     compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
-        transitive = true;
+        transitive = true
     }
     compile files('libs/ormlite-android-5.0.jar')
     compile files('libs/ormlite-core-5.0.jar')

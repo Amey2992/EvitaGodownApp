@@ -131,11 +131,11 @@ public class LoginActivity extends BaseActivity {
 
     private void initIds() {
 
-        editTextUsername = (EditText) findViewById(R.id.input_username);
-        editTextPassword = (EditText) findViewById(R.id.input_password);
-        btnLogin = (AppCompatButton) findViewById(R.id.buttonLogin);
-        tvAgencyName = (TextView) findViewById(R.id.tvAgencyName);
-        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        editTextUsername = findViewById(R.id.input_username);
+        editTextPassword = findViewById(R.id.input_password);
+        btnLogin = findViewById(R.id.buttonLogin);
+        tvAgencyName = findViewById(R.id.tvAgencyName);
+        scrollView = findViewById(R.id.scrollView);
 
         focusOnView(scrollView, editTextUsername);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);

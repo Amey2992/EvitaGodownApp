@@ -144,8 +144,8 @@ public class DomesticActivity extends BaseActivity {
 
     private void setupToolbar() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Domestic");
         setSupportActionBar(toolbar);
 
@@ -462,7 +462,7 @@ public class DomesticActivity extends BaseActivity {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date)formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd");
         }catch (Exception ex){
             ex.printStackTrace();

@@ -50,14 +50,14 @@ public class Constants {
     private static final String TEST_URL = "http://103.31.144.174:8080/EVITA/User";
     private static final String tester_prod_url ="http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
-    private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User" ;
+    private static final String PROD_URL = godown_ags;//"http://103.31.144.174:8080/EVITA_PROD/User" ;
     public static final String  EVITA_API_URL = PROD_URL;
 
     /**/
 
 
-    public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
-    public static final String post_url ="http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
+    public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
+    public static final String post_url ="http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
 
     /**/
@@ -75,6 +75,7 @@ public class Constants {
     public static String LOGIN_USERTYPE_KEY = "User_Type";
     public static String LOGIN_ANDROID = "Android";
     public static String JSON_DATA_KEY = "jsonData";
+    public static String RESET_TIMER_BROADCAST ="reset_timer_broadcast";
 
     /**
      * saveWithSharedPreferences KEY is used to save SharedPreference Value based KEY
@@ -111,7 +112,7 @@ public class Constants {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date)formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         }catch (Exception ex){
             ex.printStackTrace();
@@ -130,7 +131,7 @@ public class Constants {
     public static int CHECK_STOCK_FLAG = 2;
 
     public int setStockFlagCount(int stockFlagCount) {
-        this.CHECK_STOCK_FLAG = stockFlagCount;
+        CHECK_STOCK_FLAG = stockFlagCount;
         return CHECK_STOCK_FLAG;
     }
 
@@ -143,11 +144,7 @@ public class Constants {
         boolean isNetworkAvailable = false;
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            isNetworkAvailable = true;
-        } else {
-            isNetworkAvailable = false;
-        }
+        isNetworkAvailable = networkInfo != null && networkInfo.isConnected();
 
         return isNetworkAvailable;
     }
@@ -158,7 +155,7 @@ public class Constants {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date)formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd");
         }catch (Exception ex){
             ex.printStackTrace();

@@ -42,8 +42,8 @@ public class MechanicSignUpActivity extends
         {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
         }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
 
         mTitle.setText(R.string.signup_mechanical_title);
         setSupportActionBar(toolbar);
@@ -54,20 +54,20 @@ public class MechanicSignUpActivity extends
 
     private void initIds()
     {
-        progressView = (ProgressBar) findViewById(R.id.progress_bar);
-        input_layout_consumer_No = (TextInputLayout) findViewById(R.id.input_layout_consumer_No);
-        input_layout_consumer_name = (TextInputLayout) findViewById(R.id.input_layout_consumer_name);
-        input_layout_address = (TextInputLayout) findViewById(R.id.input_layout_address);
-        input_layout_contact_no = (TextInputLayout) findViewById(R.id.input_layout_contact_no);
+        progressView = findViewById(R.id.progress_bar);
+        input_layout_consumer_No = findViewById(R.id.input_layout_consumer_No);
+        input_layout_consumer_name = findViewById(R.id.input_layout_consumer_name);
+        input_layout_address = findViewById(R.id.input_layout_address);
+        input_layout_contact_no = findViewById(R.id.input_layout_contact_no);
 
 
-        input_consumer_no = (EditText) findViewById(R.id.input_consumer_no);
-        input_consumer_name = (EditText) findViewById(R.id.input_consumer_name);
-        input_address = (EditText) findViewById(R.id.input_address);
-        input_contact_no = (EditText) findViewById(R.id.input_contact_no);
+        input_consumer_no = findViewById(R.id.input_consumer_no);
+        input_consumer_name = findViewById(R.id.input_consumer_name);
+        input_address = findViewById(R.id.input_address);
+        input_contact_no = findViewById(R.id.input_contact_no);
 
-        btn_login = (Button) findViewById(R.id.btn_login);
-        btnComplaintType = (Button) findViewById(R.id.btnComplaintType);
+        btn_login = findViewById(R.id.btn_login);
+        btnComplaintType = findViewById(R.id.btnComplaintType);
 
 
         VolleySingleton.getInstance(getApplicationContext())

@@ -70,7 +70,7 @@ public class ChipSelectionAdapter extends RecyclerView.Adapter<ChipSelectionAdap
         public ChipViewHolder(View itemView) {
             super(itemView);
 
-            tvChipTitle = (TextView) itemView.findViewById(R.id.tvChipView);
+            tvChipTitle = itemView.findViewById(R.id.tvChipView);
         }
     }
 }

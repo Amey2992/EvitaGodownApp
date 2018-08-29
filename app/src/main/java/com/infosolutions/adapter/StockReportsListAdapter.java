@@ -78,12 +78,12 @@ public class StockReportsListAdapter extends RecyclerView.Adapter<StockReportsLi
 
         public ReportViewHolder(View itemView) {
             super(itemView);
-            tvSV = (TextView) itemView.findViewById(R.id.tvSV);
-            tvNAME = (TextView) itemView.findViewById(R.id.tvNAME);
-            tvDBC = (TextView) itemView.findViewById(R.id.tvDBC);
-            tvRETURN_FULL = (TextView) itemView.findViewById(R.id.tvRETURN_FULL);
-            tvFULL_CYLINDER = (TextView) itemView.findViewById(R.id.tvFULL_CYLINDER);
-            tvEMPTY = (TextView) itemView.findViewById(R.id.tvEMPTY);
+            tvSV = itemView.findViewById(R.id.tvSV);
+            tvNAME = itemView.findViewById(R.id.tvNAME);
+            tvDBC = itemView.findViewById(R.id.tvDBC);
+            tvRETURN_FULL = itemView.findViewById(R.id.tvRETURN_FULL);
+            tvFULL_CYLINDER = itemView.findViewById(R.id.tvFULL_CYLINDER);
+            tvEMPTY = itemView.findViewById(R.id.tvEMPTY);
         }
     }
 

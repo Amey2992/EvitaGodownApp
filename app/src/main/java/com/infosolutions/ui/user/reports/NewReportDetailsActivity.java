@@ -70,10 +70,10 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         headerTitle = intent.getStringExtra("header");
         setRequestType(requestType);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+        progressBar = findViewById(R.id.progressBar);
         mTitle.setText(headerTitle);
         setSupportActionBar(toolbar);
 
@@ -103,7 +103,7 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int width = metrics.widthPixels;
 
-        reportsListView = (ExpandableListView) findViewById(R.id.reports_listview);
+        reportsListView = findViewById(R.id.reports_listview);
         reportsListView.setIndicatorBounds(width - GetPixelFromDips(35), width - GetPixelFromDips(5));
         reportsListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -195,12 +195,12 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
             } else {
 
                 Toast.makeText(this, respMessage, Toast.LENGTH_SHORT).show();
-                LinearLayout layoutError = (LinearLayout) findViewById(R.id.errorMsg);
+                LinearLayout layoutError = findViewById(R.id.errorMsg);
                 layoutError.setVisibility(View.VISIBLE);
-                TextView tvNoDataFound = (TextView) findViewById(R.id.tvNoDataFound);
+                TextView tvNoDataFound = findViewById(R.id.tvNoDataFound);
                 tvNoDataFound.setText(respMessage);
 
-                Button btnRetry = (Button) findViewById(R.id.btnRetry);
+                Button btnRetry = findViewById(R.id.btnRetry);
                 btnRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -343,7 +343,7 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 convertView = inflater.inflate(R.layout.reports_row_layout, null);
             }
 
-            TextView textView = (TextView) convertView.findViewById(R.id.textview_parent);
+            TextView textView = convertView.findViewById(R.id.textview_parent);
             textView.setText(headerTitle);
             return convertView;
         }
@@ -357,41 +357,41 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
             }
 
-            LinearLayout domesticcommercialcontainer = (LinearLayout) convertView.findViewById(R.id.domesticcommercialcontainer);
-            LinearLayout trucksendcontainer = (LinearLayout) convertView.findViewById(R.id.trucksendcontainer);
-            LinearLayout tvcontainer = (LinearLayout) convertView.findViewById(R.id.tvcontainer);
+            LinearLayout domesticcommercialcontainer = convertView.findViewById(R.id.domesticcommercialcontainer);
+            LinearLayout trucksendcontainer = convertView.findViewById(R.id.trucksendcontainer);
+            LinearLayout tvcontainer = convertView.findViewById(R.id.tvcontainer);
 
             if (this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_DOMESTIC.toString()) || this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_COMMERCIAL.toString())) {
                 domesticcommercialcontainer.setVisibility(View.VISIBLE);
                 trucksendcontainer.setVisibility(View.GONE);
                 tvcontainer.setVisibility(View.GONE);
 
-                sv_textview = (TextView) convertView.findViewById(R.id.sv_textview);
-                sv_textview_value = (TextView) convertView.findViewById(R.id.sv_textview_value);
+                sv_textview = convertView.findViewById(R.id.sv_textview);
+                sv_textview_value = convertView.findViewById(R.id.sv_textview_value);
 
-                name_textview = (TextView) convertView.findViewById(R.id.name_textview);
+                name_textview = convertView.findViewById(R.id.name_textview);
 
-                dbc_textview = (TextView) convertView.findViewById(R.id.dbc_textview);
-                dbc_textview_value = (TextView) convertView.findViewById(R.id.dbc_textview_value);
+                dbc_textview = convertView.findViewById(R.id.dbc_textview);
+                dbc_textview_value = convertView.findViewById(R.id.dbc_textview_value);
 
-                defective_textview = (TextView) convertView.findViewById(R.id.defective_textview);
-                defective_textview_value = (TextView) convertView.findViewById(R.id.defective_textview_value);
+                defective_textview = convertView.findViewById(R.id.defective_textview);
+                defective_textview_value = convertView.findViewById(R.id.defective_textview_value);
 
-                tv_description_textview = (TextView) convertView.findViewById(R.id.tv_description_textview);
-                tv_description_textview_value = (TextView) convertView.findViewById(R.id.tv_description_textview_value);
+                tv_description_textview = convertView.findViewById(R.id.tv_description_textview);
+                tv_description_textview_value = convertView.findViewById(R.id.tv_description_textview_value);
 
-                lost_textview = (TextView) convertView.findViewById(R.id.lost_textview);
-                lost_textview_value = (TextView) convertView.findViewById(R.id.lost_textview_value);
+                lost_textview = convertView.findViewById(R.id.lost_textview);
+                lost_textview_value = convertView.findViewById(R.id.lost_textview_value);
 
 
-                return_full_textview = (TextView) convertView.findViewById(R.id.return_full_textview);
-                return_full_textview_value = (TextView) convertView.findViewById(R.id.return_full_textview_value);
+                return_full_textview = convertView.findViewById(R.id.return_full_textview);
+                return_full_textview_value = convertView.findViewById(R.id.return_full_textview_value);
 
-                full_cylinder_textview = (TextView) convertView.findViewById(R.id.full_cylinder_textview);
-                full_cylinder_textview_value = (TextView) convertView.findViewById(R.id.full_cylinder_textview_value);
+                full_cylinder_textview = convertView.findViewById(R.id.full_cylinder_textview);
+                full_cylinder_textview_value = convertView.findViewById(R.id.full_cylinder_textview_value);
 
-                empty_textview = (TextView) convertView.findViewById(R.id.empty_textview);
-                empty_textview_value = (TextView) convertView.findViewById(R.id.empty_textview_value);
+                empty_textview = convertView.findViewById(R.id.empty_textview);
+                empty_textview_value = convertView.findViewById(R.id.empty_textview_value);
 
                 sv_textview.setText("SV : ");
                 sv_textview_value.setText(childModel.sv);
@@ -424,20 +424,20 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
             } else if(this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_SEND.toString()) || this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED.toString())) {
                 trucksendcontainer.setVisibility(View.VISIBLE);
 
-                TextView vehicle_no_textview = (TextView) convertView.findViewById(R.id.vehicle_no_textview);
-                TextView vehicle_no_textview_value = (TextView) convertView.findViewById(R.id.vehicle_no_textview_value);
+                TextView vehicle_no_textview = convertView.findViewById(R.id.vehicle_no_textview);
+                TextView vehicle_no_textview_value = convertView.findViewById(R.id.vehicle_no_textview_value);
 
-                TextView invoice_no_textview = (TextView) convertView.findViewById(R.id.invoice_no_textview);
-                TextView invoice_no_textview_value = (TextView) convertView.findViewById(R.id.invoice_no_textview_value);
+                TextView invoice_no_textview = convertView.findViewById(R.id.invoice_no_textview);
+                TextView invoice_no_textview_value = convertView.findViewById(R.id.invoice_no_textview_value);
 
-                TextView description_received_textview = (TextView) convertView.findViewById(R.id.description_received_textview);
-                TextView description_received_textview_value = (TextView) convertView.findViewById(R.id.description_received_textview_value);
+                TextView description_received_textview = convertView.findViewById(R.id.description_received_textview);
+                TextView description_received_textview_value = convertView.findViewById(R.id.description_received_textview_value);
 
-                TextView quantity_textview = (TextView) convertView.findViewById(R.id.quantity_textview);
-                TextView quantity_textview_value = (TextView) convertView.findViewById(R.id.quantity_textview_value);
+                TextView quantity_textview = convertView.findViewById(R.id.quantity_textview);
+                TextView quantity_textview_value = convertView.findViewById(R.id.quantity_textview_value);
 
-                TextView defective_received_textview = (TextView) convertView.findViewById(R.id.defective_received_textview);
-                TextView defective_received_textview_value = (TextView) convertView.findViewById(R.id.defective_received_textview_value);
+                TextView defective_received_textview = convertView.findViewById(R.id.defective_received_textview);
+                TextView defective_received_textview_value = convertView.findViewById(R.id.defective_received_textview_value);
 
 
 
@@ -479,14 +479,14 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 tvcontainer.setVisibility(View.VISIBLE);
 
                 //TV Report
-                TextView description_tv_textview = (TextView) convertView.findViewById(R.id.description_tv_textview);
-                TextView description_tv_textview_value = (TextView) convertView.findViewById(R.id.description_tv_textview_value);
+                TextView description_tv_textview = convertView.findViewById(R.id.description_tv_textview);
+                TextView description_tv_textview_value = convertView.findViewById(R.id.description_tv_textview_value);
 
-                TextView consumer_no_textview = (TextView) convertView.findViewById(R.id.consumer_no_textview);
-                TextView consumer_no_textview_value = (TextView) convertView.findViewById(R.id.consumer_no_textview_value);
+                TextView consumer_no_textview = convertView.findViewById(R.id.consumer_no_textview);
+                TextView consumer_no_textview_value = convertView.findViewById(R.id.consumer_no_textview_value);
 
-                TextView quantity_tv_textview = (TextView) convertView.findViewById(R.id.quantity_tv_textview);
-                TextView quantity_tv_textview_value = (TextView) convertView.findViewById(R.id.quantity_tv_textview_value);
+                TextView quantity_tv_textview = convertView.findViewById(R.id.quantity_tv_textview);
+                TextView quantity_tv_textview_value = convertView.findViewById(R.id.quantity_tv_textview_value);
 
 
                 description_tv_textview.setText("PRODUCT TYPE: ");

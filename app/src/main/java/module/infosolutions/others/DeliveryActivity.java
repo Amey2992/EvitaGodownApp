@@ -55,7 +55,7 @@ public class DeliveryActivity extends AppCompatActivity {
         setContentView(R.layout.content_delivery);
 
         fragmentManager = getSupportFragmentManager();
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //loadToolbar();
@@ -68,8 +68,8 @@ public class DeliveryActivity extends AppCompatActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.delivery);
         setSupportActionBar(toolbar);
 

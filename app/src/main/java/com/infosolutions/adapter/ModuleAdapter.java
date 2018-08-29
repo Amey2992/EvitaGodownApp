@@ -55,8 +55,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
 
         public ModuleViewHolder(View itemView) {
             super(itemView);
-            ivImageModule = (ImageView) itemView.findViewById(R.id.ivModule);
-            tvTextModule = (TextView) itemView.findViewById(R.id.tvModule);
+            ivImageModule = itemView.findViewById(R.id.ivModule);
+            tvTextModule = itemView.findViewById(R.id.tvModule);
         }
     }
 }

@@ -134,37 +134,37 @@ public class OwnerDashboardActivity extends
 
     private void initUI(){
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        btnLogout = (ImageView) toolbar.findViewById(R.id.btnLogout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+        btnLogout = toolbar.findViewById(R.id.btnLogout);
         mTitle.setText(R.string.owner);
         setSupportActionBar(toolbar);
 
-        progressBar     = (ProgressBar)  findViewById(R.id.progress_bar);
-        tableOpening    = (TableLayout)  findViewById(R.id.tableOpening);
-        tableDomestic   = (TableLayout)  findViewById(R.id.tableDomestic);
-        tableCommercial = (TableLayout)  findViewById(R.id.tableCommercial);
-        tableReceive    = (TableLayout)  findViewById(R.id.tableReceive);
-        tableSend       = (TableLayout)  findViewById(R.id.tableSend);
-        tableTvDetails  = (TableLayout)  findViewById(R.id.tableTvDetails);
-        tableClosing    = (TableLayout)  findViewById(R.id.tableClosing);
-        tableOther      = (TableLayout)  findViewById(R.id.tableOther);
-        layoutOpening   = (LinearLayout) findViewById(R.id.opening_layout);
-        layoutDomestic  = (LinearLayout) findViewById(R.id.layoutDomestic);
-        layoutCommerce  = (LinearLayout) findViewById(R.id.layoutCommercial);
-        layoutReceive   = (LinearLayout) findViewById(R.id.layoutReceive);
-        layoutSend      = (LinearLayout) findViewById(R.id.layoutSend);
-        layoutTv        = (LinearLayout) findViewById(R.id.layoutTv);
-        layoutClose     = (LinearLayout) findViewById(R.id.layoutClose);
-        layoutOther     = (LinearLayout) findViewById(R.id.layoutOther);
-        tagOpening      = (TextView)     findViewById(R.id.tagOpening);
-        tagDomestic     = (TextView)     findViewById(R.id.tagDomestic);
-        tagCommercial   = (TextView)     findViewById(R.id.tagCommercial);
-        tagReceive      = (TextView)     findViewById(R.id.tagReceive);
-        tagSend         = (TextView)     findViewById(R.id.tagSend);
-        tagTvDetails    = (TextView)     findViewById(R.id.tagTvDetails);
-        tagClosing      = (TextView)     findViewById(R.id.tagClosing);
-        tagOther        = (TextView)     findViewById(R.id.tagOther);
+        progressBar     = findViewById(R.id.progress_bar);
+        tableOpening    = findViewById(R.id.tableOpening);
+        tableDomestic   = findViewById(R.id.tableDomestic);
+        tableCommercial = findViewById(R.id.tableCommercial);
+        tableReceive    = findViewById(R.id.tableReceive);
+        tableSend       = findViewById(R.id.tableSend);
+        tableTvDetails  = findViewById(R.id.tableTvDetails);
+        tableClosing    = findViewById(R.id.tableClosing);
+        tableOther      = findViewById(R.id.tableOther);
+        layoutOpening   = findViewById(R.id.opening_layout);
+        layoutDomestic  = findViewById(R.id.layoutDomestic);
+        layoutCommerce  = findViewById(R.id.layoutCommercial);
+        layoutReceive   = findViewById(R.id.layoutReceive);
+        layoutSend      = findViewById(R.id.layoutSend);
+        layoutTv        = findViewById(R.id.layoutTv);
+        layoutClose     = findViewById(R.id.layoutClose);
+        layoutOther     = findViewById(R.id.layoutOther);
+        tagOpening      = findViewById(R.id.tagOpening);
+        tagDomestic     = findViewById(R.id.tagDomestic);
+        tagCommercial   = findViewById(R.id.tagCommercial);
+        tagReceive      = findViewById(R.id.tagReceive);
+        tagSend         = findViewById(R.id.tagSend);
+        tagTvDetails    = findViewById(R.id.tagTvDetails);
+        tagClosing      = findViewById(R.id.tagClosing);
+        tagOther        = findViewById(R.id.tagOther);
     }
 
 
@@ -190,7 +190,7 @@ public class OwnerDashboardActivity extends
             if (objectOpening.has("RECEVING_STOCKS_COMBINED")){
                 receiveLayout(tableReceive, new JSONArray(objectOpening.getString("RECEVING_STOCKS_COMBINED")));
             }else {
-                TextView textViewError = (TextView) findViewById(R.id.tvErrorReceive);
+                TextView textViewError = findViewById(R.id.tvErrorReceive);
                 textViewError.setText("No data for Receive stock");
                 textViewError.setVisibility(View.VISIBLE);
             }
@@ -325,7 +325,7 @@ public class OwnerDashboardActivity extends
                 createLayout(tableLayout, PRODUCT_NAME,CYLINDER,"", "","","","");
             }
         }else {
-            TextView textViewError = (TextView) findViewById(R.id.tvError);
+            TextView textViewError = findViewById(R.id.tvError);
             textViewError.setTextColor(getResources().getColor(R.color.colorPrimary));
             textViewError.setText("No TV details found");
             textViewError.setVisibility(View.VISIBLE);

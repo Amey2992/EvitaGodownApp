@@ -47,8 +47,8 @@ public class StockTransferActivity extends AppCompatActivity {
     }
 
     private void init(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Stock Transfer");
         setSupportActionBar(toolbar);
 
@@ -85,7 +85,7 @@ public class StockTransferActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        godown_edittext = (com.infosolutions.ui.user.stock.AutoCompleteTextView)findViewById(R.id.godown_edittext);
+        godown_edittext = findViewById(R.id.godown_edittext);
         godown_edittext.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -93,7 +93,7 @@ public class StockTransferActivity extends AppCompatActivity {
 
             }
         });
-        product_edittext = (com.infosolutions.ui.user.stock.AutoCompleteTextView)findViewById(R.id.product_edittext);
+        product_edittext = findViewById(R.id.product_edittext);
         product_edittext.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
