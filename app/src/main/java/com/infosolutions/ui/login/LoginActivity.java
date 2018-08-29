@@ -271,8 +271,8 @@ public class LoginActivity extends BaseActivity {
 
                 responseMsg = jsonResult.getString("responseMessage");
                 if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
-
-                    AppSettings.getInstance(this).updateLocalFromServer(this);
+                    AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
+                    //AppSettings.getInstance(this).updateLocalFromServer(this);
                     /*updateDatabase();
 
                     EvitaEvent.EventDataSyncToServer eventDataSyncToServer = new EventDataSyncToServer();
@@ -311,6 +311,7 @@ public class LoginActivity extends BaseActivity {
 
 
             AppSettings.getInstance(this).updateDatabase(this);
+            bottomGodownSheetType();
         }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
             RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
                     getHelper().getCommercialCreditExceptionDao();
@@ -330,7 +331,7 @@ public class LoginActivity extends BaseActivity {
             }
 
 
-            AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
+            AppSettings.getInstance(this).updateLocalFromServer(this);
         }
         if (type.equals(VolleySingleton.CallType.AGENCY_NAME)) {
             try {
@@ -511,7 +512,7 @@ public class LoginActivity extends BaseActivity {
         setOffline_module_list(PRODUCT_LIST);
         saveWithSharedPreferences(this, Constants.KEY_USER_TYPE, getUSER_TYPE());
 
-        bottomGodownSheetType();
+
     }
 
     private void clearTablesData() {

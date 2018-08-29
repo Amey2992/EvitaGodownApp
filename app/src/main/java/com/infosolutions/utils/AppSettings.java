@@ -66,6 +66,7 @@ public class AppSettings {
     private String CHANNEL_ID = "1001";
     File backupDB;
     public String godownJson;
+    public boolean isSyncing;
 
     private AppSettings() {
     }

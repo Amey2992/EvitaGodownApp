@@ -129,6 +129,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
             public void onClick(View view) {
                 ivSync.setEnabled(false);
                 pushContentToServer();
+
+
             }
         });
 
@@ -219,6 +221,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
             progress_bar.setVisibility(View.GONE);
             ivSync.setEnabled(true);
+            AppSettings.getInstance(this).isSyncing = false;
             hideProgressDialog();
             finish();
 
@@ -248,7 +251,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
     public void updateLocalFromServer() {
         showProgressDialog();
-        VolleySingleton.getInstance(getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
+        //VolleySingleton.getInstance(getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
+        AppSettings.getInstance(this).updateLocalFromServer(this);
     }
 
     private void updateDatabase() {
@@ -323,6 +327,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
 
     private void pushContentToServer() {
+        AppSettings.getInstance(this).isSyncing = true;
         try {
             localJSON_DATA = new JSONObject(AppSettings.getInstance(this).getBodyJson(this));
         } catch (JSONException e1) {
