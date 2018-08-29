@@ -460,7 +460,6 @@ public class LoginActivity extends BaseActivity {
 
                 employeeDB.create(new EmployeeDB(1, EMP_CODE, FULL_NAME, ID_DESIGNATION, CREDIT_GIVEN));
             }
-
         }
 
         /******************************************************************************************/
@@ -485,7 +484,6 @@ public class LoginActivity extends BaseActivity {
         }
 
         /******************************************************************************************/
-
 
         RuntimeExceptionDao<VehicleDB, Integer> vehicleDB = getHelper().getVehicleRTExceptionDao();
         List<VehicleDB> vehicleDBList = vehicleDB.queryForAll();
@@ -618,10 +616,7 @@ public class LoginActivity extends BaseActivity {
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
-
-
     }
-
 
     public JSONArray getGO_DOWN_ARRAY_LIST() {
         return GO_DOWN_ARRAY_LIST;
@@ -639,7 +634,6 @@ public class LoginActivity extends BaseActivity {
     public void setUSER_TYPE(String USER_TYPE) {
         this.USER_TYPE = USER_TYPE;
     }
-
 
     @Override
     protected void onResume() {
