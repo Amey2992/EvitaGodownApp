@@ -471,6 +471,32 @@ public class DomesticActivity extends BaseActivity {
         return simpleDateFormat.format(date);
     }
 
+    private static String currentDateTime() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = (Date)formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
+    }
+
+    public String getTodayDate() {
+
+        Calendar c = Calendar.getInstance();
+        //c.setTime(yourDate);
+        int month = c.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        int year = c.get(Calendar.YEAR);
+        String finalString = Integer.toString(month)+Integer.toString(dayOfMonth)+Integer.toString(year);
+        return finalString;
+    }
+
     //--------------------------- Inserting the values on fresh trip of deliveryman------------------------------
 
     // Problem while inserting the data
@@ -503,9 +529,10 @@ public class DomesticActivity extends BaseActivity {
            */
 
            //new
+            String uniqueId = Integer.toString(getGoDownId()) + Integer.toString(getDeliveryManId()) + fresh_trip_no + currentDateTime()+getProductId  ();
             DomesticDeliveryDB domesticDeliveryDB = new DomesticDeliveryDB(1, getDeliveryManId(), fresh_trip_no, getProductId(), getDateTime(), getApplicationUserId(), fresh_full,
                     0 , 0 , 0 , 0 , 0, getDateTime(),
-                    0,0, "MOBILE", "INSERT", "N", getGoDownId(), getDeviceId(),getDate(),false,true,false);
+                    0,0, "MOBILE", "INSERT", "N", getGoDownId(), getDeviceId(),getDate(),false,true,false,uniqueId);
             domesticDB.create(domesticDeliveryDB);
             saveWithSharedPreferences(getApplicationContext(), KEY_DOMESTIC_FULL_CYLINDER, String.valueOf(fresh_full));
 
@@ -771,6 +798,7 @@ public class DomesticActivity extends BaseActivity {
 
 
 
+
             updateBuilder.updateColumnValue("empty_received", getTextFromET(input_empty_cylinder));
             updateBuilder.updateColumnValue("sv_field", getTextFromET(input_return_sv));
             updateBuilder.updateColumnValue("dbc_field", getTextFromET(input_return_dbc));
@@ -786,7 +814,7 @@ public class DomesticActivity extends BaseActivity {
             updateBuilder.updateColumnValue("isFresh", true);
             updateBuilder.updateColumnValue("isReturn", false);
             updateBuilder.updateColumnValue("isCompleted", true);
-
+            updateBuilder.updateColumnValue("uniqueID",domesticDeliveryDB.uniqueID);
 
             updateBuilder.update();
             /******************************************************************************************************************/

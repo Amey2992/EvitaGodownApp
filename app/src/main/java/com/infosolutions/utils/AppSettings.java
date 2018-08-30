@@ -196,6 +196,7 @@ public class AppSettings {
                     joDomestic.put("isFresh", cn.isFresh);
                     joDomestic.put("isReturn", cn.isReturn);
                     joDomestic.put("isCompleted", cn.isCompleted);
+                    joDomestic.put("uniqueID", cn.uniqueID);
 
                     jsonArrayDomestic.put(joDomestic);
 
