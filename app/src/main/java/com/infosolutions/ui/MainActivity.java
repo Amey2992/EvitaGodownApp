@@ -145,9 +145,9 @@ public class MainActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
 
-        LocalBroadcastManager .getInstance(this).registerReceiver(listener,
+        /*LocalBroadcastManager .getInstance(this).registerReceiver(listener,
                 new IntentFilter(Constants.RESET_TIMER_BROADCAST));
-
+*/
     }
 
     private void startTimer() {

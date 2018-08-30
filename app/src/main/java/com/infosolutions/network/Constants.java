@@ -51,13 +51,13 @@ public class Constants {
     private static final String tester_prod_url ="http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User" ;
-    public static final String  EVITA_API_URL = PROD_URL;
+    public static final String  EVITA_API_URL = tester_prod_url;
 
     /**/
 
 
-    public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
-    public static final String post_url ="http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
+    public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
+    public static final String post_url ="http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
 
     /**/
