@@ -36,8 +36,8 @@ public class ReportListItemsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_stock_report);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Report");
         setSupportActionBar(toolbar);
 
@@ -60,7 +60,7 @@ public class ReportListItemsActivity extends AppCompatActivity {
 
     private void initialiseUI() {
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.addOnItemTouchListener(new ReportListItemsActivity.RecyclerTouchListener(getApplicationContext(), recyclerView, new ReportListItemsActivity.ClickListener() {
             @Override
             public void onClick(View view, int position) {

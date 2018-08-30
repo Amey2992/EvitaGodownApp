@@ -2,14 +2,18 @@ package com.infosolutions.ui;
 
 import android.Manifest;
 import android.Manifest.permission;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -139,7 +143,10 @@ public class MainActivity extends BaseActivity {
 
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
-        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT,this);
+        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
+
+        LocalBroadcastManager .getInstance(this).registerReceiver(listener,
+                new IntentFilter(Constants.RESET_TIMER_BROADCAST));
 
     }
 
@@ -147,14 +154,28 @@ public class MainActivity extends BaseActivity {
         mtimer = new Timer();
         mTimerTask = new TimerTask() {
             public void run() {
-                //System.out.println("-----------called----------");
-                syncData();
+
+                if (!AppSettings.getInstance(MainActivity.this).isSyncing) {
+                    syncData();
+                }else{
+                    Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
+                }
 
             }
         };
 
-        mtimer.scheduleAtFixedRate(mTimerTask, 200000,200000);
+        mtimer.scheduleAtFixedRate(mTimerTask, 200000, 200000);
         //mtimer.scheduleAtFixedRate(mTimerTask, 10000,10000);
+    }
+
+    private void stopTimer(){
+        if(mTimerTask != null){
+            mTimerTask.cancel();
+        }
+
+        if(mtimer != null){
+            mtimer.cancel();
+        }
     }
 
 
@@ -274,6 +295,9 @@ public class MainActivity extends BaseActivity {
             databaseHelper = null;
         }
         eventBus.unregister(this);
+
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(listener);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -333,8 +357,8 @@ public class MainActivity extends BaseActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.godown);
 
         String SELECTED_GODOWN_NAME = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN_NAME, "Empty");
@@ -369,9 +393,18 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initialiseUI() {
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
     }
+
+    private android.content.BroadcastReceiver listener = new BroadcastReceiver() {
+        @Override
+        public void onReceive( Context context, Intent intent ) {
+            stopTimer();
+            startTimer();
+
+        }
+    };
 
 
     private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
@@ -445,6 +478,7 @@ public class MainActivity extends BaseActivity {
                     finish();
 */
                 } else {
+                    AppSettings.getInstance(this).isSyncing = false;
                     //Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -474,11 +508,12 @@ public class MainActivity extends BaseActivity {
 
             AppSettings.getInstance(this).updateDatabase(this);
             AppSettings.getInstance(this).notification(getApplicationContext(), responseMsg);
+            AppSettings.getInstance(this).isSyncing = false;
 
             EvitaEvent.EventDataSyncToServer eventDataSyncToServer = new EvitaEvent.EventDataSyncToServer();
             eventDataSyncToServer.setDataSynced(false);
             eventBus.post(eventDataSyncToServer);
-        }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
+        } else if (type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)) {
             RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
                     getHelper().getCommercialCreditExceptionDao();
 
@@ -503,6 +538,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void serverFailResponse(VolleyError error) {
+        AppSettings.getInstance(this).isSyncing = false;
     }
 
 
@@ -518,6 +554,7 @@ public class MainActivity extends BaseActivity {
 
     void syncData() {
         try {
+            AppSettings.getInstance(this).isSyncing = true;
             JSONObject localJSON_DATA = new JSONObject(AppSettings.getInstance(this).getBodyJson(this));
             AppSettings.getInstance(this).manualSyncAndroidDataToServer(this, localJSON_DATA);
         } catch (JSONException e1) {

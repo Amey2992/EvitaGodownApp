@@ -197,7 +197,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Response
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date)formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd");
         }catch (Exception ex){
             ex.printStackTrace();

@@ -50,10 +50,10 @@ public class OwnerDetailingActivity extends AppCompatActivity {
         Intent intent     =  getIntent();
         String response   =  intent.getStringExtra("response");
         String title      =  intent.getStringExtra("layout_type");
-        Toolbar toolbar   =  (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar   = findViewById(R.id.toolbar);
 
-        TextView mTitle   =  (TextView) toolbar.findViewById(R.id.toolbar_title);
-        tableLayout       =  (TableLayout) findViewById(R.id.table_layout);
+        TextView mTitle   = toolbar.findViewById(R.id.toolbar_title);
+        tableLayout       = findViewById(R.id.table_layout);
 
         mTitle.setText(title);
         setSupportActionBar(toolbar);
@@ -257,7 +257,7 @@ public class OwnerDetailingActivity extends AppCompatActivity {
 
     private void showError() {
 
-        TextView tvError = (TextView) findViewById(R.id.tvError);
+        TextView tvError = findViewById(R.id.tvError);
         tvError.setText(getResources().getString(R.string.no_record_found));
         tvError.setVisibility(View.VISIBLE);
     }

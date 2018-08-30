@@ -57,7 +57,7 @@ public class StockReportAdapter extends RecyclerView.Adapter<StockReportAdapter.
 
         public ReportViewHolder(View itemView) {
             super(itemView);
-            tvTextModule = (TextView) itemView.findViewById(R.id.tvModule);
+            tvTextModule = itemView.findViewById(R.id.tvModule);
 
         }
     }

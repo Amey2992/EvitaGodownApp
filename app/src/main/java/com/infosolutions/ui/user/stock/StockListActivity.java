@@ -52,8 +52,8 @@ public class StockListActivity extends BaseActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void setToolbarHost() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Stock Details");
         setSupportActionBar(toolbar);
 
@@ -61,14 +61,14 @@ public class StockListActivity extends BaseActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
         setGODOWN_ID(Constants.getSharedPrefWithKEY(getApplicationContext(),Constants.KEY_GODOWN));
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.STOCK_REPORT, this);
-        left_table_layout = (TableLayout) findViewById(R.id.left_table_layout);
-        right_table_layout = (TableLayout) findViewById(R.id.right_table_layout);
-        opening_stock_table = (TableLayout) findViewById(R.id.opening_stock_table);
-        delivery_table = (TableLayout) findViewById(R.id.delivery_table);
-        closing_stock_table = (TableLayout) findViewById(R.id.closing_stock_table);
-        other_stock_table = (TableLayout) findViewById(R.id.other_stock_table);
-        divider = (View) findViewById(R.id.divider);
-        loadsTextview = (TextView)findViewById(R.id.loadsTextview);
+        left_table_layout = findViewById(R.id.left_table_layout);
+        right_table_layout = findViewById(R.id.right_table_layout);
+        opening_stock_table = findViewById(R.id.opening_stock_table);
+        delivery_table = findViewById(R.id.delivery_table);
+        closing_stock_table = findViewById(R.id.closing_stock_table);
+        other_stock_table = findViewById(R.id.other_stock_table);
+        divider = findViewById(R.id.divider);
+        loadsTextview = findViewById(R.id.loadsTextview);
         loadsTextview.setTextColor(getResources().getColor(R.color.colorPrimary));
         loadsTextview.setTextSize(20);
         loadsTextview.setBackgroundColor(getResources().getColor(R.color.colorLightGrey));

@@ -20,12 +20,12 @@ public class LoginCommercialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_commercial);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.commercial_login);
         setSupportActionBar(toolbar);
 
-        final Button buttonSubmit = (Button) findViewById(R.id.btnSubmit);
+        final Button buttonSubmit = findViewById(R.id.btnSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

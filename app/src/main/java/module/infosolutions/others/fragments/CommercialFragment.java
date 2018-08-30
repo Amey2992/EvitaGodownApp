@@ -40,9 +40,9 @@ public class CommercialFragment extends Fragment {
 
         View rootView = LayoutInflater.from(getContext())
                 .inflate(R.layout.fragment_commercial,container,false);
-        layout_fresh = (LinearLayout)rootView.findViewById(R.id.layout_fresh);
-        layout_return = (LinearLayout)rootView.findViewById(R.id.layout_return);
-        btnDeliveryMan = (Button) rootView.findViewById(R.id.btnDeliveryMan);
+        layout_fresh = rootView.findViewById(R.id.layout_fresh);
+        layout_return = rootView.findViewById(R.id.layout_return);
+        btnDeliveryMan = rootView.findViewById(R.id.btnDeliveryMan);
 
         switchShowHideLayout(rootView);
         return rootView;
@@ -52,8 +52,7 @@ public class CommercialFragment extends Fragment {
     private void switchShowHideLayout(final View rootView){
 
 
-        SegmentedButtonGroup segmentedButtonGroup = (SegmentedButtonGroup)
-                rootView.findViewById(R.id.segmentedButtonGroup);
+        SegmentedButtonGroup segmentedButtonGroup = rootView.findViewById(R.id.segmentedButtonGroup);
         segmentedButtonGroup.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
             @Override
             public void onClickedButtonPosition(int position) {
@@ -77,9 +76,9 @@ public class CommercialFragment extends Fragment {
         layout_fresh.setVisibility(View.VISIBLE);
         layout_return.setVisibility(View.GONE);
 
-        et_FreshTripno = (EditText) rootview.findViewById(R.id.etFreshTripno);
-        et_FreshCylnrType = (EditText) rootview.findViewById(R.id.etFreshCylnrType);
-        btnFreshSubmit = (Button) rootview.findViewById(R.id.btnFreshSubmit);
+        et_FreshTripno = rootview.findViewById(R.id.etFreshTripno);
+        et_FreshCylnrType = rootview.findViewById(R.id.etFreshCylnrType);
+        btnFreshSubmit = rootview.findViewById(R.id.btnFreshSubmit);
 
         loadDeliveryMan();
 
@@ -114,14 +113,14 @@ public class CommercialFragment extends Fragment {
         layout_return.setVisibility(View.VISIBLE);
         layout_fresh.setVisibility(View.GONE);
 
-        et_returnTripno = (EditText) rootview.findViewById(R.id.etReturnTripno);
-        et_returnCylnrType = (EditText) rootview.findViewById(R.id.etReturnCylnrType);
-        et_returnEmptyClynr = (EditText) rootview.findViewById(R.id.etReturnEmptyClynr);
-        et_returnSV = (EditText) rootview.findViewById(R.id.etReturnSV);
-        et_returnDefective = (EditText) rootview.findViewById(R.id.etReturnDefective);
-        et_returnDBC = (EditText) rootview.findViewById(R.id.etReturnDBC);
-        et_returnFull = (EditText) rootview.findViewById(R.id.etReturnFull);
-        btnReturnSubmit = (Button) rootview.findViewById(R.id.btnReturnSubmit);
+        et_returnTripno = rootview.findViewById(R.id.etReturnTripno);
+        et_returnCylnrType = rootview.findViewById(R.id.etReturnCylnrType);
+        et_returnEmptyClynr = rootview.findViewById(R.id.etReturnEmptyClynr);
+        et_returnSV = rootview.findViewById(R.id.etReturnSV);
+        et_returnDefective = rootview.findViewById(R.id.etReturnDefective);
+        et_returnDBC = rootview.findViewById(R.id.etReturnDBC);
+        et_returnFull = rootview.findViewById(R.id.etReturnFull);
+        btnReturnSubmit = rootview.findViewById(R.id.btnReturnSubmit);
 
 
         loadDeliveryMan();

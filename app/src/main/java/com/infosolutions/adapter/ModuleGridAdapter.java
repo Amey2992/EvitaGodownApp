@@ -71,8 +71,8 @@ public class ModuleGridAdapter extends
 
         public ModuleViewHolder(View itemView) {
             super(itemView);
-            ivImageModule = (ImageView) itemView.findViewById(R.id.ivModule);
-            tvTextModule = (TextView) itemView.findViewById(R.id.tvModule);
+            ivImageModule = itemView.findViewById(R.id.ivModule);
+            tvTextModule = itemView.findViewById(R.id.tvModule);
         }
     }
 }

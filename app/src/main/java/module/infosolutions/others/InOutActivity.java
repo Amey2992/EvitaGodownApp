@@ -25,8 +25,8 @@ public class InOutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_out);
         loadToolbar();
-        cardViewIN = (CircleButton) findViewById(R.id.btnIN);
-        cardViewOUT = (CircleButton) findViewById(R.id.btnOUT);
+        cardViewIN = findViewById(R.id.btnIN);
+        cardViewOUT = findViewById(R.id.btnOUT);
 
         btnClickListner();
     }
@@ -35,8 +35,8 @@ public class InOutActivity extends AppCompatActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.inword_outword);
         setSupportActionBar(toolbar);
 

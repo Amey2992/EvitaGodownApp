@@ -34,8 +34,8 @@ public class DomesticScreen extends AppCompatActivity {
         setContentView(R.layout.fragment_godown);
         if (Build.VERSION.SDK_INT >= 21) {getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary)); }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Domestic");
         setSupportActionBar(toolbar);
         setupFragments();
@@ -46,9 +46,9 @@ public class DomesticScreen extends AppCompatActivity {
 
     //Add ViewPager
     private void setupFragments(){
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        tabs = (TabLayout) findViewById(R.id.result_tabs);
+        tabs = findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
     }
 

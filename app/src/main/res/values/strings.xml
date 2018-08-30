@@ -36,6 +36,7 @@
     <string name="kg19">19 KG</string>
     <string name="kg14Kg">14.2 KG</string>
     <string name="evita_login">Evita Login</string>
+    <string name="syncing_text">Syncing....</string>
     <string name="notification">Notification</string>
     <string name="inword_outword">Inword-Outword</string>
     <string name="title_activity_domestic_scroll">DomesticScrollActivity</string>

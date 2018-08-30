@@ -101,15 +101,15 @@ public class TruckSendFragment extends Fragment {
 
     private void initUI(View view) {
 
-        generateET = (Button) view.findViewById(R.id.generateBtn);
-        btnSubmit = (AppCompatButton) view.findViewById(R.id.btnSubmit);
-        etEnterTruckNo = (EditText) view.findViewById(R.id.etEnterTruckNo);
+        generateET = view.findViewById(R.id.generateBtn);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
         btnSelectTruckNumber = (AppCompatButton) view.findViewById(R.id.btnSelectTruckNumber);
-        etErvNumber = (EditText) view.findViewById(R.id.etErvNumber);
-        myLinearLay = (LinearLayout) view.findViewById(R.id.dynamic);
-        tvSelectedTruck = (TextView) view.findViewById(R.id.tvSelectedTruck);
-        segmentedButtonGroup = (SegmentedButtonGroup) view.findViewById(R.id.segmentedButtonGroup);
-        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
+        etErvNumber = view.findViewById(R.id.etErvNumber);
+        myLinearLay = view.findViewById(R.id.dynamic);
+        tvSelectedTruck = view.findViewById(R.id.tvSelectedTruck);
+        segmentedButtonGroup = view.findViewById(R.id.segmentedButtonGroup);
+        scrollView = view.findViewById(R.id.scrollView);
 
         btnSelectTruckNumber.setVisibility(View.GONE);
         etEnterTruckNo.setVisibility(View.GONE);
@@ -217,10 +217,10 @@ public class TruckSendFragment extends Fragment {
             public void onClick(View view) {
 
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
-                Button btnDelete = (Button) viewToAdd.findViewById(R.id.btnDelete);
-                final Spinner spinner = (Spinner) viewToAdd.findViewById(R.id.spinner);
-                etQuantity = (EditText) viewToAdd.findViewById(R.id.etQuantity);
-                final EditText etDefective = (EditText) viewToAdd.findViewById(R.id.etDefective);
+                Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
+                etQuantity = viewToAdd.findViewById(R.id.etQuantity);
+                final EditText etDefective = viewToAdd.findViewById(R.id.etDefective);
                 spinner.setAdapter(spinAdapter);
                 /* add dynamic data to spinners*/
                 dynamicQuantity.add(etQuantity);
@@ -467,7 +467,7 @@ public class TruckSendFragment extends Fragment {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date) formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         } catch (Exception ex) {
             ex.printStackTrace();

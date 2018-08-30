@@ -40,8 +40,8 @@ public class FragGodown extends Fragment {
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
 
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_godown,container,false);
-        final TextView viewMessage = (TextView) rootView.findViewById(R.id.tvMessage);
-        final RelativeLayout host_layout = (RelativeLayout) rootView.findViewById(R.id.host_layout);
+        final TextView viewMessage = rootView.findViewById(R.id.tvMessage);
+        final RelativeLayout host_layout = rootView.findViewById(R.id.host_layout);
 
         custom_font = Typeface.createFromAsset(getContext().getAssets(),  "fonts/Ubuntu-M.ttf");
         viewMessage.setTypeface(custom_font);
@@ -60,9 +60,9 @@ public class FragGodown extends Fragment {
     //Add ViewPager
     private void setupFragments(View rootView){
 
-        viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
+        viewPager = rootView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        tabs = (TabLayout) rootView.findViewById(R.id.result_tabs);
+        tabs = rootView.findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
     }
 

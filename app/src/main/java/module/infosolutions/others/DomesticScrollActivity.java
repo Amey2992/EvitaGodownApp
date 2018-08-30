@@ -53,9 +53,9 @@ public class DomesticScrollActivity extends AppCompatActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/Ubuntu-M.ttf");
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setTypeface(custom_font);
         mTitle.setText(R.string.godown);
         setSupportActionBar(toolbar);
@@ -73,16 +73,16 @@ public class DomesticScrollActivity extends AppCompatActivity {
 
     private void initViewIds(){
 
-        tvSelectedUser = (TextView) findViewById(R.id.tvSelectedUser);
+        tvSelectedUser = findViewById(R.id.tvSelectedUser);
 
-        layout_form = (LinearLayout) findViewById(R.id.layout_form);
-        more_views_layout = (LinearLayout) findViewById(R.id.more_views_layout);
-        btn_Submit_Form = (Button) findViewById(R.id.btn_Submit_Form);
-        input_layout_trip_no = (TextInputLayout) findViewById(R.id.input_layout_trip_no);
-        input_layout_full = (TextInputLayout) findViewById(R.id.input_layout_full);
-        input_trip_no = (EditText) findViewById(R.id.input_trip_no);
-        input_full = (EditText) findViewById(R.id.input_full);
-        fabLoad = (FloatingActionButton)findViewById(R.id.fab);
+        layout_form = findViewById(R.id.layout_form);
+        more_views_layout = findViewById(R.id.more_views_layout);
+        btn_Submit_Form = findViewById(R.id.btn_Submit_Form);
+        input_layout_trip_no = findViewById(R.id.input_layout_trip_no);
+        input_layout_full = findViewById(R.id.input_layout_full);
+        input_trip_no = findViewById(R.id.input_trip_no);
+        input_full = findViewById(R.id.input_full);
+        fabLoad = findViewById(R.id.fab);
 
 
     }

@@ -139,8 +139,8 @@ public class OwnerListAdapter extends BaseAdapter {
 
         public OwnerViewHolder(View itemView) {
 
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitleOpening);
-            tableOwner = (TableLayout) itemView.findViewById(R.id.tableOwner);
+            tvTitle = itemView.findViewById(R.id.tvTitleOpening);
+            tableOwner = itemView.findViewById(R.id.tableOwner);
             //tvTitle.setTypeface(typefaceBold);
         }
     }

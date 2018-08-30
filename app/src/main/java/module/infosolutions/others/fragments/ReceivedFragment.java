@@ -26,8 +26,8 @@ public class ReceivedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_truck,container,false);
-        TextView view14Kg = (TextView) rootView.findViewById(R.id.tv14Kg);
-        TextView view19Kg = (TextView) rootView.findViewById(R.id.tv19Kg);
+        TextView view14Kg = rootView.findViewById(R.id.tv14Kg);
+        TextView view19Kg = rootView.findViewById(R.id.tv19Kg);
 
         Typeface custom_font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Ubuntu-M.ttf");
         view14Kg.setTypeface(custom_font);
@@ -41,7 +41,7 @@ public class ReceivedFragment extends Fragment {
 
     private void numberButton(View rootView){
         //Click Listner
-        NumberButton numberButton14KgSound = (NumberButton) rootView.findViewById(R.id.nb14Saound);
+        NumberButton numberButton14KgSound = rootView.findViewById(R.id.nb14Saound);
         numberButton14KgSound.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
             @Override
             public void onWarningForInventory(int inventory) {
@@ -54,7 +54,7 @@ public class ReceivedFragment extends Fragment {
             }
         });
 
-        NumberButton numberButton14KgDeffective = (NumberButton) rootView.findViewById(R.id.nb14Deffective);
+        NumberButton numberButton14KgDeffective = rootView.findViewById(R.id.nb14Deffective);
         numberButton14KgDeffective.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
             @Override
             public void onWarningForInventory(int inventory) {
@@ -69,7 +69,7 @@ public class ReceivedFragment extends Fragment {
 
 
 
-        NumberButton numberButton19KgSound = (NumberButton) rootView.findViewById(R.id.nb19Sound);
+        NumberButton numberButton19KgSound = rootView.findViewById(R.id.nb19Sound);
         numberButton19KgSound.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
             @Override
             public void onWarningForInventory(int inventory) {
@@ -83,7 +83,7 @@ public class ReceivedFragment extends Fragment {
         });
 
 
-        NumberButton numberButton19KgDeffective = (NumberButton) rootView.findViewById(R.id.nb19Deffective);
+        NumberButton numberButton19KgDeffective = rootView.findViewById(R.id.nb19Deffective);
         numberButton19KgDeffective.setBuyMax(20).setInventory(50).setCurrentNumber(0).setOnWarnListener(new NumberButton.OnWarnListener(){
             @Override
             public void onWarningForInventory(int inventory) {

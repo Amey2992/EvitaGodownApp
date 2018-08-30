@@ -66,6 +66,7 @@ public class AppSettings {
     private String CHANNEL_ID = "1001";
     File backupDB;
     public String godownJson;
+    public boolean isSyncing  =false;
 
     private AppSettings() {
     }
@@ -553,7 +554,7 @@ public class AppSettings {
                 .setContentText(stringContent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManager notificationmanager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
+        NotificationManager notificationmanager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);

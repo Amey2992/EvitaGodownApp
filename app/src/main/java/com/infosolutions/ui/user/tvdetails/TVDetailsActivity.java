@@ -177,8 +177,8 @@ public class TVDetailsActivity extends BaseActivity {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("TV Details");
         setSupportActionBar(toolbar);
 

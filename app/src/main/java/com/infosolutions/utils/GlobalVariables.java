@@ -35,10 +35,7 @@ public class GlobalVariables {
                 permissionsAvailable++;
             }
         }
-        if (permissionsAvailable == requestPermissions.length) {
-            return true;
-        }
+        return permissionsAvailable == requestPermissions.length;
 
-        return false;
     }
 }

@@ -63,7 +63,7 @@ public class OwnerAdapter extends RecyclerView.Adapter<OwnerAdapter.OwnerViewHol
     @Override
     public void onBindViewHolder(OwnerViewHolder holder, int position) {
 
-        final OwnerViewHolder myViewHolder = (OwnerViewHolder) holder;
+        final OwnerViewHolder myViewHolder = holder;
         final OwnerModel album = listOwner.get(position);
         JSONArray ownerArray = album.getArrayJson();
 
@@ -132,8 +132,8 @@ public class OwnerAdapter extends RecyclerView.Adapter<OwnerAdapter.OwnerViewHol
         public OwnerViewHolder(View itemView) {
             super(itemView);
 
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitleOpening);
-            tableOwner = (TableLayout) itemView.findViewById(R.id.tableOwner);
+            tvTitle = itemView.findViewById(R.id.tvTitleOpening);
+            tableOwner = itemView.findViewById(R.id.tableOwner);
             //tvTitle.setTypeface(typefaceBold);
         }
     }

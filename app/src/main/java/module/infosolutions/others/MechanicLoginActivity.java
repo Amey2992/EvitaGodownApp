@@ -46,8 +46,8 @@ public class MechanicLoginActivity extends AppCompatActivity implements Response
         setContentView(R.layout.content_mechanic_login);
         if (Build.VERSION.SDK_INT >= 21){ getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));}
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.mechanic_login);
         setSupportActionBar(toolbar);
 
@@ -57,12 +57,12 @@ public class MechanicLoginActivity extends AppCompatActivity implements Response
 
     private void initIds(){
 
-        inputLayoutUserId = (TextInputLayout) findViewById(R.id.input_layout_userId);
-        inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
-        inputUserId = (EditText) findViewById(R.id.input_userId);
-        inputPassword = (EditText) findViewById(R.id.input_password);
-        btnLogin = (Button) findViewById(R.id.btn_login);
-        progressView = (ProgressBar) findViewById(R.id.progress_bar);
+        inputLayoutUserId = findViewById(R.id.input_layout_userId);
+        inputLayoutPassword = findViewById(R.id.input_layout_password);
+        inputUserId = findViewById(R.id.input_userId);
+        inputPassword = findViewById(R.id.input_password);
+        btnLogin = findViewById(R.id.btn_login);
+        progressView = findViewById(R.id.progress_bar);
 
 
         //Delete This Block//
@@ -80,7 +80,7 @@ public class MechanicLoginActivity extends AppCompatActivity implements Response
             }
         });
 
-        final Button btnSignUp = (Button) findViewById(R.id.btnSignUp);
+        final Button btnSignUp = findViewById(R.id.btnSignUp);
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

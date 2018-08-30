@@ -103,15 +103,15 @@ public class TruckReceiveFragment extends Fragment {
 
     private void initUI(View view) {
 
-        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
-        btnSubmit = (AppCompatButton) view.findViewById(R.id.btnSubmit);
-        etInvoiceNumber = (EditText) view.findViewById(R.id.etInvoiceNumber);
-        etEnterTruckNo = (EditText) view.findViewById(R.id.etEnterTruckNo);
-        myLinearLay = (LinearLayout) view.findViewById(R.id.dynamic);
-        btnTruckNumber = (AppCompatButton) view.findViewById(R.id.btnTruckNumber);
-        tvSelectedTruck = (TextView) view.findViewById(R.id.tvSelectedTruck);
-        segmentedButtonGroup = (SegmentedButtonGroup) view.findViewById(R.id.segmentedButtonGroup);
-        generateET = (Button) view.findViewById(R.id.generateBtn);
+        scrollView = view.findViewById(R.id.scrollView);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        etInvoiceNumber = view.findViewById(R.id.etInvoiceNumber);
+        etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
+        myLinearLay = view.findViewById(R.id.dynamic);
+        btnTruckNumber = view.findViewById(R.id.btnTruckNumber);
+        tvSelectedTruck = view.findViewById(R.id.tvSelectedTruck);
+        segmentedButtonGroup = view.findViewById(R.id.segmentedButtonGroup);
+        generateET = view.findViewById(R.id.generateBtn);
         btnTruckNumber.setVisibility(View.GONE);
         etEnterTruckNo.setVisibility(View.GONE);
 
@@ -219,13 +219,13 @@ public class TruckReceiveFragment extends Fragment {
             public void onClick(View view) {
 
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynemic_truck_layout, null);
-                Button btnDelete = (Button) viewToAdd.findViewById(R.id.btnDelete);
-                final Spinner spinner = (Spinner) viewToAdd.findViewById(R.id.spinner);
-                etQuantity = (EditText) viewToAdd.findViewById(R.id.et_quantity);
-                final EditText etLost = (EditText) viewToAdd.findViewById(R.id.et_lost);
+                Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
+                etQuantity = viewToAdd.findViewById(R.id.et_quantity);
+                final EditText etLost = viewToAdd.findViewById(R.id.et_lost);
 
-                input_layout_Qty = (TextInputLayout) viewToAdd.findViewById(R.id.input_layout_quantity);
-                input_layout_lost = (TextInputLayout) viewToAdd.findViewById(R.id.input_layout_lost);
+                input_layout_Qty = viewToAdd.findViewById(R.id.input_layout_quantity);
+                input_layout_lost = viewToAdd.findViewById(R.id.input_layout_lost);
 
                 input_layout_Qty.requestFocus();
                 focusOnView(input_layout_Qty);
@@ -482,7 +482,7 @@ public class TruckReceiveFragment extends Fragment {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date) formatter.parse(new Date().toString());
+            date = formatter.parse(new Date().toString());
             simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         } catch (Exception ex) {
             ex.printStackTrace();

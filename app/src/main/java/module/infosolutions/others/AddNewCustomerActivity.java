@@ -20,13 +20,13 @@ public class AddNewCustomerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_customer);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.add_new_customer);
         setSupportActionBar(toolbar);
 
 
-        final Button buttonSubmit = (Button) findViewById(R.id.btnSubmit);
+        final Button buttonSubmit = findViewById(R.id.btnSubmit);
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

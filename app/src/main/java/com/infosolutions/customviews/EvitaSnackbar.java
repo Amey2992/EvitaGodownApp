@@ -609,8 +609,8 @@ public final class EvitaSnackbar {
         @Override
         protected void onFinishInflate() {
             super.onFinishInflate();
-            mMessageView = (TextView) findViewById(R.id.snackbar_text);
-            mActionView = (Button) findViewById(R.id.snackbar_action);
+            mMessageView = findViewById(R.id.snackbar_text);
+            mActionView = findViewById(R.id.snackbar_action);
         }
 
         TextView getMessageView() {
