@@ -305,8 +305,8 @@ public class TruckSendFragment extends Fragment {
                         etEnterTruckNo.setError("Enter Truck Number");
                         etEnterTruckNo.requestFocus();
                         return;
-                    } else if (etQuantity.getText().toString().equals("0") || etQuantity.getText().toString().equals("00") ||
-                            etQuantity.getText().toString().equals("000")) {
+                    } else if (Integer.toString(quantity).equals("0") || Integer.toString(quantity).equals("00") ||
+                            Integer.toString(quantity).equals("000")) {
                         Toast.makeText(getContext(), "Enter Quantity Of Cylinder's", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
@@ -362,6 +362,9 @@ public class TruckSendFragment extends Fragment {
 
                 if(lsttruckSendDetailsDB.size() > 0) {
                     saveSendTruck(lsttruckSendDetailsDB);
+                }else{
+                    Toast.makeText(getContext(), "Please Add product type", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
 /*
