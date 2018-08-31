@@ -20,7 +20,7 @@ public class DomesticDeliveryDB implements Serializable,Comparator<DomesticDeliv
 	public DomesticDeliveryDB(int delivery_id, int employee_id, int trip_number, int product_id, String given_time,
 							  int given_by, int fresh_full_cylinder, int empty_received, int sv_field, int dbc_field,
 							  int defective_field, int return_full_cylinder, String received_time, int received_by, int lost_cyl,
-							  String mode_of_entry, String type_of_query, String is_sync, int godown_code, String deviceId , String given_date, boolean isFresh, boolean isReturn,boolean isCompleted) {
+							  String mode_of_entry, String type_of_query, String is_sync, int godown_code, String deviceId , String given_date, boolean isFresh, boolean isReturn,boolean isCompleted, String uniqueID) {
 		this.delivery_id = delivery_id;
 		this.employee_id = employee_id;
 		this.trip_number = trip_number;
@@ -45,6 +45,7 @@ public class DomesticDeliveryDB implements Serializable,Comparator<DomesticDeliv
 		this.isFresh =isFresh;
 		this.isReturn =isReturn;
 		this.isCompleted = isCompleted;
+		this.uniqueID = uniqueID;
 	}
 
 	public DomesticDeliveryDB(JSONObject joDomestic){
@@ -72,6 +73,7 @@ public class DomesticDeliveryDB implements Serializable,Comparator<DomesticDeliv
 			isFresh = joDomestic.optBoolean("isFresh");
 			isReturn = joDomestic.optBoolean("isReturn");
 			isCompleted = joDomestic.optBoolean("isCompleted");
+			uniqueID = joDomestic.optString("uniqueID");
 			//is_sync = joDomestic.put("Sync_Time", getDateTime());
 
 		}
@@ -129,6 +131,8 @@ public class DomesticDeliveryDB implements Serializable,Comparator<DomesticDeliv
 	@DatabaseField
 	public boolean isCompleted;
 
+	@DatabaseField
+	public String uniqueID;
 
 	@Override
 	public String toString() {
