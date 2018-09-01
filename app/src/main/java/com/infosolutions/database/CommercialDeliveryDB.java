@@ -15,7 +15,8 @@ public class CommercialDeliveryDB implements Serializable {
 								int product_id, String given_time, int given_by, int fresh_full_cylinder,
 								int empty_received, int sv_field, int dbc_field, int defective_field,
 								int return_full_cylinder, int return_credit_given, String received_time,
-								int received_by, int lost_cyl, String mode_of_entry, String type_of_query, String is_sync, String deviceId) {
+								int received_by, int lost_cyl, String mode_of_entry, String type_of_query, String is_sync,
+								String deviceId , String uniqueID){  //, String uniqueID) {
 		this.delivery_id = com_delivery_id;
 		this.employee_id = employee_id;
 		this.godownId = godownId;
@@ -36,6 +37,7 @@ public class CommercialDeliveryDB implements Serializable {
 		this.type_of_query = type_of_query;
 		this.is_sync = is_sync;
 		this.deviceId = deviceId;
+		this.uniqueID=uniqueID;
 	}
 
 
@@ -82,7 +84,8 @@ public class CommercialDeliveryDB implements Serializable {
 	public String is_sync;
 	@DatabaseField
 	public String deviceId;
-
+	@DatabaseField
+	public String uniqueID;
 
 	@Override
 	public String toString() {
@@ -107,6 +110,7 @@ public class CommercialDeliveryDB implements Serializable {
 				", type_of_query='" + type_of_query + '\'' +
 				", is_sync='" + is_sync + '\'' +
 				", deviceId='" + deviceId + '\'' +
+				", uniqueID='" + uniqueID +'\''+
 				'}';
 	}
 }

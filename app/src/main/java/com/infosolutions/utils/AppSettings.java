@@ -234,6 +234,8 @@ public class AppSettings {
                     commercialObject.put("Mode_of_Entry", "Mobile");
                     commercialObject.put("godown_code", cn.godownId);
                     commercialObject.put("Device_Id", cn.deviceId);
+                    commercialObject.put("uniqueID", cn.uniqueID);
+
 
                     jsonArrayCommercial.put(commercialObject);
                 } catch (JSONException e) {

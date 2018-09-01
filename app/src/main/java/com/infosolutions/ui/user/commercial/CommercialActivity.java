@@ -36,6 +36,7 @@ import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.EmployeeDB;
 import com.infosolutions.database.ProductDB;
 import com.infosolutions.evita.R;
+import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -45,8 +46,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,15 +128,40 @@ public class CommercialActivity extends BaseActivity {
     private int PRODUCT_CODE;
     private int selectedDeliveryManId;
     private int TOTAL_AVAILABLE_CYL = 0;
-
+    private int min = 10;
+    private int max = 110;
+    private int random=0;
+    private String uniqueId_Commercial;
+    private String randomNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setupToolbar();
+
+
+        random = new Random().nextInt((max - min) + 1) + min;
+        Log.e("random number" ,Integer.toString(random));
+        randomNumber=Integer.toString(random);
+
+
     }
 
+    private static String currentDateTime() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = (Date)formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
+    }
 
 
     @Override
@@ -383,12 +413,27 @@ public class CommercialActivity extends BaseActivity {
 
         try {
 
-            RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
+ RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
+
+            uniqueId_Commercial = Integer.toString(getGoDownId())+getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
+                    + currentDateTime()+ randomNumber;
+            Log.e("Unique",uniqueId_Commercial);
+
+
+            ///new
+            /*CommercialDeliveryDB commercialDeliveryDB = new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
+                    getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), getTextFromET(input_fresh_full_cylinder),
+                    0, 0, 0, 0, 0, 0,
+                    getDateTime(), 0,0, "MOBILE", "INSERT", "N",
+                    getDeviceId(),uniqueId_Commercial);//,uniqueId_Commercial);
+            commercialDB.create(commercialDeliveryDB);
+*/
+            //old
             commercialDB.create(new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
                     getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), getTextFromET(input_fresh_full_cylinder),
                     0, 0, 0, 0, 0, 0,
-                    getDateTime(), 0,0, "MOBILE", "INSERT", "N", getDeviceId()));
-
+                    getDateTime(), 0,0, "MOBILE", "INSERT", "N",
+                    getDeviceId(),uniqueId_Commercial));
             clearAllFields();
             showToast(getResources().getString(R.string.saved_success_msg));
             dismissProgressBar();
@@ -463,15 +508,36 @@ public class CommercialActivity extends BaseActivity {
     private void saveReturnEntry() {
 
         try{
+            /*final int min = 10;
+            final int max = 110;
+            final int random = new Random().nextInt((max - min) + 1) + min;
+            Log.e("random number" ,Integer.toString(random));
+
+            String uniqueId_Commercial = Integer.toString(getGoDownId())+getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
+                    + Constants.currentDateTime()+Integer.toString(random);*/
+
 
             RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
 
+            uniqueId_Commercial = Integer.toString(getGoDownId())+getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
+                    + currentDateTime()+ randomNumber;
+            Log.e("Unique",uniqueId_Commercial);
+
+
+            // new
+           /* CommercialDeliveryDB commercialDeliveryDB = new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
+                    getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), 0, getTextFromET(input_empty_cylinder), getTextFromET(input_return_sv),
+                    getTextFromET(input_return_dbc), getTextFromET(input_return_defective), getTextFromET(input_return_full), getTextFromET(input_credit_given),
+                    getDateTime(), getApplicationUserId(), getTextFromET(input_lost),
+                    "MOBILE", "INSERT", "N",getDeviceId(),uniqueId_Commercial ); //,uniqueId_Commercial);
+            commercialDB.create(commercialDeliveryDB);*/
+
+            //  old
             commercialDB.create(new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
                     getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), 0, getTextFromET(input_empty_cylinder), getTextFromET(input_return_sv),
                     getTextFromET(input_return_dbc), getTextFromET(input_return_defective), getTextFromET(input_return_full), getTextFromET(input_credit_given),
                     getDateTime(), getApplicationUserId(), getTextFromET(input_lost),
-                    "MOBILE", "INSERT", "N",getDeviceId()));
-
+                    "MOBILE", "INSERT", "N",getDeviceId(),uniqueId_Commercial));
             clearAllFields();
             dismissProgressBar();
             finish();
@@ -530,6 +596,8 @@ public class CommercialActivity extends BaseActivity {
     public int getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
+
+
 
     public void setSelectedDeliveryManId(int selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
