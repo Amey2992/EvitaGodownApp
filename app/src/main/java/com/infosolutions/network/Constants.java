@@ -50,15 +50,14 @@ public class Constants {
     private static final String TEST_URL = "http://103.31.144.174:8080/EVITA/User";
     private static final String tester_prod_url ="http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
-    private static final String PROD_URL = godown_ags;//"http://103.31.144.174:8080/EVITA_PROD/User" ;
-    public static final String  EVITA_API_URL = PROD_URL;
+    private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User" ;
+    public static final String  EVITA_API_URL = godown_ags;
 
     /**/
 
-
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url ="http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
-    public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
+    public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:81/Purchase/GetCreditCommCyl";
 
     /**/
     public static String LOGIN_API_VALUE = "userAuth";
@@ -106,7 +105,7 @@ public class Constants {
         return resultModule;
     }
 
-    private static String currentDateTime() {
+    /*private static String currentDateTime() {
 
         SimpleDateFormat simpleDateFormat = null;
         Date date = null;
@@ -121,7 +120,22 @@ public class Constants {
         return simpleDateFormat.format(date);
     }
 
+*/
 
+    public static String currentDateTime() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = (Date)formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
+    }
     /**
      * API
      *
