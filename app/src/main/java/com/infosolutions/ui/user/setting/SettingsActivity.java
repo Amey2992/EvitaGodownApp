@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -83,8 +82,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         super.onCreate(savedInstanceState);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.action_settings);
         setSupportActionBar(toolbar);
 
@@ -109,9 +108,9 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
     private void initID() {
 
-        btnLogout = findViewById(R.id.btnLogout);
-        progress_bar = findViewById(R.id.progress_bar);
-        ivSync = findViewById(R.id.ivSync);
+        btnLogout = (Button) findViewById(R.id.btnLogout);
+        progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
+        ivSync = (ImageView) findViewById(R.id.ivSync);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,14 +127,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         ivSync.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!AppSettings.getInstance(SettingsActivity.this).isSyncing){
-                    ivSync.setEnabled(false);
-                    pushContentToServer();
-                }else{
-                    Toast.makeText(SettingsActivity.this,getResources().getString(R.string.syncing_text),Toast.LENGTH_SHORT).show();
-
-                }
-
+                ivSync.setEnabled(false);
+                pushContentToServer();
             }
         });
 
@@ -190,7 +183,6 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
                     progress_bar.setVisibility(View.GONE);
                     hideProgressDialog();
                     ivSync.setEnabled(true);
-                    AppSettings.getInstance(this).isSyncing = false;
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -227,7 +219,6 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
             progress_bar.setVisibility(View.GONE);
             ivSync.setEnabled(true);
-            AppSettings.getInstance(this).isSyncing = false;
             hideProgressDialog();
             finish();
 
@@ -257,8 +248,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
     public void updateLocalFromServer() {
         showProgressDialog();
-        //VolleySingleton.getInstance(getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
-        AppSettings.getInstance(this).updateLocalFromServer(this);
+        VolleySingleton.getInstance(getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
     }
 
     private void updateDatabase() {
@@ -333,11 +323,6 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
 
     private void pushContentToServer() {
-        AppSettings.getInstance(this).isSyncing = true;
-        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(this);
-        Intent intent = new Intent();
-        intent.setAction(Constants.RESET_TIMER_BROADCAST);
-        localBroadcastManager.sendBroadcast(intent);
         try {
             localJSON_DATA = new JSONObject(AppSettings.getInstance(this).getBodyJson(this));
         } catch (JSONException e1) {
@@ -465,7 +450,6 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         progress_bar.setVisibility(View.GONE);
         hideProgressDialog();
         ivSync.setEnabled(true);
-        AppSettings.getInstance(this).isSyncing = false;
         showSnackBar(getString(R.string.could_not_sync));
         Toast.makeText(this, R.string.server_not_responding, Toast.LENGTH_SHORT).show();
     }
