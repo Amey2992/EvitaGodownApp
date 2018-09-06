@@ -4,6 +4,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.support.v4.app.NotificationCompat;
@@ -59,14 +62,14 @@ public class AppSettings {
 
 
     private static AppSettings _appsettings;
+    public String godownJson;
+    public boolean isSyncing = false;
+    File backupDB;
     private DatabaseHelper databaseHelper;
     private JSONArray jsonArrayTruckSendDetails;
-
-
     private String CHANNEL_ID = "1001";
-    File backupDB;
-    public String godownJson;
-    public boolean isSyncing  =false;
+    private boolean firstTime;
+    public boolean isServiceRunning;
 
     private AppSettings() {
     }
@@ -111,9 +114,14 @@ public class AppSettings {
         VolleySingleton.getInstance(context.getApplicationContext()).fetch_all_data(VolleySingleton.CallType.UPDATE_LOCAL_DATA, Constants.get_url);
     }
 
-    public void getCommercialDeliveryCreditCount(Context context){
+    public void getCommercialDeliveryCreditCount(Context context) {
         VolleySingleton.getInstance(context.getApplicationContext()).getCommercialDeliveryCount(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, Constants.COMMERCIAL_DELIVERY_COUNT);
     }
+
+    public void getConsumerDetails(Context context) {
+        VolleySingleton.getInstance(context.getApplicationContext()).getConsumerDetails(VolleySingleton.CallType.CONSUMER_DETAILS, Constants.GET_CONSUMER_DETAILS);
+    }
+
 
     public void manualSyncAndroidDataToServer(Context context, JSONObject jsonObject) {
 
@@ -580,7 +588,7 @@ public class AppSettings {
                 String currentDBPath = "/data/user/0/" + context.getPackageName() + "/databases/" + DatabaseHelper.DATABASE_NAME + "";
                 String backupDBPath = "backup_Evita" + ".db";
                 File currentDB = new File(currentDBPath);
-                if(backupDB!= null && backupDB.exists()){
+                if (backupDB != null && backupDB.exists()) {
                     backupDB.delete();
                 }
 
@@ -621,4 +629,19 @@ public class AppSettings {
             e.printStackTrace();
         }
     }
+
+    public String getAppVersion(Context context){
+        String finalString = "";
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            String defaultStr = "Version";
+            String version = pInfo.versionName;
+            finalString = defaultStr+" "+version;
+        } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return finalString;
+    }
+
 }

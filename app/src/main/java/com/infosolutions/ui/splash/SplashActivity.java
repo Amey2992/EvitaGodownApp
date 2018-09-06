@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.crashlytics.android.Crashlytics;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.database.CommercialDeliveryDB;
+import com.infosolutions.database.ConsumerDetails;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.DomesticDeliveryDB;
 import com.infosolutions.database.TVDetailsDB;
@@ -20,6 +21,7 @@ import com.infosolutions.database.TruckDetailsDB;
 import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.VolleySingleton;
+import com.infosolutions.service.GetConsumerService;
 import com.infosolutions.service.TestJobService;
 import com.infosolutions.ui.login.LoginActivity;
 import com.infosolutions.utils.AppSettings;
@@ -28,27 +30,33 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import io.fabric.sdk.android.Fabric;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import khangtran.preferenceshelper.PreferencesHelper;
 import me.tatarka.support.job.JobInfo;
 import me.tatarka.support.job.JobScheduler;
 import me.tatarka.support.os.PersistableBundle;
 
+import static com.infosolutions.network.Constants.KEY_AGENCY_NAME;
 import static com.infosolutions.network.Constants.PREF_SYNC_JSON_DATA;
 
 public class SplashActivity extends BaseActivity {
 
     private DatabaseHelper databaseHelper = null;
-    public  JSONObject     localJSON_DATA;
-    private JSONObject     localData;
-    private JobScheduler   mJobScheduler;
+    public JSONObject localJSON_DATA;
+    private JSONObject localData;
+    private JobScheduler mJobScheduler;
     private static final int JOB_ID = 100;
+    private static final String first_install = "first_install";
 
 
     @Override
@@ -57,7 +65,6 @@ public class SplashActivity extends BaseActivity {
         //mJobScheduler = JobScheduler.getInstance(this);
         //scheduleJob();
     }
-
 
 
     @Override
@@ -69,18 +76,40 @@ public class SplashActivity extends BaseActivity {
         broadcastIntent();
 
         gotoNextScreen();
+
+        PreferencesHelper.initHelper(this, "SharedPref");
+
+        checkIfFreshInstall();
+    }
+
+    private void checkIfFreshInstall() {
+
+        boolean isFresh = PreferencesHelper.getInstance().getBooleanValue(first_install, true);
+        if (isFresh) {
+            PreferencesHelper.getInstance().setValue(first_install, false);
+            Intent intent = new Intent(this, GetConsumerService.class);
+            startService(intent);
+        }else{
+
+            RuntimeExceptionDao<ConsumerDetails,Integer> consumerExceptionDao = getHelper().getConsumerExceptionDao();
+
+                int objCount = consumerExceptionDao.queryForAll().size();
+                int prefsCount = PreferencesHelper.getInstance().getIntValue("consumer_count", 0);
+
+                if(objCount != prefsCount){
+                    Intent intent = new Intent(this, GetConsumerService.class);
+                    startService(intent);
+                }
+        }
     }
 
 
-
-    public void broadcastIntent()
-    {
+    public void broadcastIntent() {
         Intent intent = new Intent();
         intent.setAction("com.infosolutions.evita");
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
         sendBroadcast(intent);
     }
-
 
 
     @Override
@@ -116,46 +145,40 @@ public class SplashActivity extends BaseActivity {
     }
 
 
+    private void scheduleJob() {
 
-
-
-
-    private void scheduleJob(){
-
-        JobInfo.Builder  builder =  new JobInfo.Builder(JOB_ID, new ComponentName(this, TestJobService.class));
+        JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this, TestJobService.class));
         PersistableBundle persistableBundle = new PersistableBundle();
         persistableBundle.putString("localData", AppSettings.getInstance(getApplicationContext()).getBodyJson(getApplicationContext()));
         builder.setPeriodic(10000).setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED).setPersisted(true)
                 .setExtras(persistableBundle).build();
 
-        int resultCode =  mJobScheduler.schedule(builder.build());
-        if(resultCode == JobScheduler.RESULT_SUCCESS){
-            Log.d("message","Job Scheduled");
-            Log.e("message","Job Scheduled");
-        }else{
-            Log.d("message","Job not Scheduled");
-            Log.e("message","Job not Scheduled");
+        int resultCode = mJobScheduler.schedule(builder.build());
+        if (resultCode == JobScheduler.RESULT_SUCCESS) {
+            Log.d("message", "Job Scheduled");
+            Log.e("message", "Job Scheduled");
+        } else {
+            Log.d("message", "Job not Scheduled");
+            Log.e("message", "Job not Scheduled");
         }
     }
 
 
-
-
     public JSONObject fetchAllDataFromDB() {
 
-        try{
+        try {
 
             localJSON_DATA = new JSONObject();
 
-            localJSON_DATA.put("ESS_ERV_DETAILS",  getTruckSendDetailsData());
-            localJSON_DATA.put("ESS_PURCHASE",  getTruckDetailsData());
-            localJSON_DATA.put("ESS_TV_DETAILS",  getTVDetailsData());
-            localJSON_DATA.put("ESS_DOMESTIC_DELIVERY",  getDomesticData());
-            localJSON_DATA.put("ESS_COMMERCIAL_DELIVERY",  getCommercialData());
+            localJSON_DATA.put("ESS_ERV_DETAILS", getTruckSendDetailsData());
+            localJSON_DATA.put("ESS_PURCHASE", getTruckDetailsData());
+            localJSON_DATA.put("ESS_TV_DETAILS", getTVDetailsData());
+            localJSON_DATA.put("ESS_DOMESTIC_DELIVERY", getDomesticData());
+            localJSON_DATA.put("ESS_COMMERCIAL_DELIVERY", getCommercialData());
 
             setLocalData(localJSON_DATA);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(context, "Invalid data", Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
 
@@ -164,14 +187,13 @@ public class SplashActivity extends BaseActivity {
         return localJSON_DATA;
     }
 
-    private JSONArray getDomesticData(){
+    private JSONArray getDomesticData() {
 
         JSONArray arrayDomestic = new JSONArray();
 
         RuntimeExceptionDao<DomesticDeliveryDB, Integer> domesticDB = getHelper().getDomesticRuntimeExceptionDao();
         List<DomesticDeliveryDB> allDomesticLocalData = domesticDB.queryForEq("is_sync", "N");
-        if (allDomesticLocalData.size()>0)
-        {
+        if (allDomesticLocalData.size() > 0) {
 
             for (DomesticDeliveryDB cn : allDomesticLocalData) {
                 try {
@@ -208,7 +230,7 @@ public class SplashActivity extends BaseActivity {
         return arrayDomestic;
     }
 
-    private JSONArray getCommercialData(){
+    private JSONArray getCommercialData() {
 
 
         JSONArray objectCommercial = new JSONArray();
@@ -216,7 +238,7 @@ public class SplashActivity extends BaseActivity {
         List<CommercialDeliveryDB> allCommercialLocalData = commercialDB.queryForEq("is_sync", "N");
 
 
-        if (allCommercialLocalData.size()>0) {
+        if (allCommercialLocalData.size() > 0) {
 
             for (CommercialDeliveryDB cn : allCommercialLocalData) {
                 try {
@@ -251,12 +273,12 @@ public class SplashActivity extends BaseActivity {
         return objectCommercial;
     }
 
-    private JSONArray getTVDetailsData(){
+    private JSONArray getTVDetailsData() {
 
         JSONArray objectTVDetails = new JSONArray();
         RuntimeExceptionDao<TVDetailsDB, Integer> tvDetails = getHelper().getTVDetailRTExceptionDao();
         List<TVDetailsDB> allTvDetails = tvDetails.queryForEq("is_sync", "N");
-        if (allTvDetails.size()>0){
+        if (allTvDetails.size() > 0) {
 
             for (TVDetailsDB cn : allTvDetails) {
                 try {
@@ -284,13 +306,13 @@ public class SplashActivity extends BaseActivity {
         return objectTVDetails;
     }
 
-    private JSONArray getTruckDetailsData(){
+    private JSONArray getTruckDetailsData() {
 
         JSONArray objectTruckDetails = new JSONArray();
         RuntimeExceptionDao<TruckDetailsDB, Integer> truckDetails = getHelper().getTruckDetailRTExceptionDao();
         List<TruckDetailsDB> allTruckDetails = truckDetails.queryForEq("is_sync", "N");
 
-        if (allTruckDetails.size()>0) {
+        if (allTruckDetails.size() > 0) {
             for (TruckDetailsDB cn : allTruckDetails) {
                 try {
 
@@ -315,15 +337,15 @@ public class SplashActivity extends BaseActivity {
             }
         }
 
-        return  objectTruckDetails;
+        return objectTruckDetails;
     }
 
-    private JSONArray getTruckSendDetailsData(){
+    private JSONArray getTruckSendDetailsData() {
 
         JSONArray objectTruckSendDetails = new JSONArray();
         RuntimeExceptionDao<TruckSendDetailsDB, Integer> truckSendDetails = getHelper().getTruckDetailSendRTExceptionDao();
         List<TruckSendDetailsDB> allTruckSendDetails = truckSendDetails.queryForEq("is_sync", "N");
-        if (allTruckSendDetails.size()>0) {
+        if (allTruckSendDetails.size() > 0) {
             for (TruckSendDetailsDB cn : allTruckSendDetails) {
                 try {
                     JSONObject truckDetailSend = new JSONObject();
@@ -352,7 +374,9 @@ public class SplashActivity extends BaseActivity {
         return localData;
     }
 
-    public void setLocalData(JSONObject localData) { this.localData = localData;}
+    public void setLocalData(JSONObject localData) {
+        this.localData = localData;
+    }
 
     public String getDateTime() {
 
@@ -361,8 +385,8 @@ public class SplashActivity extends BaseActivity {
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
             date = formatter.parse(new Date().toString());
-            simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        }catch (Exception ex){
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 

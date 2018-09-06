@@ -59,6 +59,7 @@ public class VolleySingleton {
         GET_AVAILABLE_CYL,
         UPDATE_LOCAL_DATA,
         COMMERCIAL_DELIVERY_COUNT,
+        CONSUMER_DETAILS,
         SYNC_OTHERS
 
     }
@@ -380,6 +381,29 @@ public class VolleySingleton {
         addToRequestQueue(jsonObjectRequest);
     }
 
+    public void getConsumerDetails(final CallType type, final String url){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+    }
 
     public void test_syncAndroidData(final CallType type, final String url, final JSONObject jsonSyncData){
         Log.d("bodyjson",jsonSyncData.toString());

@@ -114,8 +114,20 @@
                     android:background="@drawable/custom_btn"
                     android:layout_marginTop="@dimen/fab_margin"/>
 
+
+
             </LinearLayout>
         </ScrollView>
+        <TextView
+            android:id="@+id/version_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="version"
+            android:textColor="@color/colorBlack"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"/>
     </RelativeLayout>
 
 </LinearLayout>

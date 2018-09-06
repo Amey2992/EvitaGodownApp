@@ -51,13 +51,21 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
 	private Dao<TruckSendDetailsDB, Integer>
 			truckDetailsSendDao = null;
+
 	private RuntimeExceptionDao<TruckSendDetailsDB, Integer>
 			truckDetailSendRTExceptionDao = null;
 
 	private Dao<CommercialDeliveryCreditDB, Integer>
 			commercialDeliveryCreditDao = null;
+
 	private RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer>
 			commercialDeliveryCreditExceptionDao = null;
+
+	private Dao<ConsumerDetails, Integer>
+			consumerDetailsDao= null;
+
+	private RuntimeExceptionDao<ConsumerDetails, Integer>
+			consumerDetailsRuntimeExceptionDao = null;
 
 
 	public DatabaseHelper(Context context) {
@@ -79,7 +87,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, TruckDetailsDB.class);
 			TableUtils.createTable(connectionSource, TruckSendDetailsDB.class);
 			TableUtils.createTable(connectionSource, CommercialDeliveryCreditDB.class);
-
+			TableUtils.createTable(connectionSource, ConsumerDetails.class);
 
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Unable to create databases", e);
@@ -126,6 +134,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, TruckDetailsDB.class, true);
 			TableUtils.dropTable(connectionSource, TruckSendDetailsDB.class, true);
 			TableUtils.dropTable(connectionSource, CommercialDeliveryCreditDB.class, true);
+			TableUtils.dropTable(connectionSource, ConsumerDetails.class, true);
 
 			onCreate(sqliteDatabase, connectionSource);
 		} catch (SQLException e) {
@@ -324,5 +333,19 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return commercialDeliveryCreditExceptionDao;
 	}
 
+	public Dao<ConsumerDetails, Integer> getConsumerDao() throws SQLException {
+		if (consumerDetailsDao == null) {
+			consumerDetailsDao = getDao(ConsumerDetails.class);
+		}
+		return consumerDetailsDao;
+	}
 
+
+	public RuntimeExceptionDao<ConsumerDetails, Integer> getConsumerExceptionDao() {
+
+		if (consumerDetailsRuntimeExceptionDao == null) {
+			consumerDetailsRuntimeExceptionDao = getRuntimeExceptionDao(ConsumerDetails.class);
+		}
+		return consumerDetailsRuntimeExceptionDao;
+	}
 }
