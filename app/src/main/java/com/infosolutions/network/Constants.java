@@ -76,6 +76,7 @@ public class Constants {
     public static String LOGIN_ANDROID = "Android";
     public static String JSON_DATA_KEY = "jsonData";
     public static String RESET_TIMER_BROADCAST = "reset_timer_broadcast";
+    public static String CONSUMER_BROADCAST = "consumer_broadcast";
 
     /**
      * saveWithSharedPreferences KEY is used to save SharedPreference Value based KEY

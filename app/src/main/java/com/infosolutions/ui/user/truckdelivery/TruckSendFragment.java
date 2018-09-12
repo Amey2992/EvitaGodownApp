@@ -11,9 +11,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +74,8 @@ public class TruckSendFragment extends Fragment {
     private int selected_vehicle_id;
     private DatabaseHelper databaseHelper = null;
     private int godownId;
+    private int spinItemsCount;
+    private List<String> selectedSpinItems = new ArrayList<>(4);
 
     public String getLoad_type() {
         return load_type;
@@ -145,7 +150,7 @@ public class TruckSendFragment extends Fragment {
         });
         segmentedButtonGroup.setPosition(0, 0);
 
-        applyDynamicViews();
+        //applyDynamicViews();
         btnSelectTruckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,9 +221,77 @@ public class TruckSendFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                for (Spinner spinner1 : dynamicSpinner){
+
+                    spinner1.setClickable(false);
+                    spinner1.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return true;
+                        }
+                    });
+                }
+                spinItemsCount++;
+
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
                 Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
                 final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
+                spinner.setTag(spinItemsCount);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        String selectedItem = spinner.getSelectedItem().toString();
+
+                        if(selectedSpinItems.contains(selectedItem)){
+                            spinner.setSelection(0);
+                            Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if(selectedItem.trim().equalsIgnoreCase("--")){
+
+
+                            if (selectedSpinItems.contains(selectedItem)) {
+                                int pos = spinItemsCount;
+                                pos = --pos;
+                                selectedSpinItems.remove(pos);
+                            }
+                            return;
+                        }
+                        if(selectedSpinItems.contains(selectedItem)){
+                            Toast.makeText(getActivity(),"cannot select same product type",Toast.LENGTH_SHORT).show();
+                            return;
+                        }else {
+
+                            if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
+                                try {
+                                    int pos = spinItemsCount;
+                                    pos = --pos;
+                                    if(selectedSpinItems.size() >0) {
+                                        selectedSpinItems.remove(pos);
+                                    }
+
+                                    selectedSpinItems.add(pos, selectedItem);
+
+                                }catch (Exception e ){
+
+                                }
+
+                            }
+
+
+                        }
+
+                    }
+
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
                 etQuantity = viewToAdd.findViewById(R.id.etQuantity);
                 final EditText etDefective = viewToAdd.findViewById(R.id.etDefective);
                 spinner.setAdapter(spinAdapter);
@@ -233,6 +306,7 @@ public class TruckSendFragment extends Fragment {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        --spinItemsCount;
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
                         dynamicSpinner.remove(spinner);

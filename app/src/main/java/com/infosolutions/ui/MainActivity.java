@@ -3,16 +3,12 @@ package com.infosolutions.ui;
 import android.Manifest;
 import android.Manifest.permission;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,13 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.crashlytics.android.Crashlytics;
 import com.infosolutions.adapter.ModuleAdapter;
 import com.infosolutions.adapter.ModuleGridAdapter;
 import com.infosolutions.adapter.ModuleModel;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
 import com.infosolutions.database.CommercialDeliveryCreditDB;
+import com.infosolutions.database.ConsumerDetails;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.DomesticDeliveryDB;
 import com.infosolutions.event.EvitaEvent;
@@ -43,7 +39,6 @@ import com.infosolutions.evita.R;
 import com.infosolutions.factory.IntentFactory;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
-import com.infosolutions.service.TestJobService;
 import com.infosolutions.ui.user.commercial.CommercialActivity;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
 import com.infosolutions.ui.user.reports.ReportListItemsActivity;
@@ -52,7 +47,6 @@ import com.infosolutions.ui.user.stock.StockListActivity;
 import com.infosolutions.ui.user.stock.StockTransferActivity;
 import com.infosolutions.ui.user.tvdetails.TVDetailsActivity;
 import com.infosolutions.utils.AppSettings;
-import com.infosolutions.utils.Constant;
 import com.infosolutions.utils.GlobalVariables;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -72,10 +66,7 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-import io.fabric.sdk.android.Fabric;
 import khangtran.preferenceshelper.PreferencesHelper;
-import me.tatarka.support.job.JobInfo;
-import me.tatarka.support.os.PersistableBundle;
 
 import static com.infosolutions.network.Constants.KEY_GODOWN;
 import static com.infosolutions.network.Constants.KEY_GODOWN_NAME;
@@ -86,15 +77,22 @@ public class MainActivity extends BaseActivity {
     private static final int RECORD_REQUEST_CODE = 3367;
     private static final int RQ_DEVICE_STATE = 3360;
     boolean doubleBackToExitPressedOnce = false;
+    @Inject
+    EventBus eventBus;
+    Timer mtimer;
+    TimerTask mTimerTask;
     private RecyclerView recyclerView;
     private List<ModuleModel> listModel = new ArrayList<>();
     private String view_type;
-    @Inject
-    EventBus eventBus;
     private DatabaseHelper databaseHelper;
-    Timer mtimer;
-    TimerTask mTimerTask;
+    private android.content.BroadcastReceiver listener = new BroadcastReceiver() {
+        @Override
+        public void onReceive( Context context, Intent intent ) {
+            stopTimer();
+            startTimer();
 
+        }
+    };
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
@@ -105,15 +103,6 @@ public class MainActivity extends BaseActivity {
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {
         serverFailResponse(error);
     }
-
-
-    private interface ClickListener {
-
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -397,61 +386,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setHasFixedSize(true);
     }
 
-    private android.content.BroadcastReceiver listener = new BroadcastReceiver() {
-        @Override
-        public void onReceive( Context context, Intent intent ) {
-            stopTimer();
-            startTimer();
-
-        }
-    };
-
-
-    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private MainActivity.ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final MainActivity.ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-
-    }
-
-
     private void serverSuccessResponse(VolleySingleton.CallType type, String response) {
         String responseMsg = "";
         //progress_bar.setVisibility(View.GONE);
@@ -541,7 +475,6 @@ public class MainActivity extends BaseActivity {
         AppSettings.getInstance(this).isSyncing = false;
     }
 
-
     private void autoSync() {
         Handler handler = new Handler();
         handler.post(new Runnable() {
@@ -567,6 +500,57 @@ public class MainActivity extends BaseActivity {
             databaseHelper = OpenHelperManager.getHelper(getApplicationContext(), DatabaseHelper.class);
         }
         return databaseHelper;
+    }
+
+    private interface ClickListener {
+
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private MainActivity.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final MainActivity.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+
     }
 
 }

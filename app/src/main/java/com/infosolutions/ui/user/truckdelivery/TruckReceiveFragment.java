@@ -12,9 +12,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,6 +75,9 @@ public class TruckReceiveFragment extends Fragment {
     private ArrayAdapter<String> spinAdapter;
     private boolean isQtyEmpty = false;
     private int godownId;
+    private ArrayList<String> spinItems;
+    private List<String> selectedSpinItems = new ArrayList<>(4);
+    private int spinItemsCount;
 
     public String getLoad_type() {
         return load_type;
@@ -200,7 +205,7 @@ public class TruckReceiveFragment extends Fragment {
 
     private void applyDynamicViews() {
 
-        List<String> spinItems = new ArrayList<>();
+        spinItems = new ArrayList<>();
         RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
         List<ProductDB> productDBList = productDB.queryForAll();
         int productSize = productDBList.size();
@@ -210,6 +215,10 @@ public class TruckReceiveFragment extends Fragment {
             for (ProductDB item : productDBList)
                 spinItems.add(item.product_description);
         }
+
+
+        spinItems.add(0,"--");
+        //spinItemsCount = spinItems.size();
         spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -217,10 +226,79 @@ public class TruckReceiveFragment extends Fragment {
         generateET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                for (Spinner spinner1 : dynamicSpinner){
+                /*    if (!selectedSpinItems.contains(spinner1.getSelectedItem().toString())) {
+                        selectedSpinItems.add(spinner1.getSelectedItem().toString());
+                    }
+*/
+                    spinner1.setClickable(false);
+                    spinner1.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            return true;
+                        }
+                    });
+                }
+                spinItemsCount++;
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynemic_truck_layout, null);
                 Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
                 final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
+                spinner.setTag(spinItemsCount);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                        String selectedItem = spinner.getSelectedItem().toString();
+
+                        if(selectedSpinItems.contains(selectedItem)){
+                            spinner.setSelection(0);
+                            Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if(selectedItem.trim().equalsIgnoreCase("--")){
+
+
+                            if (selectedSpinItems.contains(selectedItem)) {
+                                int pos = spinItemsCount;
+                                pos = --pos;
+                                selectedSpinItems.remove(pos);
+                            }
+                            return;
+                        }
+                        if(selectedSpinItems.contains(selectedItem)){
+                            Toast.makeText(getActivity(),"cannot select same product type",Toast.LENGTH_SHORT).show();
+                            return;
+                        }else {
+
+                            if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
+                                try {
+                                    int pos = spinItemsCount;
+                                    pos = --pos;
+                                    if(selectedSpinItems.size() >0) {
+                                        selectedSpinItems.remove(pos);
+                                    }
+
+                                    selectedSpinItems.add(pos, selectedItem);
+
+                                }catch (Exception e ){
+
+                                }
+
+                            }
+
+
+                        }
+
+                    }
+
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
                 etQuantity = viewToAdd.findViewById(R.id.et_quantity);
                 final EditText etLost = viewToAdd.findViewById(R.id.et_lost);
 
@@ -237,15 +315,20 @@ public class TruckReceiveFragment extends Fragment {
                 dynamicSpinner.add(spinner);
 
 
+
+
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        --spinItemsCount;
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
                         dynamicLostCyl.remove(etLost);
                         dynamicSpinner.remove(spinner);
                     }
                 });
+
+                //selectedSpinItems.add(spinner.getSelectedItem().toString());
                 myLinearLay.addView(viewToAdd);
             }
         });
@@ -282,6 +365,10 @@ public class TruckReceiveFragment extends Fragment {
 
 
                     String spinner = (String) dynamicSpinner.get(i).getSelectedItem();
+                    if(spinner.trim().equalsIgnoreCase("--")) {
+                        Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     int spinnerPosition = spinAdapter.getPosition(spinner);
                     int spinnerCode = productDBList.get(spinnerPosition).product_code;
 

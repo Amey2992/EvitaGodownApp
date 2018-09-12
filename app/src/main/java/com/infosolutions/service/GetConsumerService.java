@@ -3,17 +3,21 @@ package com.infosolutions.service;
 import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.infosolutions.database.ConsumerDetails;
 import com.infosolutions.database.DatabaseHelper;
+import com.infosolutions.network.Constants;
 import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.utils.AppSettings;
+import com.infosolutions.utils.Constant;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -149,6 +153,11 @@ public class GetConsumerService extends IntentService implements ResponseListene
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+
+            Intent intent = new Intent();
+            intent.setAction(Constants.CONSUMER_BROADCAST);
+            LocalBroadcastManager.getInstance(GetConsumerService.this).sendBroadcast(intent);
+
             AppSettings.getInstance(this.consumerService).isServiceRunning = false;
             this.consumerService.stopSelf();
         }

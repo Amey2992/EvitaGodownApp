@@ -20,6 +20,7 @@ import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
 import com.infosolutions.database.CommercialDeliveryCreditDB;
 import com.infosolutions.database.CommercialDeliveryDB;
+import com.infosolutions.database.ConsumerDetails;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.DomesticDeliveryDB;
 import com.infosolutions.database.EmployeeDB;
@@ -43,6 +44,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -76,6 +78,7 @@ public class LoginActivity extends BaseActivity {
     private String offline_module_list;
     private JSONArray GO_DOWN_ARRAY_LIST;
     private String USER_TYPE;
+    private TextView version_textview;
 
     public String getUSER_ID() {
         return USER_ID;
@@ -116,6 +119,8 @@ public class LoginActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
+
+
     }
 
     @Override
@@ -136,6 +141,8 @@ public class LoginActivity extends BaseActivity {
         btnLogin = findViewById(R.id.buttonLogin);
         tvAgencyName = findViewById(R.id.tvAgencyName);
         scrollView = findViewById(R.id.scrollView);
+        version_textview = findViewById(R.id.version_textview);
+        version_textview.setText(AppSettings.getInstance(this).getAppVersion(this));
 
         focusOnView(scrollView, editTextUsername);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);
@@ -255,7 +262,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
         Log.e(TAG, response);
-        hideProgressDialog();
+
 
         String responseMsg = "";
         //progress_bar.setVisibility(View.GONE);
@@ -311,6 +318,7 @@ public class LoginActivity extends BaseActivity {
 
 
             AppSettings.getInstance(this).updateDatabase(this);
+            hideProgressDialog();
             bottomGodownSheetType();
         }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
             RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
@@ -580,7 +588,7 @@ public class LoginActivity extends BaseActivity {
         builder.addDivider();
         builder.setDividerColor(getResources().getColor(R.color.colorBlack));
         BottomSheet bottomSheet = builder.create();
-        bottomSheet.show();
+
 
         for (int position = 0; position < getGO_DOWN_ARRAY_LIST().length(); position++) {
             try {
@@ -617,6 +625,7 @@ public class LoginActivity extends BaseActivity {
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
+        bottomSheet.show();
     }
 
     public JSONArray getGO_DOWN_ARRAY_LIST() {

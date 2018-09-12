@@ -112,7 +112,6 @@ public class CommercialActivity extends BaseActivity {
     CountAnimationTextView cyl_count;
 
 
-
     private DatabaseHelper databaseHelper = null;
     private List<ChipModel> chipListModel = new ArrayList<>();
     private String productCategory;
@@ -122,15 +121,17 @@ public class CommercialActivity extends BaseActivity {
     public int getPRODUCT_CODE() {
         return PRODUCT_CODE;
     }
+
     public void setPRODUCT_CODE(int PRODUCT_CODE) {
         this.PRODUCT_CODE = PRODUCT_CODE;
     }
+
     private int PRODUCT_CODE;
     private int selectedDeliveryManId;
     private int TOTAL_AVAILABLE_CYL = 0;
     private int min = 10;
     private int max = 110;
-    private int random=0;
+    private int random = 0;
     private String uniqueId_Commercial;
     private String randomNumber;
 
@@ -142,8 +143,8 @@ public class CommercialActivity extends BaseActivity {
 
 
         random = new Random().nextInt((max - min) + 1) + min;
-        Log.e("random number" ,Integer.toString(random));
-        randomNumber=Integer.toString(random);
+        Log.e("random number", Integer.toString(random));
+        randomNumber = Integer.toString(random);
 
 
     }
@@ -154,9 +155,9 @@ public class CommercialActivity extends BaseActivity {
         Date date = null;
         try {
             DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = (Date)formatter.parse(new Date().toString());
-            simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
-        }catch (Exception ex){
+            date = (Date) formatter.parse(new Date().toString());
+            simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -165,13 +166,17 @@ public class CommercialActivity extends BaseActivity {
 
 
     @Override
-    public void injectDependency() { EvitaApplication.getEvitaComponents().inject(CommercialActivity.this);}
+    public void injectDependency() {
+        EvitaApplication.getEvitaComponents().inject(CommercialActivity.this);
+    }
 
     @Override
-    public int getLayoutId() { return R.layout.activity_commercial; }
+    public int getLayoutId() {
+        return R.layout.activity_commercial;
+    }
 
 
-    private void switchView(){
+    private void switchView() {
 
         segmentedButtonGroup.setVisibility(View.VISIBLE);
         btnDeliveryMan.setVisibility(View.VISIBLE);
@@ -179,7 +184,7 @@ public class CommercialActivity extends BaseActivity {
             @Override
             public void onClickedButtonPosition(int position) {
 
-                switch (position){
+                switch (position) {
                     case 0:
                         layout_fresh.setVisibility(View.VISIBLE);
                         layout_return.setVisibility(View.GONE);
@@ -199,7 +204,6 @@ public class CommercialActivity extends BaseActivity {
     }
 
 
-
     private void setupToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -216,7 +220,6 @@ public class CommercialActivity extends BaseActivity {
     }
 
 
-
     private void getAndSetCylinderType() {
 
         RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
@@ -228,12 +231,12 @@ public class CommercialActivity extends BaseActivity {
             String CYLINDER_DESCRIPTION = String.valueOf(cn.product_description);
             String PRODUCT_CATEGORY = String.valueOf(cn.product_category);
 
-            if (PRODUCT_CATEGORY.equalsIgnoreCase("5")){
+            if (PRODUCT_CATEGORY.equalsIgnoreCase("5")) {
                 chipListModel.add(new ChipModel(CYLINDER_DESCRIPTION, CYLINDER_CODE, PRODUCT_CATEGORY));
 
-                Log.d("CYLINDER_CODE" ,CYLINDER_CODE );
-                Log.d("CYLINDER_DESCRIPTION" ,CYLINDER_DESCRIPTION );
-                Log.d("PRODUCT_CATEGORY" ,PRODUCT_CATEGORY );
+                Log.d("CYLINDER_CODE", CYLINDER_CODE);
+                Log.d("CYLINDER_DESCRIPTION", CYLINDER_DESCRIPTION);
+                Log.d("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
             }
 
         }
@@ -251,8 +254,8 @@ public class CommercialActivity extends BaseActivity {
         recycler_view_chip.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recycler_view_chip, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                 productCode = chipListModel.get(position).getChipTitleId();
-                 productCategory = chipListModel.get(position).getChipTitleId();
+                productCode = chipListModel.get(position).getChipTitleId();
+                productCategory = chipListModel.get(position).getChipTitleId();
                 setPRODUCT_CODE(Integer.parseInt(productCode));
                 getAvailableCYL();
                 btnDeliveryMan.setVisibility(View.VISIBLE);
@@ -268,8 +271,6 @@ public class CommercialActivity extends BaseActivity {
     }
 
 
-
-
     private void showSpinnerDialog() {
 
         btnDeliveryMan.setOnClickListener(new View.OnClickListener() {
@@ -278,32 +279,29 @@ public class CommercialActivity extends BaseActivity {
                 ArrayList<String> listNames = new ArrayList();
                 final ArrayList<String> listCrditCount = new ArrayList<>();
 
-                try{
+                try {
                     RuntimeExceptionDao<EmployeeDB, Integer> employeeDB = getHelper().getEmployeeRTExceptionDao();
                     List<EmployeeDB> employee = employeeDB.queryForAll();
                     for (EmployeeDB cn : employee) {
-                        String log = cn.employee_id+": "+cn.full_name;
-                        if (cn.ID_DESIGNATION.equalsIgnoreCase("30")){
+                        String log = cn.employee_id + ": " + cn.full_name;
+                        if (cn.ID_DESIGNATION.equalsIgnoreCase("30")) {
                             listNames.add(log);
-                           // listCrditCount.add(cn.CREDIT_GIVEN);
+                            // listCrditCount.add(cn.CREDIT_GIVEN);
                         }
                     }
 
 
-
-                     commercialCreditDB = getHelper().getCommercialCreditExceptionDao();
+                    commercialCreditDB = getHelper().getCommercialCreditExceptionDao();
                     List<CommercialDeliveryCreditDB> commercialList = commercialCreditDB.queryForAll();
                     for (CommercialDeliveryCreditDB cn : commercialList) {
-                        String log = cn.product_id+": "+cn.delivery_id+": "+cn.credit_given;
-                        if (Integer.toString( cn.credit_given).equalsIgnoreCase("30")){
+                        String log = cn.product_id + ": " + cn.delivery_id + ": " + cn.credit_given;
+                        if (Integer.toString(cn.credit_given).equalsIgnoreCase("30")) {
                             listNames.add(log);
                         }
                     }
 
 
-
-
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(),
                             getResources().getString(R.string.no_data_available),
                             Toast.LENGTH_SHORT).show();
@@ -311,7 +309,7 @@ public class CommercialActivity extends BaseActivity {
 
                 final SpinnerDialog dialog = new SpinnerDialog(CommercialActivity.this, listNames, getResources().getString(R.string.select_deliveryman));
 
-                if (listNames.size()>0){
+                if (listNames.size() > 0) {
                     dialog.showSpinerDialog();
                     dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                         @Override
@@ -328,9 +326,9 @@ public class CommercialActivity extends BaseActivity {
 
                             //Amey
                             try {
-                              List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB  =  commercialCreditDB.queryBuilder().where().eq("delivery_id",Integer.parseInt(deliveryManKEY)).and().eq("product_id",getPRODUCT_CODE()).and().eq("godown_id",getGoDownId()).query();
+                                List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB = commercialCreditDB.queryBuilder().where().eq("delivery_id", Integer.parseInt(deliveryManKEY)).and().eq("product_id", getPRODUCT_CODE()).and().eq("godown_id", getGoDownId()).query();
                                 tvDeliveryMan.setText(DeliveryManVALUE);
-                                if(commercialDeliveryCreditDB.size() > 0) {
+                                if (commercialDeliveryCreditDB.size() > 0) {
                                     tvDeliveryMan.setText(DeliveryManVALUE + "\nCredit Cyl- " + commercialDeliveryCreditDB.get(0).credit_given);
                                 }
                                 tvDeliveryMan.setAllCaps(true);
@@ -341,7 +339,6 @@ public class CommercialActivity extends BaseActivity {
                             }
 
 
-
                             switchView();
 
                         }
@@ -350,9 +347,6 @@ public class CommercialActivity extends BaseActivity {
             }
         });
     }
-
-
-
 
 
     private void initFreshLayout() {
@@ -372,7 +366,7 @@ public class CommercialActivity extends BaseActivity {
                 String FRESH_CYL = input_fresh_full_cylinder.getText().toString().trim();
                 int FRESH_CYL_COUNT = Integer.parseInt(FRESH_CYL);
 
-                 if (FRESH_CYL_COUNT==0) {
+                if (FRESH_CYL_COUNT == 0) {
                     input_fresh_full_cylinder.requestFocus();
                     input_fresh_full_cylinder.setError(getResources().getString(R.string.enter_full_cylnr));
 
@@ -386,24 +380,27 @@ public class CommercialActivity extends BaseActivity {
                  }*/ /*else if (TOTAL_AVAILABLE_CYL > 0 && FRESH_CYL_COUNT > TOTAL_AVAILABLE_CYL){
                      showErrorToast(CommercialActivity.this,"Error","Can't enter more than available CYL ");
                      input_fresh_full_cylinder.setError("Can't enter more than available CYL ");
-                 }*/else {
+                 }*/ else {
 
 
-                     final AlertDialog alertDialog = new AlertDialog.Builder(CommercialActivity.this).create();
-                     alertDialog.setTitle("Entry");
-                     alertDialog.setIcon(getResources().getDrawable(R.drawable.demo_cyl));
-                     alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
-                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE",
-                             new DialogInterface.OnClickListener() {
-                                 public void onClick(DialogInterface dialog, int which) {
-                                     showProgressBar();
-                                     saveFreshEntry();
-                                 }
-                             });
-                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
-                         @Override
-                         public void onClick(DialogInterface dialog, int which) {alertDialog.dismiss();}});
-                     alertDialog.show();
+                    final AlertDialog alertDialog = new AlertDialog.Builder(CommercialActivity.this).create();
+                    alertDialog.setTitle("Entry");
+                    alertDialog.setIcon(getResources().getDrawable(R.drawable.demo_cyl));
+                    alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    showProgressBar();
+                                    saveFreshEntry();
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
                 }
             }
         });
@@ -413,11 +410,11 @@ public class CommercialActivity extends BaseActivity {
 
         try {
 
- RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
+            RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
 
-            uniqueId_Commercial = Integer.toString(getGoDownId())+getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
-                    + currentDateTime()+ randomNumber;
-            Log.e("Unique",uniqueId_Commercial);
+            uniqueId_Commercial = Integer.toString(getGoDownId()) + getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
+                    + currentDateTime() + randomNumber;
+            Log.e("Unique", uniqueId_Commercial);
 
 
             ///new
@@ -432,8 +429,8 @@ public class CommercialActivity extends BaseActivity {
             commercialDB.create(new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
                     getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), getTextFromET(input_fresh_full_cylinder),
                     0, 0, 0, 0, 0, 0,
-                    getDateTime(), 0,0, "MOBILE", "INSERT", "N",
-                    getDeviceId(),uniqueId_Commercial));
+                    getDateTime(), 0, 0, "MOBILE", "INSERT", "N",
+                    getDeviceId(), uniqueId_Commercial));
             clearAllFields();
             showToast(getResources().getString(R.string.saved_success_msg));
             dismissProgressBar();
@@ -465,7 +462,7 @@ public class CommercialActivity extends BaseActivity {
                 if (input_empty_cylinder.getText().toString().equalsIgnoreCase("0") &&
                         input_return_sv.getText().toString().equalsIgnoreCase("0") &&
                         input_credit_given.getText().toString().equalsIgnoreCase("0") &&
-                input_return_full.getText().toString().equalsIgnoreCase("0")) {
+                        input_return_full.getText().toString().equalsIgnoreCase("0")) {
 
                     Toast.makeText(CommercialActivity.this, "Empty, SV, Credit and Return full cylinder fields can not be zero.", Toast.LENGTH_SHORT).show();
                 } else if (input_return_defective.getText().toString().trim().equalsIgnoreCase("")) {
@@ -496,7 +493,10 @@ public class CommercialActivity extends BaseActivity {
                             });
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {alertDialog.dismiss();}});
+                        public void onClick(DialogInterface dialog, int which) {
+                            alertDialog.dismiss();
+                        }
+                    });
                     alertDialog.show();
                 }
             }
@@ -504,10 +504,9 @@ public class CommercialActivity extends BaseActivity {
     }
 
 
-
     private void saveReturnEntry() {
 
-        try{
+        try {
             /*final int min = 10;
             final int max = 110;
             final int random = new Random().nextInt((max - min) + 1) + min;
@@ -519,9 +518,9 @@ public class CommercialActivity extends BaseActivity {
 
             RuntimeExceptionDao<CommercialDeliveryDB, Integer> commercialDB = getHelper().getCommercialRuntimeExceptionDao();
 
-            uniqueId_Commercial = Integer.toString(getGoDownId())+getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
-                    + currentDateTime()+ randomNumber;
-            Log.e("Unique",uniqueId_Commercial);
+            uniqueId_Commercial = Integer.toString(getGoDownId()) + getPRODUCT_CODE() + Integer.toString(getSelectedDeliveryManId())
+                    + currentDateTime() + randomNumber;
+            Log.e("Unique", uniqueId_Commercial);
 
 
             // new
@@ -537,13 +536,13 @@ public class CommercialActivity extends BaseActivity {
                     getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), 0, getTextFromET(input_empty_cylinder), getTextFromET(input_return_sv),
                     getTextFromET(input_return_dbc), getTextFromET(input_return_defective), getTextFromET(input_return_full), getTextFromET(input_credit_given),
                     getDateTime(), getApplicationUserId(), getTextFromET(input_lost),
-                    "MOBILE", "INSERT", "N",getDeviceId(),uniqueId_Commercial));
+                    "MOBILE", "INSERT", "N", getDeviceId(), uniqueId_Commercial));
             clearAllFields();
             dismissProgressBar();
             finish();
             showToast(getResources().getString(R.string.saved_success_msg));
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(getApplicationContext(), R.string.could_not_store, Toast.LENGTH_SHORT).show();
             ex.printStackTrace();
         }
@@ -589,14 +588,13 @@ public class CommercialActivity extends BaseActivity {
 
     private void requestFocus(View view) {
         InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+        imm2.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         view.requestFocus();
     }
 
     public int getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
-
 
 
     public void setSelectedDeliveryManId(int selectedDeliveryManId) {
@@ -621,12 +619,12 @@ public class CommercialActivity extends BaseActivity {
 
         try {
             JSONObject objectResult = new JSONObject(response);
-            if (objectResult.has("responseCode") && objectResult.getString("responseCode").equalsIgnoreCase("200")){
+            if (objectResult.has("responseCode") && objectResult.getString("responseCode").equalsIgnoreCase("200")) {
                 JSONArray productArray = objectResult.getJSONArray("productArray");
-                String CLOSING_FULL    = productArray.getJSONObject(0).getString("CLOSING_FULL");
+                String CLOSING_FULL = productArray.getJSONObject(0).getString("CLOSING_FULL");
 
                 layout_cylinder.setVisibility(View.VISIBLE);
-                TOTAL_AVAILABLE_CYL  = Integer.parseInt(CLOSING_FULL);
+                TOTAL_AVAILABLE_CYL = Integer.parseInt(CLOSING_FULL);
                 cyl_count.setAnimationDuration(1000).countAnimation(0, TOTAL_AVAILABLE_CYL);
             }
 
@@ -646,10 +644,11 @@ public class CommercialActivity extends BaseActivity {
 
     public interface ClickListener {
         void onClick(View view, int position);
+
         void onLongClick(View view, int position);
     }
 
-    public  class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+    public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
         private CommercialActivity.ClickListener clickListener;
@@ -707,8 +706,7 @@ public class CommercialActivity extends BaseActivity {
     }
 
 
-
-    private void getAvailableCYL(){
+    private void getAvailableCYL() {
 
         VolleySingleton.getInstance(getApplicationContext()).
                 addResponseListener(VolleySingleton.CallType.GET_AVAILABLE_CYL, this);
