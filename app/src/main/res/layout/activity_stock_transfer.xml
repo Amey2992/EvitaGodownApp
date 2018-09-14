@@ -15,7 +15,7 @@
             android:id="@+id/godowntextview"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Select Godown:"
+            android:text="Transfer to Godown:"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="10dp"
@@ -25,9 +25,9 @@
             android:layout_toRightOf="@+id/godowntextview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Godown"
+            android:hint="Godown"
             android:layout_marginLeft="10dp"
-            android:backgroundTint="@color/colorAccent"
+            android:theme="@style/EditTextTheme"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             />
@@ -54,8 +54,8 @@
             android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Product"
-            android:backgroundTint="@color/colorAccent"
+            android:hint="Product"
+            android:theme="@style/EditTextTheme"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             />
@@ -165,7 +165,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/transfertextview"
@@ -182,7 +182,7 @@
                     android:inputType="number"
                     android:maxLength="3"
                     android:gravity="center"
-                    android:backgroundTint="@color/colorAccent"
+                    android:theme="@style/EditTextTheme"
                     android:layout_weight=".5" />
 
                 <EditText
@@ -192,7 +192,7 @@
                     android:gravity="center"
                     android:maxLength="3"
                     android:inputType="number"
-                    android:backgroundTint="@color/colorAccent"
+                    android:theme="@style/EditTextTheme"
                     android:layout_weight=".5" />
 
                 <EditText
@@ -202,7 +202,7 @@
                     android:gravity="center"
                     android:maxLength="3"
                     android:inputType="number"
-                    android:backgroundTint="@color/colorAccent"
+                    android:theme="@style/EditTextTheme"
                     android:layout_weight=".5" />
 
             </LinearLayout>
