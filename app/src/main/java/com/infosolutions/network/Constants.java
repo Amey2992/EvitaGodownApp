@@ -50,27 +50,26 @@ public class Constants {
     private static final String tester_prod_url = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
-    public static final  String EVITA_API_URL = godown_ags;
+    public static final  String EVITA_API_URL = PROD_URL;
 
 
 
     /*
     production
     * */
-/*
     public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
     public static final String GET_CONSUMER_DETAILS ="http://103.31.144.174/Purchase/GetAndrConsumerDetails";
     public static final String GET_STOCKS_URL = "http://103.31.144.174/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174/Purchase/SaveTransfer";
-*/
 
 
 
     /*
     Godown_Ags
     * */
+/*
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:81/Purchase/GetCreditCommCyl";
@@ -78,6 +77,7 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174:81/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
 
+*/
 
 
 

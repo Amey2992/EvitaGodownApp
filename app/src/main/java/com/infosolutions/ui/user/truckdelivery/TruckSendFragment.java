@@ -214,6 +214,8 @@ public class TruckSendFragment extends Fragment {
             for (ProductDB item : productDBList)
                 spinItems.add(item.product_description);
         }
+
+        spinItems.add(0,"--");
         spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -234,7 +236,8 @@ public class TruckSendFragment extends Fragment {
                 spinItemsCount++;
 
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
-                Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                final Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                btnDelete.setTag(spinItemsCount);
                 final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
                 spinner.setTag(spinItemsCount);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -265,8 +268,9 @@ public class TruckSendFragment extends Fragment {
                         }else {
 
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
+                                int pos = spinItemsCount;
                                 try {
-                                    int pos = spinItemsCount;
+
                                     pos = --pos;
                                     if(selectedSpinItems.size() >0) {
                                         selectedSpinItems.remove(pos);
@@ -275,7 +279,7 @@ public class TruckSendFragment extends Fragment {
                                     selectedSpinItems.add(pos, selectedItem);
 
                                 }catch (Exception e ){
-
+                                    selectedSpinItems.add(pos, selectedItem);
                                 }
 
                             }
@@ -306,7 +310,11 @@ public class TruckSendFragment extends Fragment {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        --spinItemsCount;
+                        int pos = (int)btnDelete.getTag();
+                        //pos = --pos;
+                        spinItemsCount = --spinItemsCount;;
+                        String text = ((Spinner)(myLinearLay.getChildAt(pos).findViewById(R.id.spinner))).getSelectedItem().toString();
+                        selectedSpinItems.remove(text);
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
                         dynamicSpinner.remove(spinner);
@@ -351,6 +359,12 @@ public class TruckSendFragment extends Fragment {
 
 
                     String spinner = (String) dynamicSpinner.get(i).getSelectedItem();
+                    if(spinner.trim().equalsIgnoreCase("--")) {
+                        Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+
                     int spinnerPosition = spinAdapter.getPosition(spinner);
                     int spinnerCode = productDBList.get(spinnerPosition).product_code;
 

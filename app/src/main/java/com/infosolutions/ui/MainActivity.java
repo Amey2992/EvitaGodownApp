@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -147,7 +148,13 @@ public class MainActivity extends BaseActivity {
                 if (!AppSettings.getInstance(MainActivity.this).isSyncing) {
                     syncData();
                 }else{
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
 
             }

@@ -589,22 +589,23 @@ public class LoginActivity extends BaseActivity {
         builder.setDividerColor(getResources().getColor(R.color.colorBlack));
         BottomSheet bottomSheet = builder.create();
 
+        if (getGO_DOWN_ARRAY_LIST() != null && getGO_DOWN_ARRAY_LIST().length() > 0){
+            for (int position = 0; position < getGO_DOWN_ARRAY_LIST().length(); position++) {
+                try {
+                    JSONObject jsonGodown = getGO_DOWN_ARRAY_LIST().getJSONObject(position);
 
-        for (int position = 0; position < getGO_DOWN_ARRAY_LIST().length(); position++) {
-            try {
-                JSONObject jsonGodown = getGO_DOWN_ARRAY_LIST().getJSONObject(position);
+                    String godown_type_code = jsonGodown.getString("GODOWN_CODE");
+                    int intGodownCode = Integer.parseInt(godown_type_code);
+                    String godown_type_name = jsonGodown.getString("DISPLAY_NAME");
+                    String godown_name_code = godown_type_name + ":" + godown_type_code;
+                    builder.addItem(intGodownCode, godown_name_code);
+                    mapLinked.add(godown_name_code);
 
-                String godown_type_code = jsonGodown.getString("GODOWN_CODE");
-                int intGodownCode = Integer.parseInt(godown_type_code);
-                String godown_type_name = jsonGodown.getString("DISPLAY_NAME");
-                String godown_name_code = godown_type_name + ":" + godown_type_code;
-                builder.addItem(intGodownCode, godown_name_code);
-                mapLinked.add(godown_name_code);
+                    Log.e("chipSelector", godown_name_code);
 
-                Log.e("chipSelector", godown_name_code);
-
-            } catch (JSONException e) {
-                showErrorToast(LoginActivity.this, "Error", "Something went wrong " + e.getMessage());
+                } catch (JSONException e) {
+                    showErrorToast(LoginActivity.this, "Error", "Something went wrong " + e.getMessage());
+                }
             }
         }
 

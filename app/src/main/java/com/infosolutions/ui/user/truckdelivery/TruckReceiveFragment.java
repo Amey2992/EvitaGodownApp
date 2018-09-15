@@ -241,7 +241,8 @@ public class TruckReceiveFragment extends Fragment {
                 }
                 spinItemsCount++;
                 final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynemic_truck_layout, null);
-                Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                final Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+                btnDelete.setTag(spinItemsCount);
                 final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
                 spinner.setTag(spinItemsCount);
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -272,8 +273,9 @@ public class TruckReceiveFragment extends Fragment {
                         }else {
 
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
+                                int pos = spinItemsCount;
                                 try {
-                                    int pos = spinItemsCount;
+
                                     pos = --pos;
                                     if(selectedSpinItems.size() >0) {
                                         selectedSpinItems.remove(pos);
@@ -282,7 +284,7 @@ public class TruckReceiveFragment extends Fragment {
                                     selectedSpinItems.add(pos, selectedItem);
 
                                 }catch (Exception e ){
-
+                                    selectedSpinItems.add(pos, selectedItem);
                                 }
 
                             }
@@ -320,11 +322,18 @@ public class TruckReceiveFragment extends Fragment {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        --spinItemsCount;
+                        int pos = (int)btnDelete.getTag();
+
+                        pos = --pos;
+
+                        spinItemsCount = --spinItemsCount;
+                        String text = ((Spinner)(myLinearLay.getChildAt(pos).findViewById(R.id.spinner))).getSelectedItem().toString();
+                        selectedSpinItems.remove(text);
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
                         dynamicLostCyl.remove(etLost);
                         dynamicSpinner.remove(spinner);
+
                     }
                 });
 
@@ -335,6 +344,7 @@ public class TruckReceiveFragment extends Fragment {
 
 
     }
+
 
 
     private void submitBtnClick() {
