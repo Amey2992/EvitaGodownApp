@@ -186,6 +186,7 @@ public class TVDetailsActivity extends BaseActivity {
             if(consumerDetails != null && consumerDetails.size() > 0){
                 btnSubmit.setEnabled(true);
                 input_number_of_cylinders.setText(Integer.toString(consumerDetails.get(0).NoOfCylinder));
+                input_customerId.setEnabled(false);
             }else{
                 Toast.makeText(this, Constants.error_message,Toast.LENGTH_SHORT).show();
             }
@@ -307,6 +308,9 @@ public class TVDetailsActivity extends BaseActivity {
                 setSelectedCylinderTYPE(selectedCylinderTYPE);
                 viewTV.setVisibility(View.GONE);
                 getAvailableCYL();
+                input_number_of_cylinders.setText("");
+                input_customerId.setText("");
+                input_customerId.setEnabled(true);
                 if (selectedCylinderTYPE != null){
                     viewTVDetails();
                 }else {

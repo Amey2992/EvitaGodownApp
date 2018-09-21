@@ -127,7 +127,10 @@ public class GetConsumerService extends IntentService implements ResponseListene
 
                 if (type.equals(VolleySingleton.CallType.CONSUMER_DETAILS)) {
                     JSONArray jsonArray = objectResult.optJSONArray("Table");
-                    int length = jsonArray.length();
+                    int length = 0;
+                    if(jsonArray != null) {
+                         length = jsonArray.length();
+                    }
                     /*JSONArray jsonArray1 = objectResult.optJSONArray("Table1");
                     int countOfConsumer = jsonArray1.optJSONObject(0).optInt("CountOfConsumer");*/
                     PreferencesHelper.getInstance().setValue("consumer_count", length);

@@ -74,8 +74,8 @@ public class TruckSendFragment extends Fragment {
     private int selected_vehicle_id;
     private DatabaseHelper databaseHelper = null;
     private int godownId;
-    private int spinItemsCount;
-    private List<String> selectedSpinItems = new ArrayList<>(4);
+    private int spinItemsCount = -1;
+    private List<String> selectedSpinItems = new ArrayList<>();
 
     public String getLoad_type() {
         return load_type;
@@ -257,7 +257,7 @@ public class TruckSendFragment extends Fragment {
 
                             if (selectedSpinItems.contains(selectedItem)) {
                                 int pos = spinItemsCount;
-                                pos = --pos;
+                                //pos = --pos;
                                 selectedSpinItems.remove(pos);
                             }
                             return;
@@ -271,13 +271,21 @@ public class TruckSendFragment extends Fragment {
                                 int pos = spinItemsCount;
                                 try {
 
-                                    pos = --pos;
+                                    //pos = --pos;
                                     if(selectedSpinItems.size() >0) {
-                                        selectedSpinItems.remove(pos);
+                                        try{
+                                            String str  = selectedSpinItems.get(pos);
+                                            if(!TextUtils.isEmpty(str)){
+                                                selectedSpinItems.set(pos,selectedItem);
+                                            }
+                                        }catch (Exception e){
+                                            selectedSpinItems.add(pos, selectedItem);
+                                        }
+
+                                    }else {
+
+                                        selectedSpinItems.add(pos, selectedItem);
                                     }
-
-                                    selectedSpinItems.add(pos, selectedItem);
-
                                 }catch (Exception e ){
                                     selectedSpinItems.add(pos, selectedItem);
                                 }
@@ -312,8 +320,16 @@ public class TruckSendFragment extends Fragment {
                     public void onClick(View view) {
                         int pos = (int)btnDelete.getTag();
                         //pos = --pos;
-                        spinItemsCount = --spinItemsCount;;
-                        String text = ((Spinner)(myLinearLay.getChildAt(pos).findViewById(R.id.spinner))).getSelectedItem().toString();
+                        spinItemsCount = --spinItemsCount;
+                        View view1 = ((View)(myLinearLay.getChildAt(pos)));
+                        Spinner spinner1 = null;
+                        String text = "";
+                        if(view1 != null) {
+                            spinner1 = view1.findViewById(R.id.spinner);
+                            if(spinner1 != null) {
+                                text = spinner1.getSelectedItem().toString();
+                            }
+                        }
                         selectedSpinItems.remove(text);
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
@@ -366,8 +382,15 @@ public class TruckSendFragment extends Fragment {
 
 
                     int spinnerPosition = spinAdapter.getPosition(spinner);
-                    int spinnerCode = productDBList.get(spinnerPosition).product_code;
+                    spinnerPosition = --spinnerPosition;
 
+                    //fixed crash using try catch
+                    int spinnerCode = 0;
+                    try {
+                        spinnerCode = productDBList.get(spinnerPosition).product_code;
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     //arrayDynamicViews.add(spinnerCode + "|" + et_quantity + "|" + et_defective + "~");
 
                     //Amey

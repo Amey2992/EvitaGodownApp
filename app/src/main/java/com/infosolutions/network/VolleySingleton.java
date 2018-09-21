@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -196,6 +197,53 @@ public class VolleySingleton {
     /**
      * Check Login validation for Login
      * */
+    public void new_apiCallLoginValidation(final CallType type, final String url,
+                                       final String userId, final String password, final String Android) {
+
+        JSONObject jsonObject = new JSONObject();
+        JSONObject jsonObject1 = new JSONObject();
+        try {
+            jsonObject.put(MODULE_KEY,  Constants.LOGIN_API_VALUE);
+            jsonObject.put(Constants.LOGIN_USERID_KEY, userId);
+            jsonObject.put(Constants.LOGIN_PASSWORD_KEY, password);
+            jsonObject.put(Constants.LOGIN_USERTYPE_KEY, Android);
+
+            jsonObject1.put("_objLogin",jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("login:",jsonObject1.toString());
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject1, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+
+    }
+
+        /**
+         * Check Login validation for Login
+         * */
     public void apiCallLoginValidation(final CallType type, final String url,
                                        final String userId, final String password, final String Android) {
         StringRequest request = new StringRequest(Request.Method.POST, url,
@@ -408,6 +456,7 @@ public class VolleySingleton {
     }
 
     public void getStocksDetails(final CallType type, final String url, JSONObject jsonObject){
+        Log.d("getStock",jsonObject.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

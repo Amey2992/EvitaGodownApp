@@ -272,6 +272,9 @@ public class LoginActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        String responseCode = jsonResult.optString("responseCode");
+
+
         if (type.equals(VolleySingleton.CallType.SYNC_LOCAL_DATA)) {
 
             try {
@@ -356,7 +359,13 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
+            if(responseCode.equalsIgnoreCase("500")){
+                hideProgressDialog();
+
+            }
             serverSuccessResponse(response);
+
+
         }
 
 

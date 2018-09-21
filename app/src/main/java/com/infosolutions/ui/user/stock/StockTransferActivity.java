@@ -37,6 +37,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import khangtran.preferenceshelper.PreferencesHelper;
@@ -61,6 +62,7 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
     private int availableDefectiveQty;
     private int product_code;
     private int intGodownCode;
+    HashMap<String,String> godownHash = new HashMap<String, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +103,27 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
         submitbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int full_edittext_value  = Integer.parseInt(full_edittext.getText().toString());
-                int empty_edittext_value  = Integer.parseInt(empty_edittext.getText().toString());
-                int def_edittext_value  = Integer.parseInt(def_edittext.getText().toString());
+                int full_edittext_value;
+                if(TextUtils.isEmpty(full_edittext.getText().toString())){
+                    full_edittext_value = 0;
+                }else{
+                    full_edittext_value = Integer.parseInt(full_edittext.getText().toString());;
+                }
+
+                int empty_edittext_value;
+                if(TextUtils.isEmpty(empty_edittext.getText().toString())){
+                    empty_edittext_value = 0;
+                }else{
+                    empty_edittext_value  = Integer.parseInt(empty_edittext.getText().toString());
+                }
+
+                int def_edittext_value;
+                if(TextUtils.isEmpty(def_edittext.getText().toString())){
+                    def_edittext_value = 0;
+                }else{
+                    def_edittext_value  = Integer.parseInt(def_edittext.getText().toString());
+                }
+
 
                 if(full_edittext_value <=  availableFullCylQty && empty_edittext_value <= availableEmptyCylQty && def_edittext_value <= availableDefectiveQty){
                     transferStock();
@@ -138,6 +158,8 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
                         if (!GODOWN_NAME_CODE.equalsIgnoreCase(godown_name_code)) {
                             lstgodown.add(godown_name_code);
                         }
+
+                        godownHash.put(godown_name_code,godown_type_code);
 
                     } catch (JSONException e) {
                         //showErrorToast(LoginActivity.this, "Error", "Something went wrong " + e.getMessage());
@@ -212,7 +234,7 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
         try {
             jsonObject.put("ProductId",product_code);
             jsonObject.put("FrmGodownID",getGoDownId());
-            jsonObject.put("ToGodownID",intGodownCode);
+            jsonObject.put("ToGodownID",godownHash.get(selectedgodwon));
             jsonObject.put("FullCyll",full_edittext.getText().toString());
             jsonObject.put("EmptyCyll",empty_edittext.getText().toString());
             jsonObject.put("DefectiveCyll",def_edittext.getText().toString());
@@ -266,33 +288,41 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
 
                 if (jsonArray != null) {
                     // Full cylinder
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.optJSONObject(i);
+                    if(jsonArray.length() > 0) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.optJSONObject(i);
 
-                        availableFullCylQty = jsonObject.optInt("AvailableFullCylQty");
-                        fulltextview_value.setText(Integer.toString(availableFullCylQty));
+                            availableFullCylQty = jsonObject.optInt("AvailableFullCylQty");
+                            fulltextview_value.setText(Integer.toString(availableFullCylQty));
+                        }
+                    }else{
+                        fulltextview_value.setText("0");
                     }
                 }
                 JSONArray jsonArray1 = objectResult.optJSONArray("Table1");
                 // Empty cylinder
-                if (jsonArray1 != null) {
+                if (jsonArray1 != null && jsonArray1.length() > 0) {
                     for (int i = 0; i < jsonArray1.length(); i++) {
                         JSONObject jsonObject = jsonArray1.optJSONObject(i);
 
                         availableEmptyCylQty = jsonObject.optInt("AvailableEmptyCylQty");
                         emptytextview_value.setText(Integer.toString(availableEmptyCylQty));
                     }
+                }else{
+                    emptytextview_value.setText("0");
                 }
 
                 JSONArray jsonArray2 = objectResult.optJSONArray("Table2");
                 // Empty defective
-                if (jsonArray2 != null) {
+                if (jsonArray2 != null && jsonArray2.length() > 0) {
                     for (int i = 0; i < jsonArray2.length(); i++) {
                         JSONObject jsonObject = jsonArray2.optJSONObject(i);
 
                         availableDefectiveQty = jsonObject.optInt("AvailableDefectiveQty");
                         defectivetextview_value.setText(Integer.toString(availableDefectiveQty));
                     }
+                }else{
+                    defectivetextview_value.setText("0");
                 }
 
                 enabledView();

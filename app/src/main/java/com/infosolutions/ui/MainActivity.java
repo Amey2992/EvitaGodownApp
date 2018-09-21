@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -448,7 +448,7 @@ public class MainActivity extends BaseActivity {
 
 
             AppSettings.getInstance(this).updateDatabase(this);
-            AppSettings.getInstance(this).notification(getApplicationContext(), responseMsg);
+            //AppSettings.getInstance(this).notification(getApplicationContext(), responseMsg);
             AppSettings.getInstance(this).isSyncing = false;
 
             EvitaEvent.EventDataSyncToServer eventDataSyncToServer = new EvitaEvent.EventDataSyncToServer();

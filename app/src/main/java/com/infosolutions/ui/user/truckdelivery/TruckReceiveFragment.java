@@ -76,8 +76,9 @@ public class TruckReceiveFragment extends Fragment {
     private boolean isQtyEmpty = false;
     private int godownId;
     private ArrayList<String> spinItems;
-    private List<String> selectedSpinItems = new ArrayList<>(4);
-    private int spinItemsCount;
+    private List<String> selectedSpinItems = new ArrayList<>();
+    private int spinItemsCount = -1;
+    private String temp = "";
 
     public String getLoad_type() {
         return load_type;
@@ -252,6 +253,7 @@ public class TruckReceiveFragment extends Fragment {
                         String selectedItem = spinner.getSelectedItem().toString();
 
                         if(selectedSpinItems.contains(selectedItem)){
+                            //selectedSpinItems.remove(selectedItem);
                             spinner.setSelection(0);
                             Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
                             return;
@@ -262,7 +264,7 @@ public class TruckReceiveFragment extends Fragment {
 
                             if (selectedSpinItems.contains(selectedItem)) {
                                 int pos = spinItemsCount;
-                                pos = --pos;
+                                //pos = --pos;
                                 selectedSpinItems.remove(pos);
                             }
                             return;
@@ -276,13 +278,21 @@ public class TruckReceiveFragment extends Fragment {
                                 int pos = spinItemsCount;
                                 try {
 
-                                    pos = --pos;
+                                    //pos = --pos;
                                     if(selectedSpinItems.size() >0) {
-                                        selectedSpinItems.remove(pos);
+                                        try{
+                                           String str  = selectedSpinItems.get(pos);
+                                           if(!TextUtils.isEmpty(str)){
+                                               selectedSpinItems.set(pos,selectedItem);
+                                           }
+                                        }catch (Exception e){
+                                            selectedSpinItems.add(pos, selectedItem);
+                                        }
+
+                                        //selectedSpinItems.remove(pos);
+                                    }else {
+                                        selectedSpinItems.add(pos, selectedItem);
                                     }
-
-                                    selectedSpinItems.add(pos, selectedItem);
-
                                 }catch (Exception e ){
                                     selectedSpinItems.add(pos, selectedItem);
                                 }
@@ -324,10 +334,21 @@ public class TruckReceiveFragment extends Fragment {
                     public void onClick(View view) {
                         int pos = (int)btnDelete.getTag();
 
-                        pos = --pos;
+                        //pos = --pos;
 
                         spinItemsCount = --spinItemsCount;
-                        String text = ((Spinner)(myLinearLay.getChildAt(pos).findViewById(R.id.spinner))).getSelectedItem().toString();
+                        View view1 = ((View)(myLinearLay.getChildAt(pos)));
+                        Spinner spinner1 = null;
+                        String text = "";
+                        if(view1 != null) {
+                             spinner1 = view1.findViewById(R.id.spinner);
+                            if(spinner1 != null) {
+                                text = spinner1.getSelectedItem().toString();
+                            }
+                        }
+
+
+
                         selectedSpinItems.remove(text);
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
@@ -375,13 +396,21 @@ public class TruckReceiveFragment extends Fragment {
 
 
                     String spinner = (String) dynamicSpinner.get(i).getSelectedItem();
+
                     if(spinner.trim().equalsIgnoreCase("--")) {
                         Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
                         return;
                     }
                     int spinnerPosition = spinAdapter.getPosition(spinner);
-                    int spinnerCode = productDBList.get(spinnerPosition).product_code;
 
+                    spinnerPosition = --spinnerPosition;
+                    //fixing using try catch
+                    int spinnerCode = 0;
+                    try {
+                        spinnerCode = productDBList.get(spinnerPosition).product_code;
+                    }catch (Exception e){
+                        System.out.println();
+                    }
                     //arrayDynamicViews.add(spinnerCode+"|"+etText+"|"+etLostCyl+"~");
 
                     //Amey
