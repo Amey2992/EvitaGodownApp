@@ -49,7 +49,7 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
 
     com.infosolutions.ui.user.stock.AutoCompleteTextView godown_edittext, product_edittext;
     List<String> lstgodown = new ArrayList();
-    String godownJson;
+    String godownJson = "";
     private String[] godownArr, productArr;
     private DatabaseHelper databaseHelper;
     TextView fulltextview_value, emptytextview_value, defectivetextview_value;
@@ -144,7 +144,7 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
         this.godownJson = AppSettings.getInstance(this).godownJson;
         try {
             JSONArray jsonArray = new JSONArray(this.godownJson);
-            if(jsonArray != null && jsonArray.length() > 0){
+            if(jsonArray != null ){
                 for (int position = 0; position < jsonArray.length(); position++) {
                     try {
                         JSONObject jsonGodown = jsonArray.getJSONObject(position);

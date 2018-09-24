@@ -89,6 +89,6 @@ dependencies {
     implementation files('libs/httpclient-4.2.3.jar')
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
     compile 'com.github.fccaikai:BottomMenuTutorial:1.1.0'
-    compile 'com.irozon.sneaker:sneaker:1.0.2'
+    compile 'com.irozon.sneaker:sneaker:1.0.3'
     compile 'com.github.tntkhang:preferences-helper:1.1.0'
 }

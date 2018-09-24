@@ -75,7 +75,7 @@ public class TruckSendFragment extends Fragment {
     private DatabaseHelper databaseHelper = null;
     private int godownId;
     private int spinItemsCount = -1;
-    private List<String> selectedSpinItems = new ArrayList<>();
+    private List<String> listSpinItems = new ArrayList<>();
 
     public String getLoad_type() {
         return load_type;
@@ -176,7 +176,7 @@ public class TruckSendFragment extends Fragment {
                 listTruckNumber.add(truckNum.vehicle_number);
             }
             /* show spinner dialog*/
-            final SpinnerDialog dialog = new SpinnerDialog(getActivity(), listTruckNumber, "Select Truck Number");
+            final SpinnerDialog dialog = new SpinnerDialog(getActivity(), listTruckNumber, getResources().getString(R.string.select_truck_no));
             dialog.showSpinerDialog();
             dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                 @Override
@@ -246,7 +246,14 @@ public class TruckSendFragment extends Fragment {
 
                         String selectedItem = spinner.getSelectedItem().toString();
 
-                        if(selectedSpinItems.contains(selectedItem)){
+                        if(listSpinItems.contains(selectedItem)){
+                            try {
+                                if((listSpinItems.size() - 1) == spinItemsCount) {
+                                    listSpinItems.remove(spinItemsCount);
+                                }
+                            }catch (Exception e){
+                                Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
+                            }
                             spinner.setSelection(0);
                             Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
                             return;
@@ -255,39 +262,40 @@ public class TruckSendFragment extends Fragment {
                         if(selectedItem.trim().equalsIgnoreCase("--")){
 
 
-                            if (selectedSpinItems.contains(selectedItem)) {
+                            if (listSpinItems.contains(selectedItem)) {
                                 int pos = spinItemsCount;
                                 //pos = --pos;
-                                selectedSpinItems.remove(pos);
+                                listSpinItems.remove(pos);
                             }
                             return;
                         }
-                        if(selectedSpinItems.contains(selectedItem)){
+                        /*if(listSpinItems.contains(selectedItem)){
                             Toast.makeText(getActivity(),"cannot select same product type",Toast.LENGTH_SHORT).show();
                             return;
-                        }else {
+                        }*/else {
 
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
                                 int pos = spinItemsCount;
                                 try {
 
                                     //pos = --pos;
-                                    if(selectedSpinItems.size() >0) {
+                                    if(listSpinItems.size() >0) {
                                         try{
-                                            String str  = selectedSpinItems.get(pos);
+                                            String str  = listSpinItems.get(pos);
                                             if(!TextUtils.isEmpty(str)){
-                                                selectedSpinItems.set(pos,selectedItem);
+                                                listSpinItems.set(pos,selectedItem);
+
                                             }
                                         }catch (Exception e){
-                                            selectedSpinItems.add(pos, selectedItem);
+                                            listSpinItems.add(pos, selectedItem);
                                         }
 
                                     }else {
 
-                                        selectedSpinItems.add(pos, selectedItem);
+                                        listSpinItems.add(pos, selectedItem);
                                     }
                                 }catch (Exception e ){
-                                    selectedSpinItems.add(pos, selectedItem);
+                                    listSpinItems.add(pos, selectedItem);
                                 }
 
                             }
@@ -318,19 +326,23 @@ public class TruckSendFragment extends Fragment {
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        String text = "";
+                        Spinner spinner2 = null;
+                        LinearLayout linearLayout = (LinearLayout)((Button)view).getParent();
+                        if(linearLayout != null){
+                            spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
+                            if(spinner2 != null) {
+                                text = spinner2.getSelectedItem().toString();
+                            }
+                            etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
+                        }
+
                         int pos = (int)btnDelete.getTag();
                         //pos = --pos;
                         spinItemsCount = --spinItemsCount;
-                        View view1 = ((View)(myLinearLay.getChildAt(pos)));
-                        Spinner spinner1 = null;
-                        String text = "";
-                        if(view1 != null) {
-                            spinner1 = view1.findViewById(R.id.spinner);
-                            if(spinner1 != null) {
-                                text = spinner1.getSelectedItem().toString();
-                            }
-                        }
-                        selectedSpinItems.remove(text);
+
+                        listSpinItems.remove(text);
                         myLinearLay.removeView(viewToAdd);
                         dynamicQuantity.remove(etQuantity);
                         dynamicSpinner.remove(spinner);
@@ -358,10 +370,10 @@ public class TruckSendFragment extends Fragment {
                 RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
                 List<ProductDB> productDBList = productDB.queryForAll();
 
-                while (i < dynamicQuantity.size()) {
+                for (int j = 0 ; j < dynamicQuantity.size(); j++) {
 
-                    String et_quantity = String.valueOf(dynamicQuantity.get(i).getText());
-                    String et_defective = String.valueOf(dynamicDefective.get(i).getText());
+                    String et_quantity = String.valueOf(dynamicQuantity.get(j).getText());
+                    String et_defective = String.valueOf(dynamicDefective.get(j).getText());
 
 
                     /*Added ZERO by default if validation is missed */
@@ -374,7 +386,7 @@ public class TruckSendFragment extends Fragment {
                     }
 
 
-                    String spinner = (String) dynamicSpinner.get(i).getSelectedItem();
+                    String spinner = (String) dynamicSpinner.get(j).getSelectedItem();
                     if(spinner.trim().equalsIgnoreCase("--")) {
                         Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
                         return;
@@ -405,6 +417,7 @@ public class TruckSendFragment extends Fragment {
                     if (erv_number.equalsIgnoreCase("")) {
                         etErvNumber.requestFocus();
                         etErvNumber.setError("Provide Erv Number");
+                        return;
                     } else if (Integer.toString( id_product).equalsIgnoreCase("")) {
                         Toast.makeText(getContext(), "Please Add product type", Toast.LENGTH_SHORT).show();
                         return;
@@ -468,7 +481,7 @@ public class TruckSendFragment extends Fragment {
                         lsttruckSendDetailsDB.add(truckSendDetailsDB);
                     }
 
-                    i++;
+                    //i++;
                 }
 
                 if(lsttruckSendDetailsDB.size() > 0) {

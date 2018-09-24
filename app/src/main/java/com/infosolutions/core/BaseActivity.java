@@ -138,7 +138,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Response
     }
 
     public void showErrorToast(Activity mContext, String mTitle, String message){
-        Sneaker.with(mContext).setTitle(mTitle).setMessage(message).sneakError();
+        Sneaker.with(mContext).setTitle(mTitle).setMessage(message).setHeight(ViewGroup.LayoutParams.WRAP_CONTENT).sneakError();
     }
 
     public void showWarningToast(Activity mContext, String mTitle, String message){

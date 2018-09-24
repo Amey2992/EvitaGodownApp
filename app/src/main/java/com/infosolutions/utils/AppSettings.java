@@ -558,15 +558,7 @@ public class AppSettings {
 
     public void notification(Context mContext, String stringContent) {
 
-        /*Intent intent = new Intent(mcontext, MainActivity.class);
-        intent.putExtra("title", "");
-        PendingIntent pIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = (NotificationCompat.Builder) new NotificationCompat.Builder(mcontext).setSmallIcon(R.drawable.evita_logo).setContentTitle(mcontext.getString(R.string.notificationtitle)).setContentText(stringContent).setContentIntent(pIntent).setAutoCancel(true);
-        NotificationManager notificationmanager = (NotificationManager) mcontext.getSystemService(mcontext.NOTIFICATION_SERVICE);
-        notificationmanager.notify(0, builder.build());*/
-
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
+        /*NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.evita_logo)
                 .setContentTitle(mContext.getString(R.string.notificationtitle))
                 .setContentText(stringContent)
@@ -581,7 +573,7 @@ public class AppSettings {
         }
 
 
-        notificationmanager.notify(0, mBuilder.build());
+        notificationmanager.notify(0, mBuilder.build());*/
     }
 
     public void exportDatabase(Context context) {
