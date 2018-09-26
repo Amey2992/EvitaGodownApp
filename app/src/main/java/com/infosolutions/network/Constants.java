@@ -67,15 +67,13 @@ public class Constants {
     Godown_Ags
     * */
 
-/*
-    public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
+   /* public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:81/Purchase/GetCreditCommCyl";
     public static final String GET_CONSUMER_DETAILS ="http://103.31.144.174:81/Purchase/GetAndrConsumerDetails";
     public static final String GET_STOCKS_URL = "http://103.31.144.174:81/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
 */
-
 
 /*
     tester

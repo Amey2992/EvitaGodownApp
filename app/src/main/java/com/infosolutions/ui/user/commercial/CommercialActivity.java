@@ -39,6 +39,7 @@ import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -716,5 +717,10 @@ public class CommercialActivity extends BaseActivity {
                         EVITA_API_URL, String.valueOf(getPRODUCT_CODE()), String.valueOf(getGoDownId()));
 
     }
+    @Override
+    protected void onPause() {
+        AppSettings.hideKeyboard(this);
+        super.onPause();
 
+    }
 }

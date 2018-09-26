@@ -37,6 +37,7 @@ import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.tvdetails.TVDetailsActivity;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.stmt.UpdateBuilder;
@@ -1014,5 +1015,10 @@ public class DomesticActivity extends BaseActivity {
                 .apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL, EVITA_API_URL, productId, String.valueOf(getGoDownId()));
     }
 
+    @Override
+    protected void onPause() {
+        AppSettings.hideKeyboard(this);
+        super.onPause();
 
+    }
 }

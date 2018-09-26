@@ -76,6 +76,8 @@ public class TruckSendFragment extends Fragment {
     private int godownId;
     private int spinItemsCount = -1;
     private List<String> listSpinItems = new ArrayList<>();
+    private String default_str = "--";
+
 
     public String getLoad_type() {
         return load_type;
@@ -215,7 +217,7 @@ public class TruckSendFragment extends Fragment {
                 spinItems.add(item.product_description);
         }
 
-        spinItems.add(0,"--");
+        spinItems.add(0,default_str);
         spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -259,7 +261,7 @@ public class TruckSendFragment extends Fragment {
                             return;
                         }
 
-                        if(selectedItem.trim().equalsIgnoreCase("--")){
+                        if(selectedItem.trim().equalsIgnoreCase(default_str)){
 
 
                             if (listSpinItems.contains(selectedItem)) {
@@ -291,8 +293,9 @@ public class TruckSendFragment extends Fragment {
                                         }
 
                                     }else {
-
-                                        listSpinItems.add(pos, selectedItem);
+                                        if(pos != 0 && selectedItem.equalsIgnoreCase(default_str)) {
+                                            listSpinItems.add(pos, selectedItem);
+                                        }
                                     }
                                 }catch (Exception e ){
                                     listSpinItems.add(pos, selectedItem);
@@ -387,7 +390,7 @@ public class TruckSendFragment extends Fragment {
 
 
                     String spinner = (String) dynamicSpinner.get(j).getSelectedItem();
-                    if(spinner.trim().equalsIgnoreCase("--")) {
+                    if(spinner.trim().equalsIgnoreCase(default_str)) {
                         Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
                         return;
                     }

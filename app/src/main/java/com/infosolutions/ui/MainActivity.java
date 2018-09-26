@@ -361,7 +361,7 @@ public class MainActivity extends BaseActivity {
         String SELECTED_GODOWN_CODE = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN, "Empty");
         mTitle.setText(SELECTED_GODOWN_NAME + "( " + SELECTED_GODOWN_CODE + " )");
 
-        showToast(getPreferences(Constants.KEY_AGENCY_NAME));
+        //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
         setSupportActionBar(toolbar);
 
     }
@@ -559,6 +559,8 @@ public class MainActivity extends BaseActivity {
         }
 
     }
+
+
 
 }
 

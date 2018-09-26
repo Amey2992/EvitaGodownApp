@@ -464,12 +464,18 @@ public class LoginActivity extends BaseActivity {
 
             for (int employee = 0; employee < EMP_LENGTH; employee++) {
                 JSONObject objectEmployee = arrayEMPLOYEE.getJSONObject(employee);
-                String TITLE = objectEmployee.getString("TITLE");
-                String FIRST_NAME = objectEmployee.getString("FIRST_NAME");
-                String MIDDLE_NAME = objectEmployee.getString("MIDDLE_NAME");
-                String LAST_NAME = objectEmployee.getString("LAST_NAME");
-                String ID_DESIGNATION = objectEmployee.getString("ID_DESIGNATION");
-                String CREDIT_GIVEN = objectEmployee.getString("CREDIT_GIVEN");
+                String TITLE = objectEmployee.optString("TITLE");
+                String FIRST_NAME = objectEmployee.optString("FIRST_NAME");
+                String MIDDLE_NAME = objectEmployee.optString("MIDDLE_NAME");
+                String LAST_NAME = objectEmployee.optString("LAST_NAME");
+                String ID_DESIGNATION = objectEmployee.optString("ID_DESIGNATION");
+                String CREDIT_GIVEN = objectEmployee.optString("CREDIT_GIVEN");
+
+                if(MIDDLE_NAME.trim().equalsIgnoreCase("null")){
+                    MIDDLE_NAME = "";
+                }else if(LAST_NAME.trim().equalsIgnoreCase("null")){
+                    LAST_NAME = "";
+                }
 
                 String FULL_NAME = TITLE + " " + FIRST_NAME + " " + MIDDLE_NAME + " " + LAST_NAME;
                 int EMP_CODE = Integer.parseInt(objectEmployee.getString("EMP_CODE"));

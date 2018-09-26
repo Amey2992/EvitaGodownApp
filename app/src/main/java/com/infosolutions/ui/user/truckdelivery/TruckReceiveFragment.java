@@ -78,7 +78,8 @@ public class TruckReceiveFragment extends Fragment {
     private ArrayList<String> spinItems;
     private List<String> listSpinItems = new ArrayList<>();
     private int spinItemsCount = -1;
-    private String temp = "";
+    private String default_str = "--";
+
 
     public String getLoad_type() {
         return load_type;
@@ -218,7 +219,7 @@ public class TruckReceiveFragment extends Fragment {
         }
 
 
-        spinItems.add(0,"--");
+        spinItems.add(0,default_str);
         //spinItemsCount = spinItems.size();
         spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -269,7 +270,7 @@ public class TruckReceiveFragment extends Fragment {
                             return;
                         }
 
-                        if(selectedItem.trim().equalsIgnoreCase("--")){
+                        if(selectedItem.trim().equalsIgnoreCase(default_str)){
 
 
                             if (listSpinItems.contains(selectedItem)) {
@@ -291,18 +292,22 @@ public class TruckReceiveFragment extends Fragment {
                                     //pos = --pos;
                                     if(listSpinItems.size() >0) {
                                         try{
-                                           String str  = listSpinItems.get(pos);
-                                           if(!TextUtils.isEmpty(str)){
-                                               listSpinItems.set(pos,selectedItem);
+                                            String str  = listSpinItems.get(pos);
+                                            if(!TextUtils.isEmpty(str)){
+                                                listSpinItems.set(pos,selectedItem);
 
-                                           }
+                                            }
                                         }catch (Exception e){
                                             listSpinItems.add(pos, selectedItem);
                                         }
 
                                         //selectedSpinItems.remove(pos);
                                     }else {
-                                        listSpinItems.add(pos, selectedItem);
+                                        //if(listSpinItems.size() > 0)
+
+                                        if(pos != 0 && selectedItem.equalsIgnoreCase(default_str)) {
+                                            listSpinItems.add(pos, selectedItem);
+                                        }
                                     }
                                 }catch (Exception e ){
                                     listSpinItems.add(pos, selectedItem);
@@ -346,13 +351,13 @@ public class TruckReceiveFragment extends Fragment {
                         String text = "";
                         Spinner spinner2 = null;
                         LinearLayout linearLayout = (LinearLayout)((Button)view).getParent();
-                       if(linearLayout != null){
-                           spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
-                           if(spinner2 != null) {
-                               text = spinner2.getSelectedItem().toString();
-                           }
-                           etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
-                       }
+                        if(linearLayout != null){
+                            spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
+                            if(spinner2 != null) {
+                                text = spinner2.getSelectedItem().toString();
+                            }
+                            etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
+                        }
                         int pos = (int)btnDelete.getTag();
 
                         //pos = --pos;
@@ -422,7 +427,7 @@ public class TruckReceiveFragment extends Fragment {
 
                     String spinner = (String) dynamicSpinner.get(j).getSelectedItem();
 
-                    if(spinner.trim().equalsIgnoreCase("--")) {
+                    if(spinner.trim().equalsIgnoreCase(default_str)) {
                         Toast.makeText(getActivity(),"Invalid Product",Toast.LENGTH_SHORT).show();
                         return;
                     }
