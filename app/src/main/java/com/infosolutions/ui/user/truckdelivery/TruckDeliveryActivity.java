@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.infosolutions.evita.R;
+import com.infosolutions.utils.AppSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,4 +104,10 @@ public class TruckDeliveryActivity extends AppCompatActivity  {
         }
     }
 
+    @Override
+    protected void onPause() {
+        AppSettings.hideKeyboard(this);
+        super.onPause();
+
+    }
 }
