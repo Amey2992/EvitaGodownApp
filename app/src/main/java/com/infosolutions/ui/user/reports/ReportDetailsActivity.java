@@ -150,11 +150,11 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
 
         try {
             JSONObject jsonObject = new JSONObject(response);
-            String respMessage = jsonObject.getString("responseMessage");
-            String respCode = jsonObject.getString("responseCode");
+            String respMessage = jsonObject.optString("responseMessage");
+            String respCode = jsonObject.optString("responseCode");
 
             if (respCode.equalsIgnoreCase("200")){
-                JSONArray arrayReport = jsonObject.getJSONArray("reportResult");
+                JSONArray arrayReport = jsonObject.optJSONArray("reportResult");
 
                 if (type.equals(VolleySingleton.CallType.REPORT_DOMESTIC)){
 
@@ -245,21 +245,21 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
 
                 for (int position = 0; position<arrayReceived.length(); position++){
 
-                    JSONObject jsonReceived = arrayReceived.getJSONObject(position);
-                    String productType = jsonReceived.getString("DESCRIPTION");
-                    String name = jsonReceived.getString("NAME");
-                    String fullCylinder = jsonReceived.getString("FULL_CYLINDER");
-                    String empty = jsonReceived.getString("EMPTY");
-                    String sv = jsonReceived.getString("SV");
-                    String dbc = jsonReceived.getString("DBC");
-                    String DEFECTIVE = jsonReceived.getString("DEFECTIVE");
-                    String LOST = jsonReceived.getString("LOST");
-                    String returnFull = jsonReceived.getString("RETURN_FULL");
+                    JSONObject jsonReceived = arrayReceived.optJSONObject(position);
+                    String productType = jsonReceived.optString("DESCRIPTION");
+                    String name = jsonReceived.optString("NAME");
+                    String fullCylinder = jsonReceived.optString("FULL_CYLINDER");
+                    String empty = jsonReceived.optString("EMPTY");
+                    String sv = jsonReceived.optString("SV");
+                    String dbc = jsonReceived.optString("DBC");
+                    String DEFECTIVE = jsonReceived.optString("DEFECTIVE");
+                    String LOST = jsonReceived.optString("LOST");
+                    String returnFull = jsonReceived.optString("RETURN_FULL");
 
                     createLayout(productType, name,  fullCylinder, empty, sv, dbc, DEFECTIVE, LOST,returnFull,"");
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Toast.makeText(this, "Invalid data received field", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
@@ -278,18 +278,18 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
 
                 for (int position = 0; position<arrayReceived.length(); position++){
 
-                    JSONObject jsonReceived = arrayReceived.getJSONObject(position);
+                    JSONObject jsonReceived = arrayReceived.optJSONObject(position);
 
-                    String VECHICAL_NO = jsonReceived.getString("VECHICAL_NO");
-                    String INVOICE_NO = jsonReceived.getString("INVOICE_NO");
-                    String DESCRIPTION = jsonReceived.getString("DESCRIPTION");
-                    String QUANTITY = jsonReceived.getString("QUANTITY");
-                    String LOST = jsonReceived.getString("LOST");
+                    String VECHICAL_NO = jsonReceived.optString("VECHICAL_NO");
+                    String INVOICE_NO = jsonReceived.optString("INVOICE_NO");
+                    String DESCRIPTION = jsonReceived.optString("DESCRIPTION");
+                    String QUANTITY = jsonReceived.optString("QUANTITY");
+                    String LOST = jsonReceived.optString("LOST");
 
                     createLayout(VECHICAL_NO, INVOICE_NO, DESCRIPTION,  QUANTITY, LOST,"","","","","");
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Toast.makeText(this, "Invalid data received field", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
@@ -308,17 +308,17 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
 
                 for (int position = 0; position<arrayReceived.length(); position++){
 
-                    JSONObject jsonReceived = arrayReceived.getJSONObject(position);
-                    String VEHICLE_NO = jsonReceived.getString("VECHICAL_NO");
-                    String ERV_NO = jsonReceived.getString("ERV_NO");
-                    String DESCRIPTION = jsonReceived.getString("DESCRIPTION");
-                    String QUANTITY = jsonReceived.getString("QUANTITY");
-                    String DIFFECTIVE = jsonReceived.getString("DIFFECTIVE");
+                    JSONObject jsonReceived = arrayReceived.optJSONObject(position);
+                    String VEHICLE_NO = jsonReceived.optString("VECHICAL_NO");
+                    String ERV_NO = jsonReceived.optString("ERV_NO");
+                    String DESCRIPTION = jsonReceived.optString("DESCRIPTION");
+                    String QUANTITY = jsonReceived.optString("QUANTITY");
+                    String DIFFECTIVE = jsonReceived.optString("DIFFECTIVE");
 
                     createLayout(VEHICLE_NO, ERV_NO, DESCRIPTION, QUANTITY, DIFFECTIVE, "","","","","");
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Toast.makeText(this, "Invalid data received field", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
@@ -337,15 +337,15 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
 
                 for (int position = 0; position<arrayReceived.length(); position++){
 
-                    JSONObject jsonReceived = arrayReceived.getJSONObject(position);
-                    String DESCRIPTION = jsonReceived.getString("DESCRIPTION");
-                    String CONSUMER_NO = jsonReceived.getString("CONSUMER_NO");
-                    String QUANTITY = jsonReceived.getString("QUANTITY");
+                    JSONObject jsonReceived = arrayReceived.optJSONObject(position);
+                    String DESCRIPTION = jsonReceived.optString("DESCRIPTION");
+                    String CONSUMER_NO = jsonReceived.optString("CONSUMER_NO");
+                    String QUANTITY = jsonReceived.optString("QUANTITY");
 
                     createLayout(DESCRIPTION, CONSUMER_NO, QUANTITY, "", "", "","","","","");
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Toast.makeText(this, "Invalid data received field", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }

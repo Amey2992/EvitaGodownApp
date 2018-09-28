@@ -147,11 +147,11 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
             if(jsonArray != null ){
                 for (int position = 0; position < jsonArray.length(); position++) {
                     try {
-                        JSONObject jsonGodown = jsonArray.getJSONObject(position);
+                        JSONObject jsonGodown = jsonArray.optJSONObject(position);
 
-                        String godown_type_code = jsonGodown.getString("GODOWN_CODE");
+                        String godown_type_code = jsonGodown.optString("GODOWN_CODE");
                         intGodownCode = Integer.parseInt(godown_type_code);
-                        String godown_type_name = jsonGodown.getString("DISPLAY_NAME");
+                        String godown_type_name = jsonGodown.optString("DISPLAY_NAME");
                         String godown_name_code = godown_type_name + ":" + godown_type_code;
                         //builder.addItem(intGodownCode, godown_name_code);
                         //mapLinked.add(godown_name_code);
@@ -161,7 +161,7 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
 
                         godownHash.put(godown_name_code,godown_type_code);
 
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         //showErrorToast(LoginActivity.this, "Error", "Something went wrong " + e.getMessage());
                     }
                 }
@@ -328,8 +328,8 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
                 enabledView();
                 hideProgressDialog();
             }else{
-                String responseMsg = objectResult.getString("responseMessage");
-                if (objectResult.getString("responseCode").equalsIgnoreCase("200")) {
+                String responseMsg = objectResult.optString("responseMessage");
+                if (objectResult.optString("responseCode").equalsIgnoreCase("200")) {
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
                     finish();

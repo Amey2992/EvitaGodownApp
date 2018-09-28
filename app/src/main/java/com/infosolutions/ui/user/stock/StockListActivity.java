@@ -105,21 +105,21 @@ public class StockListActivity extends BaseActivity {
         try {
 
             JSONObject jsonObject = new JSONObject(response);
-            String responseCode = jsonObject.getString("responseCode");
+            String responseCode = jsonObject.optString("responseCode");
 
             if (responseCode.equalsIgnoreCase("200")) {
 
-                openingStock(jsonObject.getString("OPENING_STOCKS"));
+                openingStock(jsonObject.optString("OPENING_STOCKS"));
                 loadsTextview.setVisibility(View.VISIBLE);
-                loadsReceived(jsonObject.getString("LOAD_RECEVIED"));
+                loadsReceived(jsonObject.optString("LOAD_RECEVIED"));
                 divider.setVisibility(View.VISIBLE);
-                loadsSend(jsonObject.getString("LOAD_SEND"));
-                loadDelivery(jsonObject.getString("DELIVERY"));
-                loadClosingStock(jsonObject.getString("CLOSING_STOCKS"));
-                loadOtherStock(jsonObject.getString("OTHER_STOCKS"));
+                loadsSend(jsonObject.optString("LOAD_SEND"));
+                loadDelivery(jsonObject.optString("DELIVERY"));
+                loadClosingStock(jsonObject.optString("CLOSING_STOCKS"));
+                loadOtherStock(jsonObject.optString("OTHER_STOCKS"));
 
             } else {
-                RESP_MSG = jsonObject.getString("RESP_MSG");
+                RESP_MSG = jsonObject.optString("RESP_MSG");
                 Toast.makeText(StockListActivity.this, RESP_MSG, Toast.LENGTH_SHORT).show();
             }
         }catch (Exception ex)
@@ -194,12 +194,12 @@ public class StockListActivity extends BaseActivity {
 
                 for (int i = 0; i<arrayOpening.length(); i++)
                 {
-                    JSONObject jsonReceived = arrayOpening.getJSONObject(i);
+                    JSONObject jsonReceived = arrayOpening.optJSONObject(i);
 
-                    String DEFECTIVE     =  jsonReceived.getString("DEFECTIVE");
-                    String DESCRIPTION   =  jsonReceived.getString("DESCRIPTION");
-                    String OPENING_FULL  =  jsonReceived.getString("OPENING_FULL");
-                    String OPENING_EMPTY =  jsonReceived.getString("OPENING_EMPTY");
+                    String DEFECTIVE     =  jsonReceived.optString("DEFECTIVE");
+                    String DESCRIPTION   =  jsonReceived.optString("DESCRIPTION");
+                    String OPENING_FULL  =  jsonReceived.optString("OPENING_FULL");
+                    String OPENING_EMPTY =  jsonReceived.optString("OPENING_EMPTY");
 
                     initOtherStockLayout(DESCRIPTION, OPENING_FULL, OPENING_EMPTY, DEFECTIVE,opening_stock_table);
                 }
@@ -225,13 +225,13 @@ public class StockListActivity extends BaseActivity {
 
             for (int position = 0; position<arraySend.length(); position++){
 
-                JSONObject jsonSend     = arraySend.getJSONObject(position);
+                JSONObject jsonSend     = arraySend.optJSONObject(position);
                 //JSONObject jsonReceived = arrayReceived.getJSONObject(position);
-                String description      = jsonSend.getString("DESCRIPTION");
+                String description      = jsonSend.optString("DESCRIPTION");
                 //String soundReceive     = jsonReceived.getString("SOUND");
                 //String lost             = jsonReceived.getString("LOST_TRUCK_RECEVING");
-                String soundSend        = jsonSend.getString("SOUND");
-                String defective        = jsonSend.getString("TRUCK_DEFECTIVE");
+                String soundSend        = jsonSend.optString("SOUND");
+                String defective        = jsonSend.optString("TRUCK_DEFECTIVE");
 
                 //initLoadsLayout(description, soundReceive, lost, soundSend, defective);
                 initLoadsLayout(description, soundSend, defective,right_table_layout);
@@ -258,10 +258,10 @@ public class StockListActivity extends BaseActivity {
             for (int position = 0; position<arrayReceived.length(); position++){
 
                 //JSONObject jsonSend     = arraySend.getJSONObject(position);
-                JSONObject jsonReceived = arrayReceived.getJSONObject(position);
-                String description      = jsonReceived.getString("DESCRIPTION");
-                String soundReceive     = jsonReceived.getString("SOUND");
-                String lost             = jsonReceived.getString("LOST_TRUCK_RECEVING");
+                JSONObject jsonReceived = arrayReceived.optJSONObject(position);
+                String description      = jsonReceived.optString("DESCRIPTION");
+                String soundReceive     = jsonReceived.optString("SOUND");
+                String lost             = jsonReceived.optString("LOST_TRUCK_RECEVING");
                 //String soundSend        = jsonSend.getString("SOUND");
                 //String defective        = jsonSend.getString("TRUCK_DEFECTIVE");
 
@@ -387,14 +387,14 @@ public class StockListActivity extends BaseActivity {
                 setHeaderDelivery("", "FULL", "EMPTY", "SV/DBC", "DEFECTIVE", "TV Out",delivery_table);
 
                 for (int i = 0; i<arrayDelivery.length(); i++){
-                    JSONObject jsonReceived = arrayDelivery.getJSONObject(i);
+                    JSONObject jsonReceived = arrayDelivery.optJSONObject(i);
 
-                    String DESCRIPTION = jsonReceived.getString("DESCRIPTION");
-                    String FULL = jsonReceived.getString("DELIVERY_FULL");
-                    String EMPTY = jsonReceived.getString("DELIVERY_EMPTY");
-                    String SV_DBC = jsonReceived.getString("SV");
-                    String DEFECTIVE = jsonReceived.getString("DEFECTIVE");
-                    String TVOUT = jsonReceived.getString("TV");
+                    String DESCRIPTION = jsonReceived.optString("DESCRIPTION");
+                    String FULL = jsonReceived.optString("DELIVERY_FULL");
+                    String EMPTY = jsonReceived.optString("DELIVERY_EMPTY");
+                    String SV_DBC = jsonReceived.optString("SV");
+                    String DEFECTIVE = jsonReceived.optString("DEFECTIVE");
+                    String TVOUT = jsonReceived.optString("TV");
 
                     initOther5(DESCRIPTION, FULL, EMPTY, SV_DBC, DEFECTIVE, TVOUT,delivery_table);
                 }
@@ -419,12 +419,12 @@ public class StockListActivity extends BaseActivity {
                 setHeaderStock("", "FULL", "EMPTY", "DEFECTIVE",closing_stock_table);
 
                 for (int i = 0; i<arrayClosing.length(); i++){
-                    JSONObject jsonReceived = arrayClosing.getJSONObject(i);
+                    JSONObject jsonReceived = arrayClosing.optJSONObject(i);
 
-                    String DESCRIPTION =jsonReceived.getString("DESCRIPTION");
-                    String CLOSING_FULL =jsonReceived.getString("CLOSING_FULL");
-                    String CLOSING_EMPTY =jsonReceived.getString("CLOSING_EMPTY");
-                    String DEFECTIVE =jsonReceived.getString("DEFECTIVE");
+                    String DESCRIPTION =jsonReceived.optString("DESCRIPTION");
+                    String CLOSING_FULL =jsonReceived.optString("CLOSING_FULL");
+                    String CLOSING_EMPTY =jsonReceived.optString("CLOSING_EMPTY");
+                    String DEFECTIVE =jsonReceived.optString("DEFECTIVE");
 
                     initOtherStockLayout(DESCRIPTION, CLOSING_FULL, CLOSING_EMPTY, DEFECTIVE,closing_stock_table);
                 }
@@ -451,11 +451,11 @@ public class StockListActivity extends BaseActivity {
 
                 for (int i = 0; i<arrayOther.length(); i++){
 
-                    JSONObject jsonReceived = arrayOther.getJSONObject(i);
-                    String DESCRIPTION = jsonReceived.getString("DESCRIPTION");
-                    String CREDIT = jsonReceived.getString("CREDIT");
-                    String LOST_DELIVERY_CYLINDERS = jsonReceived.getString("LOST_DELIVERY_CYLINDERS");
-                    String ON_FIELD = jsonReceived.getString("ON_FIELD");
+                    JSONObject jsonReceived = arrayOther.optJSONObject(i);
+                    String DESCRIPTION = jsonReceived.optString("DESCRIPTION");
+                    String CREDIT = jsonReceived.optString("CREDIT");
+                    String LOST_DELIVERY_CYLINDERS = jsonReceived.optString("LOST_DELIVERY_CYLINDERS");
+                    String ON_FIELD = jsonReceived.optString("ON_FIELD");
 
                     initOtherStockLayout(DESCRIPTION, CREDIT, LOST_DELIVERY_CYLINDERS, ON_FIELD,other_stock_table);
                 }

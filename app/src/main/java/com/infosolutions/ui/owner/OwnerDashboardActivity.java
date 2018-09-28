@@ -232,7 +232,7 @@ public class OwnerDashboardActivity extends
 
             for (int i=0; i<arrayOpening.length(); i++){
 
-                JSONObject openingItem = arrayOpening.getJSONObject(i);
+                JSONObject openingItem = arrayOpening.optJSONObject(i);
                 String DESCRIPTION = openingItem.getString("DESCRIPTION");
                 String OPENING_FULL = openingItem.getString("OPENING_FULL");
                 String OPENING_EMPTY = openingItem.getString("OPENING_EMPTY");
@@ -248,7 +248,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout, "PRODUCT", "FULL","EMPTY", "SV","", "","" );
 
             for (int i=0; i<arrayDomestic.length(); i++){
-                JSONObject openingItem = arrayDomestic.getJSONObject(i);
+                JSONObject openingItem = arrayDomestic.optJSONObject(i);
 
                 String Description = openingItem.getString("DESCRIPTION");
                 String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
@@ -267,7 +267,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout,"PRODUCT", "FULL","EMPTY", "SV","", "" ,"");
 
             for (int i=0; i<arrayCommercial.length(); i++){
-                JSONObject openingItem = arrayCommercial.getJSONObject(i);
+                JSONObject openingItem = arrayCommercial.optJSONObject(i);
 
                 String Description = openingItem.getString("DESCRIPTION");
                 String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
@@ -286,7 +286,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout,"PRODUCT", "SOUND", "LOST","","","","");
 
             for (int i=0; i<arrayReceive.length(); i++){
-                JSONObject openingItem = arrayReceive.getJSONObject(i);
+                JSONObject openingItem = arrayReceive.optJSONObject(i);
 
                 String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
                 String SOUND = openingItem.getString("SOUND");
@@ -303,7 +303,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout, "PRODUCT", "SOUND","DEFECTIVE","","","","");
 
             for (int i=0; i<arraySend.length(); i++){
-                JSONObject openingItem = arraySend.getJSONObject(i);
+                JSONObject openingItem = arraySend.optJSONObject(i);
                 String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
                 String SOUND = openingItem.getString("SOUND");
                 String DEFECTIVE = openingItem.getString("TRUCK_DEFECTIVE");
@@ -318,7 +318,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout, "PRODUCT", "CYLINDER", "", "","","","");
             Log.e("TV Details", arrayTVDetails.toString());
             for (int i=0; i<arrayTVDetails.length(); i++){
-                JSONObject openingItem = arrayTVDetails.getJSONObject(i);
+                JSONObject openingItem = arrayTVDetails.optJSONObject(i);
                 String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
                 String CYLINDER = openingItem.getString("CYLINDER");
 
@@ -338,7 +338,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout, "PRODUCT", "FULL", "EMPTY", "DEFECTIVE","","","");
 
             for (int i=0; i<arrayClosing.length(); i++){
-                JSONObject openingItem = arrayClosing.getJSONObject(i);
+                JSONObject openingItem = arrayClosing.optJSONObject(i);
                 String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
 
                 String CLOSING_FULL = openingItem.getString("CLOSING_FULL");
@@ -358,7 +358,7 @@ public class OwnerDashboardActivity extends
             setHeaders(tableLayout, "PRODUCT", "CREDIT", "ON FEILD", "LOST","","","");
 
             for (int i=0; i<arrayOther.length(); i++){
-                JSONObject openingItem = arrayOther.getJSONObject(i);
+                JSONObject openingItem = arrayOther.optJSONObject(i);
                 String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
                 String CREDIT = openingItem.getString("CREDIT");
                 String ON_FIELD = openingItem.getString("ON_FIELD");

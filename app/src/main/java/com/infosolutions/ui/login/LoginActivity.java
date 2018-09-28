@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -142,7 +143,7 @@ public class LoginActivity extends BaseActivity {
         tvAgencyName = findViewById(R.id.tvAgencyName);
         scrollView = findViewById(R.id.scrollView);
         version_textview = findViewById(R.id.version_textview);
-        version_textview.setText(AppSettings.getInstance(this).getAppVersion(this));
+        version_textview.setText(AppSettings.getInstance(this).getAppVersion(this) +" " + (Constants.dbname));
 
         focusOnView(scrollView, editTextUsername);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);
@@ -179,8 +180,8 @@ public class LoginActivity extends BaseActivity {
 
         try {
             JSONObject objectESS = new JSONObject(response);
-            String responseMessage = objectESS.getString("responseMessage");
-            String responseCode = objectESS.getString("responseCode");
+            String responseMessage = objectESS.optString("responseMessage");
+            String responseCode = objectESS.optString("responseCode");
 
             if (objectESS.has("USERNAME")) {
 
@@ -197,9 +198,9 @@ public class LoginActivity extends BaseActivity {
 
             if (responseMessage.equalsIgnoreCase(Response.SUCCESS) && responseCode.equalsIgnoreCase(String.valueOf(Response.RESPONSECODE))) {
 
-                USER_TYPE = objectESS.getString("USERTYPE");
+                USER_TYPE = objectESS.optString("USERTYPE");
                 if (objectESS.has("AGENCY_NAME")) {
-                    AGENCY_NAME = objectESS.getString("AGENCY_NAME");
+                    AGENCY_NAME = objectESS.optString("AGENCY_NAME");
                     PreferencesHelper.getInstance().setValue(KEY_AGENCY_NAME, AGENCY_NAME);
                 }
 
@@ -208,7 +209,7 @@ public class LoginActivity extends BaseActivity {
                 if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_USER)) {
                     userTypeMode(objectESS);
                 } else if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
-                    String ownerType = objectESS.getString("OWNER_DATA");
+                    String ownerType = objectESS.optString("OWNER_DATA");
                     ownerTypeMode(ownerType);
                 }
                 clearPreviousData();
@@ -279,8 +280,8 @@ public class LoginActivity extends BaseActivity {
 
             try {
 
-                responseMsg = jsonResult.getString("responseMessage");
-                if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
+                responseMsg = jsonResult.optString("responseMessage");
+                if (jsonResult.optString("responseCode").equalsIgnoreCase("200")) {
                     AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
                     //AppSettings.getInstance(this).updateLocalFromServer(this);
                     /*updateDatabase();
@@ -294,7 +295,7 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     //Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -349,10 +350,16 @@ public class LoginActivity extends BaseActivity {
 
                 if (response != null) {
                     JSONObject objectAgency = new JSONObject(response);
-                    JSONArray arrayDistributor = objectAgency.getJSONArray("ESS_MST_DISTRIBUTOR");
-                    AGENCY_NAME = arrayDistributor.getJSONObject(0).getString("AGENCY_NAME");
-                    tvAgencyName.setText(AGENCY_NAME);
-                    tvAgencyName.setBackground(getResources().getDrawable(R.drawable.btn_white_background));
+                    JSONArray arrayDistributor = objectAgency.optJSONArray("ESS_MST_DISTRIBUTOR");
+                    AGENCY_NAME = arrayDistributor.optJSONObject(0).optString("AGENCY_NAME");
+                    String status = arrayDistributor.optJSONObject(0).optString("STATUS");
+                    if(!TextUtils.isEmpty(status) && status.trim().equalsIgnoreCase("approved")) {
+                        tvAgencyName.setVisibility(View.VISIBLE);
+                        tvAgencyName.setText(AGENCY_NAME);
+                        tvAgencyName.setBackground(getResources().getDrawable(R.drawable.btn_white_background));
+                    }else{
+                        tvAgencyName.setVisibility(View.GONE);
+                    }
                 }
 
             } catch (JSONException e) {
@@ -434,12 +441,12 @@ public class LoginActivity extends BaseActivity {
 
     private void userTypeMode(JSONObject objectESS) throws JSONException {
 
-        JSONArray arrayPRODUCT = objectESS.getJSONArray("ESS_MST_PRODUCT");
-        JSONArray arrayEMPLOYEE = objectESS.getJSONArray("ESS_MST_EMPLOYEE");
-        JSONArray arrayVEHICLE = objectESS.getJSONArray("ESS_MST_VEHICLE");
-        JSONArray ESS_MST_GODOWN = objectESS.getJSONArray("ESS_MST_GODOWN");
-        String ESS_MST_STOCKS = objectESS.getString("STOCKS");
-        JSONArray ESS_COMMERCIAL_DELIVERY_CREDIT = objectESS.getJSONArray("ESS_COMMERCIAL_DELIVERY_CREDIT");
+        JSONArray arrayPRODUCT = objectESS.optJSONArray("ESS_MST_PRODUCT");
+        JSONArray arrayEMPLOYEE = objectESS.optJSONArray("ESS_MST_EMPLOYEE");
+        JSONArray arrayVEHICLE = objectESS.optJSONArray("ESS_MST_VEHICLE");
+        JSONArray ESS_MST_GODOWN = objectESS.optJSONArray("ESS_MST_GODOWN");
+        String ESS_MST_STOCKS = objectESS.optString("STOCKS");
+        JSONArray ESS_COMMERCIAL_DELIVERY_CREDIT = objectESS.optJSONArray("ESS_COMMERCIAL_DELIVERY_CREDIT");
 
         if (ESS_COMMERCIAL_DELIVERY_CREDIT != null) {
             storeCommercialCredit(ESS_COMMERCIAL_DELIVERY_CREDIT);
@@ -463,7 +470,7 @@ public class LoginActivity extends BaseActivity {
         if (EMP_LENGTH > 0) {
 
             for (int employee = 0; employee < EMP_LENGTH; employee++) {
-                JSONObject objectEmployee = arrayEMPLOYEE.getJSONObject(employee);
+                JSONObject objectEmployee = arrayEMPLOYEE.optJSONObject(employee);
                 String TITLE = objectEmployee.optString("TITLE");
                 String FIRST_NAME = objectEmployee.optString("FIRST_NAME");
                 String MIDDLE_NAME = objectEmployee.optString("MIDDLE_NAME");
@@ -478,7 +485,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 String FULL_NAME = TITLE + " " + FIRST_NAME + " " + MIDDLE_NAME + " " + LAST_NAME;
-                int EMP_CODE = Integer.parseInt(objectEmployee.getString("EMP_CODE"));
+                int EMP_CODE = Integer.parseInt(objectEmployee.optString("EMP_CODE"));
 
                 Log.e("CREDIT_GIVEN: ", CREDIT_GIVEN);
 
@@ -497,11 +504,11 @@ public class LoginActivity extends BaseActivity {
         }
 
         for (int product = 0; product < arrayPRODUCT.length(); product++) {
-            JSONObject objectProduct = arrayPRODUCT.getJSONObject(product);
-            int PRODUCT_CODE = Integer.parseInt(objectProduct.getString("PRODUCT_CODE"));
-            String PRODUCT_CATEGORY = objectProduct.getString("ID_PRODUCT_CATEGORY");
-            String PRODUCT_DESCRIPTION = objectProduct.getString("DESCRIPTION");
-            String UNIT_MEASUREMENT = objectProduct.getString("UNIT_OF_MEASUREMENT");
+            JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
+            int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
+            String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
+            String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
+            String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
 
             productDB.create(new ProductDB(1, PRODUCT_CODE, PRODUCT_CATEGORY,
                     PRODUCT_DESCRIPTION, UNIT_MEASUREMENT));
@@ -519,17 +526,17 @@ public class LoginActivity extends BaseActivity {
         }
         for (int vehicle = 0; vehicle < arrayVEHICLE.length(); vehicle++) {
 
-            JSONObject objectVehicle = arrayVEHICLE.getJSONObject(vehicle);
-            String VEHICLE_NO = objectVehicle.getString("VEHICLE_NO");
-            int VEHICLE_ID = Integer.parseInt(objectVehicle.getString("VEHICAL_ID"));
+            JSONObject objectVehicle = arrayVEHICLE.optJSONObject(vehicle);
+            String VEHICLE_NO = objectVehicle.optString("VEHICLE_NO");
+            int VEHICLE_ID = Integer.parseInt(objectVehicle.optString("VEHICAL_ID"));
             vehicleDB.create(new VehicleDB(1, VEHICLE_ID, VEHICLE_NO));
         }
 
         /******************************************************************************************/
 
-        USER_ID = objectESS.getString("ID_USER");
+        USER_ID = objectESS.optString("ID_USER");
         setUSER_ID(USER_ID);
-        String PRODUCT_LIST = objectESS.getString("productDetails");
+        String PRODUCT_LIST = objectESS.optString("productDetails");
         setOffline_module_list(PRODUCT_LIST);
         saveWithSharedPreferences(this, Constants.KEY_USER_TYPE, getUSER_TYPE());
 
@@ -580,13 +587,13 @@ public class LoginActivity extends BaseActivity {
         }
 
         for (int position = 0; position < ess_commercial_delivery_credit.length(); position++) {
-            JSONObject objectProduct = ess_commercial_delivery_credit.getJSONObject(position);
+            JSONObject objectProduct = ess_commercial_delivery_credit.optJSONObject(position);
 
-            int PRODUCT_ID = Integer.parseInt(objectProduct.getString("PRODUCT_ID"));
-            int DELIVERY_ID = Integer.parseInt(objectProduct.getString("DELIVERY_ID"));
-            String GODOWN_ID = objectProduct.getString("GODOWN_ID");
-            String CREDIT_GIVEN = objectProduct.getString("CREDIT_GIVEN");
-            String DATE_TIME = objectProduct.getString("DATE_TIME");
+            int PRODUCT_ID = Integer.parseInt(objectProduct.optString("PRODUCT_ID"));
+            int DELIVERY_ID = Integer.parseInt(objectProduct.optString("DELIVERY_ID"));
+            String GODOWN_ID = objectProduct.optString("GODOWN_ID");
+            String CREDIT_GIVEN = objectProduct.optString("CREDIT_GIVEN");
+            String DATE_TIME = objectProduct.optString("DATE_TIME");
 
             //ccCreditDB.create(new CommercialDeliveryCreditDB(PRODUCT_ID, DELIVERY_ID, CREDIT_GIVEN, GODOWN_ID, DATE_TIME));
         }
@@ -607,18 +614,18 @@ public class LoginActivity extends BaseActivity {
         if (getGO_DOWN_ARRAY_LIST() != null && getGO_DOWN_ARRAY_LIST().length() > 0){
             for (int position = 0; position < getGO_DOWN_ARRAY_LIST().length(); position++) {
                 try {
-                    JSONObject jsonGodown = getGO_DOWN_ARRAY_LIST().getJSONObject(position);
+                    JSONObject jsonGodown = getGO_DOWN_ARRAY_LIST().optJSONObject(position);
 
-                    String godown_type_code = jsonGodown.getString("GODOWN_CODE");
+                    String godown_type_code = jsonGodown.optString("GODOWN_CODE");
                     int intGodownCode = Integer.parseInt(godown_type_code);
-                    String godown_type_name = jsonGodown.getString("DISPLAY_NAME");
+                    String godown_type_name = jsonGodown.optString("DISPLAY_NAME");
                     String godown_name_code = godown_type_name + ":" + godown_type_code;
                     builder.addItem(intGodownCode, godown_name_code);
                     mapLinked.add(godown_name_code);
 
                     Log.e("chipSelector", godown_name_code);
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     showErrorToast(LoginActivity.this, "Error", "Something went wrong " + e.getMessage());
                 }
             }

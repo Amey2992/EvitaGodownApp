@@ -154,11 +154,11 @@ public class OwnerListAdapter extends BaseAdapter {
 
             for (int i=0; i<arrayOpening.length(); i++){
 
-                JSONObject openingItem = arrayOpening.getJSONObject(i);
-                String DESCRIPTION = openingItem.getString("DESCRIPTION");
-                String OPENING_FULL = openingItem.getString("OPENING_FULL");
-                String OPENING_EMPTY = openingItem.getString("OPENING_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
+                JSONObject openingItem = arrayOpening.optJSONObject(i);
+                String DESCRIPTION = openingItem.optString("DESCRIPTION");
+                String OPENING_FULL = openingItem.optString("OPENING_FULL");
+                String OPENING_EMPTY = openingItem.optString("OPENING_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
 
                 createLayout(tableLayout, DESCRIPTION, OPENING_FULL, OPENING_EMPTY, DEFECTIVE,"","","");
             }
@@ -170,14 +170,14 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout, "PRODUCT", "FULL","EMPTY", "DEFECTIVE","SV", "TV","" );
 
             for (int i=0; i<arrayDomestic.length(); i++){
-                JSONObject openingItem = arrayDomestic.getJSONObject(i);
+                JSONObject openingItem = arrayDomestic.optJSONObject(i);
 
-                String Description = openingItem.getString("DESCRIPTION");
-                String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
-                String DELIVERY_EMPTY = openingItem.getString("DELIVERY_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
-                String SV = openingItem.getString("SV");
-                String TV = openingItem.getString("TV");
+                String Description = openingItem.optString("DESCRIPTION");
+                String DELIVERY_FULL = openingItem.optString("DELIVERY_FULL");
+                String DELIVERY_EMPTY = openingItem.optString("DELIVERY_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
+                String SV = openingItem.optString("SV");
+                String TV = openingItem.optString("TV");
                 /* create table view*/
 
                 setHeaders(tableLayout, Description, DELIVERY_FULL, DELIVERY_EMPTY,DEFECTIVE, SV, TV,"");
@@ -191,14 +191,14 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout,"PRODUCT", "FULL","EMPTY", "DEFECTIVE","SV", "TV" ,"");
 
             for (int i=0; i<arrayCommercial.length(); i++){
-                JSONObject openingItem = arrayCommercial.getJSONObject(i);
+                JSONObject openingItem = arrayCommercial.optJSONObject(i);
 
-                String Description = openingItem.getString("DESCRIPTION");
-                String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
-                String DELIVERY_EMPTY = openingItem.getString("DELIVERY_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
-                String SV = openingItem.getString("SV");
-                String TV = openingItem.getString("TV");
+                String Description = openingItem.optString("DESCRIPTION");
+                String DELIVERY_FULL = openingItem.optString("DELIVERY_FULL");
+                String DELIVERY_EMPTY = openingItem.optString("DELIVERY_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
+                String SV = openingItem.optString("SV");
+                String TV = openingItem.optString("TV");
                 /* create table view*/
 
                 createLayout(tableLayout, Description, DELIVERY_FULL, DELIVERY_EMPTY,DEFECTIVE, SV, TV,"");
@@ -211,11 +211,11 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout,"PRODUCT", "SOUND", "LOST","","","","");
 
             for (int i=0; i<arrayReceive.length(); i++){
-                JSONObject openingItem = arrayReceive.getJSONObject(i);
+                JSONObject openingItem = arrayReceive.optJSONObject(i);
 
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String SOUND = openingItem.getString("SOUND");
-                String LOST_TRUCK_RECEVING = openingItem.getString("LOST_TRUCK_RECEVING");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String SOUND = openingItem.optString("SOUND");
+                String LOST_TRUCK_RECEVING = openingItem.optString("LOST_TRUCK_RECEVING");
 
                 createLayout(tableLayout, PRODUCT_NAME, SOUND, LOST_TRUCK_RECEVING,"","","","");
             }
@@ -228,10 +228,10 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout, "PRODUCT", "SOUND","DEFECTIVE","","","","");
 
             for (int i=0; i<arraySend.length(); i++){
-                JSONObject openingItem = arraySend.getJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String SOUND = openingItem.getString("SOUND");
-                String DEFECTIVE = openingItem.getString("TRUCK_DEFECTIVE");
+                JSONObject openingItem = arraySend.optJSONObject(i);
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String SOUND = openingItem.optString("SOUND");
+                String DEFECTIVE = openingItem.optString("TRUCK_DEFECTIVE");
 
                 createLayout(tableLayout, PRODUCT_NAME, SOUND, DEFECTIVE,"","","","");
             }
@@ -243,11 +243,11 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout, "PRODUCT", "FULL", "EMPTY", "DEFECTIVE","","","");
 
             for (int i=0; i<arrayTVDetails.length(); i++){
-                JSONObject openingItem = arrayTVDetails.getJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String CLOSING_FULL = openingItem.getString("CLOSING_FULL");
-                String CLOSING_EMPTY = openingItem.getString("CLOSING_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
+                JSONObject openingItem = arrayTVDetails.optJSONObject(i);
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String CLOSING_FULL = openingItem.optString("CLOSING_FULL");
+                String CLOSING_EMPTY = openingItem.optString("CLOSING_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
 
                 createLayout(tableLayout, PRODUCT_NAME,CLOSING_FULL,CLOSING_EMPTY, DEFECTIVE,"","","");
             }
@@ -260,12 +260,12 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout, "PRODUCT", "FULL", "EMPTY", "DEFECTIVE","","","");
 
             for (int i=0; i<arrayClosing.length(); i++){
-                JSONObject openingItem = arrayClosing.getJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
+                JSONObject openingItem = arrayClosing.optJSONObject(i);
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
 
-                String CLOSING_FULL = openingItem.getString("CLOSING_FULL");
-                String CLOSING_EMPTY = openingItem.getString("CLOSING_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
+                String CLOSING_FULL = openingItem.optString("CLOSING_FULL");
+                String CLOSING_EMPTY = openingItem.optString("CLOSING_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
 
                 createLayout(tableLayout, PRODUCT_NAME,CLOSING_FULL,CLOSING_EMPTY, DEFECTIVE,"","","");
             }
@@ -277,11 +277,11 @@ public class OwnerListAdapter extends BaseAdapter {
             setHeaders(tableLayout, "PRODUCT", "CREDIT", "ON FEILD", "LOST","","","");
 
             for (int i=0; i<arrayOther.length(); i++){
-                JSONObject openingItem = arrayOther.getJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String CREDIT = openingItem.getString("CREDIT");
-                String ON_FIELD = openingItem.getString("ON_FIELD");
-                String LOST_DELIVERY_CYLINDERS = openingItem.getString("LOST_DELIVERY_CYLINDERS");
+                JSONObject openingItem = arrayOther.optJSONObject(i);
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String CREDIT = openingItem.optString("CREDIT");
+                String ON_FIELD = openingItem.optString("ON_FIELD");
+                String LOST_DELIVERY_CYLINDERS = openingItem.optString("LOST_DELIVERY_CYLINDERS");
 
                 createLayout(tableLayout, PRODUCT_NAME, CREDIT, ON_FIELD, LOST_DELIVERY_CYLINDERS,"","","");
             }

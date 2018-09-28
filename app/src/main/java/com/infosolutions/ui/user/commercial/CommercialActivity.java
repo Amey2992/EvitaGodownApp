@@ -620,9 +620,9 @@ public class CommercialActivity extends BaseActivity {
 
         try {
             JSONObject objectResult = new JSONObject(response);
-            if (objectResult.has("responseCode") && objectResult.getString("responseCode").equalsIgnoreCase("200")) {
-                JSONArray productArray = objectResult.getJSONArray("productArray");
-                String CLOSING_FULL = productArray.getJSONObject(0).getString("CLOSING_FULL");
+            if (objectResult.has("responseCode") && objectResult.optString("responseCode").equalsIgnoreCase("200")) {
+                JSONArray productArray = objectResult.optJSONArray("productArray");
+                String CLOSING_FULL = productArray.optJSONObject(0).optString("CLOSING_FULL");
 
                 layout_cylinder.setVisibility(View.VISIBLE);
                 TOTAL_AVAILABLE_CYL = Integer.parseInt(CLOSING_FULL);

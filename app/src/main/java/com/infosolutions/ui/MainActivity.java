@@ -339,10 +339,10 @@ public class MainActivity extends BaseActivity {
         try {
             JSONArray jsonArray = new JSONArray(moduleVALUE.toString());
             for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonModel = jsonArray.getJSONObject(i);
-                String imagePathUrl = jsonModel.getString("imagePath");
-                String moduleName = jsonModel.getString("name");
-                String modulePosition = jsonModel.getString("seq");
+                JSONObject jsonModel = jsonArray.optJSONObject(i);
+                String imagePathUrl = jsonModel.optString("imagePath");
+                String moduleName = jsonModel.optString("name");
+                String modulePosition = jsonModel.optString("seq");
 
                 listModel.add(new ModuleModel(imagePathUrl, moduleName, modulePosition));
             }
@@ -406,8 +406,8 @@ public class MainActivity extends BaseActivity {
 
             try {
 
-                responseMsg = jsonResult.getString("responseMessage");
-                if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
+                responseMsg = jsonResult.optString("responseMessage");
+                if (jsonResult.optString("responseCode").equalsIgnoreCase("200")) {
                     AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
 
                     /*updateDatabase();
@@ -422,7 +422,7 @@ public class MainActivity extends BaseActivity {
                     AppSettings.getInstance(this).isSyncing = false;
                     //Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

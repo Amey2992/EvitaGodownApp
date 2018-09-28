@@ -85,9 +85,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 for (int i=0; i<arrayLength; i++)
                 {
 
-                    if (openingArray.getJSONObject(i).has("valueArray") && openingArray.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray openArray = openingArray.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = openingArray.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (openingArray.optJSONObject(i).has("valueArray") && openingArray.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray openArray = openingArray.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = openingArray.optJSONObject(i).getString("DISPLAY_NAME");
                         createOpeningLayout(godownTitle, openArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -104,9 +104,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 for (int i=0; i<arrayLength; i++)
                 {
 
-                    if (arrayDetailing.getJSONObject(i).has("valueArray") && arrayDetailing.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray otherArray = arrayDetailing.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arrayDetailing.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arrayDetailing.optJSONObject(i).has("valueArray") && arrayDetailing.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray otherArray = arrayDetailing.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arrayDetailing.optJSONObject(i).optString("DISPLAY_NAME");
                         createOtherLayout(godownTitle, otherArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -123,9 +123,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 for (int i=0; i<arraylength; i++)
                 {
 
-                    if (arrayReceive.getJSONObject(i).has("valueArray") && arrayReceive.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray commercialArray = arrayReceive.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arrayReceive.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arrayReceive.optJSONObject(i).has("valueArray") && arrayReceive.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray commercialArray = arrayReceive.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arrayReceive.optJSONObject(i).optString("DISPLAY_NAME");
                         createReceivingLayout(godownTitle, commercialArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -140,9 +140,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             if (arrayLength>0){
                 for (int i=0; i<arrayLength; i++)
                 {
-                    if (arrayDomestic.getJSONObject(i).has("valueArray") && arrayDomestic.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray domesticArray = arrayDomestic.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arrayDomestic.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arrayDomestic.optJSONObject(i).has("valueArray") && arrayDomestic.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray domesticArray = arrayDomestic.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arrayDomestic.optJSONObject(i).optString("DISPLAY_NAME");
                         createDomesticLayout(godownTitle, domesticArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -159,9 +159,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 for (int i=0; i<arrayLength; i++)
                 {
 
-                    if (arrayCommercial.getJSONObject(i).has("valueArray") && arrayCommercial.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray commercialArray = arrayCommercial.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arrayCommercial.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arrayCommercial.optJSONObject(i).has("valueArray") && arrayCommercial.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray commercialArray = arrayCommercial.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arrayCommercial.optJSONObject(i).optString("DISPLAY_NAME");
                         createCommercialLayout(godownTitle, commercialArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -177,9 +177,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             if (arrayLength>0){
                 for (int i=0; i<arrayLength; i++)
                 {
-                    if (arraySending.getJSONObject(i).has("valueArray") && arraySending.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray openingArray = arraySending.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arraySending.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arraySending.optJSONObject(i).has("valueArray") && arraySending.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray openingArray = arraySending.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arraySending.optJSONObject(i).optString("DISPLAY_NAME");
                         createSendLayout(godownTitle, openingArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -195,9 +195,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             if (arrayLength>0){
                 for (int i=0; i<arrayLength; i++)
                 {
-                    if (arrayClosing.getJSONObject(i).has("valueArray") && arrayClosing.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray openingArray = arrayClosing.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = arrayClosing.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (arrayClosing.optJSONObject(i).has("valueArray") && arrayClosing.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray openingArray = arrayClosing.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = arrayClosing.optJSONObject(i).optString("DISPLAY_NAME");
                         createClosingLayout(godownTitle, openingArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -214,9 +214,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 for (int i=0; i<arrayLength; i++)
                 {
 
-                    if (jsonArrayTV.getJSONObject(i).has("valueArray") && jsonArrayTV.getJSONObject(i).has("DISPLAY_NAME")){
-                        JSONArray tvArray = jsonArrayTV.getJSONObject(i).getJSONArray("valueArray");
-                        String godownTitle = jsonArrayTV.getJSONObject(i).getString("DISPLAY_NAME");
+                    if (jsonArrayTV.optJSONObject(i).has("valueArray") && jsonArrayTV.optJSONObject(i).has("DISPLAY_NAME")){
+                        JSONArray tvArray = jsonArrayTV.optJSONObject(i).optJSONArray("valueArray");
+                        String godownTitle = jsonArrayTV.optJSONObject(i).optString("DISPLAY_NAME");
                         createTVLayout(godownTitle, tvArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -242,11 +242,11 @@ public class OwnerDetailingActivity extends AppCompatActivity {
 
                 for (int i=0; i<arrayOpening.length(); i++){
 
-                    JSONObject objectItem = arrayOpening.getJSONObject(i);
-                    String DESCRIPTION = objectItem.getString("DESCRIPTION");
-                    String DEFECTIVE = objectItem.getString("DEFECTIVE");
-                    String FULL = objectItem.getString("OPENING_FULL");
-                    String EMPTY = objectItem.getString("OPENING_EMPTY");
+                    JSONObject objectItem = arrayOpening.optJSONObject(i);
+                    String DESCRIPTION = objectItem.optString("DESCRIPTION");
+                    String DEFECTIVE = objectItem.optString("DEFECTIVE");
+                    String FULL = objectItem.optString("OPENING_FULL");
+                    String EMPTY = objectItem.optString("OPENING_EMPTY");
 
                     createLayout(DESCRIPTION, FULL, EMPTY, DEFECTIVE,"", "","","");
                 }
@@ -270,10 +270,10 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             showDivider(godown_name);
             setHeaders("PRODUCT",  "SOUND", "DEFECTIVE","",  "","", "","");
             for (int i=0; i<arraySend.length(); i++){
-                JSONObject objectItem = arraySend.getJSONObject(i);
-                String PRODUCT=objectItem.getString("DESCRIPTION");
-                String SOUND=objectItem.getString("SOUND");
-                String DEFECTIVE=objectItem.getString("TRUCK_DEFECTIVE");
+                JSONObject objectItem = arraySend.optJSONObject(i);
+                String PRODUCT=objectItem.optString("DESCRIPTION");
+                String SOUND=objectItem.optString("SOUND");
+                String DEFECTIVE=objectItem.optString("TRUCK_DEFECTIVE");
 
                 createLayout(PRODUCT, SOUND, DEFECTIVE, "", "", "", "","");
             }
@@ -289,12 +289,12 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             setHeaders("PRODUCT", "FULL","EMPTY",  "DEFECTIVE", "","","","");
             for (int i=0; i<arrayClosing.length(); i++){
 
-                JSONObject objectItem = arrayClosing.getJSONObject(i);
+                JSONObject objectItem = arrayClosing.optJSONObject(i);
 
-                String PRODUCT=objectItem.getString("DESCRIPTION");
-                String FULL = objectItem.getString("CLOSING_FULL");
-                String EMPTY=objectItem.getString("CLOSING_EMPTY");
-                String DEFECTIVE=objectItem.getString("DEFECTIVE");
+                String PRODUCT=objectItem.optString("DESCRIPTION");
+                String FULL = objectItem.optString("CLOSING_FULL");
+                String EMPTY=objectItem.optString("CLOSING_EMPTY");
+                String DEFECTIVE=objectItem.optString("DEFECTIVE");
 
                 createLayout(PRODUCT, FULL, EMPTY,  DEFECTIVE, "","","","");
             }
@@ -308,9 +308,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             showDivider(godown_name);
             setHeaders("PRODUCT", "NO. OF. CYLINDER", "", "","",  "", "","");
             for (int i=0; i<arrayTV.length(); i++){
-                JSONObject objectItem = arrayTV.getJSONObject(i);
-                String PRODUCT=objectItem.getString("DESCRIPTION");
-                String NO_OF_CYLINDER =objectItem.getString("CYLINDER");
+                JSONObject objectItem = arrayTV.optJSONObject(i);
+                String PRODUCT=objectItem.optString("DESCRIPTION");
+                String NO_OF_CYLINDER =objectItem.optString("CYLINDER");
 
                 createLayout(PRODUCT, NO_OF_CYLINDER, "", "", "",  "", "","");
             }
@@ -325,14 +325,14 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             showDivider(godown_name);
             setHeaders("PRODUCT", "DELIVERY", "SV", "DBC","DEFECTIVE",  "LOST", "","");
             for (int i=0; i<arrayDelivery.length(); i++){
-                JSONObject objectItem = arrayDelivery.getJSONObject(i);
+                JSONObject objectItem = arrayDelivery.optJSONObject(i);
 
-                String PRODUCT            = objectItem.getString("DESCRIPTION");
-                String DELIVERY           = objectItem.getString("DELIVERY");
-                String SV_CYLINDER        = objectItem.getString("SV");
-                String DBC_CYLINDER       = objectItem.getString("DBC");
-                String DEFECTIVE          = objectItem.getString("DEFECTIVE");
-                String LOST               = objectItem.getString("LOST");
+                String PRODUCT            = objectItem.optString("DESCRIPTION");
+                String DELIVERY           = objectItem.optString("DELIVERY");
+                String SV_CYLINDER        = objectItem.optString("SV");
+                String DBC_CYLINDER       = objectItem.optString("DBC");
+                String DEFECTIVE          = objectItem.optString("DEFECTIVE");
+                String LOST               = objectItem.optString("LOST");
 
                 createLayout(PRODUCT, DELIVERY, SV_CYLINDER, DBC_CYLINDER, DEFECTIVE, LOST, "", "");
 
@@ -349,16 +349,16 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             setHeaders("PRODUCT",  "FULL", "EMPTY","SV",  "DBC", "DEFECTIVE","CREDIT", "LOST");
 
             for (int i=0; i<arrayDelivery.length(); i++){
-                JSONObject objectItem = arrayDelivery.getJSONObject(i);
+                JSONObject objectItem = arrayDelivery.optJSONObject(i);
 
-                String PRODUCT=objectItem.getString("DESCRIPTION");
-                String FULL = objectItem.getString("DELIVERY_FULL");
-                String EMPTY = objectItem.getString("DELIVERY_EMPTY");
-                String SV=objectItem.getString("SV");
-                String DBC=objectItem.getString("DBC");
-                String DEFECTIVE = objectItem.getString("DEFECTIVE");
-                String CREDIT=objectItem.getString("CREDIT");
-                String LOST = objectItem.getString("LOST");
+                String PRODUCT=objectItem.optString("DESCRIPTION");
+                String FULL = objectItem.optString("DELIVERY_FULL");
+                String EMPTY = objectItem.optString("DELIVERY_EMPTY");
+                String SV=objectItem.optString("SV");
+                String DBC=objectItem.optString("DBC");
+                String DEFECTIVE = objectItem.optString("DEFECTIVE");
+                String CREDIT=objectItem.optString("CREDIT");
+                String LOST = objectItem.optString("LOST");
 
                 createLayout(PRODUCT, FULL, EMPTY, SV, DBC, DEFECTIVE, CREDIT, LOST);
             }
@@ -372,11 +372,11 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             showDivider(godown_name);
             setHeaders("PRODUCT", "SOUND", "LOST","", "", "", "","");
             for (int i=0; i<arrayReceiving.length(); i++){
-                JSONObject objectItem = arrayReceiving.getJSONObject(i);
+                JSONObject objectItem = arrayReceiving.optJSONObject(i);
 
-                String PRODUCT=objectItem.getString("DESCRIPTION");
-                String SOUND=objectItem.getString("SOUND");
-                String LOST=objectItem.getString("LOST_TRUCK_RECEVING");
+                String PRODUCT=objectItem.optString("DESCRIPTION");
+                String SOUND=objectItem.optString("SOUND");
+                String LOST=objectItem.optString("LOST_TRUCK_RECEVING");
 
                 createLayout(PRODUCT, SOUND, LOST, "","",  "", "","");
             }
@@ -394,12 +394,12 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             setHeaders("PRODUCT", "CREDIT", "LOST", "ON FIELD","",  "", "","");
             for (int i=0; i<arrayOther.length(); i++){
 
-                JSONObject objectItem = arrayOther.getJSONObject(i);
+                JSONObject objectItem = arrayOther.optJSONObject(i);
 
-                String PRODUCT = objectItem.getString("DESCRIPTION");
-                String CREDIT = objectItem.getString("CREDIT");
-                String LOST = objectItem.getString("LOST_DELIVERY_CYLINDERS");
-                String ON_FIELD = objectItem.getString("ON_FIELD");
+                String PRODUCT = objectItem.optString("DESCRIPTION");
+                String CREDIT = objectItem.optString("CREDIT");
+                String LOST = objectItem.optString("LOST_DELIVERY_CYLINDERS");
+                String ON_FIELD = objectItem.optString("ON_FIELD");
 
                 createLayout(PRODUCT, CREDIT, LOST, ON_FIELD, "", "","","");
             }

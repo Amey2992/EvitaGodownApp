@@ -166,8 +166,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
 
             try {
 
-                responseMsg = jsonResult.getString("responseMessage");
-                if (jsonResult.getString("responseCode").equalsIgnoreCase("200")) {
+                responseMsg = jsonResult.optString("responseMessage");
+                if (jsonResult.optString("responseCode").equalsIgnoreCase("200")) {
                     //updateLocalFromServer();
                     AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
 
@@ -185,7 +185,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
                     ivSync.setEnabled(true);
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
