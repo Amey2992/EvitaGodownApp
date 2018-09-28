@@ -129,7 +129,8 @@
     <string name="quantity">Quantity</string>
     <string name="enter_truck_number">Enter Truck Number</string>
     <string name="bottom_sheet_title">Please Select Your Godown</string>
-    <string name="lost_cylinder">Lost Cylinder</string>
+    <string name="lost_cylinder">Lost</string>
+    <string name="lost_defective">Defective</string>
     <string name="offline_storage">Offline Storage</string>
     <string name="fix_value">0</string>
     <string name="enter_lost_cyl">Lost</string>

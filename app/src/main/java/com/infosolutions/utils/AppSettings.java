@@ -310,6 +310,7 @@ public class AppSettings {
                             productJsonObject.put("Quantity", cn.Quantity);
                             productJsonObject.put("LostCylinder", cn.LostCylinder);
                             productJsonObject.put("godown_code", cn.godownId);
+                            productJsonObject.put("Defective", cn.Defective);
 
                             //get product json array and update with latest
                             JSONObject jsonObject = (JSONObject) jsonArrayTruckDetails.get(jsonArrayTruckDetails.length() - 1);
@@ -330,6 +331,7 @@ public class AppSettings {
                             productJsonObject.put("Quantity", cn.Quantity);
                             productJsonObject.put("LostCylinder", cn.LostCylinder);
                             productJsonObject.put("godown_code", cn.godownId);
+                            productJsonObject.put("Defective", cn.Defective);
 
                             productsJsonArray = new JSONArray();
                             productsJsonArray.put(productJsonObject);
@@ -344,6 +346,7 @@ public class AppSettings {
                         productJsonObject.put("Quantity", cn.Quantity);
                         productJsonObject.put("LostCylinder", cn.LostCylinder);
                         productJsonObject.put("godown_code", cn.godownId);
+                        productJsonObject.put("Defective", cn.Defective);
 
                         productsJsonArray.put(productJsonObject);
                         truckDetailObject.put("Products", new JSONArray(productsJsonArray.toString()));
@@ -394,6 +397,7 @@ public class AppSettings {
                             productJsonObject.put("Id_product", cn.idProduct);
                             productJsonObject.put("Quantity", cn.Quantity);
                             productJsonObject.put("Defective", cn.Defective);
+
 
                             //get product json array and update with latest
                             JSONObject jsonObject = (JSONObject) jsonArrayTruckSendDetails.get(jsonArrayTruckSendDetails.length() - 1);

@@ -1,70 +1,108 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_quantity"
-        android:layout_width="match_parent"
+    >
+    <RelativeLayout
+        android:id="@+id/rightcontainer"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <EditText
-            android:id="@+id/et_quantity"
-            android:layout_width="match_parent"
+        >
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/quantity"
-            android:text="0"
-            android:selectAllOnFocus="true"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
-            android:maxLength="3"
-            android:textSize="13dp"
-            android:digits="0123456789"
-            android:drawablePadding="@dimen/activity_vertical_margin"
-            android:inputType="number"/>
+            android:layout_centerVertical="true"
+            android:textSize="13sp" />
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_toRightOf="@+id/spinner"
+            android:layout_width="35sp"
+            android:layout_centerVertical="true"
+            android:layout_height="35sp"
+            android:background="@android:drawable/ic_delete" />
 
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_lost"
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/leftcontainer"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/rightcontainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
-
-        <EditText
-            android:id="@+id/et_lost"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lost_cylinder"
-            android:text="0"
-            android:textSize="13dp"
-            android:selectAllOnFocus="true"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-condensed"
-            android:digits="0123456789"
-            android:maxLength="3"
-            android:drawablePadding="@dimen/activity_vertical_margin"
-            android:inputType="number"/>
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_quantity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-    </android.support.design.widget.TextInputLayout>
+                <EditText
+                    android:id="@+id/et_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/quantity"
+                    android:text="0"
+                    android:selectAllOnFocus="true"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:maxLength="3"
+                    android:textSize="13dp"
+                    android:digits="0123456789"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
 
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_lost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:padding="10dp"
-        android:textSize="13sp" />
+                <EditText
+                    android:id="@+id/et_lost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lost_cylinder"
+                    android:text="0"
+                    android:textSize="13dp"
+                    android:selectAllOnFocus="true"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:digits="0123456789"
+                    android:maxLength="3"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="number"/>
 
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="35sp"
-        android:layout_height="35sp"
-        android:background="@android:drawable/ic_delete" />
-</LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_defective"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/et_defective"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lost_defective"
+                    android:text="0"
+                    android:textSize="13dp"
+                    android:selectAllOnFocus="true"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:digits="0123456789"
+                    android:maxLength="3"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,9 +64,11 @@ public class TruckReceiveFragment extends Fragment {
     private List<EditText> dynamicQuantity = new ArrayList<>();
     private List<EditText> dynamicLostCyl = new ArrayList<>();
     private List<Spinner> dynamicSpinner = new ArrayList<>();
+    List<EditText> dynamicDefective = new ArrayList<>();
     private ArrayList<String> arrayDynamicViews = new ArrayList<>();
     private TextInputLayout input_layout_lost;
     private TextInputLayout input_layout_Qty;
+    private TextInputLayout input_layout_defective;
     private Button generateET;
     private LinearLayout myLinearLay;
     private String selected_vehicle_number = "";
@@ -79,6 +82,7 @@ public class TruckReceiveFragment extends Fragment {
     private List<String> listSpinItems = new ArrayList<>();
     private int spinItemsCount = -1;
     private String default_str = "--";
+    private EditText et_defective;
 
 
     public String getLoad_type() {
@@ -228,7 +232,10 @@ public class TruckReceiveFragment extends Fragment {
         generateET.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(listSpinItems.contains(default_str)){
+                    Toast.makeText(getActivity(),"Please Enter valid Product Id",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 for (Spinner spinner1 : dynamicSpinner){
                 /*    if (!selectedSpinItems.contains(spinner1.getSelectedItem().toString())) {
@@ -255,9 +262,10 @@ public class TruckReceiveFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                         String selectedItem = spinner.getSelectedItem().toString();
+                        int pos = spinItemsCount;
 
                         if(listSpinItems.contains(selectedItem)){
-                            //selectedSpinItems.remove(selectedItem);
+
                             try {
                                 if((listSpinItems.size() - 1) == spinItemsCount) {
                                     listSpinItems.remove(spinItemsCount);
@@ -274,9 +282,11 @@ public class TruckReceiveFragment extends Fragment {
 
 
                             if (listSpinItems.contains(selectedItem)) {
-                                int pos = spinItemsCount;
+                                //pos = spinItemsCount;
                                 //pos = --pos;
                                 listSpinItems.remove(pos);
+                            }else{
+                                listSpinItems.add(pos,selectedItem);
                             }
                             return;
                         }
@@ -286,10 +296,8 @@ public class TruckReceiveFragment extends Fragment {
                         }*/else {
 
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
-                                int pos = spinItemsCount;
-                                try {
 
-                                    //pos = --pos;
+                                try {
                                     if(listSpinItems.size() >0) {
                                         try{
                                             String str  = listSpinItems.get(pos);
@@ -303,11 +311,9 @@ public class TruckReceiveFragment extends Fragment {
 
                                         //selectedSpinItems.remove(pos);
                                     }else {
-                                        //if(listSpinItems.size() > 0)
 
-                                        if(pos != 0 && selectedItem.equalsIgnoreCase(default_str)) {
-                                            listSpinItems.add(pos, selectedItem);
-                                        }
+                                        listSpinItems.add(pos, selectedItem);
+
                                     }
                                 }catch (Exception e ){
                                     listSpinItems.add(pos, selectedItem);
@@ -329,9 +335,11 @@ public class TruckReceiveFragment extends Fragment {
 
                 etQuantity = viewToAdd.findViewById(R.id.et_quantity);
                 final EditText etLost = viewToAdd.findViewById(R.id.et_lost);
+                et_defective = viewToAdd.findViewById(R.id.et_defective);
 
                 input_layout_Qty = viewToAdd.findViewById(R.id.input_layout_quantity);
                 input_layout_lost = viewToAdd.findViewById(R.id.input_layout_lost);
+                input_layout_defective  = viewToAdd.findViewById(R.id.input_layout_defective);
 
                 input_layout_Qty.requestFocus();
                 focusOnView(input_layout_Qty);
@@ -341,6 +349,7 @@ public class TruckReceiveFragment extends Fragment {
                 dynamicQuantity.add(etQuantity);
                 dynamicLostCyl.add(etLost);
                 dynamicSpinner.add(spinner);
+                dynamicDefective.add((et_defective));
 
 
 
@@ -350,13 +359,13 @@ public class TruckReceiveFragment extends Fragment {
                     public void onClick(View view) {
                         String text = "";
                         Spinner spinner2 = null;
-                        LinearLayout linearLayout = (LinearLayout)((Button)view).getParent();
-                        if(linearLayout != null){
-                            spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
+                        RelativeLayout relativeLayout = (RelativeLayout)((Button)view).getParent();
+                        if(relativeLayout != null){
+                            spinner2 = (Spinner) relativeLayout.findViewById(R.id.spinner);
                             if(spinner2 != null) {
                                 text = spinner2.getSelectedItem().toString();
                             }
-                            etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
+                            etQuantity = (EditText) relativeLayout.findViewById(R.id.et_quantity);
                         }
                         int pos = (int)btnDelete.getTag();
 
@@ -378,6 +387,7 @@ public class TruckReceiveFragment extends Fragment {
                         dynamicQuantity.remove(etQuantity);
                         dynamicLostCyl.remove(etLost);
                         dynamicSpinner.remove(spinner);
+                        dynamicDefective.remove(et_defective);
 
                     }
                 });
@@ -409,9 +419,11 @@ public class TruckReceiveFragment extends Fragment {
                 for (int j = 0 ; j < dynamicQuantity.size(); j++) {
                     String etText = "";
                     String etLostCyl = "";
+                    String etDefective = "";
                     try {
                         etText = String.valueOf(dynamicQuantity.get(j).getText());
                         etLostCyl = String.valueOf(dynamicLostCyl.get(j).getText());
+                        etDefective = String.valueOf(dynamicDefective.get(j).getText());
                     }catch (Exception e){
 
                     }
@@ -424,6 +436,9 @@ public class TruckReceiveFragment extends Fragment {
                         etLostCyl = "0";
                     }
 
+                    if (TextUtils.isEmpty(etDefective)) {
+                        etDefective = "0";
+                    }
 
                     String spinner = (String) dynamicSpinner.get(j).getSelectedItem();
 
@@ -447,6 +462,7 @@ public class TruckReceiveFragment extends Fragment {
                     int id_product = spinnerCode;
                     int quantity = Integer.parseInt(etText);
                     int lostCylinder = Integer.parseInt(etLostCyl);
+                    int defective = Integer.parseInt(etDefective);
 
                     final String invoice_number = etInvoiceNumber.getText().toString().trim();
                     String truck_no = etEnterTruckNo.getText().toString().trim();
@@ -503,6 +519,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.deviceId = getDeviceId();
                             truckDetailsDB.Quantity = quantity;
                             truckDetailsDB.LostCylinder = lostCylinder;
+                            truckDetailsDB.Defective = defective;
 
 
                         } else {
@@ -523,6 +540,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.deviceId = getDeviceId();
                             truckDetailsDB.Quantity = quantity;
                             truckDetailsDB.LostCylinder = lostCylinder;
+                            truckDetailsDB.Defective = defective;
                         }
 
                         lstTruckDetailsDB.add(truckDetailsDB);

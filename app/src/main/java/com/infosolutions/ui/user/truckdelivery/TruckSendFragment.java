@@ -225,6 +225,11 @@ public class TruckSendFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                if(listSpinItems.contains(default_str)){
+                    Toast.makeText(getActivity(),"Please Enter valid Product Id",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 for (Spinner spinner1 : dynamicSpinner){
 
                     spinner1.setClickable(false);
@@ -247,7 +252,7 @@ public class TruckSendFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                         String selectedItem = spinner.getSelectedItem().toString();
-
+                        int pos = spinItemsCount;
                         if(listSpinItems.contains(selectedItem)){
                             try {
                                 if((listSpinItems.size() - 1) == spinItemsCount) {
@@ -265,9 +270,11 @@ public class TruckSendFragment extends Fragment {
 
 
                             if (listSpinItems.contains(selectedItem)) {
-                                int pos = spinItemsCount;
+                                //int pos = spinItemsCount;
                                 //pos = --pos;
                                 listSpinItems.remove(pos);
+                            }else{
+                                listSpinItems.add(pos,selectedItem);
                             }
                             return;
                         }
@@ -277,7 +284,7 @@ public class TruckSendFragment extends Fragment {
                         }*/else {
 
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
-                                int pos = spinItemsCount;
+
                                 try {
 
                                     //pos = --pos;

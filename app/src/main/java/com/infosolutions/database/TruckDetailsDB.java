@@ -70,6 +70,9 @@ public class TruckDetailsDB implements Serializable {
     @DatabaseField
     public int LostCylinder;
 
+    @DatabaseField
+    public int Defective;
+
 
     @Override
     public String toString() {
