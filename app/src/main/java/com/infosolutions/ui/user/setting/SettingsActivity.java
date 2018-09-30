@@ -71,7 +71,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
     public JSONObject localJSON_DATA;
     private JSONObject jsonObjectSyncAndroidDataToServer;
     File backupDB;
-
+TextView appVersion;
 
     @Inject
     EventBus eventBus;
@@ -111,7 +111,8 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         btnLogout = (Button) findViewById(R.id.btnLogout);
         progress_bar = (ProgressBar) findViewById(R.id.progress_bar);
         ivSync = (ImageView) findViewById(R.id.ivSync);
-
+        appVersion = (TextView) findViewById(R.id.appVersion);
+        appVersion.setText(AppSettings.getInstance(this).getAppVersion(this));
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

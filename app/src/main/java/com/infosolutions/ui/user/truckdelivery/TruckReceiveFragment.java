@@ -57,7 +57,7 @@ public class TruckReceiveFragment extends Fragment {
     private String TAG = TruckDeliveryActivity.class.getSimpleName();
     private AppCompatButton btnSubmit;
     private EditText etInvoiceNumber;
-    private EditText etEnterTruckNo;
+    private EditText etEnterTruckNo, etErvNumber;
     private AppCompatButton btnTruckNumber;
     private TextView tvSelectedTruck;
     private SegmentedButtonGroup segmentedButtonGroup;
@@ -81,7 +81,7 @@ public class TruckReceiveFragment extends Fragment {
     private ArrayList<String> spinItems;
     private List<String> listSpinItems = new ArrayList<>();
     private int spinItemsCount = -1;
-    private String default_str = "--";
+    private String default_str = "--select--";
     private EditText et_defective;
 
 
@@ -118,6 +118,7 @@ public class TruckReceiveFragment extends Fragment {
         btnSubmit = view.findViewById(R.id.btnSubmit);
         etInvoiceNumber = view.findViewById(R.id.etInvoiceNumber);
         etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
+        etErvNumber = view.findViewById(R.id.etErvNumber);
         myLinearLay = view.findViewById(R.id.dynamic);
         btnTruckNumber = view.findViewById(R.id.btnTruckNumber);
         tvSelectedTruck = view.findViewById(R.id.tvSelectedTruck);
@@ -286,7 +287,7 @@ public class TruckReceiveFragment extends Fragment {
                                 //pos = --pos;
                                 listSpinItems.remove(pos);
                             }else{
-                                listSpinItems.add(pos,selectedItem);
+                                productsAddRemoveCommon(pos,selectedItem);
                             }
                             return;
                         }
@@ -298,23 +299,7 @@ public class TruckReceiveFragment extends Fragment {
                             if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
 
                                 try {
-                                    if(listSpinItems.size() >0) {
-                                        try{
-                                            String str  = listSpinItems.get(pos);
-                                            if(!TextUtils.isEmpty(str)){
-                                                listSpinItems.set(pos,selectedItem);
-
-                                            }
-                                        }catch (Exception e){
-                                            listSpinItems.add(pos, selectedItem);
-                                        }
-
-                                        //selectedSpinItems.remove(pos);
-                                    }else {
-
-                                        listSpinItems.add(pos, selectedItem);
-
-                                    }
+                                    productsAddRemoveCommon(pos,selectedItem);
                                 }catch (Exception e ){
                                     listSpinItems.add(pos, selectedItem);
                                 }
@@ -365,7 +350,20 @@ public class TruckReceiveFragment extends Fragment {
                             if(spinner2 != null) {
                                 text = spinner2.getSelectedItem().toString();
                             }
-                            etQuantity = (EditText) relativeLayout.findViewById(R.id.et_quantity);
+
+                            //test Amey
+                           RelativeLayout parentLayout = (RelativeLayout)relativeLayout.getParent();
+                            if(parentLayout != null) {
+                                RelativeLayout relativeLayout1 = (RelativeLayout) parentLayout.findViewById(R.id.leftcontainer);
+                              if(relativeLayout1 != null){
+                                  LinearLayout linearLayout = (LinearLayout) parentLayout.findViewById(R.id.left_child_container);
+                                  if(linearLayout != null) {
+                                      etQuantity = (EditText) linearLayout
+                                              .findViewById(R.id.et_quantity);
+                                  }
+                              }
+                            }
+
                         }
                         int pos = (int)btnDelete.getTag();
 
@@ -400,7 +398,26 @@ public class TruckReceiveFragment extends Fragment {
 
     }
 
+    void productsAddRemoveCommon(int pos, String selectedItem){
+        if(listSpinItems.size() >0) {
+            try{
+                String str  = listSpinItems.get(pos);
+                if(!TextUtils.isEmpty(str)){
+                    listSpinItems.set(pos,selectedItem);
 
+                }
+            }catch (Exception e){
+                listSpinItems.add(pos, selectedItem);
+            }
+
+            //selectedSpinItems.remove(pos);
+        }else {
+
+            listSpinItems.add(pos, selectedItem);
+
+        }
+
+    }
 
     private void submitBtnClick() {
 
@@ -466,7 +483,10 @@ public class TruckReceiveFragment extends Fragment {
 
                     final String invoice_number = etInvoiceNumber.getText().toString().trim();
                     String truck_no = etEnterTruckNo.getText().toString().trim();
-
+                    String erv_no = etErvNumber.getText().toString().trim();
+                    if(TextUtils.isEmpty(erv_no)){
+                        erv_no = "0";
+                    }
 
                     if (invoice_number.equalsIgnoreCase("")) {
                         etInvoiceNumber.requestFocus();
@@ -520,7 +540,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.Quantity = quantity;
                             truckDetailsDB.LostCylinder = lostCylinder;
                             truckDetailsDB.Defective = defective;
-
+                            truckDetailsDB.ERVNO = erv_no;
 
                         } else {
 
@@ -541,6 +561,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.Quantity = quantity;
                             truckDetailsDB.LostCylinder = lostCylinder;
                             truckDetailsDB.Defective = defective;
+                            truckDetailsDB.ERVNO = erv_no;
                         }
 
                         lstTruckDetailsDB.add(truckDetailsDB);

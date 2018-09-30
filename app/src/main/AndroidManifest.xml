@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name="com.infosolutions.ui.login.LoginActivity"
-
+            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_empty" />
         <activity
             android:name="com.infosolutions.ui.MainActivity"

@@ -217,7 +217,7 @@ public class StockListActivity extends BaseActivity {
     private void loadsSend(String load_send){
         //applyHeaderMargin("",right_table_layout);
         setLoadHeader("", "SEND", "", "", "",right_table_layout);
-        setHeader("", "SOUND", "LOST", "", "",right_table_layout);
+        setHeader("", "SOUND", "DEFECTIVE", "", "",right_table_layout);
 
         try {
             JSONArray arraySend = new JSONArray(load_send);

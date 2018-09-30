@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.infosolutions.database.DatabaseHelper;
+import com.infosolutions.database.ERVModel;
 import com.infosolutions.database.ProductDB;
 import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.database.VehicleDB;
@@ -76,7 +77,8 @@ public class TruckSendFragment extends Fragment {
     private int godownId;
     private int spinItemsCount = -1;
     private List<String> listSpinItems = new ArrayList<>();
-    private String default_str = "--";
+    private String default_str = "--select--";
+    EditText erv_spinner_edittext;
 
 
     public String getLoad_type() {
@@ -111,6 +113,13 @@ public class TruckSendFragment extends Fragment {
         generateET = view.findViewById(R.id.generateBtn);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
+        erv_spinner_edittext = view.findViewById(R.id.erv_spinner_edittext);
+        erv_spinner_edittext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    //autofillUI();
+            }
+        });
         btnSelectTruckNumber = (AppCompatButton) view.findViewById(R.id.btnSelectTruckNumber);
         etErvNumber = view.findViewById(R.id.etErvNumber);
         myLinearLay = view.findViewById(R.id.dynamic);
@@ -123,6 +132,28 @@ public class TruckSendFragment extends Fragment {
 
         showHideSegmentedButton();
         submitBtnClick();
+
+    }
+
+    private void autofillUI(ERVModel model){
+        if(!TextUtils.isEmpty(model.ERV_No)) {
+            tvSelectedTruck.setText("");
+        }
+
+        if(!TextUtils.isEmpty(model.ERV_No)) {
+            etEnterTruckNo.setText("");
+        }
+
+        if (getLoad_type().toString().equalsIgnoreCase("OWN")) {
+            loadDynamicProducts();
+        }else{
+
+        }
+
+
+        for(int i = 0; i < 5; i++) {
+
+        }
 
     }
 
@@ -203,6 +234,151 @@ public class TruckSendFragment extends Fragment {
 
     }
 
+    private void loadDynamicProducts(){
+        if(listSpinItems.contains(default_str)){
+            Toast.makeText(getActivity(),"Please Enter valid Product Id",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        for (Spinner spinner1 : dynamicSpinner){
+
+            spinner1.setClickable(false);
+            spinner1.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    return true;
+                }
+            });
+        }
+        spinItemsCount++;
+
+        final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
+        final Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
+        btnDelete.setTag(spinItemsCount);
+        final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
+        spinner.setTag(spinItemsCount);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String selectedItem = spinner.getSelectedItem().toString();
+                int pos = spinItemsCount;
+                if(listSpinItems.contains(selectedItem)){
+                    try {
+                        if((listSpinItems.size() - 1) == spinItemsCount) {
+                            listSpinItems.remove(spinItemsCount);
+                        }
+                    }catch (Exception e){
+                        Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
+                    }
+                    spinner.setSelection(0);
+                    Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(selectedItem.trim().equalsIgnoreCase(default_str)){
+
+
+                    if (listSpinItems.contains(selectedItem)) {
+                        //int pos = spinItemsCount;
+                        //pos = --pos;
+                        listSpinItems.remove(pos);
+                    }else{
+                        productsAddRemoveCommon(pos,selectedItem);
+                    }
+                    return;
+                }
+                        /*if(listSpinItems.contains(selectedItem)){
+                            Toast.makeText(getActivity(),"cannot select same product type",Toast.LENGTH_SHORT).show();
+                            return;
+                        }*/else {
+
+                    if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
+
+                        try {
+
+                            //pos = --pos;
+                            productsAddRemoveCommon(pos,selectedItem);
+                        }catch (Exception e ){
+                            listSpinItems.add(pos, selectedItem);
+                        }
+
+                    }
+
+
+                }
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        etQuantity = viewToAdd.findViewById(R.id.etQuantity);
+        final EditText etDefective = viewToAdd.findViewById(R.id.etDefective);
+        spinner.setAdapter(spinAdapter);
+        /* add dynamic data to spinners*/
+        dynamicQuantity.add(etQuantity);
+        dynamicSpinner.add(spinner);
+        dynamicDefective.add(etDefective);
+
+        etQuantity.requestFocus();
+        focusOnView(etQuantity);
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String text = "";
+                Spinner spinner2 = null;
+                LinearLayout linearLayout = (LinearLayout)((Button)view).getParent();
+                if(linearLayout != null){
+                    spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
+                    if(spinner2 != null) {
+                        text = spinner2.getSelectedItem().toString();
+                    }
+                    etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
+                }
+
+                int pos = (int)btnDelete.getTag();
+                //pos = --pos;
+                spinItemsCount = --spinItemsCount;
+
+                listSpinItems.remove(text);
+                myLinearLay.removeView(viewToAdd);
+                dynamicQuantity.remove(etQuantity);
+                dynamicSpinner.remove(spinner);
+                dynamicDefective.remove(etDefective);
+            }
+        });
+        myLinearLay.addView(viewToAdd);
+
+    }
+
+    void productsAddRemoveCommon(int pos, String selectedItem){
+        if(listSpinItems.size() >0) {
+            try{
+                String str  = listSpinItems.get(pos);
+                if(!TextUtils.isEmpty(str)){
+                    listSpinItems.set(pos,selectedItem);
+
+                }
+            }catch (Exception e){
+                listSpinItems.add(pos, selectedItem);
+            }
+
+        }else {
+            if(pos != 0 && selectedItem.equalsIgnoreCase(default_str)) {
+                listSpinItems.add(pos, selectedItem);
+            }
+        }
+
+    }
+
     private void applyDynamicViews() {
 
         List<String> spinItems = new ArrayList<>();
@@ -225,141 +401,7 @@ public class TruckSendFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(listSpinItems.contains(default_str)){
-                    Toast.makeText(getActivity(),"Please Enter valid Product Id",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                for (Spinner spinner1 : dynamicSpinner){
-
-                    spinner1.setClickable(false);
-                    spinner1.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            return true;
-                        }
-                    });
-                }
-                spinItemsCount++;
-
-                final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
-                final Button btnDelete = viewToAdd.findViewById(R.id.btnDelete);
-                btnDelete.setTag(spinItemsCount);
-                final Spinner spinner = viewToAdd.findViewById(R.id.spinner);
-                spinner.setTag(spinItemsCount);
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                        String selectedItem = spinner.getSelectedItem().toString();
-                        int pos = spinItemsCount;
-                        if(listSpinItems.contains(selectedItem)){
-                            try {
-                                if((listSpinItems.size() - 1) == spinItemsCount) {
-                                    listSpinItems.remove(spinItemsCount);
-                                }
-                            }catch (Exception e){
-                                Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
-                            }
-                            spinner.setSelection(0);
-                            Toast.makeText(getActivity(),"Already Product Selected",Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-
-                        if(selectedItem.trim().equalsIgnoreCase(default_str)){
-
-
-                            if (listSpinItems.contains(selectedItem)) {
-                                //int pos = spinItemsCount;
-                                //pos = --pos;
-                                listSpinItems.remove(pos);
-                            }else{
-                                listSpinItems.add(pos,selectedItem);
-                            }
-                            return;
-                        }
-                        /*if(listSpinItems.contains(selectedItem)){
-                            Toast.makeText(getActivity(),"cannot select same product type",Toast.LENGTH_SHORT).show();
-                            return;
-                        }*/else {
-
-                            if(Integer.parseInt(spinner.getTag().toString()) == spinItemsCount){
-
-                                try {
-
-                                    //pos = --pos;
-                                    if(listSpinItems.size() >0) {
-                                        try{
-                                            String str  = listSpinItems.get(pos);
-                                            if(!TextUtils.isEmpty(str)){
-                                                listSpinItems.set(pos,selectedItem);
-
-                                            }
-                                        }catch (Exception e){
-                                            listSpinItems.add(pos, selectedItem);
-                                        }
-
-                                    }else {
-                                        if(pos != 0 && selectedItem.equalsIgnoreCase(default_str)) {
-                                            listSpinItems.add(pos, selectedItem);
-                                        }
-                                    }
-                                }catch (Exception e ){
-                                    listSpinItems.add(pos, selectedItem);
-                                }
-
-                            }
-
-
-                        }
-
-                    }
-
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-
-                etQuantity = viewToAdd.findViewById(R.id.etQuantity);
-                final EditText etDefective = viewToAdd.findViewById(R.id.etDefective);
-                spinner.setAdapter(spinAdapter);
-                /* add dynamic data to spinners*/
-                dynamicQuantity.add(etQuantity);
-                dynamicSpinner.add(spinner);
-                dynamicDefective.add(etDefective);
-
-                etQuantity.requestFocus();
-                focusOnView(etQuantity);
-
-                btnDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        String text = "";
-                        Spinner spinner2 = null;
-                        LinearLayout linearLayout = (LinearLayout)((Button)view).getParent();
-                        if(linearLayout != null){
-                            spinner2 = (Spinner) linearLayout.findViewById(R.id.spinner);
-                            if(spinner2 != null) {
-                                text = spinner2.getSelectedItem().toString();
-                            }
-                            etQuantity = (EditText) linearLayout.findViewById(R.id.et_quantity);
-                        }
-
-                        int pos = (int)btnDelete.getTag();
-                        //pos = --pos;
-                        spinItemsCount = --spinItemsCount;
-
-                        listSpinItems.remove(text);
-                        myLinearLay.removeView(viewToAdd);
-                        dynamicQuantity.remove(etQuantity);
-                        dynamicSpinner.remove(spinner);
-                        dynamicDefective.remove(etDefective);
-                    }
-                });
-                myLinearLay.addView(viewToAdd);
+                loadDynamicProducts();
             }
         });
 

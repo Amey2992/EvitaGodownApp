@@ -312,6 +312,7 @@ public class AppSettings {
                             productJsonObject.put("godown_code", cn.godownId);
                             productJsonObject.put("Defective", cn.Defective);
 
+
                             //get product json array and update with latest
                             JSONObject jsonObject = (JSONObject) jsonArrayTruckDetails.get(jsonArrayTruckDetails.length() - 1);
                             JSONArray jsonArray = jsonObject.optJSONArray("Products");
@@ -366,7 +367,7 @@ public class AppSettings {
                     truckDetailObject.put("Device_Id", cn.deviceId);
                     truckDetailObject.put("Sync_Time", getDateTime());
                     truckDetailObject.put("Mode_of_entry", "Mobile");
-
+                    truckDetailObject.put("ERVNO", cn.ERVNO);
 
                     jsonArrayTruckDetails.put(truckDetailObject);
 

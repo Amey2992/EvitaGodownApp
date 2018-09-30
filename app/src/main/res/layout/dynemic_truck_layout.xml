@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/left_child_container"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -37,7 +38,7 @@
                 android:id="@+id/input_layout_quantity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1.4">
 
                 <EditText
                     android:id="@+id/et_quantity"
@@ -61,7 +62,7 @@
                 android:id="@+id/input_layout_lost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1.4">
 
                 <EditText
                     android:id="@+id/et_lost"
@@ -83,7 +84,7 @@
                 android:id="@+id/input_layout_defective"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_weight="1.4">
 
                 <EditText
                     android:id="@+id/et_defective"

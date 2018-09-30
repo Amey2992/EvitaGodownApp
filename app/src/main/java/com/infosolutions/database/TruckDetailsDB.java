@@ -19,7 +19,7 @@ public class TruckDetailsDB implements Serializable {
     public TruckDetailsDB(int truck_details_id, String invoiceNo, String invoiceDate,
                           int vehicleId, String pcoVehicleNo, String createdBy, String createdDate,
                           int idProduct, String typeOfuery, int godownId, String is_sync,
-                          String mode_of_entry, String deviceId, int Quantity, int lostCylinder) {
+                          String mode_of_entry, String deviceId, int Quantity, int lostCylinder, String ERVNO) {
         this.truck_details_id = truck_details_id;
         this.invoiceNo = invoiceNo;
         this.invoiceDate = invoiceDate;
@@ -35,6 +35,7 @@ public class TruckDetailsDB implements Serializable {
         this.deviceId = deviceId;
         this.Quantity = Quantity;
         this.LostCylinder = lostCylinder;
+        this.ERVNO = ERVNO;
      }
 
     @DatabaseField(generatedId = true, columnName = "truck_details_id")
@@ -72,6 +73,9 @@ public class TruckDetailsDB implements Serializable {
 
     @DatabaseField
     public int Defective;
+
+    @DatabaseField
+    public String ERVNO;
 
 
     @Override

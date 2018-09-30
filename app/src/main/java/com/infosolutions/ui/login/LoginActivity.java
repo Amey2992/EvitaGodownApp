@@ -143,6 +143,7 @@ public class LoginActivity extends BaseActivity {
         tvAgencyName = findViewById(R.id.tvAgencyName);
         scrollView = findViewById(R.id.scrollView);
         version_textview = findViewById(R.id.version_textview);
+        version_textview.setVisibility(View.GONE);
         version_textview.setText(AppSettings.getInstance(this).getAppVersion(this) +" " + (Constants.dbname));
 
         focusOnView(scrollView, editTextUsername);

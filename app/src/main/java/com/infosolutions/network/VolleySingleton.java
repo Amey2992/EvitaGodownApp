@@ -63,6 +63,7 @@ public class VolleySingleton {
         CONSUMER_DETAILS,
         GET_STOCKS,
         POST_STOCKS,
+        ERV_PURCHASE,
         SYNC_OTHERS
 
     }

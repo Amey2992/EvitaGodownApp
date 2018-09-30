@@ -64,7 +64,16 @@
 
             </co.ceryle.segmentedbutton.SegmentedButtonGroup>
 
-
+            <EditText
+                android:id="@+id/erv_spinner_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLength="15"
+                android:textAllCaps="true"
+                android:inputType="none"
+                android:visibility="gone"
+                android:hint="Select ERV Number"/>
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnSelectTruckNumber"
                 android:layout_width="match_parent"

@@ -9,13 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:padding="10dp"
         android:textSize="13sp" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1.2">
 
         <EditText
             android:id="@+id/etQuantity"
@@ -38,7 +37,7 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1.2">
 
     <EditText
         android:id="@+id/etDefective"
