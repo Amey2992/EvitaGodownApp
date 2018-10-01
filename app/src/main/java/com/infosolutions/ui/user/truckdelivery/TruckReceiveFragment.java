@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -83,7 +84,7 @@ public class TruckReceiveFragment extends Fragment {
     private int spinItemsCount = -1;
     private String default_str = "--select--";
     private EditText et_defective;
-
+    android.widget.CheckBox chkOneWay;
 
     public String getLoad_type() {
         return load_type;
@@ -126,7 +127,19 @@ public class TruckReceiveFragment extends Fragment {
         generateET = view.findViewById(R.id.generateBtn);
         btnTruckNumber.setVisibility(View.GONE);
         etEnterTruckNo.setVisibility(View.GONE);
-
+        chkOneWay = (CheckBox) view.findViewById(R.id.chkOneWay);
+        chkOneWay.setChecked(false);
+        chkOneWay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(((CheckBox)v).isChecked()){
+                    etErvNumber.setText("");
+                    etErvNumber.setEnabled(false);
+                }else{
+                    etErvNumber.setEnabled(true);
+                }
+            }
+        });
 
         showHideSegmentedButton();
         submitBtnClick();
@@ -412,8 +425,8 @@ public class TruckReceiveFragment extends Fragment {
 
             //selectedSpinItems.remove(pos);
         }else {
+                listSpinItems.add(pos, selectedItem);
 
-            listSpinItems.add(pos, selectedItem);
 
         }
 
@@ -541,6 +554,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.LostCylinder = lostCylinder;
                             truckDetailsDB.Defective = defective;
                             truckDetailsDB.ERVNO = erv_no;
+                            truckDetailsDB.isOneWay = chkOneWay.isChecked();
 
                         } else {
 
@@ -562,6 +576,7 @@ public class TruckReceiveFragment extends Fragment {
                             truckDetailsDB.LostCylinder = lostCylinder;
                             truckDetailsDB.Defective = defective;
                             truckDetailsDB.ERVNO = erv_no;
+                            truckDetailsDB.isOneWay = chkOneWay.isChecked();
                         }
 
                         lstTruckDetailsDB.add(truckDetailsDB);

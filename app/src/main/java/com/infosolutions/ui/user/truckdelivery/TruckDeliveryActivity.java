@@ -9,20 +9,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.infosolutions.database.ERVModel;
+import com.infosolutions.database.PurchaseERVProduct;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.utils.AppSettings;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -30,8 +34,9 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
 
     private ViewPager viewPager;
     private TabLayout tabs;
-    public List<ERVModel> lstERVOWMModel = new ArrayList<>();
-    public List<ERVModel> lstERVPCOModel = new ArrayList<>();
+    public List<String> lstERVOWNModel = new ArrayList<>();
+    public List<String> lstERVPCOModel = new ArrayList<>();
+    public HashMap<String,List<PurchaseERVProduct>> hashProduct = new HashMap<>();
 
 
     @Override
@@ -42,6 +47,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
 
         setupToolBar();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.ERV_PURCHASE, this);
+        AppSettings.getInstance(this).getPurchaseERV(this);
     }
 
     private void setupToolBar() {
@@ -76,23 +82,51 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
-        response = "";
-        JSONObject jsonObject = null;
+        //response = "";
+        JSONObject jsonObject= null;
         try {
             jsonObject = new JSONObject(response);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        String responseCode = jsonObject.optString("responseCode");
+        // String responseCode = jsonObject.optString("responseCode");
+        JSONArray jsonArray = jsonObject.optJSONArray("Table");
         if (type.equals(VolleySingleton.CallType.ERV_PURCHASE)) {
+            if(jsonArray != null && jsonArray.length() > 0){
+                for(int i = 0; i < jsonArray.length(); i++){
+                    String ervno  = jsonArray.optJSONObject(i).optString("ERVNO");
+                    String Vehicle_No  = jsonArray.optJSONObject(i).optString("Vehicle_No");
+                    String PCO_Vehical_No  = jsonArray.optJSONObject(i).optString("PCO_Vehical_No");
+                    int Vehical_Id  = jsonArray.optJSONObject(i).optInt("vehicleId");
 
+
+                    if(!TextUtils.isEmpty(Vehicle_No)){
+                        lstERVOWNModel.add(ervno);
+                    }else {
+                        lstERVPCOModel.add(ervno);
+                    }
+
+                    JSONArray productArr = jsonArray.optJSONObject(i).optJSONArray("Details");
+                    List<PurchaseERVProduct> lstPurchaseProduct = new ArrayList<>();
+                    if(productArr != null && productArr.length() > 0){
+                        for(int j = 0; j < productArr.length(); j++){
+                            PurchaseERVProduct purchaseERVProduct = new PurchaseERVProduct(productArr.optJSONObject(j),ervno,Vehicle_No,PCO_Vehical_No, Vehical_Id);
+                            if(purchaseERVProduct != null){
+                                lstPurchaseProduct.add(purchaseERVProduct);
+                            }
+                        }
+                        hashProduct.put(ervno,lstPurchaseProduct);
+                    }
+
+                }
+            }
         }
     }
 
     @Override
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {
-
+        System.out.println();
     }
 
     static class Adapter extends FragmentPagerAdapter {

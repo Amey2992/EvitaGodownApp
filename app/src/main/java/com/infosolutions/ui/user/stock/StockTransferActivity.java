@@ -104,6 +104,11 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
             @Override
             public void onClick(View v) {
                 int full_edittext_value;
+                if(TextUtils.isEmpty(full_edittext.getText().toString()) && TextUtils.isEmpty(empty_edittext.getText().toString()) && TextUtils.isEmpty(def_edittext.getText().toString())){
+                    Toast.makeText(StockTransferActivity.this,"Please Enter Quantity of Cylinders",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(TextUtils.isEmpty(full_edittext.getText().toString())){
                     full_edittext_value = 0;
                 }else{

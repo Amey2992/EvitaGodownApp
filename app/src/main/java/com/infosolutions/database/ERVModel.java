@@ -12,7 +12,7 @@ public class ERVModel {
 
     public String Vehicle_No;
 
-    public String Id_Product;
+    public String Product_Name;
 
     public String Sound_Quantity;
 
@@ -23,7 +23,7 @@ public class ERVModel {
             this.ERV_No = jsonObject.optString("ERV_No");
             this.PCO_Vehical_No = jsonObject.optString("PCO_Vehical_No");
             this.Vehicle_No = jsonObject.optString("Vehicle_No");
-            this.Id_Product = jsonObject.optString("Id_Product");
+            this.Product_Name = jsonObject.optString("Product_Name");
             this.Sound_Quantity = jsonObject.optString("Sound_Quantity");
             this.Defective = jsonObject.optString("Defective");
         }

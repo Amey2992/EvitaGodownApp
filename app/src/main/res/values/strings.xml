@@ -146,6 +146,7 @@
     <string name="data_saved_to_local_disk">SV File has been saved to File System</string>
     <string name="select_deliveryman">Select Deliveryman</string>
     <string name="select_truck_no">Select Truck Number</string>
+    <string name="select_erv_no">Select ERV Number</string>
     <string name="saved_success_msg">Saved Successfully</string>
     <string name="proide_username">Please provide username</string>
     <string name="empty_password">Password can not leave empty</string>

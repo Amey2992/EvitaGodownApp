@@ -120,6 +120,10 @@ public class AppSettings {
         VolleySingleton.getInstance(context.getApplicationContext()).getCommercialDeliveryCount(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, Constants.COMMERCIAL_DELIVERY_COUNT);
     }
 
+    public void getPurchaseERV(Context context){
+        VolleySingleton.getInstance(context.getApplicationContext()).getPurchaseERV(VolleySingleton.CallType.ERV_PURCHASE, Constants.GET_PURCHASE_ERV);
+    }
+
     public void getConsumerDetails(Context context) {
         VolleySingleton.getInstance(context.getApplicationContext()).getConsumerDetails(VolleySingleton.CallType.CONSUMER_DETAILS, Constants.GET_CONSUMER_DETAILS);
     }
@@ -368,6 +372,7 @@ public class AppSettings {
                     truckDetailObject.put("Sync_Time", getDateTime());
                     truckDetailObject.put("Mode_of_entry", "Mobile");
                     truckDetailObject.put("ERVNO", cn.ERVNO);
+                    truckDetailObject.put("isOneWay", cn.isOneWay);
 
                     jsonArrayTruckDetails.put(truckDetailObject);
 
