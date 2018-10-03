@@ -169,7 +169,7 @@ public class TruckReceiveFragment extends Fragment {
                         etEnterTruckNo.setText("");
                         focusOnView(etInvoiceNumber);*/
                         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                        transaction.replace(fragment_own_container.getId(),truckReceivedOwnFragment).commit();
+                        transaction.replace(fragment_own_container.getId(),new TruckReceivedOwnFragment()).commit();
                         transaction.addToBackStack(null);
                         break;
                     case 1:
@@ -181,7 +181,7 @@ public class TruckReceiveFragment extends Fragment {
                         tvSelectedTruck.setVisibility(View.GONE);
                         focusOnView(etEnterTruckNo);*/
                         FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
-                        transaction1.replace(fragment_own_container.getId(),truckReceivedPcoFragment).commit();
+                        transaction1.replace(fragment_own_container.getId(),new TruckReceivedPcoFragment()).commit();
                         transaction1.addToBackStack(null);
                         break;
                 }

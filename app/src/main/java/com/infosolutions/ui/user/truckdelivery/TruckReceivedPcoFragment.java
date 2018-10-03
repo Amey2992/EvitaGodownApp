@@ -33,6 +33,7 @@ import com.infosolutions.database.ProductDB;
 import com.infosolutions.database.TruckDetailsDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -139,6 +140,9 @@ public class TruckReceivedPcoFragment extends Fragment{
 
                 Log.d("dynamicQuantity", Integer.toString(dynamicQuantity.size()));
 
+                final String invoice_number = etInvoiceNumber.getText().toString().trim();
+                String randomNumber = invoice_number + getGodownId() + AppSettings.currentDateTime() + AppSettings.getInstance(getActivity()).getRandomNumber();
+
                 for (int j = 0 ; j < dynamicQuantity.size(); j++) {
                     String etText = "";
                     String etLostCyl = "";
@@ -187,7 +191,7 @@ public class TruckReceivedPcoFragment extends Fragment{
                     int lostCylinder = Integer.parseInt(etLostCyl);
                     int defective = Integer.parseInt(etDefective);
 
-                    final String invoice_number = etInvoiceNumber.getText().toString().trim();
+
                     String truck_no = etEnterTruckNo.getText().toString().trim();
                     String erv_no = etErvNumber.getText().toString().trim();
                     if(TextUtils.isEmpty(erv_no)){
@@ -247,7 +251,7 @@ public class TruckReceivedPcoFragment extends Fragment{
                         truckDetailsDB.Defective = defective;
                         truckDetailsDB.ERVNO = erv_no;
                         truckDetailsDB.isOneWay = chkOneWay.isChecked();
-
+                        truckDetailsDB.Purchase_Code = randomNumber;
 
                         lstTruckDetailsDB.add(truckDetailsDB);
                     }
@@ -277,6 +281,22 @@ public class TruckReceivedPcoFragment extends Fragment{
 
         });
     }
+
+    public String getDate() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
+    }
+
 
     private void applyDynamicViews() {
 

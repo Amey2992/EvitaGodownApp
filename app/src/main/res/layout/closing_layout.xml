@@ -23,7 +23,7 @@
                     android:id="@+id/tagClosing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="CLOSING STOCK"
+                    android:text="CURRENT STOCK"
                     android:textSize="15dp"
                     android:textStyle="bold"
                     android:gravity="center"

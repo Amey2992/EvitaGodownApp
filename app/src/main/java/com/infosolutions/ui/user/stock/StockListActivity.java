@@ -415,7 +415,7 @@ public class StockListActivity extends BaseActivity {
             JSONArray arrayClosing = new JSONArray(loadClosingStock);
             int closingLength = arrayClosing.length();
             if (closingLength>0){
-                applyHeaderMargin("CLOSING STOCKS",closing_stock_table);
+                applyHeaderMargin("CURRENT STOCKS",closing_stock_table);
                 setHeaderStock("", "FULL", "EMPTY", "DEFECTIVE",closing_stock_table);
 
                 for (int i = 0; i<arrayClosing.length(); i++){

@@ -43,11 +43,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import android.content.Context;
 import android.view.View;
@@ -315,7 +317,7 @@ public class AppSettings {
                             productJsonObject.put("LostCylinder", cn.LostCylinder);
                             productJsonObject.put("godown_code", cn.godownId);
                             productJsonObject.put("Defective", cn.Defective);
-
+                            productJsonObject.put("Purchase_Code", cn.Purchase_Code);
 
                             //get product json array and update with latest
                             JSONObject jsonObject = (JSONObject) jsonArrayTruckDetails.get(jsonArrayTruckDetails.length() - 1);
@@ -337,6 +339,7 @@ public class AppSettings {
                             productJsonObject.put("LostCylinder", cn.LostCylinder);
                             productJsonObject.put("godown_code", cn.godownId);
                             productJsonObject.put("Defective", cn.Defective);
+                            productJsonObject.put("Purchase_Code", cn.Purchase_Code);
 
                             productsJsonArray = new JSONArray();
                             productsJsonArray.put(productJsonObject);
@@ -352,6 +355,7 @@ public class AppSettings {
                         productJsonObject.put("LostCylinder", cn.LostCylinder);
                         productJsonObject.put("godown_code", cn.godownId);
                         productJsonObject.put("Defective", cn.Defective);
+                        productJsonObject.put("Purchase_Code", cn.Purchase_Code);
 
                         productsJsonArray.put(productJsonObject);
                         truckDetailObject.put("Products", new JSONArray(productsJsonArray.toString()));
@@ -373,6 +377,7 @@ public class AppSettings {
                     truckDetailObject.put("Mode_of_entry", "Mobile");
                     truckDetailObject.put("ERVNO", cn.ERVNO);
                     truckDetailObject.put("isOneWay", cn.isOneWay);
+                    truckDetailObject.put("Purchase_Code", cn.Purchase_Code);
 
                     jsonArrayTruckDetails.put(truckDetailObject);
 
@@ -403,6 +408,7 @@ public class AppSettings {
                             productJsonObject.put("Id_product", cn.idProduct);
                             productJsonObject.put("Quantity", cn.Quantity);
                             productJsonObject.put("Defective", cn.Defective);
+                            productJsonObject.put("Id_ERV", cn.Id_ERV);
 
 
                             //get product json array and update with latest
@@ -420,6 +426,7 @@ public class AppSettings {
                             productJsonObject.put("Id_product", cn.idProduct);
                             productJsonObject.put("Quantity", cn.Quantity);
                             productJsonObject.put("Defective", cn.Defective);
+                            productJsonObject.put("Id_ERV", cn.Id_ERV);
 
                             productsTrucksSendJsonArray = new JSONArray();
                             productsTrucksSendJsonArray.put(productJsonObject);
@@ -434,6 +441,7 @@ public class AppSettings {
                         productJsonObject.put("Id_product", cn.idProduct);
                         productJsonObject.put("Quantity", cn.Quantity);
                         productJsonObject.put("Defective", cn.Defective);
+                        productJsonObject.put("Id_ERV", cn.Id_ERV);
 
                         productsTrucksSendJsonArray.put(productJsonObject);
                         truckDetailSend.put("Products", new JSONArray(productsTrucksSendJsonArray.toString()));
@@ -449,6 +457,7 @@ public class AppSettings {
                     truckDetailSend.put("godown_code", cn.godown_Id);
                     truckDetailSend.put("Send_Date", cn.send_date);
                     truckDetailSend.put("Mode_of_entry", "Mobile");
+                    truckDetailSend.put("Id_ERV", cn.Id_ERV);
 
                     jsonArrayTruckSendDetails.put(truckDetailSend);
                     count = jsonArrayTruckSendDetails.length();
@@ -658,9 +667,37 @@ public class AppSettings {
     public static void hideKeyboard(Activity activity) {
         View view = activity.findViewById(android.R.id.content);
         if (view != null) {
-             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private int random = 0;
+    private int min = 10;
+    private int max = 110;
+
+    public String getRandomNumber(){
+        String randomNumber;
+        random = new Random().nextInt((max - min) + 1) + min;
+        Log.e("random number", Integer.toString(random));
+        randomNumber = Integer.toString(random);
+        return randomNumber;
+
+    }
+
+    public static String currentDateTime() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = (Date)formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
     }
 
 }

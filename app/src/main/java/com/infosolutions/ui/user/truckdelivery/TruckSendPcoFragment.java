@@ -34,6 +34,7 @@ import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.ui.user.truckdelivery.TruckDeliveryActivity;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -89,6 +90,21 @@ public class TruckSendPcoFragment extends Fragment {
         truckDeliveryActivity = ((TruckDeliveryActivity) getActivity());
 
         return rootView;
+    }
+
+    public String getDate() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = formatter.parse(new Date().toString());
+            simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd");
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
     }
 
     private void initUI(View view) {
@@ -379,6 +395,8 @@ public class TruckSendPcoFragment extends Fragment {
                 RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
                 List<ProductDB> productDBList = productDB.queryForAll();
 
+                final String erv_number = etErvNumber.getText().toString().trim();
+                String randomNumber = erv_number + getGodownId() + AppSettings.currentDateTime() + AppSettings.getInstance(getActivity()).getRandomNumber();
                 for (int j = 0 ; j < dynamicQuantity.size(); j++) {
 
                     String et_quantity = String.valueOf(dynamicQuantity.get(j).getText());
@@ -419,7 +437,7 @@ public class TruckSendPcoFragment extends Fragment {
                     int quantity = Integer.parseInt(et_quantity);
                     int defective = Integer.parseInt(et_defective);
 
-                    final String erv_number = etErvNumber.getText().toString().trim();
+
                     String truck_no = etEnterTruckNo.getText().toString().trim().toUpperCase();
 
 
@@ -445,6 +463,7 @@ public class TruckSendPcoFragment extends Fragment {
                             setSelected_vehicle_number(truck_no);
                         }*/
                         String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+
                         TruckSendDetailsDB truckSendDetailsDB = null;
 
                             truckSendDetailsDB = new TruckSendDetailsDB();
@@ -463,7 +482,7 @@ public class TruckSendPcoFragment extends Fragment {
                             truckSendDetailsDB.mode_of_entry = "mobile";
                             truckSendDetailsDB.Quantity = quantity;
                             truckSendDetailsDB.Defective = defective;
-
+                            truckSendDetailsDB.Id_ERV = randomNumber;
 
 
                         lsttruckSendDetailsDB.add(truckSendDetailsDB);

@@ -81,6 +81,9 @@ public class TruckDetailsDB implements Serializable {
     @DatabaseField
     public boolean isOneWay;
 
+    @DatabaseField
+    public String Purchase_Code;
+
     @Override
     public String toString() {
         return "TruckDetailsDB{" +

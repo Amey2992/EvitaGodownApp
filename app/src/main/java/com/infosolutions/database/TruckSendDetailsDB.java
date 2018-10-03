@@ -74,6 +74,10 @@ public class TruckSendDetailsDB implements Serializable {
     @DatabaseField
     public int unique_id;
 
+
+    @DatabaseField
+    public String Id_ERV;
+
     @Override
     public String toString() {
 

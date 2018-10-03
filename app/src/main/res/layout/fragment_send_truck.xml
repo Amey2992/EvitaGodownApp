@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:background="@color/colorLightGrey"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:paddingTop="70dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:orientation="vertical">
@@ -21,8 +21,6 @@
         android:id="@+id/segmentedButtonGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
         app:sbg_animateSelector="anticipate"
         app:sbg_animateSelectorDuration="000"
         app:sbg_backgroundColor="@color/white"
