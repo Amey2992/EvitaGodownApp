@@ -37,6 +37,7 @@
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/appbar_padding_top"
+                android:layout_marginBottom="@dimen/appbar_padding_top"
                 android:fontFamily="sans-serif-condensed"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:visibility="visible" />
