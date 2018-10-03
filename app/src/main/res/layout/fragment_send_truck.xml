@@ -6,10 +6,75 @@
     android:windowSoftInputMode="adjustResize"
     android:fitsSystemWindows="true"
     android:background="@color/colorLightGrey">
+    <LinearLayout
+        android:id="@+id/layout_input1"
+        android:layout_width="match_parent"
+        android:background="@color/colorLightGrey"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="vertical">
 
+
+    <co.ceryle.segmentedbutton.SegmentedButtonGroup
+        android:id="@+id/segmentedButtonGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
+        app:sbg_animateSelector="anticipate"
+        app:sbg_animateSelectorDuration="000"
+        app:sbg_backgroundColor="@color/white"
+        app:sbg_dividerColor="@color/colorPrimary"
+        app:sbg_dividerPadding="10dp"
+        app:sbg_dividerRadius="10dp"
+        app:sbg_dividerSize="0dp"
+        app:sbg_position="1"
+        app:sbg_radius="2dp"
+        app:sbg_rippleColor="@color/colorPrimaryDark"
+        app:sbg_selectorColor="@color/colorPrimary"
+        app:sbg_selectorTextColor="@color/white"
+        app:sbg_shadow="true"
+        app:sbg_shadowElevation="3dp"
+        app:sbg_shadowMargin="4dp">
+
+        <Button
+            android:id="@+id/btnOWN"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="10dp"
+            android:text="@string/own"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnPCO"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="10dp"
+            android:text="@string/pco"
+            android:textAllCaps="false" />
+
+
+    </co.ceryle.segmentedbutton.SegmentedButtonGroup>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/fragment_own_container"
+        android:layout_below="@+id/layout_input1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/fragment_pco_container"
+        android:layout_below="@+id/layout_input1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,46 +88,7 @@
             android:paddingBottom="150dp"
             android:orientation="vertical">
 
-            <co.ceryle.segmentedbutton.SegmentedButtonGroup
-                android:id="@+id/segmentedButtonGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:sbg_animateSelector="anticipate"
-                app:sbg_animateSelectorDuration="000"
-                app:sbg_backgroundColor="@color/white"
-                app:sbg_dividerColor="@color/colorPrimary"
-                app:sbg_dividerPadding="10dp"
-                app:sbg_dividerRadius="10dp"
-                app:sbg_dividerSize="0dp"
-                app:sbg_position="1"
-                app:sbg_radius="2dp"
-                app:sbg_rippleColor="@color/colorPrimaryDark"
-                app:sbg_selectorColor="@color/colorPrimary"
-                app:sbg_selectorTextColor="@color/white"
-                app:sbg_shadow="true"
-                app:sbg_shadowElevation="3dp"
-                app:sbg_shadowMargin="4dp">
 
-                <Button
-                    android:id="@+id/btnOWN"
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:minHeight="10dp"
-                    android:text="@string/own"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/btnPCO"
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:minHeight="10dp"
-                    android:text="@string/pco"
-                    android:textAllCaps="false" />
-
-
-            </co.ceryle.segmentedbutton.SegmentedButtonGroup>
 
             <EditText
                 android:id="@+id/erv_spinner_edittext"
@@ -175,6 +201,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorWhite"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:visibility="gone"
         android:background="@drawable/btn_background"/>
 
 </RelativeLayout>

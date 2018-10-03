@@ -1,12 +1,17 @@
 package com.infosolutions.ui.user.truckdelivery;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.SQLException;
-import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -33,6 +38,7 @@ import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.database.VehicleDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
+import com.infosolutions.ui.user.truckdelivery.TruckDeliveryActivity;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -43,247 +49,134 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 import static com.infosolutions.network.Constants.getSharedPrefWithKEY;
 import static java.lang.Integer.parseInt;
 
-/**
- * Created @author Shailesh Mishra on 10/8/17.
- */
 
-public class TruckSendFragment extends Fragment {
+public class TruckSendOwnFragment extends Fragment {
 
-    private String TAG = TruckSendFragment.class.getSimpleName();
-    private AppCompatButton btnSubmit;
-    private Button btnSelectTruckNumber;
-    private EditText etEnterTruckNo;
-    private SegmentedButtonGroup segmentedButtonGroup;
-    private EditText etErvNumber;
-    private Button generateET;
+    EditText  etErvNumber, etQuantity;
+    android.widget.Button btnSelectTruckNumber, generateET;
+    TextView tvSelectedTruck;
+    TextInputLayout input_layout_erv;
     private LinearLayout myLinearLay;
+    private ScrollView scrollView;
+    AppCompatButton btnSubmit;
     private int USER_ID;
-    private TextView tvSelectedTruck;
+    private DatabaseHelper databaseHelper;
+    private int selected_vehicle_id;
+    private int godownId;
+    private String load_type;
+    TruckDeliveryActivity truckDeliveryActivity;
+    private List<PurchaseERVProduct> purchaseERVProduct = new ArrayList<>();
+    private String selected_vehicle_number;
+    private List<String> listSpinItems = new ArrayList<>();
     private ArrayAdapter<String> spinAdapter;
     private List<EditText> dynamicQuantity = new ArrayList<>();
     private List<EditText> dynamicDefective = new ArrayList<>();
     private List<Spinner> dynamicSpinner = new ArrayList<>();
     private ArrayList<String> arrayDynamicViews = new ArrayList<>();
-    private String selected_vehicle_number = "";
-    private int selected_vehicle_id;
-    private DatabaseHelper databaseHelper = null;
-    private int godownId;
-    private int spinItemsCount = -1;
-    private List<String> listSpinItems = new ArrayList<>();
     private String default_str = "--select--";
-    EditText erv_spinner_edittext;
-    TruckDeliveryActivity truckDeliveryActivity;
-    private List<PurchaseERVProduct> purchaseERVProduct = new ArrayList<>();
+    private int spinItemsCount = -1;
     private ArrayList<String> spinItems;
-    TruckSendOwnFragment truckSendOwnFragment;
-    TruckSendPcoFragment truckSendPcoFragment;
-    android.widget.RelativeLayout fragment_own_container,fragment_pco_container;
 
-    public String getLoad_type() {
-        return load_type;
+    public TruckSendOwnFragment(){
+
     }
 
-    public void setLoad_type(String load_type) {
-        this.load_type = load_type;
-    }
-
-    private String load_type;
-    private ScrollView scrollView;
-    private EditText etQuantity;
-
-
-    public TruckSendFragment() {
-    }
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_send_truck, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_send_own_truck, container, false);
         USER_ID = parseInt(getSharedPrefWithKEY(getContext(), Constants.KEY_USER_ID));
         setGodownId(Integer.parseInt(Constants.getSharedPrefWithKEY(getContext(), Constants.KEY_GODOWN)));
         ButterKnife.bind(getActivity());
         initUI(rootView);
-        setLoad_type("OWN");
         truckDeliveryActivity = ((TruckDeliveryActivity) getActivity());
+
         return rootView;
     }
 
-    private void initUI(View view) {
+    private void initUI(final View view) {
 
-        /*generateET = view.findViewById(R.id.generateBtn);
+        generateET = view.findViewById(R.id.generateBtn);
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
-        erv_spinner_edittext = view.findViewById(R.id.erv_spinner_edittext);
-        erv_spinner_edittext.clearFocus();
-        erv_spinner_edittext.setCursorVisible(false);
-        erv_spinner_edittext.setShowSoftInputOnFocus(false);
-        erv_spinner_edittext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getLoad_type().toString().equalsIgnoreCase("OWN")) {
-                    initERVOWNAdapter();
-                }else{
-                    initERVPCOAdapter();
-                }
-            }
-        });
+
+
         btnSelectTruckNumber = (AppCompatButton) view.findViewById(R.id.btnSelectTruckNumber);
         etErvNumber = view.findViewById(R.id.etErvNumber);
+        etErvNumber.setEnabled(false);
         myLinearLay = view.findViewById(R.id.dynamic);
         tvSelectedTruck = view.findViewById(R.id.tvSelectedTruck);
-        segmentedButtonGroup = view.findViewById(R.id.segmentedButtonGroup);
         scrollView = view.findViewById(R.id.scrollView);
-
-        btnSelectTruckNumber.setVisibility(View.GONE);
-        etEnterTruckNo.setVisibility(View.GONE);
-
-        showHideSegmentedButton();
-        submitBtnClick();*/
-        fragment_own_container = view.findViewById(R.id.fragment_own_container);
-        fragment_pco_container = view.findViewById(R.id.fragment_pco_container);
-        fragment_pco_container.setVisibility(View.GONE);
-        truckSendOwnFragment = new TruckSendOwnFragment();
-        truckSendPcoFragment = new TruckSendPcoFragment();
-
-        //transaction.add(fragment_own_container.getId(), truckSendOwnFragment ).commit();
-        //transaction.add(fragment_pco_container.getId(), truckSendPcoFragment );
-        //transaction.commit();
-
-        segmentedButtonGroup = view.findViewById(R.id.segmentedButtonGroup);
-        showHideSegmentedButton();
-    }
-
-    void initERVOWNAdapter(){
-
-        List<String> ownItems = ((TruckDeliveryActivity)getActivity()).lstERVOWNModel;
-        final SpinnerDialog dialog = new SpinnerDialog(getActivity(),new ArrayList<String>( ownItems), getResources().getString(R.string.select_erv_no));
-        dialog.showSpinerDialog();
-        dialog.bindOnSpinerListener(new OnSpinerItemClick() {
-            @Override
-            public void onClick(String ervNumber, int position) {
-                erv_spinner_edittext.setText(ervNumber);
-                //purchaseERVProduct.clear();
-                purchaseERVProduct = truckDeliveryActivity.hashProduct.get(ervNumber);
-                if(purchaseERVProduct != null && purchaseERVProduct.size() > 0){
-                    PurchaseERVProduct purchaseERVHeader = purchaseERVProduct.get(0);
-                    tvSelectedTruck.setVisibility(View.VISIBLE);
-                    tvSelectedTruck.setText(purchaseERVHeader.Vehicle_No);
-                    etErvNumber.setText(purchaseERVHeader.ERV_No);
-                    etErvNumber.setEnabled(false);
-                    setSelected_vehicle_number(purchaseERVHeader.Vehicle_No);
-                    setSelected_vehicle_id(purchaseERVHeader.vehicleId);
-
-                }
-
-                if(myLinearLay != null) {
-                    if(myLinearLay.getChildCount() > 0)
-                        myLinearLay.removeAllViews();
-                }
-
-                listSpinItems.clear();
-                autofillUI();
-            }
-        });
-    }
-
-    void initERVPCOAdapter(){
-        List<String> pcoItems = ((TruckDeliveryActivity)getActivity()).lstERVPCOModel;
-        final SpinnerDialog dialog = new SpinnerDialog(getActivity(),new ArrayList<String>( pcoItems), getResources().getString(R.string.select_erv_no));
-        dialog.showSpinerDialog();
-        dialog.bindOnSpinerListener(new OnSpinerItemClick() {
-            @Override
-            public void onClick(String ervNumber, int position) {
-                erv_spinner_edittext.setText(ervNumber);
-                //purchaseERVProduct.clear();
-                purchaseERVProduct = truckDeliveryActivity.hashProduct.get(ervNumber);
-                if(purchaseERVProduct != null && purchaseERVProduct.size() > 0){
-                    PurchaseERVProduct purchaseERVHeader = purchaseERVProduct.get(0);
-                    tvSelectedTruck.setVisibility(View.VISIBLE);
-                    tvSelectedTruck.setText(purchaseERVHeader.PCO_Vehical_No);
-                    etErvNumber.setText(purchaseERVHeader.ERV_No);
-                    etErvNumber.setEnabled(false);
-                    setSelected_vehicle_number(purchaseERVHeader.PCO_Vehical_No);
-                    //setSelected_vehicle_id("");
-                }
-                if(myLinearLay != null) {
-                    if(myLinearLay.getChildCount() > 0)
-                        myLinearLay.removeAllViews();
-                }
-                listSpinItems.clear();
-                autofillUI();
-            }
-        });
-
-    }
-
-    private void autofillUI(){
-        /*if(!TextUtils.isEmpty(model.ERV_No)) {
-            tvSelectedTruck.setText("");
+        if(TruckDeliveryActivity.isShowPopup && truckDeliveryActivity != null && truckDeliveryActivity.lstERVOWNModel !=null ) {
+            initERVOWNAdapter();
         }
 
-        if(!TextUtils.isEmpty(model.ERV_No)) {
-            etEnterTruckNo.setText("");
-        }*/
-        spinItemsCount = -1;
-        for(int i = 0; i< purchaseERVProduct.size(); i++) {
-            loadDynamicProducts(purchaseERVProduct.get(i),true);
-        }
-
-
-
-
-    }
-
-    private void showHideSegmentedButton() {
-
-        segmentedButtonGroup.setOnClickedButtonPosition(new SegmentedButtonGroup.OnClickedButtonPosition() {
-            @Override
-            public void onClickedButtonPosition(int position) {
-
-                switch (position) {
-                    case 0:
-                        //setLoad_type("OWN");
-          /*              setLoad_type("OWN");
-                        btnSelectTruckNumber.setVisibility(View.VISIBLE);
-                        etEnterTruckNo.setVisibility(View.GONE);
-                        etEnterTruckNo.setText("");*/
-                        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                        transaction.replace(fragment_own_container.getId(),truckSendOwnFragment).commit();
-                        transaction.addToBackStack(null);
-                        break;
-                    case 1:
-                        //setLoad_type("PCO");
-                        /*setLoad_type("PCO");
-                        btnSelectTruckNumber.setVisibility(View.GONE);
-                        etEnterTruckNo.setVisibility(View.VISIBLE);
-                        etEnterTruckNo.requestFocus();
-                        btnSelectTruckNumber.setVisibility(View.GONE);
-                        tvSelectedTruck.setText("");*/
-                        FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
-                        transaction1.replace(fragment_own_container.getId(),truckSendPcoFragment).commit();
-                        transaction1.addToBackStack(null);
-                        break;
-                }
-            }
-        });
-        segmentedButtonGroup.setPosition(0, 0);
-
-        //applyDynamicViews();
-      /*  btnSelectTruckNumber.setOnClickListener(new View.OnClickListener() {
+        //etEnterTruckNo.setVisibility(View.GONE);
+        btnSelectTruckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTruckList();
+                if(view.getVisibility() == View.VISIBLE) {
+                    showTruckList();
+                }
             }
-        });*/
-        //applyDynamicViews();
+        });
+
+        submitBtnClick();
+        applyDynamicViews();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(listener,
+                new IntentFilter("showDialog"));
+    }
+    private android.content.BroadcastReceiver listener = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent ) {
+            if(truckDeliveryActivity != null && truckDeliveryActivity.lstERVOWNModel != null) {
+                if(isAdded()) {
+                    initERVOWNAdapter();
+                }
+            }
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
+    private void applyDynamicViews() {
+
+        spinItems = new ArrayList<>();
+
+        RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
+        List<ProductDB> productDBList = productDB.queryForAll();
+        int productSize = productDBList.size();
+
+        spinItems.clear();
+        if (productSize > 0) {
+            for (ProductDB item : productDBList)
+                spinItems.add(item.product_description);
+        }
+
+        spinItems.add(0,default_str);
+        spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+
+        generateET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                loadDynamicProducts(null,false);
+            }
+        });
+
+
+    }
 
     private void showTruckList() {
 
@@ -321,6 +214,59 @@ public class TruckSendFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "No Truck Available", Toast.LENGTH_SHORT).show();
         }
+
+
+    }
+
+    void initERVOWNAdapter(){
+
+
+            List<String> ownItems = truckDeliveryActivity.lstERVOWNModel;
+            final SpinnerDialog dialog = new SpinnerDialog(getActivity(), new ArrayList<String>(ownItems), getResources().getString(R.string.select_erv_no));
+            dialog.showSpinerDialog();
+            dialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                @Override
+                public void onClick(String ervNumber, int position) {
+                    //purchaseERVProduct.clear();
+                    purchaseERVProduct = truckDeliveryActivity.hashProduct.get(ervNumber);
+                    if (purchaseERVProduct != null && purchaseERVProduct.size() > 0) {
+                        PurchaseERVProduct purchaseERVHeader = purchaseERVProduct.get(0);
+                        tvSelectedTruck.setVisibility(View.VISIBLE);
+                        tvSelectedTruck.setText(purchaseERVHeader.Vehicle_No);
+                        etErvNumber.setText(purchaseERVHeader.ERV_No);
+                        etErvNumber.setEnabled(false);
+                        btnSelectTruckNumber.setEnabled(false);
+                        setSelected_vehicle_number(purchaseERVHeader.Vehicle_No);
+                        setSelected_vehicle_id(purchaseERVHeader.vehicleId);
+
+                    }
+
+                    if (myLinearLay != null) {
+                        if (myLinearLay.getChildCount() > 0)
+                            myLinearLay.removeAllViews();
+                    }
+
+                    listSpinItems.clear();
+                    autofillUI();
+                }
+            });
+
+    }
+
+    private void autofillUI(){
+        /*if(!TextUtils.isEmpty(model.ERV_No)) {
+            tvSelectedTruck.setText("");
+        }
+
+        if(!TextUtils.isEmpty(model.ERV_No)) {
+            etEnterTruckNo.setText("");
+        }*/
+        spinItemsCount = -1;
+        for(int i = 0; i< purchaseERVProduct.size(); i++) {
+            loadDynamicProducts(purchaseERVProduct.get(i),true);
+        }
+
+
 
 
     }
@@ -482,37 +428,14 @@ public class TruckSendFragment extends Fragment {
 
     }
 
-    private void applyDynamicViews() {
-
-        spinItems = new ArrayList<>();
-
-        RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
-        List<ProductDB> productDBList = productDB.queryForAll();
-        int productSize = productDBList.size();
-
-        spinItems.clear();
-        if (productSize > 0) {
-            for (ProductDB item : productDBList)
-                spinItems.add(item.product_description);
-        }
-
-        spinItems.add(0,default_str);
-        spinAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinItems);
-        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-
-        generateET.setOnClickListener(new View.OnClickListener() {
+    private final void focusOnView(final View view) {
+        scrollView.post(new Runnable() {
             @Override
-            public void onClick(View view) {
-
-                loadDynamicProducts(null,false);
+            public void run() {
+                scrollView.scrollTo(0, view.getBottom());
             }
         });
-
-
     }
-
 
     private void submitBtnClick() {
 
@@ -568,7 +491,7 @@ public class TruckSendFragment extends Fragment {
                     int defective = Integer.parseInt(et_defective);
 
                     final String erv_number = etErvNumber.getText().toString().trim();
-                    String truck_no = etEnterTruckNo.getText().toString().trim().toUpperCase();
+                    //String truck_no = etEnterTruckNo.getText().toString().trim().toUpperCase();
 
 
                     if (erv_number.equalsIgnoreCase("")) {
@@ -581,23 +504,14 @@ public class TruckSendFragment extends Fragment {
                     } else if (btnSelectTruckNumber.getVisibility() == View.VISIBLE && selected_vehicle_number.equalsIgnoreCase("")) {
                         Toast.makeText(getContext(), "Select Truck Number", Toast.LENGTH_SHORT).show();
                         return;
-                    } else if (etEnterTruckNo.getVisibility() == View.VISIBLE && truck_no.equalsIgnoreCase("")) {
-                        Toast.makeText(getContext(), "Enter Truck Number", Toast.LENGTH_SHORT).show();
-                        etEnterTruckNo.setError("Enter Truck Number");
-                        etEnterTruckNo.requestFocus();
-                        return;
-                    } else if (Integer.toString(quantity).equals("0") || Integer.toString(quantity).equals("00") ||
+                    }  else if (Integer.toString(quantity).equals("0") || Integer.toString(quantity).equals("00") ||
                             Integer.toString(quantity).equals("000")) {
                         Toast.makeText(getContext(), "Enter Quantity Of Cylinder's", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-
-                        if (btnSelectTruckNumber.getVisibility() == View.GONE) {
-                            setSelected_vehicle_number(truck_no);
-                        }
                         String deviceId = Settings.Secure.getString(getContext().getContentResolver(), Settings.Secure.ANDROID_ID);
                         TruckSendDetailsDB truckSendDetailsDB = null;
-                        if (getLoad_type().toString().equalsIgnoreCase("OWN")) {
+
                             truckSendDetailsDB = new TruckSendDetailsDB();
                             truckSendDetailsDB.truck_details_send_id = 1;
                             truckSendDetailsDB.truck_send_id = 1;
@@ -615,25 +529,7 @@ public class TruckSendFragment extends Fragment {
                             truckSendDetailsDB.Quantity = quantity;
                             truckSendDetailsDB.Defective = defective;
 
-                        } else {
-                            truckSendDetailsDB = new TruckSendDetailsDB();
-                            truckSendDetailsDB.truck_details_send_id = 1;
-                            truckSendDetailsDB.truck_send_id = 1;
-                            truckSendDetailsDB.ervNo = erv_number;
-                            truckSendDetailsDB.idProduct = id_product;
-                            truckSendDetailsDB.vehicleId = 0;
-                            truckSendDetailsDB.pcoVehicleNo = getSelected_vehicle_number();
-                            truckSendDetailsDB.createdBy = USER_ID;
-                            truckSendDetailsDB.deviceId = deviceId;
-                            truckSendDetailsDB.typeOfQuery = "INSERT";
-                            truckSendDetailsDB.godown_Id = getGodownId();
-                            truckSendDetailsDB.send_date = getDateTime();
-                            truckSendDetailsDB.is_sync = "N";
-                            truckSendDetailsDB.mode_of_entry = "mobile";
-                            truckSendDetailsDB.Quantity = quantity;
-                            truckSendDetailsDB.Defective = defective;
 
-                        }
 
                         lsttruckSendDetailsDB.add(truckSendDetailsDB);
                     }
@@ -663,6 +559,7 @@ public class TruckSendFragment extends Fragment {
 
             }
         });
+
     }
 
     private void saveSendTruck(final List<TruckSendDetailsDB> lsttruckSendDetailsDB) {
@@ -703,13 +600,23 @@ public class TruckSendFragment extends Fragment {
     }
 
 
-    public String getSelected_vehicle_number() {
-        return selected_vehicle_number;
+    public String getDateTime() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = formatter.parse(new Date().toString());
+            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return simpleDateFormat.format(date);
     }
 
-    public void setSelected_vehicle_number(String selected_vehicle_number) {
-        this.selected_vehicle_number = selected_vehicle_number;
-    }
+
+
 
     public int getSelected_vehicle_id() {
         return selected_vehicle_id;
@@ -743,32 +650,20 @@ public class TruckSendFragment extends Fragment {
     public void setGodownId(int godownId) {
         this.godownId = godownId;
     }
-
-
-    public String getDateTime() {
-
-        SimpleDateFormat simpleDateFormat = null;
-        Date date = null;
-        try {
-            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
-            date = formatter.parse(new Date().toString());
-            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return simpleDateFormat.format(date);
+    public String getLoad_type() {
+        return load_type;
     }
 
-
-    private final void focusOnView(final View view) {
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.scrollTo(0, view.getBottom());
-            }
-        });
+    public void setLoad_type(String load_type) {
+        this.load_type = load_type;
     }
 
+    public String getSelected_vehicle_number() {
+        return selected_vehicle_number;
+    }
+
+    public void setSelected_vehicle_number(String selected_vehicle_number) {
+        this.selected_vehicle_number = selected_vehicle_number;
+    }
 
 }

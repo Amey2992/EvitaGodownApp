@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
@@ -19,7 +20,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.ProductDB;
 import com.infosolutions.database.TruckDetailsDB;
-import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.database.VehicleDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
@@ -85,6 +84,9 @@ public class TruckReceiveFragment extends Fragment {
     private String default_str = "--select--";
     private EditText et_defective;
     android.widget.CheckBox chkOneWay;
+    TruckReceivedOwnFragment truckReceivedOwnFragment;
+    TruckReceivedPcoFragment truckReceivedPcoFragment;
+    android.widget.RelativeLayout fragment_own_container;
 
     public String getLoad_type() {
         return load_type;
@@ -115,7 +117,7 @@ public class TruckReceiveFragment extends Fragment {
 
     private void initUI(View view) {
 
-        scrollView = view.findViewById(R.id.scrollView);
+        /*scrollView = view.findViewById(R.id.scrollView);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         etInvoiceNumber = view.findViewById(R.id.etInvoiceNumber);
         etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
@@ -142,7 +144,13 @@ public class TruckReceiveFragment extends Fragment {
         });
 
         showHideSegmentedButton();
-        submitBtnClick();
+        submitBtnClick();*/
+
+        fragment_own_container = view.findViewById(R.id.fragment_own_container);
+        truckReceivedOwnFragment = new TruckReceivedOwnFragment();
+        truckReceivedPcoFragment = new TruckReceivedPcoFragment();
+        segmentedButtonGroup = view.findViewById(R.id.segmentedButtonGroup);
+        showHideSegmentedButton();
     }
 
 
@@ -155,32 +163,38 @@ public class TruckReceiveFragment extends Fragment {
                 switch (position) {
 
                     case 0:
-                        setLoad_type("OWN");
+                   /*     setLoad_type("OWN");
                         btnTruckNumber.setVisibility(View.VISIBLE);
                         etEnterTruckNo.setVisibility(View.GONE);
                         etEnterTruckNo.setText("");
-                        focusOnView(etInvoiceNumber);
+                        focusOnView(etInvoiceNumber);*/
+                        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                        transaction.replace(fragment_own_container.getId(),truckReceivedOwnFragment).commit();
+                        transaction.addToBackStack(null);
                         break;
                     case 1:
-                        setLoad_type("PCO");
+                        /*setLoad_type("PCO");
                         btnTruckNumber.setVisibility(View.GONE);
                         etEnterTruckNo.setVisibility(View.VISIBLE);
                         etEnterTruckNo.requestFocus();
                         tvSelectedTruck.setText("");
                         tvSelectedTruck.setVisibility(View.GONE);
-                        focusOnView(etEnterTruckNo);
+                        focusOnView(etEnterTruckNo);*/
+                        FragmentTransaction transaction1 = getChildFragmentManager().beginTransaction();
+                        transaction1.replace(fragment_own_container.getId(),truckReceivedPcoFragment).commit();
+                        transaction1.addToBackStack(null);
                         break;
                 }
             }
         });
         segmentedButtonGroup.setPosition(0, 0);
-        applyDynamicViews();
+        /*applyDynamicViews();
         btnTruckNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTruckList();
             }
-        });
+        });*/
     }
 
 

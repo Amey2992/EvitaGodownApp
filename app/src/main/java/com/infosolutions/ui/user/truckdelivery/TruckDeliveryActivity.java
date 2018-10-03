@@ -1,15 +1,18 @@
 package com.infosolutions.ui.user.truckdelivery;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -37,7 +40,8 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
     public List<String> lstERVOWNModel = new ArrayList<>();
     public List<String> lstERVPCOModel = new ArrayList<>();
     public HashMap<String,List<PurchaseERVProduct>> hashProduct = new HashMap<>();
-
+    public static boolean isShowPopup = false;
+    private LocalBroadcastManager localBroadcastManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +52,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
         setupToolBar();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.ERV_PURCHASE, this);
         AppSettings.getInstance(this).getPurchaseERV(this);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
     }
 
     private void setupToolBar() {
@@ -69,6 +74,26 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
         setupViewPager(viewPager);
         tabs = findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                Log.d("viewpager:","onPageScrolled");
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 1){
+                    Intent localIntent = new Intent("showDialog");
+                    localBroadcastManager.sendBroadcast(localIntent);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Log.d("viewpager:","onPageScrollStateChanged");
+            }
+        });
     }
 
 
@@ -120,6 +145,8 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
                     }
 
                 }
+
+                isShowPopup = true;
             }
         }
     }
@@ -150,6 +177,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
+
 
         @Override
         public CharSequence getPageTitle(int position) {
