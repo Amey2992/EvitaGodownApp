@@ -84,6 +84,10 @@ public class TruckDetailsDB implements Serializable {
     @DatabaseField
     public String Purchase_Code;
 
+    @DatabaseField
+    public String status;
+
+
     @Override
     public String toString() {
         return "TruckDetailsDB{" +

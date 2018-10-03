@@ -292,27 +292,27 @@ public class TruckReceivedOwnFragment extends Fragment {
 
                         TruckDetailsDB truckDetailsDB;
 
-                            truckDetailsDB = new TruckDetailsDB();
-                            truckDetailsDB.truck_details_id = 1;
-                            truckDetailsDB.invoiceNo = invoice_number;
-                            truckDetailsDB.invoiceDate = getDateTime();
-                            truckDetailsDB.vehicleId = getSelected_vehicle_id();
-                            truckDetailsDB.pcoVehicleNo = "";
-                            truckDetailsDB.createdBy = String.valueOf(USER_ID);
-                            truckDetailsDB.createdDate = getDateTime();
-                            truckDetailsDB.idProduct = id_product;
-                            truckDetailsDB.typeOfQuery = "INSERT";
-                            truckDetailsDB.godownId = getGodownId();
-                            truckDetailsDB.is_sync = "N";
-                            truckDetailsDB.mode_of_entry = "mobile";
-                            truckDetailsDB.deviceId = getDeviceId();
-                            truckDetailsDB.Quantity = quantity;
-                            truckDetailsDB.LostCylinder = lostCylinder;
-                            truckDetailsDB.Defective = defective;
-                            truckDetailsDB.ERVNO = erv_no;
-                            truckDetailsDB.isOneWay = chkOneWay.isChecked();
-                            truckDetailsDB.Purchase_Code = randomNumber;
-
+                        truckDetailsDB = new TruckDetailsDB();
+                        truckDetailsDB.truck_details_id = 1;
+                        truckDetailsDB.invoiceNo = invoice_number;
+                        truckDetailsDB.invoiceDate = getDateTime();
+                        truckDetailsDB.vehicleId = getSelected_vehicle_id();
+                        truckDetailsDB.pcoVehicleNo = "";
+                        truckDetailsDB.createdBy = String.valueOf(USER_ID);
+                        truckDetailsDB.createdDate = getDateTime();
+                        truckDetailsDB.idProduct = id_product;
+                        truckDetailsDB.typeOfQuery = "INSERT";
+                        truckDetailsDB.godownId = getGodownId();
+                        truckDetailsDB.is_sync = "N";
+                        truckDetailsDB.mode_of_entry = "mobile";
+                        truckDetailsDB.deviceId = getDeviceId();
+                        truckDetailsDB.Quantity = quantity;
+                        truckDetailsDB.LostCylinder = lostCylinder;
+                        truckDetailsDB.Defective = defective;
+                        truckDetailsDB.ERVNO = erv_no;
+                        truckDetailsDB.isOneWay = chkOneWay.isChecked();
+                        truckDetailsDB.Purchase_Code = randomNumber;
+                        truckDetailsDB.status = "O";
 
                         lstTruckDetailsDB.add(truckDetailsDB);
                     }
@@ -607,7 +607,7 @@ public class TruckReceivedOwnFragment extends Fragment {
 
     private void showHideSegmentedButton() {
 
-            }
+    }
 
 
     protected String getDeviceId() {

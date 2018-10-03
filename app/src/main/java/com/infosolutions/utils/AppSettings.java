@@ -378,6 +378,7 @@ public class AppSettings {
                     truckDetailObject.put("ERVNO", cn.ERVNO);
                     truckDetailObject.put("isOneWay", cn.isOneWay);
                     truckDetailObject.put("Purchase_Code", cn.Purchase_Code);
+                    truckDetailObject.put("status", cn.status);
 
                     jsonArrayTruckDetails.put(truckDetailObject);
 
