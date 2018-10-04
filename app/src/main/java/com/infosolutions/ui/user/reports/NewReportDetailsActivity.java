@@ -2,6 +2,7 @@ package com.infosolutions.ui.user.reports;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -357,6 +359,8 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
             }
 
+
+
             LinearLayout domesticcommercialcontainer = convertView.findViewById(R.id.domesticcommercialcontainer);
             LinearLayout trucksendcontainer = convertView.findViewById(R.id.trucksendcontainer);
             LinearLayout tvcontainer = convertView.findViewById(R.id.tvcontainer);
@@ -439,7 +443,10 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 TextView defective_received_textview = convertView.findViewById(R.id.defective_received_textview);
                 TextView defective_received_textview_value = convertView.findViewById(R.id.defective_received_textview_value);
 
+                TextView purchase_defective_textview = convertView.findViewById(R.id.purchase_defective_textview);
+                TextView purchase_defective_textview_value = convertView.findViewById(R.id.purchase_defective_textview_value);
 
+                RelativeLayout purchase_defective_container = (RelativeLayout) convertView.findViewById(R.id.purchase_defective_container);
 
                 if (type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED.toString())) {
                     vehicle_no_textview.setText("TRUCK NUMBER: ");
@@ -456,6 +463,11 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
                     quantity_textview.setText("QUANTITY: ");
                     quantity_textview_value.setText(childModel.quantity);
+
+                    purchase_defective_container.setVisibility(View.VISIBLE);
+                    purchase_defective_textview.setText("DEFECTIVE: ");
+                    purchase_defective_textview_value.setText(childModel.defective);
+
                 } else if (type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_SEND.toString())) {
                     vehicle_no_textview.setText("TRUCK NUMBER: ");
                     vehicle_no_textview_value.setText(childModel.vehicle_no);
@@ -471,6 +483,8 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
                     quantity_textview.setText("QUANTITY: ");
                     quantity_textview_value.setText(childModel.quantity);
+
+                    purchase_defective_container.setVisibility(View.GONE);
                 }
 
                 domesticcommercialcontainer.setVisibility(View.GONE);

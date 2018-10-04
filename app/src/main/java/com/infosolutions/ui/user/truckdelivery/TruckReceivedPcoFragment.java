@@ -248,7 +248,7 @@ public class TruckReceivedPcoFragment extends Fragment{
                         truckDetailsDB.ERVNO = erv_no;
                         truckDetailsDB.isOneWay = chkOneWay.isChecked();
                         truckDetailsDB.Purchase_Code = randomNumber;
-                        truckDetailsDB.status = "O";
+                        truckDetailsDB.status = "Open";
 
                         lstTruckDetailsDB.add(truckDetailsDB);
                     }

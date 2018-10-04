@@ -68,6 +68,7 @@ public class StockDetailModel {
                 description = jsonObject.optString("DESCRIPTION");
                 lost = jsonObject.optString("LOST");
                 quantity = jsonObject.optString("QUANTITY");
+                defective = jsonObject.optString("DEFECTIVE");
             }else if(type.equals(VolleySingleton.CallType.REPORT_TRUCK_SEND)){
                 vehicle_no = jsonObject.optString("VECHICAL_NO");
                 erv_no = jsonObject.optString("ERV_NO");
