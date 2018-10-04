@@ -52,7 +52,7 @@ public class TruckReceivedPcoFragment extends Fragment{
     private int USER_ID;
     private DatabaseHelper databaseHelper;
     private int godownId;
-    private String selected_vehicle_number;
+    private String selected_vehicle_number = "";
     private int selected_vehicle_id;
     private ScrollView scrollView;
     private EditText etEnterTruckNo, etQuantity;
@@ -210,10 +210,7 @@ public class TruckReceivedPcoFragment extends Fragment{
                         Toast.makeText(getContext(), "Provide Invoice Number", Toast.LENGTH_SHORT).show();
                         focusOnView(etInvoiceNumber);
                         return;
-                    } else if (btnTruckNumber.getVisibility() == View.VISIBLE && selected_vehicle_number.equalsIgnoreCase("")) {
-                        Toast.makeText(getContext(), "Select Truck Number", Toast.LENGTH_SHORT).show();
-                        return;
-                    } else if (etEnterTruckNo.getVisibility() == View.VISIBLE && truck_no.equalsIgnoreCase("")) {
+                    }  else if (etEnterTruckNo.getVisibility() == View.VISIBLE && truck_no.equalsIgnoreCase("")) {
                         Toast.makeText(getContext(), "Enter Truck Number", Toast.LENGTH_SHORT).show();
                         focusOnView(etEnterTruckNo);
                         etEnterTruckNo.setError("Enter Truck Number");
@@ -225,9 +222,8 @@ public class TruckReceivedPcoFragment extends Fragment{
                         return;
                     } else {
 
-                        if (btnTruckNumber.getVisibility() == View.GONE) {
-                            setSelected_vehicle_number(etEnterTruckNo.getText().toString().toUpperCase());
-                        }
+                        setSelected_vehicle_number(etEnterTruckNo.getText().toString().toUpperCase());
+
 
 
                         TruckDetailsDB truckDetailsDB;
