@@ -131,7 +131,8 @@
             android:name="com.infosolutions.ui.user.reports.NewReportDetailsActivity"
             android:label="" />
         <activity android:name="com.infosolutions.ui.user.stock.StockTransferActivity"
-            android:label=""></activity>
+            android:label=""
+            android:windowSoftInputMode="adjustResize"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

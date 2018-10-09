@@ -6,215 +6,225 @@
     android:layout_height="match_parent"
     >
     <include layout="@layout/actionbar_toolbar" />
-    <RelativeLayout
-        android:id="@+id/godowncontainer"
-        android:layout_below="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/godowntextview"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Transfer to Godown:"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:textSize="15sp"/>
-        <com.infosolutions.ui.user.stock.AutoCompleteTextView
-            android:id="@+id/godown_edittext"
-            android:layout_toRightOf="@+id/godowntextview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Godown"
-            android:layout_marginLeft="10dp"
-            android:theme="@style/EditTextTheme"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/productcontainer"
-        android:layout_below="@+id/godowncontainer"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/producttextview"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Select Product:"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            android:textSize="15sp"/>
-        <com.infosolutions.ui.user.stock.AutoCompleteTextView
-            android:id="@+id/product_edittext"
-            android:layout_toRightOf="@+id/producttextview"
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Product"
-            android:theme="@style/EditTextTheme"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-    <TableLayout
-        android:id="@+id/tablecontainer"
-        android:layout_below="@+id/productcontainer"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="40dp"
-        android:stretchColumns="*">
-
-        <TableRow
+        android:layout_below="@+id/toolbar"
+        android:scrollbars="none">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <!--android:background="#000"-->
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
-                android:padding="10dp">
-
+            <RelativeLayout
+                android:id="@+id/godowncontainer"
+                android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/availabletextview"
-                    android:layout_width="0dp"
+                    android:id="@+id/godowntextview"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Available:" />
-
-                <RelativeLayout
-                    android:layout_width="0dp"
+                    android:text="Transfer to Godown:"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:textSize="15sp"/>
+                <com.infosolutions.ui.user.stock.AutoCompleteTextView
+                    android:id="@+id/godown_edittext"
+                    android:layout_toRightOf="@+id/godowntextview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5">
+                    android:hint="Godown"
+                    android:layout_marginLeft="10dp"
+                    android:theme="@style/EditTextTheme"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/fulltextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Full" />
-
-                    <TextView
-                        android:id="@+id/fulltextview_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_below="@+id/fulltextview"
-                        android:text="-" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5">
-
-                    <TextView
-                        android:id="@+id/emptytextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Empty" />
-
-                    <TextView
-                        android:id="@+id/emptytextview_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/emptytextview"
-                        android:layout_centerInParent="true"
-                        android:text="-" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5">
-
-                    <TextView
-                        android:id="@+id/defectivetextview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Def" />
-
-                    <TextView
-                        android:id="@+id/defectivetextview_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/defectivetextview"
-                        android:layout_centerInParent="true"
-                        android:text="-" />
-                </RelativeLayout>
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-
-            >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
+            <RelativeLayout
+                android:id="@+id/productcontainer"
+                android:layout_below="@+id/godowncontainer"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:id="@+id/transfertextview"
-                    android:layout_width="0dp"
+                    android:id="@+id/producttextview"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Transfer Qty:" />
-
-                <EditText
-                    android:id="@+id/full_edittext"
-                    android:layout_width="0dp"
+                    android:text="Select Product:"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:textSize="15sp"/>
+                <com.infosolutions.ui.user.stock.AutoCompleteTextView
+                    android:id="@+id/product_edittext"
+                    android:layout_toRightOf="@+id/producttextview"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:gravity="center"
+                    android:hint="Product"
                     android:theme="@style/EditTextTheme"
-                    android:layout_weight=".5" />
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+            <TableLayout
+                android:id="@+id/tablecontainer"
+                android:layout_below="@+id/productcontainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="40dp"
+                android:stretchColumns="*">
 
-                <EditText
-                    android:id="@+id/empty_edittext"
-                    android:layout_width="0dp"
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <!--android:background="#000"-->
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/availabletextview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Available:" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
+
+                            <TextView
+                                android:id="@+id/fulltextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="Full" />
+
+                            <TextView
+                                android:id="@+id/fulltextview_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_below="@+id/fulltextview"
+                                android:text="-" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
+
+                            <TextView
+                                android:id="@+id/emptytextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="Empty" />
+
+                            <TextView
+                                android:id="@+id/emptytextview_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/emptytextview"
+                                android:layout_centerInParent="true"
+                                android:text="-" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".5">
+
+                            <TextView
+                                android:id="@+id/defectivetextview"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:text="Def" />
+
+                            <TextView
+                                android:id="@+id/defectivetextview_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/defectivetextview"
+                                android:layout_centerInParent="true"
+                                android:text="-" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:theme="@style/EditTextTheme"
-                    android:layout_weight=".5" />
+                    android:layout_width="match_parent"
 
-                <EditText
-                    android:id="@+id/def_edittext"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:maxLength="3"
-                    android:inputType="number"
-                    android:theme="@style/EditTextTheme"
-                    android:layout_weight=".5" />
+                    >
 
-            </LinearLayout>
-        </TableRow>
-    </TableLayout>
-    <Button
-        android:id="@+id/submitbutton"
-        android:layout_below="@+id/tablecontainer"
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:text="Submit"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/transfertextview"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Transfer Qty:" />
+
+                        <EditText
+                            android:id="@+id/full_edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:gravity="center"
+                            android:theme="@style/EditTextTheme"
+                            android:layout_weight=".5" />
+
+                        <EditText
+                            android:id="@+id/empty_edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:maxLength="3"
+                            android:inputType="number"
+                            android:theme="@style/EditTextTheme"
+                            android:layout_weight=".5" />
+
+                        <EditText
+                            android:id="@+id/def_edittext"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:maxLength="3"
+                            android:inputType="number"
+                            android:theme="@style/EditTextTheme"
+                            android:layout_weight=".5" />
+
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+            <Button
+                android:id="@+id/submitbutton"
+                android:layout_below="@+id/tablecontainer"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:text="Submit"/>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

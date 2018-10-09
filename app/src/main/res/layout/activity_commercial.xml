@@ -345,6 +345,7 @@
                         android:id="@+id/input_layout_credit_given"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginTop="@dimen/activity_vertical_margin">
 
                         <EditText
