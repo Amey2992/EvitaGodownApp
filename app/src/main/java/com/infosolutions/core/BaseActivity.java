@@ -146,9 +146,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Response
     }
 
 
-
-
-
     public void focusOnView(final ScrollView scrollView, final EditText editText){
         scrollView.post(new Runnable() {
             @Override
@@ -223,9 +220,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Response
 
         return  dt;
     }
-
-
-
 
 
     public String  getPreferences(String sharedPrefKey){
