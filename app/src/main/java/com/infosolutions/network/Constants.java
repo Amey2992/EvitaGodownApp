@@ -54,7 +54,7 @@ public class Constants {
     private static final String tester_prod_url = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
-    public static final  String EVITA_API_URL = godown_ags;
+    public static final  String EVITA_API_URL = PROD_URL;
 
 
 
@@ -62,7 +62,7 @@ public class Constants {
     production
     * */
 
-    /*public static final String dbname = "EVITA_PROD";
+    public static final String dbname = "EVITA_PROD";
     public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174/Purchase/GetCreditCommCyl";
@@ -70,11 +70,12 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
-*/
+    public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     /*
     Godown_Ags
     * */
 
+/*
     public static final String dbname = "GODOWN_AGS";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
@@ -83,6 +84,7 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174:81/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:81/Purchase/GetAndrPurchaseERV";
+*/
 
     /*
     tester
@@ -111,6 +113,7 @@ public class Constants {
     public static String MODULE_AGENCY_NAME = "getSplashData";
     public static String LOGIN_USERID_KEY = "userId";
     public static String LOGIN_PASSWORD_KEY = "password";
+    public static String COMMERCIAL_LOGIN = "isCommercialDeliveryman";
     public static String LOGIN_USERTYPE_KEY = "User_Type";
     public static String LOGIN_ANDROID = "Android";
     public static String JSON_DATA_KEY = "jsonData";

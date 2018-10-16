@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 
 import com.android.volley.VolleyError;
+import com.commercialMgmt.models.CommercialProductModel;
+import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
 import com.infosolutions.database.CommercialDeliveryCreditDB;
@@ -121,7 +123,8 @@ public class LoginActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
-        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);
+
+
 
     }
 
@@ -155,7 +158,27 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE,Constants.LOGIN_DELIVERYMAN);
-                openHomeScreen();
+                if (getTextString(editTextUsername).equalsIgnoreCase("")) {
+                    focusOnView(scrollView, editTextUsername);
+                    showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.proide_username));
+                } else if (getTextString(editTextPassword).equalsIgnoreCase("")) {
+                    focusOnView(scrollView, editTextPassword);
+                    showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.empty_password));
+                } else {
+                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_GODOWNKEEPER);
+                    if (Constants.isNetworkAvailable(getApplicationContext())) {
+                        showProgressDialog();
+
+                        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN, LoginActivity.this);
+                        VolleySingleton.getInstance(getApplicationContext())
+                                .new_apiCallLoginValidation(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN, Constants.LOGIN_URL, getTextString(editTextUsername),
+                                        getTextString(editTextPassword), "Android",true);
+                    } else {
+                        showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.no_network_available));
+                    }
+                }
+
+
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -174,9 +197,10 @@ public class LoginActivity extends BaseActivity {
                     if (Constants.isNetworkAvailable(getApplicationContext())) {
                         showProgressDialog();
 
+                        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, LoginActivity.this);
                         VolleySingleton.getInstance(getApplicationContext())
-                                .apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.EVITA_API_URL, getTextString(editTextUsername),
-                                        getTextString(editTextPassword), "Android");
+                                .new_apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.EVITA_API_URL, getTextString(editTextUsername),
+                                        getTextString(editTextPassword), "Android",false);
                     } else {
                         showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.no_network_available));
                     }
@@ -384,8 +408,41 @@ public class LoginActivity extends BaseActivity {
             serverSuccessResponse(response);
 
 
+        }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
+            try {
+                fillCommercialProductsDB(new JSONObject(response));
+                fillCommercialConsumerDB(new JSONObject(response));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            hideProgressDialog();
+            openHomeScreen();
+
         }
 
+    }
+
+    private void fillCommercialConsumerDB(JSONObject jsonObject) {
+        JSONArray arrayPRODUCT = jsonObject.optJSONArray("consumerDetails");
+        RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getConsumerModelExceptionDao();
+        List<ConsumerModel> consumertDBList = consumerDB.queryForAll();
+        int consumerSize = consumertDBList.size();
+
+        if (consumerSize > 0) {
+            consumerDB.delete(consumertDBList);
+        }
+
+        for (int product = 0; product < arrayPRODUCT.length(); product++) {
+            JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
+           /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
+            String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
+            String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
+            String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
+*/
+            ConsumerModel consumerModel = new ConsumerModel(objectProduct);
+            consumerDB.create(consumerModel);
+        }
 
     }
 
@@ -550,6 +607,30 @@ public class LoginActivity extends BaseActivity {
         String PRODUCT_LIST = objectESS.optString("productDetails");
         setOffline_module_list(PRODUCT_LIST);
         saveWithSharedPreferences(this, Constants.KEY_USER_TYPE, getUSER_TYPE());
+
+
+    }
+
+    void fillCommercialProductsDB(JSONObject jsonObject){
+        JSONArray arrayPRODUCT = jsonObject.optJSONArray("products");
+        RuntimeExceptionDao<CommercialProductModel, Integer> productDB = getHelper().getCommercialProductModelExceptionDao();
+        List<CommercialProductModel> productDBList = productDB.queryForAll();
+        int productSize = productDBList.size();
+
+        if (productSize > 0) {
+            productDB.delete(productDBList);
+        }
+
+        for (int product = 0; product < arrayPRODUCT.length(); product++) {
+            JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
+           /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
+            String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
+            String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
+            String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
+*/
+            CommercialProductModel commercialProductModel = new CommercialProductModel(objectProduct);
+            productDB.create(commercialProductModel);
+        }
 
 
     }
