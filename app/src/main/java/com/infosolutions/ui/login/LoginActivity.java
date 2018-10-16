@@ -36,6 +36,7 @@ import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.MainActivity;
 import com.infosolutions.ui.owner.OwnerDashboardActivity;
 import com.infosolutions.utils.AppSettings;
+import com.infosolutions.utils.Constant;
 import com.infosolutions.utils.GlobalVariables.LOGINKEY;
 import com.infosolutions.utils.GlobalVariables.Response;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -73,7 +74,7 @@ public class LoginActivity extends BaseActivity {
 
     private String TAG = LoginActivity.class.getSimpleName();
     private EditText editTextUsername, editTextPassword;
-    private AppCompatButton btnLogin;
+    private AppCompatButton btnLogin, btnCommercialLogin;
     private ScrollView scrollView;
     private DatabaseHelper databaseHelper = null;
     private String offline_module_list;
@@ -120,7 +121,7 @@ public class LoginActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT, this);
-
+        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);
 
     }
 
@@ -140,6 +141,7 @@ public class LoginActivity extends BaseActivity {
         editTextUsername = findViewById(R.id.input_username);
         editTextPassword = findViewById(R.id.input_password);
         btnLogin = findViewById(R.id.buttonLogin);
+        btnCommercialLogin = findViewById(R.id.commercialbuttonLogin);
         tvAgencyName = findViewById(R.id.tvAgencyName);
         scrollView = findViewById(R.id.scrollView);
         version_textview = findViewById(R.id.version_textview);
@@ -147,7 +149,15 @@ public class LoginActivity extends BaseActivity {
         version_textview.setText(AppSettings.getInstance(this).getAppVersion(this) +" " + (Constants.dbname));
 
         focusOnView(scrollView, editTextUsername);
-        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, this);
+
+
+        btnCommercialLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE,Constants.LOGIN_DELIVERYMAN);
+                openHomeScreen();
+            }
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -160,7 +170,7 @@ public class LoginActivity extends BaseActivity {
                     focusOnView(scrollView, editTextPassword);
                     showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.empty_password));
                 } else {
-
+                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_GODOWNKEEPER);
                     if (Constants.isNetworkAvailable(getApplicationContext())) {
                         showProgressDialog();
 
@@ -643,13 +653,17 @@ public class LoginActivity extends BaseActivity {
                 PreferencesHelper.getInstance().setValue(KEY_GODOWN_NAME, leftRight[0]);
                 PreferencesHelper.getInstance().setValue(KEY_GODOWN, leftRight[1]);
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                openHomeScreen();
             }
         });
         bottomSheet.show();
+    }
+
+    void openHomeScreen(){
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
     public JSONArray getGO_DOWN_ARRAY_LIST() {

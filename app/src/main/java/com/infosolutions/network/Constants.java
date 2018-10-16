@@ -27,6 +27,9 @@ public class Constants {
 
     public static final String KEY_GODOWN = "GODOWN";
     public static final String KEY_GODOWN_NAME = "GODOWN_NAME";
+    public static final String LOGIN_GODOWNKEEPER = "login_godown_keeper";
+    public static final String LOGIN_DELIVERYMAN = "login_deliveryman";
+    public static final String LOGIN_TYPE = "login_type";
     public static final String REPORTS = "reports";
     public static final String KEY_AGENCY_NAME = "AGENCY_NAME";
     public static final String KEY_REPORT_NAME = "reportName";
@@ -51,7 +54,7 @@ public class Constants {
     private static final String tester_prod_url = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
-    public static final  String EVITA_API_URL = tester_prod_url;
+    public static final  String EVITA_API_URL = godown_ags;
 
 
 
@@ -72,7 +75,6 @@ public class Constants {
     Godown_Ags
     * */
 
-/*
     public static final String dbname = "GODOWN_AGS";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
@@ -81,20 +83,21 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174:81/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:81/Purchase/GetAndrPurchaseERV";
-*/
 
     /*
     tester
     * */
 
+/*
     public static final String dbname = "TESTER_AGS";
     public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
-    public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:82/Purchase/GetCreditCommCyl";
+    public static final String C OMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:82/Purchase/GetCreditCommCyl";
     public static final String GET_CONSUMER_DETAILS ="http://103.31.144.174:82/Purchase/GetAndrConsumerDetails";
     public static final String GET_STOCKS_URL = "http://103.31.144.174:82/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:82/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:82/Purchase/GetAndrPurchaseERV";
+*/
 
     /**/
     public static String LOGIN_API_VALUE = "userAuth";

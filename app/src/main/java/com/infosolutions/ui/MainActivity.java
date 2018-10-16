@@ -353,19 +353,35 @@ public class MainActivity extends BaseActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText(R.string.godown);
 
-        String SELECTED_GODOWN_NAME = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN_NAME, "Empty");
-        String SELECTED_GODOWN_CODE = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN, "Empty");
-        mTitle.setText(SELECTED_GODOWN_NAME + "( " + SELECTED_GODOWN_CODE + " )");
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(R.string.godown);
 
-        //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
-        setSupportActionBar(toolbar);
+            String SELECTED_GODOWN_NAME = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN_NAME, "Empty");
+            String SELECTED_GODOWN_CODE = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN, "Empty");
+            mTitle.setText(SELECTED_GODOWN_NAME + "( " + SELECTED_GODOWN_CODE + " )");
+
+            //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
+            setSupportActionBar(toolbar);
+
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        String login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
+
+        if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+
+            menu.findItem(R.id.action_transfer).setVisible(true);
+            menu.findItem(R.id.action_setting).setVisible(true);
+        }else{
+            menu.findItem(R.id.action_transfer).setVisible(false);
+            menu.findItem(R.id.action_setting).setVisible(false);
+        }
+        return true;
+    }
 
     private void loadGridView() {
 
