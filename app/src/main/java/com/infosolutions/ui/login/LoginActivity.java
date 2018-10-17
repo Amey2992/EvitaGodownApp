@@ -201,8 +201,8 @@ public class LoginActivity extends BaseActivity {
 
                         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, LoginActivity.this);
                         VolleySingleton.getInstance(getApplicationContext())
-                                .new_apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.EVITA_API_URL, getTextString(editTextUsername),
-                                        getTextString(editTextPassword), "Android",false);
+                                .apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.EVITA_API_URL, getTextString(editTextUsername),
+                                        getTextString(editTextPassword), "Android");
                     } else {
                         showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.no_network_available));
                     }
@@ -412,16 +412,20 @@ public class LoginActivity extends BaseActivity {
 
         }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
             try {
-
-                String user_id = jsonResult.optString("user_id");
-                PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID,user_id);
-                fillCommercialConsumerDB(jsonResult);
-                fillCommercialProductsDB(jsonResult);
-                String NENUS_LIST = jsonResult.optString("menus");
-                setOffline_module_list(NENUS_LIST);
-                hideProgressDialog();
-                openHomeScreen();
-
+                if(responseCode.equalsIgnoreCase("500")){
+                    hideProgressDialog();
+                    serverSuccessResponse(response);
+                }
+                else {
+                    int user_id = jsonResult.optInt("user_id");
+                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
+                    fillCommercialConsumerDB(jsonResult);
+                    fillCommercialProductsDB(jsonResult);
+                    String NENUS_LIST = jsonResult.optString("menus");
+                    setOffline_module_list(NENUS_LIST);
+                    hideProgressDialog();
+                    openHomeScreen();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
