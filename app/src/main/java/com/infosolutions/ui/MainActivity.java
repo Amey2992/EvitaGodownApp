@@ -68,6 +68,7 @@ import java.util.TimerTask;
 import javax.inject.Inject;
 
 import khangtran.preferenceshelper.PreferencesHelper;
+import module.infosolutions.others.AddNewCustomerActivity;
 
 import static com.infosolutions.network.Constants.KEY_GODOWN;
 import static com.infosolutions.network.Constants.KEY_GODOWN_NAME;
@@ -94,6 +95,7 @@ public class MainActivity extends BaseActivity {
 
         }
     };
+    private String login_type;
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
@@ -109,6 +111,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferencesHelper.initHelper(this, "SharedPref");
+        login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
         loadToolbar();
         loadModuleList();
         initialiseUI();
@@ -309,25 +312,32 @@ public class MainActivity extends BaseActivity {
         ModuleModel model = listModel.get(position);
         String selectedModuleType = model.getModuleId();
 
-        if (selectedModuleType.equalsIgnoreCase("1")) {
-            startActivity(new Intent(getApplicationContext(), DomesticActivity.class));
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else if (selectedModuleType.equalsIgnoreCase("2")) {
-            startActivity(new Intent(getApplicationContext(), CommercialActivity.class));
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else if (selectedModuleType.equalsIgnoreCase("3")) {
-            Intent intent = IntentFactory.getIntent(this, IntentFactory.TRUCKDELIVERYACTIVITY);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else if (selectedModuleType.equalsIgnoreCase("4")) {
-            startActivity(new Intent(getApplicationContext(), TVDetailsActivity.class));
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else if (selectedModuleType.equalsIgnoreCase("5")) {
-            startActivity(new Intent(getApplicationContext(), StockListActivity.class));
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else if (selectedModuleType.equalsIgnoreCase("6")) {
-            startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+            if (selectedModuleType.equalsIgnoreCase("1")) {
+                startActivity(new Intent(getApplicationContext(), DomesticActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (selectedModuleType.equalsIgnoreCase("2")) {
+                startActivity(new Intent(getApplicationContext(), CommercialActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (selectedModuleType.equalsIgnoreCase("3")) {
+                Intent intent = IntentFactory.getIntent(this, IntentFactory.TRUCKDELIVERYACTIVITY);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (selectedModuleType.equalsIgnoreCase("4")) {
+                startActivity(new Intent(getApplicationContext(), TVDetailsActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (selectedModuleType.equalsIgnoreCase("5")) {
+                startActivity(new Intent(getApplicationContext(), StockListActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (selectedModuleType.equalsIgnoreCase("6")) {
+                startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        }else{
+            if (selectedModuleType.equalsIgnoreCase("7")) {
+                startActivity(new Intent(getApplicationContext(), AddNewCustomerActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
         }
     }
 
@@ -353,19 +363,35 @@ public class MainActivity extends BaseActivity {
 
     private void loadToolbar() {
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText(R.string.godown);
 
-        String SELECTED_GODOWN_NAME = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN_NAME, "Empty");
-        String SELECTED_GODOWN_CODE = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN, "Empty");
-        mTitle.setText(SELECTED_GODOWN_NAME + "( " + SELECTED_GODOWN_CODE + " )");
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
+            mTitle.setText(R.string.godown);
 
-        //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
-        setSupportActionBar(toolbar);
+            String SELECTED_GODOWN_NAME = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN_NAME, "Empty");
+            String SELECTED_GODOWN_CODE = PreferencesHelper.getInstance().getStringValue(KEY_GODOWN, "Empty");
+            mTitle.setText(SELECTED_GODOWN_NAME + "( " + SELECTED_GODOWN_CODE + " )");
+
+            //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
+            setSupportActionBar(toolbar);
+
 
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+
+        if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+
+            menu.findItem(R.id.action_transfer).setVisible(true);
+            menu.findItem(R.id.action_setting).setVisible(true);
+        }else{
+            menu.findItem(R.id.action_transfer).setVisible(false);
+            menu.findItem(R.id.action_setting).setVisible(false);
+        }
+        return true;
+    }
 
     private void loadGridView() {
 

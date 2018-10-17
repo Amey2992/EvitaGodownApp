@@ -239,19 +239,20 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
         try {
             jsonObject.put("ProductId",product_code);
             jsonObject.put("FrmGodownID",getGoDownId());
-            jsonObject.put("ToGodownID",godownHash.get(selectedgodwon));
+            jsonObject.put("ToGodownID", Integer.parseInt(godownHash.get(selectedgodwon)));
             jsonObject.put("FullCyll",full_edittext.getText().toString());
             jsonObject.put("EmptyCyll",empty_edittext.getText().toString());
             jsonObject.put("DefectiveCyll",def_edittext.getText().toString());
             jsonObject.put("Date",getDate());
 
+            Log.d("stockjson",jsonObject.toString());
             AppSettings.getInstance(this).saveStocks(this,jsonObject);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        AppSettings.getInstance(this).saveStocks(this,new JSONObject());
+        //AppSettings.getInstance(this).saveStocks(this,new JSONObject());
     }
 
 

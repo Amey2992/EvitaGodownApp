@@ -49,6 +49,7 @@ public class VolleySingleton {
 
         AGENCY_NAME,
         USER_LOGIN,
+        USER_COMMERCIAL_LOGIN,
         SYNC_LOCAL_DATA,
         REPORT_DOMESTIC,
         REPORT_COMMERCIAL,
@@ -200,7 +201,7 @@ public class VolleySingleton {
      * Check Login validation for Login
      * */
     public void new_apiCallLoginValidation(final CallType type, final String url,
-                                       final String userId, final String password, final String Android) {
+                                       final String userId, final String password, final String Android, final boolean isCommercialDeliveryman) {
 
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonObject1 = new JSONObject();
@@ -209,6 +210,9 @@ public class VolleySingleton {
             jsonObject.put(Constants.LOGIN_USERID_KEY, userId);
             jsonObject.put(Constants.LOGIN_PASSWORD_KEY, password);
             jsonObject.put(Constants.LOGIN_USERTYPE_KEY, Android);
+            if(isCommercialDeliveryman) {
+                jsonObject.put(Constants.COMMERCIAL_LOGIN, isCommercialDeliveryman);
+            }
 
             jsonObject1.put("_objLogin",jsonObject);
 
@@ -282,6 +286,7 @@ public class VolleySingleton {
                 params.put(Constants.LOGIN_USERID_KEY, userId);
                 params.put(Constants.LOGIN_PASSWORD_KEY, password);
                 params.put(Constants.LOGIN_USERTYPE_KEY, Android);
+
 
                 if (params != null && params.size() > 0) {
                     return encodeParameters(params, getParamsEncoding());

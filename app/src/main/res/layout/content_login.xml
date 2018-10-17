@@ -103,7 +103,7 @@
                     android:id="@+id/buttonLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Log In"
+                    android:text="Log In As Godownkeeper"
                     android:textAllCaps="false"
                     android:fontFamily="sans-serif-condensed"
                     android:textColor="@color/colorPrimary"
@@ -114,6 +114,21 @@
                     android:background="@drawable/custom_btn"
                     android:layout_marginTop="@dimen/fab_margin"/>
 
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/commercialbuttonLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Log In As Deliveryman"
+                    android:textAllCaps="false"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_marginBottom="@dimen/appbar_padding_top"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_btn"
+                    />
 
 
             </LinearLayout>
