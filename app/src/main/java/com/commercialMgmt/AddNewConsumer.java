@@ -91,7 +91,7 @@ public class AddNewConsumer extends AppCompatActivity {
         UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
         Log.e("UserId .................",String.valueOf(UserId));
-       // getProducts();
+        getProducts();
         saveConsumerBtn();
 
     }
@@ -236,7 +236,7 @@ public class AddNewConsumer extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Domestic");
+        mTitle.setText("Add Customer");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
