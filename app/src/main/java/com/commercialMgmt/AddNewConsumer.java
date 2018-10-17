@@ -216,16 +216,18 @@ public class AddNewConsumer extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("CreatedBy",UserId);
-                jsonObject.put("ConsumerName",com_consumer_name.getText().toString());
-                jsonObject.put("MobileNo",Integer.parseInt(com_mobile_number.getText().toString()));
-                jsonObject.put("ConsumerAddress",com_consumer_address.getText().toString());
-                jsonObject.put("ConsumerEmail",com_consumer_email_id.getText().toString());
-                jsonObject.put("ProductId",productId);
-                jsonObject.put("Discount",Float.valueOf(com_consumer_discount.getText().toString()));
-                jsonObject.put("ConsumerPAN",com_consumer_PAN_No.getText().toString());
-                jsonObject.put("ConsumerGSTIN",com_consumer_GSTIN.getText().toString());
-                jsonObject.put("DateTime",Constants.getDateTime());
+                jsonObject.put("Business_Name",com_consumer_name.getText().toString());
+                jsonObject.put("Contact_Person_mobile",Integer.parseInt(com_mobile_number.getText().toString()));
+                jsonObject.put("Address1",com_consumer_address.getText().toString());
+                jsonObject.put("Email",com_consumer_email_id.getText().toString());
+                jsonObject.put("ProductID",productId);
+                jsonObject.put("Discount_price",Float.valueOf(com_consumer_discount.getText().toString()));
+                jsonObject.put("PAN",com_consumer_PAN_No.getText().toString());
+                jsonObject.put("GSTIN",com_consumer_GSTIN.getText().toString());
+                jsonObject.put("OpeningDate",Constants.getDateTime());
                 jsonObject.put("uniqueId",uniqueId());
+                jsonObject.put("ModeOfEntry","Mobile");
+                jsonObject.put("IsActive","Y");
 
 
                 parentJsonObj.put("objCommercialPartyMst",jsonObject);

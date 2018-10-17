@@ -57,6 +57,8 @@ public class Constants {
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
     public static final  String EVITA_API_URL = PROD_URL;
 
+    public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
+
 
 
     /*

@@ -120,8 +120,8 @@
                 />
 -->
             <com.infosolutions.ui.user.stock.AutoCompleteTextView
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:id="@+id/et_product_name"
-                android:layout_toRightOf="@+id/producttextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Product"
