@@ -257,7 +257,7 @@ public class AddNewConsumer extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
-        mTitle.setText("Domestic");
+        mTitle.setText("Add Customer");
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
