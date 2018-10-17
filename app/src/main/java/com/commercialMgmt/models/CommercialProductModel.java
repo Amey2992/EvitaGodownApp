@@ -23,7 +23,7 @@ public class CommercialProductModel implements Serializable {
     public int product_id;
 
     @DatabaseField
-    public int product_rate;
+    public double product_rate;
 
     public CommercialProductModel(){}
 
@@ -32,7 +32,7 @@ public class CommercialProductModel implements Serializable {
             product_category = jsonObject.optInt("ID_PRODUCT_CATEGORY");
             product_name = jsonObject.optString("PRODUCT_NAME");
             product_id = jsonObject.optInt("PRODUCT_ID");
-            product_rate = jsonObject.optInt("rate");
+            product_rate = jsonObject.optDouble("rate");
         }
     }
 
