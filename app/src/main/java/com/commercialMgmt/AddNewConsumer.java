@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import khangtran.preferenceshelper.PreferencesHelper;
 
 public class AddNewConsumer extends AppCompatActivity {
@@ -88,13 +89,28 @@ public class AddNewConsumer extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_consumer);
         setupToolbar();
 
+        ButterKnife.bind(this);
+        //Init();
+
         UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
         Log.e("UserId .................",String.valueOf(UserId));
-       // getProducts();
+        getProducts();
         saveConsumerBtn();
 
     }
+
+    /*private void Init() {
+        scrollView=
+        com_consumer_name
+        com_mobile_number
+        com_consumer_address
+
+
+
+
+
+    }*/
 
     private void getProducts() {
 
