@@ -1,9 +1,212 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.commercialMgmt.AddNewConsumer">
+    android:background="@color/colorLightGrey"
+    android:orientation="vertical"
+    tools:context="com.commercialMgmt.AddNewConsumer"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/actionbar_toolbar" />
+
+
+
+    <ScrollView
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:id="@+id/customerView">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_consumer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_consumer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="Consumer Name"
+                    android:enabled="true"
+                    android:maxLength="30"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="textPersonName"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_mob_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="Mobile Number"
+                    android:enabled="true"
+                    android:maxLength="10"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="Address"
+                    android:enabled="true"
+                    android:maxLength="50"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="textPostalAddress"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_email_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_email_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="Email Id"
+                    android:enabled="true"
+                    android:maxLength="50"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="textEmailAddress"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/et_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Product"
+                android:drawablePadding="@dimen/activity_vertical_margin"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_Discount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_Discount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="Discount"
+                    android:enabled="true"
+                    android:maxLength="10"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="numberDecimal"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_Pan_No"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_Pan_No"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="PAN No"
+                    android:enabled="true"
+                    android:maxLength="10"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="textCapWords"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_GSTIN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_GSTIN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_lock_outline"
+                    android:hint="GSTIN"
+                    android:enabled="true"
+                    android:maxLength="15"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="textCapWords"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <EditText
+                android:id="@+id/abcdesd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_lock_outline"
+                android:hint="GSTIN"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                />
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+    <Button
+        android:id="@+id/btnAddNewConsumer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:elevation="10dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_background"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textAllCaps="true"
+        android:text="Add New Consumer" />
+
+
+
+</RelativeLayout>

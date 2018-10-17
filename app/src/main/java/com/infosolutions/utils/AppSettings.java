@@ -138,6 +138,12 @@ public class AppSettings {
         VolleySingleton.getInstance(context.getApplicationContext()).postStocksDetails(VolleySingleton.CallType.POST_STOCKS, Constants.POST_STOCKS_URL,jsonObject);
     }
 
+    // made by sachin
+    public void saveCommercialConsumer(Context context, JSONObject jsonObject){
+        VolleySingleton.getInstance(context.getApplicationContext()).postStocksDetails(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, Constants.POST_STOCKS_URL,jsonObject);
+    }
+
+
     public void manualSyncAndroidDataToServer(Context context, JSONObject jsonObject) {
 
 
