@@ -8,21 +8,31 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.commercialMgmt.models.CommercialProductModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
+import com.infosolutions.database.ProductDB;
 import com.infosolutions.evita.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import com.infosolutions.network.*;
 import com.infosolutions.core.*;
 import com.infosolutions.utils.AppSettings;
 import com.infosolutions.utils.Constant;
+import com.infosolutions.database.*;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +54,7 @@ public class AddNewConsumer extends AppCompatActivity {
     @BindView(R.id.et_email_id)
     EditText com_consumer_email_id;
     @BindView(R.id.et_product_name)
-    AutoCompleteTextView com_product_name;
+    Spinner com_product_name;
     @BindView(R.id.et_Discount)
     EditText com_consumer_discount;
     @BindView(R.id.et_Pan_No)
@@ -57,6 +67,7 @@ public class AddNewConsumer extends AppCompatActivity {
 
     private EvitaProgressDialog dialog;
 
+    private DatabaseHelper databaseHelper;
     private int min = 10;
     private int max = 110;
     private int random = 0;
@@ -64,7 +75,11 @@ public class AddNewConsumer extends AppCompatActivity {
     private String randomNumber;
     private int product_code;
     private  String mobile_no;
-    private String UserId;
+    private int UserId;
+    private String default_str = "Select Product";
+    private ArrayList<String> spinItems;
+    private ArrayAdapter<String> spinAdapter;
+    private String selectedItem;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -73,12 +88,51 @@ public class AddNewConsumer extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_consumer);
         setupToolbar();
 
-        UserId=PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_DELIVERYMAN_ID,"");
+        UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
-        Log.e("UserId .................",UserId);
-
+        Log.e("UserId .................",String.valueOf(UserId));
+       // getProducts();
         saveConsumerBtn();
 
+    }
+
+    private void getProducts() {
+
+        spinItems = new ArrayList<>();
+
+        RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
+        List<CommercialProductModel> productDBList = comProductDB.queryForAll();
+        int productSize = productDBList.size();
+
+        spinItems.clear();
+        if (productSize > 0) {
+            for (CommercialProductModel item : productDBList)
+                spinItems.add(item.product_name);
+        }
+
+        spinItems.add(0,default_str);
+        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
+        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        com_product_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedItem = com_product_name.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getApplicationContext(),"Select Product",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private DatabaseHelper getHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+        }
+        return databaseHelper;
     }
 
     public void showProgressDialog() {
@@ -139,27 +193,30 @@ public class AddNewConsumer extends AppCompatActivity {
         mobile_no=com_mobile_number.getText().toString();
         uniqueId();
 
+        JSONObject parentJsonObj = new JSONObject();
             JSONObject jsonObject = new JSONObject();
             try {
-                //jsonObject.put("CreatedBy",UserId);
+                jsonObject.put("CreatedBy",UserId);
                 jsonObject.put("ConsumerName",com_consumer_name.getText().toString());
                 jsonObject.put("MobileNo",Integer.parseInt(com_mobile_number.getText().toString()));
                 jsonObject.put("ConsumerAddress",com_consumer_address.getText().toString());
                 jsonObject.put("ConsumerEmail",com_consumer_email_id.getText().toString());
-                jsonObject.put("ProductId",com_product_name.getText().toString());
+                jsonObject.put("ProductId",com_product_name.getSelectedItemId());
                 jsonObject.put("Discount",Float.valueOf(com_consumer_discount.getText().toString()));
                 jsonObject.put("ConsumerPAN",com_consumer_PAN_No.getText().toString());
                 jsonObject.put("ConsumerGSTIN",com_consumer_GSTIN.getText().toString());
                 jsonObject.put("DateTime",Constants.getDateTime());
                 jsonObject.put("uniqueId",uniqueId());
 
-                AppSettings.getInstance(this).saveCommercialConsumer(this,jsonObject);
+
+                parentJsonObj.put("objCommercialPartyMst",jsonObject);
+                AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            AppSettings.getInstance(this).saveCommercialConsumer(this,new JSONObject());
+            AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
 
     }
 
