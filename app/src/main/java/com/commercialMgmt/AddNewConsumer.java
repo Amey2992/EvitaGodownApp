@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import khangtran.preferenceshelper.PreferencesHelper;
 
 public class AddNewConsumer extends AppCompatActivity {
@@ -54,7 +55,7 @@ public class AddNewConsumer extends AppCompatActivity {
     @BindView(R.id.et_email_id)
     EditText com_consumer_email_id;
     @BindView(R.id.et_product_name)
-    Spinner com_product_name;
+    AutoCompleteTextView com_product_name;
     @BindView(R.id.et_Discount)
     EditText com_consumer_discount;
     @BindView(R.id.et_Pan_No)
@@ -73,13 +74,16 @@ public class AddNewConsumer extends AppCompatActivity {
     private int random = 0;
     private String uniqueId_AddConsumer;
     private String randomNumber;
-    private int product_code;
+    private int productId;
+    private int productIdPosition;
     private  String mobile_no;
     private int UserId;
     private String default_str = "Select Product";
     private ArrayList<String> spinItems;
     private ArrayAdapter<String> spinAdapter;
     private String selectedItem;
+    private int[] productArr;
+    private List<CommercialProductModel> productDBList;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -87,6 +91,9 @@ public class AddNewConsumer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_consumer);
         setupToolbar();
+
+        ButterKnife.bind(this);
+        //Init();
 
         UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
@@ -96,36 +103,48 @@ public class AddNewConsumer extends AppCompatActivity {
 
     }
 
+
+    @SuppressLint("LongLogTag")
     private void getProducts() {
 
         spinItems = new ArrayList<>();
 
         RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
-        List<CommercialProductModel> productDBList = comProductDB.queryForAll();
+        productDBList = comProductDB.queryForAll();
         int productSize = productDBList.size();
 
+        //----------------------------------------------------------------------------------
+        //  product poaitions
+
+        productArr = new int[productDBList.size()];
+        for(int i = 0; i < productDBList.size(); i++){
+            productArr[i] = productDBList.get(i).product_id;
+            Log.e("Products position....",String.valueOf(productArr[i]));
+        }
+
+        //------------------------------------------------------------------------------------
+
         spinItems.clear();
+
         if (productSize > 0) {
             for (CommercialProductModel item : productDBList)
                 spinItems.add(item.product_name);
         }
 
-        spinItems.add(0,default_str);
+        //spinItems.add(0,default_str);
+
         spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        com_product_name.setAdapter(spinAdapter);
 
-        com_product_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedItem = com_product_name.getSelectedItem().toString();
-            }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                productId = productDBList.get(position).product_id;
+                Log.e("Item Position ",String.valueOf(productId));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getApplicationContext(),"Select Product",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private DatabaseHelper getHelper() {
@@ -201,7 +220,7 @@ public class AddNewConsumer extends AppCompatActivity {
                 jsonObject.put("MobileNo",Integer.parseInt(com_mobile_number.getText().toString()));
                 jsonObject.put("ConsumerAddress",com_consumer_address.getText().toString());
                 jsonObject.put("ConsumerEmail",com_consumer_email_id.getText().toString());
-                jsonObject.put("ProductId",com_product_name.getSelectedItemId());
+                jsonObject.put("ProductId",productId);
                 jsonObject.put("Discount",Float.valueOf(com_consumer_discount.getText().toString()));
                 jsonObject.put("ConsumerPAN",com_consumer_PAN_No.getText().toString());
                 jsonObject.put("ConsumerGSTIN",com_consumer_GSTIN.getText().toString());
