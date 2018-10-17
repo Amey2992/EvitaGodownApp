@@ -1,5 +1,6 @@
 package com.commercialMgmt;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -26,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import khangtran.preferenceshelper.PreferencesHelper;
 
 public class AddNewConsumer extends AppCompatActivity {
 
@@ -41,7 +44,7 @@ public class AddNewConsumer extends AppCompatActivity {
     @BindView(R.id.et_email_id)
     EditText com_consumer_email_id;
     @BindView(R.id.et_product_name)
-    Spinner com_product_name;
+    AutoCompleteTextView com_product_name;
     @BindView(R.id.et_Discount)
     EditText com_consumer_discount;
     @BindView(R.id.et_Pan_No)
@@ -59,13 +62,20 @@ public class AddNewConsumer extends AppCompatActivity {
     private int random = 0;
     private String uniqueId_AddConsumer;
     private String randomNumber;
+    private int product_code;
+    private  String mobile_no;
+    private String UserId;
 
+    @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_consumer);
         setupToolbar();
-        uniqueId();
+
+        UserId=PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_DELIVERYMAN_ID,"");
+
+        Log.e("UserId .................",UserId);
 
         saveConsumerBtn();
 
@@ -126,19 +136,21 @@ public class AddNewConsumer extends AppCompatActivity {
     }
 
     private void saveConsumerDetails() {
+        mobile_no=com_mobile_number.getText().toString();
+        uniqueId();
 
             JSONObject jsonObject = new JSONObject();
             try {
-                //jsonObject.put("UserId",UserId);
-                jsonObject.put("Consumer_Name",com_consumer_name.getText().toString());
-                jsonObject.put("Mobile_No",Integer.parseInt(com_mobile_number.getText().toString()));
-                jsonObject.put("Consumer_Address",com_consumer_address.getText().toString());
-                jsonObject.put("Consumer_Email",com_consumer_email_id.getText().toString());
-                jsonObject.put("Product_Name",com_product_name.getSelectedItemId());
+                //jsonObject.put("CreatedBy",UserId);
+                jsonObject.put("ConsumerName",com_consumer_name.getText().toString());
+                jsonObject.put("MobileNo",Integer.parseInt(com_mobile_number.getText().toString()));
+                jsonObject.put("ConsumerAddress",com_consumer_address.getText().toString());
+                jsonObject.put("ConsumerEmail",com_consumer_email_id.getText().toString());
+                jsonObject.put("ProductId",com_product_name.getText().toString());
                 jsonObject.put("Discount",Float.valueOf(com_consumer_discount.getText().toString()));
-                jsonObject.put("Consumer_PAN",com_consumer_PAN_No.getText().toString());
-                jsonObject.put("Consumer_GSTIN",com_consumer_GSTIN.getText().toString());
-                jsonObject.put("Date",Constants.getDateTime());
+                jsonObject.put("ConsumerPAN",com_consumer_PAN_No.getText().toString());
+                jsonObject.put("ConsumerGSTIN",com_consumer_GSTIN.getText().toString());
+                jsonObject.put("DateTime",Constants.getDateTime());
                 jsonObject.put("uniqueId",uniqueId());
 
                 AppSettings.getInstance(this).saveCommercialConsumer(this,jsonObject);
@@ -156,7 +168,7 @@ public class AddNewConsumer extends AppCompatActivity {
         Log.e("random number", Integer.toString(random));
         randomNumber = Integer.toString(random);
 
-        uniqueId_AddConsumer=randomNumber+Constants.getDateTime()+com_mobile_number.getText().toString();
+        uniqueId_AddConsumer=randomNumber+Constants.getDateTime()+mobile_no;
 
         return uniqueId_AddConsumer;
     }
