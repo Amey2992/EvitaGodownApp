@@ -10,8 +10,8 @@ import java.io.Serializable;
 @DatabaseTable(tableName = "CommercialProductTable")
 public class CommercialProductModel implements Serializable {
 
-    @DatabaseField(generatedId = true, columnName = "_id")
-    public int _id;
+    @DatabaseField(generatedId = true, columnName = "id")
+    public int id;
 
     @DatabaseField
     public int product_category;

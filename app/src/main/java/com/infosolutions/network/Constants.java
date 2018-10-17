@@ -29,6 +29,7 @@ public class Constants {
     public static final String KEY_GODOWN_NAME = "GODOWN_NAME";
     public static final String LOGIN_GODOWNKEEPER = "login_godown_keeper";
     public static final String LOGIN_DELIVERYMAN = "login_deliveryman";
+    public static final String LOGIN_DELIVERYMAN_ID = "login_deliveryman_id";
     public static final String LOGIN_TYPE = "login_type";
     public static final String REPORTS = "reports";
     public static final String KEY_AGENCY_NAME = "AGENCY_NAME";

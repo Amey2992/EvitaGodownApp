@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.ConsumerModel;
+import com.google.gson.JsonObject;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
 import com.infosolutions.database.CommercialDeliveryCreditDB;
@@ -83,6 +84,7 @@ public class LoginActivity extends BaseActivity {
     private JSONArray GO_DOWN_ARRAY_LIST;
     private String USER_TYPE;
     private TextView version_textview;
+    private ArrayList<ConsumerModel> consumerDetailsList;
 
     public String getUSER_ID() {
         return USER_ID;
@@ -118,7 +120,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferencesHelper.initHelper(this, "SharedPref");
+        PreferencesHelper.initHelper(this, Constants.SHARED_PREF);
         initIds();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
@@ -157,7 +159,7 @@ public class LoginActivity extends BaseActivity {
         btnCommercialLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE,Constants.LOGIN_DELIVERYMAN);
+                //PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE,Constants.LOGIN_DELIVERYMAN);
                 if (getTextString(editTextUsername).equalsIgnoreCase("")) {
                     focusOnView(scrollView, editTextUsername);
                     showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.proide_username));
@@ -165,7 +167,7 @@ public class LoginActivity extends BaseActivity {
                     focusOnView(scrollView, editTextPassword);
                     showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.empty_password));
                 } else {
-                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_GODOWNKEEPER);
+                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_DELIVERYMAN);
                     if (Constants.isNetworkAvailable(getApplicationContext())) {
                         showProgressDialog();
 
@@ -410,14 +412,20 @@ public class LoginActivity extends BaseActivity {
 
         }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
             try {
-                fillCommercialProductsDB(new JSONObject(response));
-                fillCommercialConsumerDB(new JSONObject(response));
-            } catch (JSONException e) {
+
+                String user_id = jsonResult.optString("user_id");
+                PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID,user_id);
+                fillCommercialConsumerDB(jsonResult);
+                fillCommercialProductsDB(jsonResult);
+                String NENUS_LIST = jsonResult.optString("menus");
+                setOffline_module_list(NENUS_LIST);
+                hideProgressDialog();
+                openHomeScreen();
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            hideProgressDialog();
-            openHomeScreen();
 
         }
 
@@ -426,13 +434,12 @@ public class LoginActivity extends BaseActivity {
     private void fillCommercialConsumerDB(JSONObject jsonObject) {
         JSONArray arrayPRODUCT = jsonObject.optJSONArray("consumerDetails");
         RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getConsumerModelExceptionDao();
-        List<ConsumerModel> consumertDBList = consumerDB.queryForAll();
-        int consumerSize = consumertDBList.size();
-
-        if (consumerSize > 0) {
-            consumerDB.delete(consumertDBList);
+        try {
+            consumerDB.deleteBuilder().delete();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
+        consumerDetailsList = new ArrayList<>();
         for (int product = 0; product < arrayPRODUCT.length(); product++) {
             JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
            /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
@@ -440,9 +447,12 @@ public class LoginActivity extends BaseActivity {
             String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
             String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
 */
-            ConsumerModel consumerModel = new ConsumerModel(objectProduct);
-            consumerDB.create(consumerModel);
+            ConsumerModel consumerModel = new ConsumerModel(1,objectProduct);
+            consumerDetailsList.add(consumerModel);
+
         }
+
+        consumerDB.create(consumerDetailsList);
 
     }
 
@@ -614,11 +624,10 @@ public class LoginActivity extends BaseActivity {
     void fillCommercialProductsDB(JSONObject jsonObject){
         JSONArray arrayPRODUCT = jsonObject.optJSONArray("products");
         RuntimeExceptionDao<CommercialProductModel, Integer> productDB = getHelper().getCommercialProductModelExceptionDao();
-        List<CommercialProductModel> productDBList = productDB.queryForAll();
-        int productSize = productDBList.size();
-
-        if (productSize > 0) {
-            productDB.delete(productDBList);
+        try {
+            productDB.deleteBuilder().delete();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         for (int product = 0; product < arrayPRODUCT.length(); product++) {

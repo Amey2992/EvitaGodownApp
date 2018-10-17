@@ -7,12 +7,11 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-@DatabaseTable(tableName = "ConsumerTable")
+@DatabaseTable(tableName = "CommercialConsumerTable")
 public class ConsumerModel implements Serializable {
 
-    @DatabaseField(generatedId = true, columnName = "_id")
-    public int _id;
-
+    @DatabaseField(generatedId = true, columnName = "id")
+    public int id;
 
     @DatabaseField
     public String consumer_no;
@@ -35,10 +34,8 @@ public class ConsumerModel implements Serializable {
     @DatabaseField
     public int discount;
 
-
     @DatabaseField
     public String pan_card;
-
 
     @DatabaseField
     public String gstin;
@@ -52,12 +49,11 @@ public class ConsumerModel implements Serializable {
     @DatabaseField
     public int amount_credit_cylinder;
 
-
     public ConsumerModel(){}
 
-    public ConsumerModel(JSONObject jsonObject){
+    public ConsumerModel( int id, JSONObject jsonObject){
         if(jsonObject != null){
-
+            this.id = id;
             consumer_no = jsonObject.optString("consumer_no");
             consumer_name = jsonObject.optString("consumer_name");
             mobile_no = jsonObject.optString("mobile_no");
