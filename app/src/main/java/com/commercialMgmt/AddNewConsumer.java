@@ -217,11 +217,11 @@ public class AddNewConsumer extends AppCompatActivity {
             try {
                 jsonObject.put("CreatedBy",UserId);
                 jsonObject.put("Business_Name",com_consumer_name.getText().toString());
-                jsonObject.put("Contact_Person_mobile",Integer.parseInt(com_mobile_number.getText().toString()));
+                jsonObject.put("Contact_Person_mobile",com_mobile_number.getText().toString());
                 jsonObject.put("Address1",com_consumer_address.getText().toString());
                 jsonObject.put("Email",com_consumer_email_id.getText().toString());
                 jsonObject.put("ProductID",productId);
-                jsonObject.put("Discount_price",Float.valueOf(com_consumer_discount.getText().toString()));
+                jsonObject.put("Discount_price",Double.valueOf(com_consumer_discount.getText().toString()));
                 jsonObject.put("PAN",com_consumer_PAN_No.getText().toString());
                 jsonObject.put("GSTIN",com_consumer_GSTIN.getText().toString());
                 jsonObject.put("OpeningDate",Constants.getDateTime());
@@ -236,9 +236,6 @@ public class AddNewConsumer extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
-
     }
 
     private String uniqueId() {
