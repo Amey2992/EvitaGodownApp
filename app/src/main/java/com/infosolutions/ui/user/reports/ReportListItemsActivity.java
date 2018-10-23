@@ -18,12 +18,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.commercialMgmt.CommercialReportDetailActivity;
 import com.infosolutions.adapter.StockReportAdapter;
 import com.infosolutions.evita.R;
 import com.infosolutions.model.StockReportModel;
+import com.infosolutions.network.Constants;
+import com.infosolutions.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import khangtran.preferenceshelper.PreferencesHelper;
 
 
 public class ReportListItemsActivity extends AppCompatActivity {
@@ -31,6 +36,7 @@ public class ReportListItemsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<StockReportModel> listModel = new ArrayList<>();
     private StockReportAdapter listAdapter;
+    private String login_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,55 +79,85 @@ public class ReportListItemsActivity extends AppCompatActivity {
             }
         }));
 
-        loadData();
+        login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
+
+        if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+            loadData();
+        }else{
+            loadCommercialData();
+        }
+    }
+
+    private void loadCommercialData() {
+        listModel.add(new StockReportModel(Constants.StockReportTitle));
+        listModel.add(new StockReportModel(Constants.ConsumerReportTitle));
+
     }
 
     private void goToNextActivity(View view, int position) {
         StockReportModel model = listModel.get(position);
 
-        if (model.getStockReportTitle().equalsIgnoreCase("Domestic")){
 
-            Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
-            intent.putExtra("reportName","GET_TODAYS_DOMESTIC");
-            intent.putExtra("header","Domestic");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            if (model.getStockReportTitle().equalsIgnoreCase("Domestic")) {
 
-        }else if (model.getStockReportTitle().equalsIgnoreCase("Commercial")){
+                Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
+                intent.putExtra("reportName", "GET_TODAYS_DOMESTIC");
+                intent.putExtra("header", "Domestic");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-            Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
-            intent.putExtra("reportName","GET_TODAYS_COMMERCIAL");
-            intent.putExtra("header","Commercial");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (model.getStockReportTitle().equalsIgnoreCase("Commercial")) {
 
-        }else if (model.getStockReportTitle().equalsIgnoreCase("Truck Received")){
+                Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
+                intent.putExtra("reportName", "GET_TODAYS_COMMERCIAL");
+                intent.putExtra("header", "Commercial");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-            Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
-            intent.putExtra("reportName","GET_TODAYS_RECEIVE_TRUCK");
-            intent.putExtra("header","Truck Received");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (model.getStockReportTitle().equalsIgnoreCase("Truck Received")) {
 
-        }else if (model.getStockReportTitle().equalsIgnoreCase("Truck Send")){
+                Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
+                intent.putExtra("reportName", "GET_TODAYS_RECEIVE_TRUCK");
+                intent.putExtra("header", "Truck Received");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-            Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
-            intent.putExtra("reportName","GET_TODAYS_SENDING_TRUCK");
-            intent.putExtra("header","Truck Send");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (model.getStockReportTitle().equalsIgnoreCase("Truck Send")) {
 
-        }else if (model.getStockReportTitle().equalsIgnoreCase("TV Details")){
+                Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
+                intent.putExtra("reportName", "GET_TODAYS_SENDING_TRUCK");
+                intent.putExtra("header", "Truck Send");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
-            Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
-            intent.putExtra("reportName","GET_TODAYS_TV");
-            intent.putExtra("header","TV Details");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else if (model.getStockReportTitle().equalsIgnoreCase("TV Details")) {
 
-        }else {
-            Toast.makeText(this, "Wrong Selection", Toast.LENGTH_SHORT).show();
-        }
+                Intent intent = new Intent(getApplicationContext(), NewReportDetailsActivity.class);
+                intent.putExtra("reportName", "GET_TODAYS_TV");
+                intent.putExtra("header", "TV Details");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+            }else if (model.getStockReportTitle().equalsIgnoreCase(Constants.StockReportTitle)) {
+
+                Intent intent = new Intent(getApplicationContext(), CommercialReportDetailActivity.class);
+                intent.putExtra("reportName", "GET_STOCK");
+                intent.putExtra("header", Constants.StockReportTitle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+            }else if (model.getStockReportTitle().equalsIgnoreCase(Constants.ConsumerReportTitle)) {
+
+                Intent intent = new Intent(getApplicationContext(), CommercialReportDetailActivity.class);
+                intent.putExtra("reportName", "GET_CONSUMER");
+                intent.putExtra("header", Constants.ConsumerReportTitle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+            } else {
+                Toast.makeText(this, "Wrong Selection", Toast.LENGTH_SHORT).show();
+            }
+
     }
 
     private void loadData() {

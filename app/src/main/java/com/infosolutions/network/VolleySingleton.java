@@ -56,6 +56,8 @@ public class VolleySingleton {
         REPORT_TRUCK_RECEIVED,
         REPORT_TRUCK_SEND,
         REPORT_TV_DETAILS,
+        COMMERCIAL_REPORT_STOCK,
+        COMMERCIAL_REPORT_CONSUMER,
         STOCK_REPORT,
         OWNER_REPORT,
         GET_AVAILABLE_CYL,
@@ -661,6 +663,35 @@ public class VolleySingleton {
     }
 
 
+    public void get_commercial_report(final CallType type,final String reportName, final String url){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(Constants.KEY_REPORT_NAME, reportName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+    }
 
 
 

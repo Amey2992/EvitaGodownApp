@@ -41,6 +41,9 @@ public class Constants {
     public static boolean isNetworkAvailable;
     public static final String DEFAULT_STRING_VALUE = "No Preference Found";
     public static final String error_message ="ग्राहक उपलब्ध नहीं है";
+    public static final String ConsumerReportTitle = "Consumer";
+    public static final String StockReportTitle = "Stock";
+
     /*Typefaces*/
     public static final String TYPEFACE_BOLD = "fonts/Ubuntu-B.ttf";
     public static final String TYPEFACE_LARGE = "fonts/Ubuntu-L.ttf";
@@ -74,12 +77,13 @@ public class Constants {
     public static final String POST_STOCKS_URL = "http://103.31.144.174/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
+    public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
+
     /*
     Godown_Ags
     * */
 
-/*
-    public static final String dbname = "GODOWN_AGS";
+    /*public static final String dbname = "GODOWN_AGS";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:81/Purchase/GetCreditCommCyl";
@@ -87,23 +91,24 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174:81/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:81/Purchase/GetAndrPurchaseERV";
+    public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
+    public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
 */
-
     /*
     tester
     * */
 
-/*
-    public static final String dbname = "TESTER_AGS";
+    /*public static final String dbname = "TESTER_AGS";
     public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
-    public static final String C OMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:82/Purchase/GetCreditCommCyl";
+    public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:82/Purchase/GetCreditCommCyl";
     public static final String GET_CONSUMER_DETAILS ="http://103.31.144.174:82/Purchase/GetAndrConsumerDetails";
     public static final String GET_STOCKS_URL = "http://103.31.144.174:82/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174:82/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:82/Purchase/GetAndrPurchaseERV";
+    public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
+    public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
 */
-
     /**/
     public static String LOGIN_API_VALUE = "userAuth";
     public static String SYNC_ANDROID_DATA_VALUE = "syncAndriodData";
@@ -134,7 +139,7 @@ public class Constants {
      */
 
     public static void saveWithSharedPreferences(Context context, String sharedPrefKey, String sharedPrefValue) {
-        SharedPreferences sharedPref = context.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(sharedPrefKey, sharedPrefValue);
         editor.commit();
@@ -149,7 +154,7 @@ public class Constants {
      */
     public static String getSharedPrefWithKEY(Context context, String sharedPrefKey) {
 
-        SharedPreferences sharedPref = context.getSharedPreferences("SharedPref", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         String defaultValue = context.getResources().getString(R.string.sp_default_value);
         String resultModule = sharedPref.getString(sharedPrefKey, defaultValue);
         return resultModule;
