@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
+import com.infosolutions.utils.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -680,10 +681,12 @@ public class VolleySingleton {
     }
 
 
-    public void get_commercial_report(final CallType type,final String reportName, final String url){
+    public void get_commercial_report(final CallType type,final String reportName, final String date, final String url){
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(Constants.KEY_REPORT_NAME, reportName);
+            jsonObject.put("Date",date);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

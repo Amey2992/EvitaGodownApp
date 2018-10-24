@@ -49,6 +49,7 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
     HashMap<String, List<String>> listDataChild;
     private String headerTitle;
     private String requestType;
+    android.support.v7.widget.SearchView searchView;
 
     public String getGODOWN_ID() {
         return GODOWN_ID;
@@ -79,6 +80,9 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         mTitle.setText(headerTitle);
         setSupportActionBar(toolbar);
 
+        searchView = (android.support.v7.widget.SearchView) findViewById(R.id.search);
+        searchView.setVisibility(View.GONE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
 
@@ -100,11 +104,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         VolleySingleton.getInstance(getApplicationContext())
                 .addResponseListener(VolleySingleton.CallType.REPORT_TV_DETAILS, this);
 
-        VolleySingleton.getInstance(getApplicationContext())
-                .addResponseListener(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK, this);
-
-        VolleySingleton.getInstance(getApplicationContext())
-                .addResponseListener(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, this);
 
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -177,19 +176,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                                 Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
             }
 
-            else if (headerTitle.equalsIgnoreCase(Constants.StockReportTitle)) {
-
-                VolleySingleton.getInstance(getApplicationContext()).
-                        apiGetReportList(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,
-                                Constants.COMMERCIAL_REPORTS, getRequestType(), getGODOWN_ID());
-            }
-
-            else if (headerTitle.equalsIgnoreCase(Constants.ConsumerReportTitle)) {
-
-                VolleySingleton.getInstance(getApplicationContext()).
-                        apiGetReportList(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER,
-                                Constants.COMMERCIAL_REPORTS, getRequestType(), getGODOWN_ID());
-            }
 
         } else {
             Toast.makeText(getApplicationContext(), R.string.no_network_available, Toast.LENGTH_SHORT).show();

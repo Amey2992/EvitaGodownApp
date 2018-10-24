@@ -1,11 +1,16 @@
 package com.commercialMgmt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -23,18 +28,20 @@ import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.reports.NewReportDetailsActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class CommercialReportDetailActivity extends AppCompatActivity implements ResponseListener {
 
 
     ExpandableListView reportsListView;
-    NewReportDetailsActivity.ExpandableListAdapter adapter;
+    CommercialReportDetailActivity.ExpandableListAdapter adapter;
     List<String> listDataHeader;
     ProgressBar progressBar;
     HashMap<String, List<String>> listDataChild;
@@ -107,14 +114,14 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             if (headerTitle.equalsIgnoreCase(Constants.StockReportTitle)) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
-                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,getRequestType(),
+                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,getRequestType(),Constants.getDateTime(),
                                 Constants.COMMERCIAL_REPORTS );
             }
 
             else if (headerTitle.equalsIgnoreCase(Constants.ConsumerReportTitle)) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
-                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, getRequestType(),
+                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, getRequestType(),Constants.getDateTime(),
                                 Constants.COMMERCIAL_REPORTS);
             }
 
@@ -180,11 +187,296 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
     }
 
     private void reportWiseData(JSONObject jsonObject, VolleySingleton.CallType type) {
-        System.out.println(jsonObject.toString());
+        JSONArray jsonArray = jsonObject.optJSONArray("Report");
+        List<CommercialConsumerStockReport> listStockDetailModel = new ArrayList<>();
+        if (jsonArray != null && jsonArray.length() > 0) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                CommercialConsumerStockReport stockDetailModel = new CommercialConsumerStockReport(jsonArray.optJSONObject(i), type);
+
+                listStockDetailModel.add(stockDetailModel);
+                if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK)) {
+                    stockHash.put(stockDetailModel.ProdName, listStockDetailModel);
+                }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER)){
+                    stockHash.put(stockDetailModel.ConsumerName, listStockDetailModel);
+                }
+            }
+            listDataHeader = new ArrayList<>();
+            listDataHeader.addAll(stockHash.keySet());
+            loadListView(type.toString(),listStockDetailModel);
+        } else {
+            Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadListView(String type,List<CommercialConsumerStockReport> stocksmodel) {
+        adapter = new CommercialReportDetailActivity.ExpandableListAdapter(this, listDataHeader, stockHash, type,stocksmodel);
+        reportsListView.setAdapter(adapter);
+    }
+
+    public class ExpandableListAdapter extends BaseExpandableListAdapter {
+
+        private Context context;
+        private List<String> headerTitle;
+        private HashMap<String, List<CommercialConsumerStockReport>> childData;
+        String type;
+        private List<CommercialConsumerStockReport> stocksmodel;
+        private TextView consumer_name_textview;
+        private TextView consumer_name_textview_value;
+        private TextView prod_name_textview;
+        private TextView prod_name_textview_value;
+        private TextView mrp_textview;
+        private TextView mrp_textview_value;
+        private TextView discount_textview;
+        private TextView discount_textview_value;
+        private TextView fullcyl_textview;
+        private TextView fullcyl_textview_value;
+        private TextView emptycyl_textview;
+        private TextView emptycyl_textview_value;
+        private TextView creditcyl_textview;
+        private TextView creditcyl_textview_value;
+        private TextView amount_textview;
+        private TextView amount_textview_value;
+        private TextView credit_amount_textview;
+        private TextView credit_amount_textview_value;
+        private TextView payment_mode_textview;
+        private TextView payment_mode_textview_value;
+        private TextView payment_status_textview;
+        private TextView payment_status_textview_value;
+        private TextView challan_textview;
+        private TextView challan_textview_value;
+        private TextView credit_textview;
+        private TextView credit_textview_value;
+        private TextView closing_textview;
+        private TextView closing_textview_value;
+        private TextView opening_textview;
+        private TextView opening_textview_value;
+
+
+
+
+
+
+        private ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<CommercialConsumerStockReport>> listChildData, String type, List<CommercialConsumerStockReport> stocksmodel ) {
+            this.context = context;
+            this.headerTitle = listDataHeader;
+            this.childData = listChildData;
+            this.type = type;
+            this.stocksmodel = stocksmodel;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return stocksmodel.size();
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return 1;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            if(type.equalsIgnoreCase(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER.toString())) {
+                return this.stocksmodel.get(groupPosition).ConsumerName;
+            }else if(type.equalsIgnoreCase(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK.toString())){
+                return this.stocksmodel.get(groupPosition).ProdName;
+            }
+            return "";
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return this.stocksmodel.get(groupPosition);
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childPosition;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return false;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            String headerTitle = (String) getGroup(groupPosition);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.reports_row_layout, null);
+            }
+
+            TextView textView = convertView.findViewById(R.id.textview_parent);
+            textView.setText(headerTitle);
+            return convertView;
+        }
+
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            final CommercialConsumerStockReport childModel = (CommercialConsumerStockReport) getChild(groupPosition, childPosition);
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.commercial_reports_row_child, null);
+
+            }
+
+            LinearLayout consumerContainer = convertView.findViewById(R.id.consumerContainer);
+            LinearLayout stockcontainer = convertView.findViewById(R.id.stockcontainer);
+
+
+            consumer_name_textview = convertView.findViewById(R.id.consumer_name_textview);
+            consumer_name_textview_value = convertView.findViewById(R.id.consumer_name_textview_value);
+            consumer_name_textview_value.setText(childModel.ConsumerName);
+
+            prod_name_textview = convertView.findViewById(R.id.prod_name_textview);
+            prod_name_textview_value = convertView.findViewById(R.id.prod_name_textview_value);
+
+            mrp_textview = convertView.findViewById(R.id.mrp_textview);
+            mrp_textview_value = convertView.findViewById(R.id.mrp_textview_value);
+
+            discount_textview = convertView.findViewById(R.id.discount_textview);
+            discount_textview_value = convertView.findViewById(R.id.discount_textview_value);
+
+            fullcyl_textview = convertView.findViewById(R.id.fullcyl_textview);
+            fullcyl_textview_value = convertView.findViewById(R.id.fullcyl_textview_value);
+
+            emptycyl_textview = convertView.findViewById(R.id.emptycyl_textview);
+            emptycyl_textview_value = convertView.findViewById(R.id.emptycyl_textview_value);
+
+            creditcyl_textview = convertView.findViewById(R.id.creditcyl_textview);
+            creditcyl_textview_value = convertView.findViewById(R.id.creditcyl_textview_value);
+
+            amount_textview = convertView.findViewById(R.id.amount_textview);
+            amount_textview_value = convertView.findViewById(R.id.amount_textview_value);
+
+            credit_amount_textview = convertView.findViewById(R.id.credit_amount_textview);
+            credit_amount_textview_value = convertView.findViewById(R.id.credit_amount_textview_value);
+
+            payment_mode_textview = convertView.findViewById(R.id.payment_mode_textview);
+            payment_mode_textview_value = convertView.findViewById(R.id.payment_mode_textview_value);
+
+            payment_status_textview = convertView.findViewById(R.id.payment_status_textview);
+            payment_status_textview_value = convertView.findViewById(R.id.payment_status_textview_value);
+
+            challan_textview = convertView.findViewById(R.id.challan_textview);
+            challan_textview_value = convertView.findViewById(R.id.challan_textview_value);
+
+            credit_textview = convertView.findViewById(R.id.credit_textview);
+            credit_textview_value = convertView.findViewById(R.id.credit_textview_value);
+
+            closing_textview = convertView.findViewById(R.id.closing_textview);
+            closing_textview_value = convertView.findViewById(R.id.closing_textview_value);
+
+            opening_textview = convertView.findViewById(R.id.opening_textview);
+            opening_textview_value = convertView.findViewById(R.id.opening_textview_value);
+
+
+            if (this.type.equalsIgnoreCase(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER.toString())) {
+                consumerContainer.setVisibility(View.VISIBLE);
+                stockcontainer.setVisibility(View.GONE);
+
+                consumer_name_textview.setText("Consumer Name: ");
+                consumer_name_textview_value.setText(childModel.ConsumerName);
+
+                prod_name_textview.setText("Product Name: ");
+                prod_name_textview_value.setText(childModel.ProdName);
+
+                mrp_textview.setText("MRP: ");
+                mrp_textview_value.setText(Integer.toString(childModel.MRP));
+
+                discount_textview.setText("Discount: ");
+                discount_textview_value.setText(Integer.toString(childModel.Discount));
+
+                fullcyl_textview.setText("FullCyl: ");
+                fullcyl_textview_value.setText(Integer.toString(childModel.FullCyl));
+
+                emptycyl_textview.setText("EmptyCyl: ");
+                emptycyl_textview_value.setText(Integer.toString(childModel.EmptyCyl));
+
+                creditcyl_textview.setText("CredityCyl: ");
+                creditcyl_textview_value.setText(Integer.toString(childModel.CreditCyl));
+
+                amount_textview.setText("Amount");
+                amount_textview_value.setText(Integer.toString(childModel.Amount));
+
+                credit_amount_textview.setText("Credit Amount: ");
+                credit_amount_textview_value.setText(Integer.toString(childModel.CreditAmount));
+
+                payment_mode_textview.setText("Payment Mode: ");
+                payment_mode_textview_value.setText(childModel.PaymentMode);
+
+                payment_status_textview.setText("Payment Status: ");
+                payment_status_textview_value.setText(childModel.PaymentStatus);
+
+                challan_textview.setText("Challan No: ");
+                challan_textview_value.setText(childModel.ChallanNo);
+
+            }else if (this.type.equalsIgnoreCase(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK.toString())) {
+
+                stockcontainer.setVisibility(View.VISIBLE);
+                consumerContainer.setVisibility(View.GONE);
+
+
+
+                credit_textview.setText("Credit: ");
+                credit_textview_value.setText(Integer.toString(childModel.Credit));
+
+                closing_textview.setText("Closing: ");
+                closing_textview_value.setText(Integer.toString(childModel.Closing));
+
+                opening_textview.setText("Opening: ");
+                opening_textview_value.setText(Integer.toString(childModel.Opening));
+
+
+            }
+            return  convertView;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return false;
+        }
+
+        // Filter Class
+        /*public void filter(String charText) {
+            charText = charText.toLowerCase(Locale.getDefault());
+            worldpopulationlist.clear();
+            if (charText.length() == 0) {
+                worldpopulationlist.addAll(arraylist);
+            }
+            else
+            {
+                for (WorldPopulation wp : arraylist)
+                {
+                    if (wp.getCountry().toLowerCase(Locale.getDefault()).contains(charText))
+                    {
+                        worldpopulationlist.add(wp);
+                    }
+                }
+            }
+            notifyDataSetChanged();
+        }*/
+
     }
 
     @Override
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {
         progressBar.setVisibility(View.GONE);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
