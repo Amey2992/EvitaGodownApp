@@ -1,4 +1,3 @@
-/*
 package com.commercialMgmt.models;
 
 import com.j256.ormlite.field.DatabaseField;
@@ -8,14 +7,17 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
-@DatabaseTable(tableName = "CommercialConsumerTable")
-public class CommercialConsumerModel implements Serializable {
+@DatabaseTable(tableName = "CommercialConsumerStockReportTable")
+public class CommercialConsumerStockReport implements Serializable {
 
     @DatabaseField(generatedId = true, columnName = "id")
     public int id;
 
     @DatabaseField
-    public int ConsumerNo;
+    public String date;
+
+    @DatabaseField
+    public String ConsumerNo;
 
     @DatabaseField
     public String ConsumerName;
@@ -59,14 +61,25 @@ public class CommercialConsumerModel implements Serializable {
     @DatabaseField
     public String ChallanNo;
 
-    public CommercialConsumerModel(){}
+    @DatabaseField
+    public int Credit;
 
-    public CommercialConsumerModel(JSONObject jsonObject){
+    @DatabaseField
+    public int Closing;
+
+    @DatabaseField
+    public int Opening;
+
+
+    public CommercialConsumerStockReport(){}
+
+    public CommercialConsumerStockReport(JSONObject jsonObject){
         if(jsonObject != null){
-            ConsumerNo = jsonObject.optInt("ConsumerNo");
+            ConsumerNo = jsonObject.optString("ConsumerNo");
             ConsumerName = jsonObject.optString("ConsumerName");
             ProductId = jsonObject.optInt("ProductId");
             ProdName = jsonObject.optString("ProdName");
+            date = jsonObject.optString("date");
             BPCLRate = jsonObject.optInt("BPCLRate");
             MRP = jsonObject.optInt("MRP");
             Discount = jsonObject.optInt("Discount");
@@ -78,7 +91,9 @@ public class CommercialConsumerModel implements Serializable {
             PaymentMode = jsonObject.optString("PaymentMode");
             PaymentStatus = jsonObject.optString("PaymentStatus");
             ChallanNo = jsonObject.optString("ChallanNo");
-
+            Credit = jsonObject.optInt("Credit");
+            Closing = jsonObject.optInt("Closing");
+            Opening = jsonObject.optInt("Opening");
         }
     }
 
@@ -92,4 +107,3 @@ public class CommercialConsumerModel implements Serializable {
 
 
 }
-*/

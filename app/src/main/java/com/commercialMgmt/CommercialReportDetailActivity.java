@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.commercialMgmt.models.CommercialConsumerStockReport;
 import com.commercialMgmt.models.CommercialStockModel;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
@@ -38,8 +40,9 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
     HashMap<String, List<String>> listDataChild;
     private String headerTitle;
     private String requestType;
-    List<CommercialStockModel> listStockDetailModel = new ArrayList<>();
-    HashMap<String, List<CommercialStockModel>> stockHash = new HashMap<String, List<CommercialStockModel>>();
+    List<CommercialConsumerStockReport> listStockDetailModel = new ArrayList<>();
+    HashMap<String, List<CommercialConsumerStockReport>> stockHash = new HashMap<String, List<CommercialConsumerStockReport>>();
+    android.support.v7.widget.SearchView searchView;
 
 
     @Override
@@ -58,6 +61,9 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         progressBar = findViewById(R.id.progressBar);
         mTitle.setText(headerTitle);
         setSupportActionBar(toolbar);
+
+        searchView = (android.support.v7.widget.SearchView) findViewById(R.id.search);
+        searchView.onActionViewExpanded();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
