@@ -140,7 +140,7 @@ public class AppSettings {
 
     // made by sachin
     public void saveCommercialConsumer(Context context, JSONObject jsonObject){
-        VolleySingleton.getInstance(context.getApplicationContext()).postStocksDetails(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, Constants.SAVE_CONSUMER_DETAILS,jsonObject);
+        VolleySingleton.getInstance(context.getApplicationContext()).postConsumerDetails(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, Constants.SAVE_CONSUMER_DETAILS,jsonObject);
     }
 
 

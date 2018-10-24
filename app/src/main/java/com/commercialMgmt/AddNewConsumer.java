@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.ProductDB;
@@ -26,6 +28,9 @@ import com.infosolutions.evita.R;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.infosolutions.network.*;
 import com.infosolutions.core.*;
 import com.infosolutions.utils.AppSettings;
@@ -40,8 +45,9 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import khangtran.preferenceshelper.PreferencesHelper;
+import com.infosolutions.network.*;
 
-public class AddNewConsumer extends AppCompatActivity {
+public class AddNewConsumer extends AppCompatActivity implements ResponseListener{
 
 
     @BindView(R.id.scrollView)
@@ -81,7 +87,7 @@ public class AddNewConsumer extends AppCompatActivity {
     private String default_str = "Select Product";
     private ArrayList<String> spinItems;
     private ArrayAdapter<String> spinAdapter;
-    private String selectedItem;
+
     private int[] productArr;
     private List<CommercialProductModel> productDBList;
 
@@ -95,12 +101,14 @@ public class AddNewConsumer extends AppCompatActivity {
         ButterKnife.bind(this);
         //Init();
 
+        com_consumer_discount.setText("0");
+
         UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
         Log.e("UserId .................",String.valueOf(UserId));
         getProducts();
         saveConsumerBtn();
-
+        VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, this);
     }
 
 
@@ -180,22 +188,74 @@ public class AddNewConsumer extends AppCompatActivity {
         btn_addConsumer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveConfirmation_consumer();
+
+                if (com_consumer_name.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(getApplicationContext(),"Enter Consumer Name",Toast.LENGTH_SHORT).show();
+                }
+                else if (com_mobile_number.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(getApplicationContext(),"Enter Mobile Number",Toast.LENGTH_SHORT).show();
+
+                }
+                else if (!(com_mobile_number.getText().toString().length() ==10)) {
+                    Toast.makeText(getApplicationContext(),"Mobile Number Not Valid",Toast.LENGTH_SHORT).show();
+
+                }
+                else if (com_product_name.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(getApplicationContext(),"Select Product",Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+
+                    saveConfirmation_consumer();/*
+                    int discount_edittext_value;
+                    if(TextUtils.isEmpty(com_consumer_discount.getText().toString())){
+                        com_consumer_discount.setText("0");
+
+
+                    }else{
+                        discount_edittext_value  = Integer.parseInt(com_consumer_discount.getText().toString());
+                    }*/
+
+                }
+
+
+
             }
         });
     }
 
 
+    private boolean isValidMail(String email) {
+        boolean check;
+        Pattern p;
+        Matcher m;
+
+        String EMAIL_STRING = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+        p = Pattern.compile(EMAIL_STRING);
+
+        m = p.matcher(email);
+        check = m.matches();
+
+        if(!check) {
+            com_consumer_email_id.setError("Not Valid Email");
+        }
+        return check;
+    }
 
     private void saveConfirmation_consumer() {
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Stock");
+        alertDialog.setTitle("Add Consumer");
         alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showProgressDialog();
-                saveConsumerDetails();
+                //isValidMail(com_consumer_email_id.getText().toString());
+
+
+                    saveConsumerDetails();
             }
         });
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
@@ -243,7 +303,7 @@ public class AddNewConsumer extends AppCompatActivity {
         Log.e("random number", Integer.toString(random));
         randomNumber = Integer.toString(random);
 
-        uniqueId_AddConsumer=randomNumber+Constants.getDateTime()+mobile_no;
+        uniqueId_AddConsumer=randomNumber+Constants.currentDateTime()+mobile_no;
 
         return uniqueId_AddConsumer;
     }
@@ -262,4 +322,32 @@ public class AddNewConsumer extends AppCompatActivity {
 
         }
 
+    @Override
+    public void onSuccess(VolleySingleton.CallType type, String response) {
+        hideProgressDialog();
+        //responseMessage = "Success", IsAuthenticate = true, responseCode = 200
+
+        try {
+            JSONObject objectResult = new JSONObject(response);
+
+            String responseMsg = objectResult.optString("responseMessage");
+            if (objectResult.optString("responseCode").equalsIgnoreCase("200")) {
+                Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
+                hideProgressDialog();
+                finish();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+       // Toast.makeText(getApplicationContext(),"Consumer Added Successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailure(VolleySingleton.CallType type, VolleyError error) {
+        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+    }
 }
