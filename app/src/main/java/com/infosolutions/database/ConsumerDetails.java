@@ -22,6 +22,9 @@ public class ConsumerDetails  implements Serializable{
     @DatabaseField
     public int NoOfCylinder;
 
+    @DatabaseField
+    public String ConsumerName;
+
     public ConsumerDetails(){}
 
     public ConsumerDetails(JSONObject jsonObject){
@@ -30,6 +33,7 @@ public class ConsumerDetails  implements Serializable{
             ConsumerNo = jsonObject.optString("ConsumerNo");
             ProductId = jsonObject.optInt("ProductId");
             NoOfCylinder = jsonObject.optInt("NoOfCylinder");
+            ConsumerName = jsonObject.optString("ConsumerName");
         }
     }
 

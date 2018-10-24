@@ -68,8 +68,11 @@ import khangtran.preferenceshelper.PreferencesHelper;
 import static com.infosolutions.network.Constants.KEY_AGENCY_NAME;
 import static com.infosolutions.network.Constants.KEY_GODOWN;
 import static com.infosolutions.network.Constants.KEY_GODOWN_NAME;
+import static com.infosolutions.network.Constants.LOGIN_GODOWNKEEPER;
+import static com.infosolutions.network.Constants.LOGIN_DELIVERYMAN;
 import static com.infosolutions.network.Constants.PREF_DATE;
 import static com.infosolutions.network.Constants.SHARED_PREF;
+import static com.infosolutions.network.Constants.LOGIN_TYPE;
 import static com.infosolutions.network.Constants.saveWithSharedPreferences;
 
 
@@ -85,6 +88,7 @@ public class LoginActivity extends BaseActivity {
     private String USER_TYPE;
     private TextView version_textview;
     private ArrayList<ConsumerModel> consumerDetailsList;
+    private String login_type;
 
     public String getUSER_ID() {
         return USER_ID;
@@ -120,7 +124,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferencesHelper.initHelper(this, Constants.SHARED_PREF);
+        //PreferencesHelper.initHelper(this, Constants.SHARED_PREF);
         initIds();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.SYNC_LOCAL_DATA, this);
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.UPDATE_LOCAL_DATA, this);
@@ -167,7 +171,7 @@ public class LoginActivity extends BaseActivity {
                     focusOnView(scrollView, editTextPassword);
                     showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.empty_password));
                 } else {
-                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_DELIVERYMAN);
+
                     if (Constants.isNetworkAvailable(getApplicationContext())) {
                         showProgressDialog();
 
@@ -195,7 +199,7 @@ public class LoginActivity extends BaseActivity {
                     focusOnView(scrollView, editTextPassword);
                     showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.empty_password));
                 } else {
-                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_TYPE, Constants.LOGIN_GODOWNKEEPER);
+
                     if (Constants.isNetworkAvailable(getApplicationContext())) {
                         showProgressDialog();
 
@@ -249,6 +253,7 @@ public class LoginActivity extends BaseActivity {
                     String ownerType = objectESS.optString("OWNER_DATA");
                     ownerTypeMode(ownerType);
                 }
+                String str = PreferencesHelper.getInstance().getStringValue("login_type","");
                 clearPreviousData();
                 syncData();
             } else {
@@ -403,6 +408,8 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
+
+            login_type = LOGIN_GODOWNKEEPER;
             if(responseCode.equalsIgnoreCase("500")){
                 hideProgressDialog();
 
@@ -412,13 +419,14 @@ public class LoginActivity extends BaseActivity {
 
         }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
             try {
+                login_type = LOGIN_DELIVERYMAN;
                 if(responseCode.equalsIgnoreCase("500")){
                     hideProgressDialog();
                     serverSuccessResponse(response);
                 }
                 else {
                     int user_id = jsonResult.optInt("user_id");
-                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
+                    //PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
                     fillCommercialConsumerDB(jsonResult);
                     fillCommercialProductsDB(jsonResult);
                     String NENUS_LIST = jsonResult.optString("menus");
@@ -486,8 +494,13 @@ public class LoginActivity extends BaseActivity {
 
         }
         savePreferences(PREF_DATE, current_date);
+        saveLoginTypePreference(login_type);
 
         setOffline_module_list(getOffline_module_list());
+    }
+
+    private void saveLoginTypePreference(String value) {
+        PreferencesHelper.getInstance().setValue(LOGIN_TYPE, value);
     }
 
 
@@ -502,6 +515,10 @@ public class LoginActivity extends BaseActivity {
         saveWithSharedPreferences(getApplicationContext(), moduleKEY, offline_module_list);
         saveWithSharedPreferences(this, Constants.KEY_USER_ID, getUSER_ID());
         this.offline_module_list = offline_module_list;
+    }
+
+    private void setLoginType(String loginType){
+
     }
 
 

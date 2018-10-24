@@ -22,6 +22,7 @@ import com.infosolutions.database.TVDetailsDB;
 import com.infosolutions.database.TruckDetailsDB;
 import com.infosolutions.database.TruckSendDetailsDB;
 import com.infosolutions.evita.R;
+import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.service.GetConsumerService;
 import com.infosolutions.service.TestJobService;
@@ -83,7 +84,7 @@ public class SplashActivity extends BaseActivity {
 
         gotoNextScreen();
 
-        PreferencesHelper.initHelper(this, "SharedPref");
+        PreferencesHelper.initHelper(this, Constants.SHARED_PREF);
 
         checkIfFreshInstall();
     }

@@ -31,7 +31,8 @@
     <string name="add">Add</string>
     <string name="invoice_no">Invoice Number</string>
     <string name="sound">Sound</string>
-    <string name="customerId">Customer Id</string>
+    <string name="customerId">Customer No</string>
+    <string name="consumerName">Consumer Name</string>
     <string name="erv_no">ERV Number</string>
     <string name="kg19">19 KG</string>
     <string name="kg14Kg">14.2 KG</string>

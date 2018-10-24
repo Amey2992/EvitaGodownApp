@@ -16,6 +16,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,7 @@ import com.infosolutions.evita.R;
 import com.infosolutions.factory.IntentFactory;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
+import com.infosolutions.ui.login.LoginActivity;
 import com.infosolutions.ui.user.commercial.CommercialActivity;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
 import com.infosolutions.ui.user.reports.ReportListItemsActivity;
@@ -111,8 +113,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PreferencesHelper.initHelper(this, "SharedPref");
+        //PreferencesHelper.initHelper(this, "SharedPref");
         login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
+        Log.d("oncreate_logintype",login_type);
         loadToolbar();
         loadModuleList();
         initialiseUI();
@@ -339,6 +342,11 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), AddNewConsumer.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
+
+            if (selectedModuleType.equalsIgnoreCase("9")) {
+                startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
         }
     }
 
@@ -382,12 +390,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
 
-
+        login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
         if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
-
+            Log.d("loginType:",Constants.LOGIN_GODOWNKEEPER);
             menu.findItem(R.id.action_transfer).setVisible(true);
             menu.findItem(R.id.action_setting).setVisible(true);
         }else{
+            Log.d("loginType:",Constants.LOGIN_DELIVERYMAN);
             menu.findItem(R.id.action_transfer).setVisible(false);
             menu.findItem(R.id.action_setting).setVisible(false);
         }
