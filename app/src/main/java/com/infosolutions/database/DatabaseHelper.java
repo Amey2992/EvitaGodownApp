@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.commercialMgmt.models.CommercialConsumerModel;
+//import com.commercialMgmt.models.CommercialConsumerModel;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.CommercialStockModel;
 import com.commercialMgmt.models.ConsumerModel;
@@ -88,9 +88,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private RuntimeExceptionDao<CommercialStockModel, Integer>
 			commercialStockModelRuntimeExceptionDao = null;
 
-	private RuntimeExceptionDao<CommercialConsumerModel, Integer>
+	/*private RuntimeExceptionDao<CommercialConsumerModel, Integer>
 			commercialConsumerModelRuntimeExceptionDao = null;
-
+*/
 
 	public DatabaseHelper(Context context) {
 		super(context, DATABASE_NAME, null,
@@ -115,7 +115,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, ConsumerModel.class);
 			TableUtils.createTable(connectionSource, CommercialProductModel.class);
 			TableUtils.createTable(connectionSource, CommercialStockModel.class);
-			TableUtils.createTable(connectionSource, CommercialConsumerModel.class);
+			//TableUtils.createTable(connectionSource, CommercialConsumerModel.class);
 
 		} catch (SQLException e) {
 			Log.e(DatabaseHelper.class.getName(), "Unable to create databases", e);
@@ -166,7 +166,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, ConsumerModel.class,true);
 			TableUtils.dropTable(connectionSource, CommercialProductModel.class,true);
 			TableUtils.dropTable(connectionSource, CommercialStockModel.class,true);
-			TableUtils.dropTable(connectionSource, CommercialConsumerModel.class,true);
+			//TableUtils.dropTable(connectionSource, CommercialConsumerModel.class,true);
 
 			onCreate(sqliteDatabase, connectionSource);
 		} catch (SQLException e) {
@@ -414,11 +414,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		return commercialStockModelRuntimeExceptionDao;
 	}
 
-	public RuntimeExceptionDao<CommercialConsumerModel, Integer> getCommercialConsumerModelExceptionDao() {
+	/*public RuntimeExceptionDao<CommercialConsumerModel, Integer> getCommercialConsumerModelExceptionDao() {
 
 		if (commercialConsumerModelRuntimeExceptionDao == null) {
 			commercialConsumerModelRuntimeExceptionDao = getRuntimeExceptionDao(CommercialConsumerModel.class);
 		}
 		return commercialConsumerModelRuntimeExceptionDao;
-	}
+	}*/
 }

@@ -1,3 +1,4 @@
+/*
 package com.commercialMgmt.models;
 
 import com.j256.ormlite.field.DatabaseField;
@@ -91,3 +92,4 @@ public class CommercialConsumerModel implements Serializable {
 
 
 }
+*/

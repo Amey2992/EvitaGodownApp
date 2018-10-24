@@ -80,12 +80,17 @@ public class TVDetailsActivity extends BaseActivity {
     EditText input_number_of_cylinders;
     @BindView(R.id.input_customerId)
     EditText input_customerId;
+
+    @BindView(R.id.consumer_name)
+    EditText consumer_name;
     @BindView(R.id.btnSubmit)
     AppCompatButton btnSubmit;
     @BindView(R.id.input_layout_customerId)
     TextInputLayout input_layout_customerId;
     @BindView(R.id.input_layout_noc)
     TextInputLayout input_layout_noc;
+    @BindView(R.id.consumer_name_container)
+    TextInputLayout consumer_name_container;
     @BindView(R.id.layout_cylinder)
     RelativeLayout layout_cylinder;
     @BindView(R.id.tv_available_cyl)
@@ -123,6 +128,7 @@ public class TVDetailsActivity extends BaseActivity {
         getDataButtonHandler();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.CONSUMER_DETAILS, this);
         input_number_of_cylinders.setEnabled(false);
+        consumer_name.setEnabled(false);
         btnSubmit.setEnabled(false);
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
                 new IntentFilter(Constants.CONSUMER_BROADCAST));
@@ -186,6 +192,7 @@ public class TVDetailsActivity extends BaseActivity {
             if(consumerDetails != null && consumerDetails.size() > 0){
                 btnSubmit.setEnabled(true);
                 input_number_of_cylinders.setText(Integer.toString(consumerDetails.get(0).NoOfCylinder));
+                consumer_name.setText(consumerDetails.get(0).ConsumerName);
                 input_customerId.setEnabled(false);
             }else{
                 Toast.makeText(this, Constants.error_message,Toast.LENGTH_SHORT).show();
@@ -216,6 +223,7 @@ public class TVDetailsActivity extends BaseActivity {
 
                 input_layout_customerId.setErrorEnabled(false);
                 input_layout_noc.setErrorEnabled(false);
+                consumer_name_container.setErrorEnabled(false);
 
                 if (input_customerId.getText() != null && input_customerId.getText().toString().trim().equalsIgnoreCase("")){
                     input_layout_customerId.setError("Please Provide Customer ID");
@@ -309,6 +317,7 @@ public class TVDetailsActivity extends BaseActivity {
                 viewTV.setVisibility(View.GONE);
                 getAvailableCYL();
                 input_number_of_cylinders.setText("");
+                consumer_name.setText("");
                 input_customerId.setText("");
                 input_customerId.setEnabled(true);
                 if (selectedCylinderTYPE != null){

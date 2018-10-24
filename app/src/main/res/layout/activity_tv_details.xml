@@ -133,6 +133,22 @@
                             android:text="Get Cylinder" />
 
                     </android.support.design.widget.TextInputLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/consumer_name_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                        <EditText
+                            android:id="@+id/consumer_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_lock_outline"
+                            android:drawablePadding="@dimen/appbar_padding_top"
+                            android:hint="@string/customer_name"
+                            android:selectAllOnFocus="true" />
+
+                    </android.support.design.widget.TextInputLayout>
 
 
                     <android.support.design.widget.TextInputLayout
