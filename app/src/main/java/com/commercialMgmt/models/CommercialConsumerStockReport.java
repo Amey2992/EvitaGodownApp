@@ -1,5 +1,6 @@
 package com.commercialMgmt.models;
 
+import com.infosolutions.network.VolleySingleton;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -73,27 +74,31 @@ public class CommercialConsumerStockReport implements Serializable {
 
     public CommercialConsumerStockReport(){}
 
-    public CommercialConsumerStockReport(JSONObject jsonObject){
+    public CommercialConsumerStockReport(JSONObject jsonObject, VolleySingleton.CallType type){
         if(jsonObject != null){
-            ConsumerNo = jsonObject.optString("ConsumerNo");
-            ConsumerName = jsonObject.optString("ConsumerName");
             ProductId = jsonObject.optInt("ProductId");
             ProdName = jsonObject.optString("ProdName");
             date = jsonObject.optString("date");
-            BPCLRate = jsonObject.optInt("BPCLRate");
-            MRP = jsonObject.optInt("MRP");
-            Discount = jsonObject.optInt("Discount");
-            FullCyl = jsonObject.optInt("FullCyl");
-            EmptyCyl = jsonObject.optInt("EmptyCyl");
-            CreditCyl = jsonObject.optInt("CreditCyl");
-            Amount = jsonObject.optInt("Amount");
-            CreditAmount = jsonObject.optInt("CreditAmount");
-            PaymentMode = jsonObject.optString("PaymentMode");
-            PaymentStatus = jsonObject.optString("PaymentStatus");
-            ChallanNo = jsonObject.optString("ChallanNo");
-            Credit = jsonObject.optInt("Credit");
-            Closing = jsonObject.optInt("Closing");
-            Opening = jsonObject.optInt("Opening");
+            if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER)) {
+                ConsumerNo = jsonObject.optString("ConsumerNo");
+                ConsumerName = jsonObject.optString("ConsumerName");
+                BPCLRate = jsonObject.optInt("BPCLRate");
+                MRP = jsonObject.optInt("MRP");
+                Discount = jsonObject.optInt("Discount");
+                FullCyl = jsonObject.optInt("FullCyl");
+                EmptyCyl = jsonObject.optInt("EmptyCyl");
+                CreditCyl = jsonObject.optInt("CreditCyl");
+                Amount = jsonObject.optInt("Amount");
+                CreditAmount = jsonObject.optInt("CreditAmount");
+                PaymentMode = jsonObject.optString("PaymentMode");
+                PaymentStatus = jsonObject.optString("PaymentStatus");
+                ChallanNo = jsonObject.optString("ChallanNo");
+
+            }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK)){
+                Credit = jsonObject.optInt("Credit");
+                Closing = jsonObject.optInt("Closing");
+                Opening = jsonObject.optInt("Opening");
+            }
         }
     }
 
