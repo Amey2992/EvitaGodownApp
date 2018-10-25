@@ -16,6 +16,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.commercialMgmt.models.CommercialProductModel;
+import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
@@ -61,9 +62,14 @@ public class CommercialSale extends AppCompatActivity {
     private EvitaProgressDialog dialog;
     private DatabaseHelper databaseHelper;
     private ArrayList<String> spinItems;
-    private int[] productArr;
-    private List<CommercialProductModel> productDBList;
     private ArrayAdapter<String> spinAdapter;
+
+    private int[] productArr;
+
+    private List<CommercialProductModel> productDBList;
+    private List<ConsumerModel> consumerDBList;
+    private String[] consumerArr;
+    private ArrayList<String> consumerListItems;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,8 +80,10 @@ public class CommercialSale extends AppCompatActivity {
         setupToolbar();
 
         getProducts();
+        getConsumer();
 
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -88,8 +96,30 @@ public class CommercialSale extends AppCompatActivity {
         }
     }
 
-    private void getProducts() {
+    private void getConsumer() {
+        consumerListItems= new ArrayList<>();
+        RuntimeExceptionDao<ConsumerModel, Integer> comConsumerDB = getHelper().getComConsumerRTExceptionDao();
+        consumerDBList = comConsumerDB.queryForAll();
+        int consumerSize = consumerDBList.size();
+        consumerListItems.clear();
 
+        consumerArr = new String[consumerDBList.size()];
+        for(int i = 0; i < consumerDBList.size(); i++){
+            consumerArr[i] = consumerDBList.get(i).consumer_name;
+            Log.e("Products position....",String.valueOf(productArr[i]));
+        }
+
+/*
+        if (consumerSize > 0) {
+            for (ConsumerModel item : consumerListItems)
+                consumerListItems.add(item.consumer_name);
+        }
+*/
+
+    }
+
+
+    private void getProducts() {
 
     spinItems = new ArrayList<>();
 

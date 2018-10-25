@@ -426,7 +426,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 else {
                     int user_id = jsonResult.optInt("user_id");
-                    //PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
+                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
                     fillCommercialConsumerDB(jsonResult);
                     fillCommercialProductsDB(jsonResult);
                     String NENUS_LIST = jsonResult.optString("menus");
@@ -437,10 +437,7 @@ public class LoginActivity extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
-
     }
 
     private void fillCommercialConsumerDB(JSONObject jsonObject) {
@@ -461,13 +458,9 @@ public class LoginActivity extends BaseActivity {
 */
             ConsumerModel consumerModel = new ConsumerModel(1,objectProduct);
             consumerDetailsList.add(consumerModel);
-
         }
-
         consumerDB.create(consumerDetailsList);
-
     }
-
 
     @Override
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {
@@ -475,9 +468,7 @@ public class LoginActivity extends BaseActivity {
         serverFailResponse(error);
     }
 
-
     private void clearPreviousData() {
-
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String current_date = dateFormat.format(new Date());
         SharedPreferences sharedPref = getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
@@ -507,7 +498,6 @@ public class LoginActivity extends BaseActivity {
     public String getOffline_module_list() {
         return offline_module_list;
     }
-
 
     public void setOffline_module_list(String offline_module_list) {
 
