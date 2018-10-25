@@ -506,17 +506,6 @@ public class DomesticActivity extends BaseActivity {
 
         try {
 
-            /*Long tsLong = System.currentTimeMillis()/1000;
-            String ts = tsLong.toString();
-
-            Date date=new Date(tsLong);
-            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            String dateText = df2.format(date);*/
-
-       /*     Calendar c = Calendar.getInstance();
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = df.format(c.getTime());*/
-
 
             DatabaseHelper databaseHelper = new DatabaseHelper(DomesticActivity.this);
 
@@ -524,11 +513,7 @@ public class DomesticActivity extends BaseActivity {
             {*/
             RuntimeExceptionDao<DomesticDeliveryDB, Integer> domesticDB = getHelper().getDomesticRuntimeExceptionDao();
 
-            //old
-           /* DomesticDeliveryDB domesticDeliveryDB = new DomesticDeliveryDB(1, getDeliveryManId(), fresh_trip_no, getProductId(), getDateTime(), getApplicationUserId(), fresh_full,
-                    0 , 0 , 0 , 0 , 0, getDateTime(),
-                    0,0, "MOBILE", "INSERT", "N", getGoDownId(), getDeviceId(),getDate(),false,true,false);
-           */
+
 
            //new
             String uniqueId = Integer.toString(getGoDownId()) + Integer.toString(getDeliveryManId()) + fresh_trip_no + currentDateTime()+getProductId  ();

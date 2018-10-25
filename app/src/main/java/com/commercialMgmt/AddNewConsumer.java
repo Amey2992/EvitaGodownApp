@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -99,7 +100,6 @@ public class AddNewConsumer extends AppCompatActivity implements ResponseListene
         setupToolbar();
 
         ButterKnife.bind(this);
-        //Init();
 
         com_consumer_discount.setText("0");
 
@@ -111,6 +111,17 @@ public class AddNewConsumer extends AppCompatActivity implements ResponseListene
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, this);
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @SuppressLint("LongLogTag")
     private void getProducts() {

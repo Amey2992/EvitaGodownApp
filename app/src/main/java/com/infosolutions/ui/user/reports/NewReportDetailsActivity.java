@@ -150,31 +150,31 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_DOMESTIC,
-                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
+                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Commercial")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_COMMERCIAL,
-                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
+                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Truck Received")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED,
-                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
+                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Truck Send")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TRUCK_SEND,
-                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
+                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("TV Details")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TV_DETAILS,
-                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
+                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
             }
 
             else if (headerTitle.equalsIgnoreCase(Constants.StockReportTitle)) {
