@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.commercialMgmt.AddNewConsumer;
+import com.commercialMgmt.CommercialSale;
 import com.infosolutions.adapter.ModuleAdapter;
 import com.infosolutions.adapter.ModuleGridAdapter;
 import com.infosolutions.adapter.ModuleModel;
@@ -342,9 +343,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), AddNewConsumer.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
-
-            if (selectedModuleType.equalsIgnoreCase("9")) {
-                startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
+            else if (selectedModuleType.equalsIgnoreCase("8")) {
+                startActivity(new Intent(getApplicationContext(), CommercialSale.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         }
