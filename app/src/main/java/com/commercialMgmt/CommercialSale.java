@@ -20,6 +20,7 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
+import com.infosolutions.ui.user.commercial.CommercialActivity;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -28,6 +29,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class CommercialSale extends AppCompatActivity {
 
@@ -55,10 +58,13 @@ public class CommercialSale extends AppCompatActivity {
     EditText et_total_credit_amt;
     @BindView(R.id.et_product_name)
     AutoCompleteTextView com_product_name;
+    @BindView(R.id.et_consumer_name)
+    AutoCompleteTextView et_consumer_name;
     @BindView(R.id.btnSaveComDelivery)
     Button btnSaveComDelivery;
 
     private int productId;
+
     private EvitaProgressDialog dialog;
     private DatabaseHelper databaseHelper;
     private ArrayList<String> spinItems;
@@ -66,10 +72,12 @@ public class CommercialSale extends AppCompatActivity {
 
     private int[] productArr;
 
+    private String consumerList;
     private List<CommercialProductModel> productDBList;
     private List<ConsumerModel> consumerDBList;
     private String[] consumerArr;
     private ArrayList<String> consumerListItems;
+    private ArrayAdapter<String> commercialAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,16 +113,38 @@ public class CommercialSale extends AppCompatActivity {
 
         consumerArr = new String[consumerDBList.size()];
         for(int i = 0; i < consumerDBList.size(); i++){
-            consumerArr[i] = consumerDBList.get(i).consumer_name;
-            Log.e("Products position....",String.valueOf(productArr[i]));
+
+            consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
-/*
-        if (consumerSize > 0) {
-            for (ConsumerModel item : consumerListItems)
-                consumerListItems.add(item.consumer_name);
-        }
-*/
+        commercialAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, consumerListItems);
+        commercialAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_consumer_name.setAdapter(commercialAdapter);
+
+        et_consumer_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                consumerList = consumerDBList.get(position).consumer_name;
+                final SpinnerDialog dialog = new SpinnerDialog(CommercialSale.this, consumerListItems, getResources().getString(R.string.select_deliveryman));
+
+                if(consumerListItems.size()>0)
+                {
+                    dialog.showSpinerDialog();
+                    dialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                        @Override
+                        public void onClick(String s, int i) {
+
+                        }
+                    });
+                }
+
+
+                /*consumerList = consumerDBList.get(position).consumer_name;
+                Log.e("Item Position ",String.valueOf(consumerList));*/
+
+            }
+        });
 
     }
 

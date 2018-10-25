@@ -29,7 +29,7 @@
             android:layout_marginRight="20dp"
             android:id="@+id/customerView">
 
-        <!--<com.infosolutions.ui.user.stock.AutoCompleteTextView
+        <com.infosolutions.ui.user.stock.AutoCompleteTextView
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/et_consumer_name"
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:theme="@style/EditTextTheme"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            />-->
+            />
 
             <com.infosolutions.ui.user.stock.AutoCompleteTextView
                 android:layout_marginTop="@dimen/activity_vertical_margin"
