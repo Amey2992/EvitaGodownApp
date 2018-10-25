@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import khangtran.preferenceshelper.PreferencesHelper;
+
 import static com.infosolutions.network.Constants.GODOWN_CODE;
 import static com.infosolutions.network.Constants.MODULE_KEY;
 import static com.infosolutions.network.Constants.PRODUCT_ID;
@@ -683,9 +685,11 @@ public class VolleySingleton {
 
     public void get_commercial_report(final CallType type,final String reportName, final String date, final String url){
         JSONObject jsonObject = new JSONObject();
+        int UserId= PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
         try {
             jsonObject.put(Constants.KEY_REPORT_NAME, reportName);
             jsonObject.put("Date",date);
+            jsonObject.put("UserID",UserId);
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package com.commercialMgmt;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,10 +36,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 public class CommercialReportDetailActivity extends AppCompatActivity implements ResponseListener {
 
@@ -50,7 +58,9 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
     List<CommercialConsumerStockReport> listStockDetailModel = new ArrayList<>();
     HashMap<String, List<CommercialConsumerStockReport>> stockHash = new HashMap<String, List<CommercialConsumerStockReport>>();
     android.support.v7.widget.SearchView searchView;
-
+    Button calendar_button;
+    RelativeLayout commercialcontainer;
+    String myFormat = "yyyy-MM-dd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +79,9 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         mTitle.setText(headerTitle);
         setSupportActionBar(toolbar);
 
+        commercialcontainer = (RelativeLayout) findViewById(R.id.commercialcontainer);
+        commercialcontainer.setVisibility(View.VISIBLE);
+
         searchView = (android.support.v7.widget.SearchView) findViewById(R.id.search);
         searchView.onActionViewExpanded();
         searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
@@ -84,6 +97,45 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             return false;
             }
         });
+
+        String dateTime = Constants.getDateTime();
+        final Calendar myCalendar = Calendar.getInstance();
+        calendar_button = (Button) findViewById(R.id.calendar_button);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        calendar_button.setText(Constants.getDateTime());
+
+
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                //updateLabel();
+
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                calendar_button.setText(sdf.format(myCalendar.getTime()));
+                loadReport(calendar_button.getText().toString());
+                searchView.setQuery("",false);
+
+
+            }
+
+        };
+
+        calendar_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(CommercialReportDetailActivity.this, date, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
@@ -114,27 +166,27 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             }
         });
 
-        loadReport();
+        loadReport(Constants.getDateTime());
         //prepareListData();
 
 
     }
 
-    private void loadReport() {
+    private void loadReport(String date) {
 
         if (Constants.isNetworkAvailable(getApplicationContext())) {
             progressBar.setVisibility(View.VISIBLE);
             if (headerTitle.equalsIgnoreCase(Constants.StockReportTitle)) {
                 searchView.setVisibility(View.GONE);
                 VolleySingleton.getInstance(getApplicationContext()).
-                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,getRequestType(),Constants.getDateTime(),
+                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,getRequestType(),date,
                                 Constants.COMMERCIAL_REPORTS );
             }
 
             else if (headerTitle.equalsIgnoreCase(Constants.ConsumerReportTitle)) {
                 searchView.setVisibility(View.VISIBLE);
                 VolleySingleton.getInstance(getApplicationContext()).
-                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, getRequestType(),Constants.getDateTime(),
+                        get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, getRequestType(),date,
                                 Constants.COMMERCIAL_REPORTS);
             }
 
@@ -218,6 +270,16 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             loadListView(type.toString(),listStockDetailModel);
         } else {
             Toast.makeText(this, "No data found", Toast.LENGTH_SHORT).show();
+
+            if(adapter != null) {
+                if (adapter.stocksmodel != null)
+                    adapter.stocksmodel.clear();
+
+                if (adapter.arraylist != null)
+                    adapter.arraylist.clear();
+
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 
