@@ -71,6 +71,19 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
 
         searchView = (android.support.v7.widget.SearchView) findViewById(R.id.search);
         searchView.onActionViewExpanded();
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                String text = newText.toLowerCase(Locale.getDefault());
+                adapter.filter(text);
+            return false;
+            }
+        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
@@ -112,14 +125,14 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         if (Constants.isNetworkAvailable(getApplicationContext())) {
             progressBar.setVisibility(View.VISIBLE);
             if (headerTitle.equalsIgnoreCase(Constants.StockReportTitle)) {
-
+                searchView.setVisibility(View.GONE);
                 VolleySingleton.getInstance(getApplicationContext()).
                         get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK,getRequestType(),Constants.getDateTime(),
                                 Constants.COMMERCIAL_REPORTS );
             }
 
             else if (headerTitle.equalsIgnoreCase(Constants.ConsumerReportTitle)) {
-
+                searchView.setVisibility(View.VISIBLE);
                 VolleySingleton.getInstance(getApplicationContext()).
                         get_commercial_report(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER, getRequestType(),Constants.getDateTime(),
                                 Constants.COMMERCIAL_REPORTS);
@@ -253,7 +266,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
 
 
 
-
+        private ArrayList<CommercialConsumerStockReport> arraylist=null;
 
 
         private ExpandableListAdapter(Context context, List<String> listDataHeader, HashMap<String, List<CommercialConsumerStockReport>> listChildData, String type, List<CommercialConsumerStockReport> stocksmodel ) {
@@ -262,6 +275,10 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             this.childData = listChildData;
             this.type = type;
             this.stocksmodel = stocksmodel;
+
+            this.arraylist = new ArrayList<CommercialConsumerStockReport>();
+            this.arraylist.addAll(stocksmodel);
+
         }
 
         @Override
@@ -462,10 +479,26 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             }
             notifyDataSetChanged();
         }*/
+        public void filter(String charText) {
+            charText = charText.toLowerCase(Locale.getDefault());
+            stocksmodel.clear();
+            if (charText.length() == 0) {
+                stocksmodel.addAll(arraylist);
+            } else {
+                for (CommercialConsumerStockReport wp : arraylist) {
+                    if (wp.ConsumerName.toLowerCase(Locale.getDefault()).contains(charText)) {
+                        stocksmodel.add(wp);
+                    }
+                }
+            }
+            notifyDataSetChanged();
+
+        }
 
     }
 
-    @Override
+
+        @Override
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {
         progressBar.setVisibility(View.GONE);
     }
