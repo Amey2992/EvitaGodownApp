@@ -45,6 +45,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private RuntimeExceptionDao<CommercialProductModel, Integer>
 			comProductRTExceptionDao = null;
 
+	private Dao<ConsumerModel, Integer> comCosnumerDao = null;
+	private RuntimeExceptionDao<ConsumerModel, Integer>
+			comConsumerRTExceptionDao = null;
+
 	private Dao<VehicleDB, Integer> vehicleDao = null;
 	private RuntimeExceptionDao<VehicleDB, Integer>
 			vehicleRTExceptionDao = null;
@@ -264,6 +268,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			comProductRTExceptionDao = getRuntimeExceptionDao(CommercialProductModel.class);
 		}
 		return comProductRTExceptionDao;
+	}
+
+	public RuntimeExceptionDao<ConsumerModel, Integer> getComConsumerRTExceptionDao() {
+
+		if (comConsumerRTExceptionDao == null) {
+			comConsumerRTExceptionDao = getRuntimeExceptionDao(ConsumerModel.class);
+		}
+		return comConsumerRTExceptionDao;
 	}
 
 
