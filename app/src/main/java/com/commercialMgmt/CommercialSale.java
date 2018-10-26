@@ -117,16 +117,15 @@ public class CommercialSale extends AppCompatActivity {
             consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
-        commercialAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, consumerListItems);
+       /* commercialAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, consumerListItems);
         commercialAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        et_consumer_name.setAdapter(commercialAdapter);
+        et_consumer_name.setAdapter(commercialAdapter);*/
 
-        et_consumer_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        et_consumer_name.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
 
-                consumerList = consumerDBList.get(position).consumer_name;
-                final SpinnerDialog dialog = new SpinnerDialog(CommercialSale.this, consumerListItems, getResources().getString(R.string.select_deliveryman));
+                final SpinnerDialog dialog = new SpinnerDialog(CommercialSale.this, consumerListItems, "Select Consumer");
 
                 if(consumerListItems.size()>0)
                 {
@@ -134,15 +133,10 @@ public class CommercialSale extends AppCompatActivity {
                     dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                         @Override
                         public void onClick(String s, int i) {
-
+                            //consumerList = consumerDBList.get(s).consumer_name;
                         }
                     });
                 }
-
-
-                /*consumerList = consumerDBList.get(position).consumer_name;
-                Log.e("Item Position ",String.valueOf(consumerList));*/
-
             }
         });
 
