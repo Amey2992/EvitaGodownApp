@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,15 +26,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.commercialMgmt.AddNewConsumer;
-import com.commercialMgmt.CommercialSale;
+import com.commercialMgmt.AddNewConsumerActivity;
+import com.commercialMgmt.CommercialSaleActivity;
 import com.infosolutions.adapter.ModuleAdapter;
 import com.infosolutions.adapter.ModuleGridAdapter;
 import com.infosolutions.adapter.ModuleModel;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
 import com.infosolutions.database.CommercialDeliveryCreditDB;
-import com.infosolutions.database.ConsumerDetails;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.database.DomesticDeliveryDB;
 import com.infosolutions.event.EvitaEvent;
@@ -43,7 +41,6 @@ import com.infosolutions.evita.R;
 import com.infosolutions.factory.IntentFactory;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
-import com.infosolutions.ui.login.LoginActivity;
 import com.infosolutions.ui.user.commercial.CommercialActivity;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
 import com.infosolutions.ui.user.reports.ReportListItemsActivity;
@@ -73,7 +70,6 @@ import java.util.TimerTask;
 import javax.inject.Inject;
 
 import khangtran.preferenceshelper.PreferencesHelper;
-import module.infosolutions.others.AddNewCustomerActivity;
 
 import static com.infosolutions.network.Constants.KEY_GODOWN;
 import static com.infosolutions.network.Constants.KEY_GODOWN_NAME;
@@ -367,11 +363,11 @@ public class MainActivity extends BaseActivity {
             }
         }else{
             if (selectedModuleType.equalsIgnoreCase("7")) {
-                startActivity(new Intent(getApplicationContext(), AddNewConsumer.class));
+                startActivity(new Intent(getApplicationContext(), AddNewConsumerActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
             else if (selectedModuleType.equalsIgnoreCase("8")) {
-                startActivity(new Intent(getApplicationContext(), CommercialSale.class));
+                startActivity(new Intent(getApplicationContext(), CommercialSaleActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }else if (selectedModuleType.equalsIgnoreCase("9")) {
                 startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));

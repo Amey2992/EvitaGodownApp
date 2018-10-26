@@ -257,6 +257,7 @@ public class VolleySingleton {
          * */
     public void apiCallLoginValidation(final CallType type, final String url,
                                        final String userId, final String password, final String Android) {
+
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

@@ -158,8 +158,8 @@
             android:name="com.infosolutions.service.GetConsumerService"
             android:exported="true" />
 
-        <activity android:label="" android:name="com.commercialMgmt.AddNewConsumer"></activity>
-        <activity android:label="" android:name="com.commercialMgmt.CommercialSale"></activity>
+        <activity android:label="" android:name="com.commercialMgmt.AddNewConsumerActivity"></activity>
+        <activity android:label="" android:name="com.commercialMgmt.CommercialSaleActivity"></activity>
         <activity android:label="" android:name="com.commercialMgmt.CommercialReportDetailActivity"></activity>
     </application>
 

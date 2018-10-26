@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorLightGrey"
     android:orientation="vertical"
-    tools:context="com.commercialMgmt.AddNewConsumer"
+    tools:context="com.commercialMgmt.AddNewConsumerActivity"
     >
 
     <include
@@ -29,7 +29,7 @@
             android:layout_marginRight="20dp"
             android:id="@+id/customerView">
 
-        <com.infosolutions.ui.user.stock.AutoCompleteTextView
+        <TextView
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/et_consumer_name"
             android:layout_width="match_parent"
