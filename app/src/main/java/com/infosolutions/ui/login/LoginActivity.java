@@ -4,6 +4,7 @@ package com.infosolutions.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
@@ -410,6 +411,7 @@ public class LoginActivity extends BaseActivity {
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
 
             login_type = LOGIN_GODOWNKEEPER;
+            saveLoginTypePreference(login_type);
             if(responseCode.equalsIgnoreCase("500")){
                 hideProgressDialog();
 
@@ -420,6 +422,7 @@ public class LoginActivity extends BaseActivity {
         }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
             try {
                 login_type = LOGIN_DELIVERYMAN;
+                saveLoginTypePreference(login_type);
                 if(responseCode.equalsIgnoreCase("500")){
                     hideProgressDialog();
                     serverSuccessResponse(response);
@@ -427,9 +430,26 @@ public class LoginActivity extends BaseActivity {
                 else {
                     int user_id = jsonResult.optInt("user_id");
                     PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
-                    fillCommercialConsumerDB(jsonResult);
-                    fillCommercialProductsDB(jsonResult);
+
+                    final JSONObject Object =  jsonResult;
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fillCommercialConsumerDB(Object);
+                            fillCommercialProductsDB(Object);
+                        }
+                    }).start();
+                    /*AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            //TODO your background code
+
+                        }
+                    });*/
+
+
                     String NENUS_LIST = jsonResult.optString("menus");
+
                     setOffline_module_list(NENUS_LIST);
                     hideProgressDialog();
                     openHomeScreen();

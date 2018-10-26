@@ -68,8 +68,7 @@ public class Constants {
     production
     * */
 
-/*
-    public static final String dbname = "EVITA_PROD";
+    /*public static final String dbname = "EVITA_PROD";
     public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";

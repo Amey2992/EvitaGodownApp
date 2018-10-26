@@ -16,5 +16,10 @@
         android:id="@+id/action_transfer"
         app:showAsAction="ifRoom"
         android:icon="@drawable/transfer"
-        android:title="@string/action_settings"/>
+        android:title="Stock Transfer"/>
+    <item
+        android:id="@+id/action_logout"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/logout"
+        android:title="Logout"/>
 </menu>
