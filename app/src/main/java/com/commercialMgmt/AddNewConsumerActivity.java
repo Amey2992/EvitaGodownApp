@@ -48,7 +48,7 @@ import butterknife.ButterKnife;
 import khangtran.preferenceshelper.PreferencesHelper;
 import com.infosolutions.network.*;
 
-public class AddNewConsumer extends AppCompatActivity implements ResponseListener{
+public class AddNewConsumerActivity extends AppCompatActivity implements ResponseListener{
 
 
     @BindView(R.id.scrollView)
