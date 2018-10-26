@@ -346,6 +346,9 @@ public class MainActivity extends BaseActivity {
             else if (selectedModuleType.equalsIgnoreCase("8")) {
                 startActivity(new Intent(getApplicationContext(), CommercialSale.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }else if (selectedModuleType.equalsIgnoreCase("9")) {
+                startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         }
     }
