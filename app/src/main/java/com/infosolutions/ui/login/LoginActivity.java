@@ -307,7 +307,7 @@ public class LoginActivity extends BaseActivity {
         Log.e(TAG, response);
 
 
-        String responseMsg = "";
+            String responseMsg = "";
         //progress_bar.setVisibility(View.GONE);
         JSONObject jsonResult = null;
         try {
