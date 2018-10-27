@@ -142,22 +142,15 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     /*private void getData(String s) {
         String[] =getSelectedDeliveryManId(s);
     }
 
-
     public String getSelectedDeliveryManId(String DeliveryManVALUE) {
         return DeliveryManVALUE;
     }*/
-
-
-
-
 
     public void setSelectedDeliveryManId(String selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
@@ -236,7 +229,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
         }
     }
 
-
     private void setupToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -248,6 +240,5 @@ public class CommercialSaleActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
 
     }
-
 
 }
