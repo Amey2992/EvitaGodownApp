@@ -119,16 +119,15 @@
                     android:id="@+id/commercialbuttonLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/appbar_padding_top"
+                    android:background="@drawable/custom_btn"
+                    android:fontFamily="sans-serif-condensed"
                     android:text="Log In As Deliveryman"
                     android:textAllCaps="false"
-                    android:fontFamily="sans-serif-condensed"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginBottom="@dimen/appbar_padding_top"
                     android:textAppearance="?android:textAppearanceMedium"
-                    android:textStyle="bold"
-                    android:layout_gravity="center"
-                    android:background="@drawable/custom_btn"
-                    />
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>

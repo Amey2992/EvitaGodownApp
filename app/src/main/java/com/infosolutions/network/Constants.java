@@ -55,8 +55,9 @@ public class Constants {
     /**/
 
     private static final String TEST_URL = "http://103.31.144.174:8080/EVITA/User";
-    private static final String tester_prod_url = "http://103.31.144.174:8080/TESTER_AGS/User";
+    private static final String BHIVANDI_GAS_SERVICE = "http://103.31.144.174:8080/BHIVANDI_GAS_AGENCY/User";
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
+    //private static final String TESTER_AGS = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
     public static final  String EVITA_API_URL = PROD_URL;
 
@@ -79,7 +80,6 @@ public class Constants {
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
-
     /*
     Godown_Ags
     * */

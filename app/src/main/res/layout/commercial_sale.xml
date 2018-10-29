@@ -29,12 +29,12 @@
             android:layout_marginRight="20dp"
             android:id="@+id/customerView">
 
-        <TextView
+        <EditText
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/et_consumer_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Product"
+            android:hint="Select Consumer"
             android:drawableLeft="@drawable/product"
             android:drawablePadding="@dimen/activity_vertical_margin"
             android:theme="@style/EditTextTheme"
