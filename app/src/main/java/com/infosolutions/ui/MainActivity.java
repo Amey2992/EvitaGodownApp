@@ -41,6 +41,7 @@ import com.infosolutions.evita.R;
 import com.infosolutions.factory.IntentFactory;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
+import com.infosolutions.ui.login.LoginActivity;
 import com.infosolutions.ui.user.commercial.CommercialActivity;
 import com.infosolutions.ui.user.domestic.DomesticActivity;
 import com.infosolutions.ui.user.reports.ReportListItemsActivity;
@@ -52,6 +53,7 @@ import com.infosolutions.utils.AppSettings;
 import com.infosolutions.utils.GlobalVariables;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.kcode.bottomlib.BottomDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -221,9 +223,35 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), StockTransferActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 break;
+
+            case R.id.action_logout:
+                logout();
+                break;
         }
         return true;
     }
+
+    private void logout() {
+        BottomDialog dialog = BottomDialog.newInstance("Are you sure do you want logout ?", "Dismiss", new String[]{"YES", "NO"});
+        dialog.show(getSupportFragmentManager(), "dialog");
+        dialog.setListener(new BottomDialog.OnClickListener() {
+            @Override
+            public void click(int position) {
+                switch (position) {
+                    case 0:
+                        Intent next = new Intent(getApplicationContext(), LoginActivity.class);
+                        next.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(next);
+                        finish();
+                    case 1:
+
+                }
+            }
+        });
+
+
+    }
+
 
 
     @Override
@@ -394,10 +422,12 @@ public class MainActivity extends BaseActivity {
             Log.d("loginType:",Constants.LOGIN_GODOWNKEEPER);
             menu.findItem(R.id.action_transfer).setVisible(true);
             menu.findItem(R.id.action_setting).setVisible(true);
+            menu.findItem(R.id.action_logout).setVisible(false);
         }else{
             Log.d("loginType:",Constants.LOGIN_DELIVERYMAN);
             menu.findItem(R.id.action_transfer).setVisible(false);
             menu.findItem(R.id.action_setting).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(true);
         }
         return true;
     }
