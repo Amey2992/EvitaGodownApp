@@ -1,5 +1,6 @@
 package com.commercialMgmt;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -60,7 +62,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
     @BindView(R.id.et_product_name)
     AutoCompleteTextView com_product_name;
     @BindView(R.id.et_consumer_name)
-    TextView et_consumer_name;
+    EditText et_consumer_name;
     @BindView(R.id.btnSaveComDelivery)
     Button btnSaveComDelivery;
 
@@ -82,6 +84,10 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
     private String selectedDeliveryManId;
 
+    public String getSelectedDeliveryManId() {
+        return selectedDeliveryManId;
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +96,24 @@ public class CommercialSaleActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setupToolbar();
 
+        disabledFocusFromET();
         getProducts();
         getConsumer();
 
     }
 
+    private void disabledFocusFromET() {
+        et_consumer_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(et_consumer_name.getWindowToken(), 0);
+                }
+            }
+        });
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -135,7 +154,10 @@ public class CommercialSaleActivity extends AppCompatActivity {
                     dialog.showSpinerDialog();
                     dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                         @Override
-                        public void onClick(String s, int i) {
+                        public void onClick(String consumer, int i) {
+                           String CossumerName=consumer;
+                           Log.e("selected consumer",CossumerName);
+                          et_consumer_name.setText(CossumerName);
 
                         }
                     });
