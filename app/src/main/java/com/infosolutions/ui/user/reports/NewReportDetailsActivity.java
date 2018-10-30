@@ -86,7 +86,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
 
-
         setGODOWN_ID(Constants.getSharedPrefWithKEY(getApplicationContext(), Constants.KEY_GODOWN));
 
         VolleySingleton.getInstance(getApplicationContext())
@@ -103,8 +102,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
         VolleySingleton.getInstance(getApplicationContext())
                 .addResponseListener(VolleySingleton.CallType.REPORT_TV_DETAILS, this);
-
-
 
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -126,10 +123,7 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
         loadReport();
         //prepareListData();
-
-
     }
-
 
     public String getRequestType() {
         return requestType;
@@ -138,7 +132,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
     public void setRequestType(String requestType) {
         this.requestType = requestType;
     }
-
 
     private void loadReport() {
 
@@ -149,40 +142,36 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_DOMESTIC,
-                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
+                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Commercial")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_COMMERCIAL,
-                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
+                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Truck Received")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED,
-                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
+                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("Truck Send")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TRUCK_SEND,
-                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
+                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
 
             } else if (headerTitle.equalsIgnoreCase("TV Details")) {
 
                 VolleySingleton.getInstance(getApplicationContext()).
                         apiGetReportList(VolleySingleton.CallType.REPORT_TV_DETAILS,
-                                Constants.GET_ALL_REPORT, getRequestType(), getGODOWN_ID());
+                                Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
             }
-
-
         } else {
             Toast.makeText(getApplicationContext(), R.string.no_network_available, Toast.LENGTH_SHORT).show();
         }
-
     }
-
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {

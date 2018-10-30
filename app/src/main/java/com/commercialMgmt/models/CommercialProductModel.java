@@ -25,6 +25,9 @@ public class CommercialProductModel implements Serializable {
     @DatabaseField
     public double product_rate;
 
+    @DatabaseField
+    public double bpcl_rate;
+
     public CommercialProductModel(){}
 
     public CommercialProductModel(JSONObject jsonObject){
@@ -33,8 +36,8 @@ public class CommercialProductModel implements Serializable {
             product_name = jsonObject.optString("PRODUCT_NAME");
             product_id = jsonObject.optInt("PRODUCT_ID");
             product_rate = jsonObject.optDouble("rate");
+            bpcl_rate=jsonObject.optDouble("BPCLRate");
+
         }
     }
-
-
 }
