@@ -316,13 +316,13 @@ public class LoginActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String responseCode = jsonResult.optString("responseCode");
+
 
 
         if (type.equals(VolleySingleton.CallType.SYNC_LOCAL_DATA)) {
 
             try {
-
+                String responseCode = jsonResult.optString("responseCode");
                 responseMsg = jsonResult.optString("responseMessage");
                 if (jsonResult.optString("responseCode").equalsIgnoreCase("200")) {
                     AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
@@ -409,7 +409,7 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
-
+            String responseCode = jsonResult.optString("responseCode");
             login_type = LOGIN_GODOWNKEEPER;
             saveLoginTypePreference(login_type);
             if(responseCode.equalsIgnoreCase("500")){
@@ -421,6 +421,7 @@ public class LoginActivity extends BaseActivity {
 
         }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
             try {
+                String responseCode = jsonResult.optString(Constants.responseCcode);
                 login_type = LOGIN_DELIVERYMAN;
                 saveLoginTypePreference(login_type);
                 if(responseCode.equalsIgnoreCase("500")){

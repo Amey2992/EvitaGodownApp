@@ -342,7 +342,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
             JSONObject objectResult = new JSONObject(response);
 
             String responseMsg = objectResult.optString("responseMessage");
-            if (objectResult.optString("responseCode").equalsIgnoreCase("200")) {
+            if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
                 Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 hideProgressDialog();
                 finish();
