@@ -73,7 +73,9 @@ public class StockDetailModel {
                 vehicle_no = jsonObject.optString("VECHICAL_NO");
                 erv_no = jsonObject.optString("ERV_NO");
                 description = jsonObject.optString("DESCRIPTION");
-                defective = jsonObject.optString("DIFFECTIVE");
+                // UPDATED BY SACHIN
+                defective = jsonObject.optString("DEFECTIVE");
+
                 quantity = jsonObject.optString("QUANTITY");
             }else if(type.equals(VolleySingleton.CallType.REPORT_TV_DETAILS)){
                 description = jsonObject.optString("DESCRIPTION");

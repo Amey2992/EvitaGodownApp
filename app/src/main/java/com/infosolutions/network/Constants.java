@@ -81,6 +81,7 @@ public class Constants {
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
+
     /*
     Godown_Ags
     * */

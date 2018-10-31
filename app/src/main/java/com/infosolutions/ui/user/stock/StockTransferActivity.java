@@ -211,7 +211,6 @@ public class StockTransferActivity extends BaseActivity implements ResponseListe
         godown_edittext.setAdapter(adapter);
         product_edittext.setAdapter(adapter1);
 
-
     }
 
     private void transferStock() {
