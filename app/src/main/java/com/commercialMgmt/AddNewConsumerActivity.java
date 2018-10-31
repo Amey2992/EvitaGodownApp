@@ -27,6 +27,7 @@ import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.ProductDB;
 import com.infosolutions.evita.R;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -343,21 +344,19 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
             JSONObject objectResult = new JSONObject(response);
 
             String responseMsg = objectResult.optString("responseMessage");
-            if (objectResult.optString("responseCode").equalsIgnoreCase("200")) {
 
-                // Save consumer Data to local DB
+                if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
+                    Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
+                    saveConsumerToLocalDB();
+                    hideProgressDialog();
+                    finish();
+                }
 
-                saveConsumerToLocalDB();
-
-            if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
-                Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
-                hideProgressDialog();
-                finish();
-            }
         }
-        catch (Exception e)
+        catch (JSONException e)
         {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            Log.e("JSON RESULT",e.getMessage());
         }
 
        // Toast.makeText(getApplicationContext(),"Consumer Added Successfully",Toast.LENGTH_SHORT).show();
@@ -386,7 +385,12 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         comdb.amount_credit_cylinder= 0;
 
         consumerDB.create(comdb);
-        Log.e("Consumer adding : ......",consumerDB.toString() );
+        try {
+            List<ConsumerModel> lstModel = getHelper().getComConsumerRTExceptionDao().queryBuilder().where().eq("consumer_name",com_consumer_name.getText().toString()).query();
+            System.out.println(lstModel);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

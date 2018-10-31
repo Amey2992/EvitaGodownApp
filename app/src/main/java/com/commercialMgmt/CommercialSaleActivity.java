@@ -81,6 +81,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private String[] consumerArr;
     private ArrayList<String> consumerListItems;
     private ArrayAdapter<String> commercialAdapter;
+    private Double BPCLrate;
 
     private String selectedDeliveryManId;
 
@@ -95,6 +96,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         setupToolbar();
+        et_bpcl_rate.setFocusable(false);
 
         disabledFocusFromET();
         getProducts();
@@ -139,9 +141,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
             consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
-        /*commercialAdapter =new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, consumerListItems);
-        commercialAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        et_consumer_name.setAdapter(commercialAdapter);*/
 
         et_consumer_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,32 +154,22 @@ public class CommercialSaleActivity extends AppCompatActivity {
                     dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                         @Override
                         public void onClick(String consumer, int i) {
-                           String CossumerName=consumer;
-                           Log.e("selected consumer",CossumerName);
-                          et_consumer_name.setText(CossumerName);
+                            String CossumerName=consumer;
+                            et_consumer_name.setText(CossumerName);
 
+                           // productId = productDBList.get(position).product_id;
+                            Double discount= Double.valueOf(consumerDBList.get(i).discount);
+                            Log.e("discount",String.valueOf(discount));
+                            et_discount.setText(String.valueOf(discount));
                         }
                     });
                 }
             }
         });
 
-        //  Item Click listener
-
-
-
-
-
 
     }
 
-    /*private void getData(String s) {
-        String[] =getSelectedDeliveryManId(s);
-    }
-
-    public String getSelectedDeliveryManId(String DeliveryManVALUE) {
-        return DeliveryManVALUE;
-    }*/
 
     public void setSelectedDeliveryManId(String selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
@@ -223,20 +212,14 @@ public class CommercialSaleActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             productId = productDBList.get(position).product_id;
-            Log.e("Item Position ",String.valueOf(productId));
-                getBPCLRate(productId);
+            BPCLrate= productDBList.get(position).bpcl_rate;
+
+            et_bpcl_rate.setText(String.valueOf(BPCLrate));
+
         }
     });
 }
 
-    private void getBPCLRate(int productId) {
-        Double []product_rate ;
-        product_rate = new Double[productDBList.size()];
-        for(int i = 0; i < productDBList.size(); i++){
-            product_rate[i] = productDBList.get(i).bpcl_rate;
-            Log.e("BPCL RATE....",String.valueOf(product_rate[i]));
-        }
-    }
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {

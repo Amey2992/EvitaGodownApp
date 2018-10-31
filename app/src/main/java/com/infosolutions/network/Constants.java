@@ -81,11 +81,12 @@ public class Constants {
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
+
     /*
     Godown_Ags
     * */
-/*
 
+/*
     public static final String dbname = "GODOWN_AGS";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
