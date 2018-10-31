@@ -43,6 +43,7 @@ public class Constants {
     public static final String error_message ="ग्राहक उपलब्ध नहीं है";
     public static final String ConsumerReportTitle = "Consumer";
     public static final String StockReportTitle = "Stock";
+    public static final String responseCcode = "ResponseCode";
 
     /*Typefaces*/
     public static final String TYPEFACE_BOLD = "fonts/Ubuntu-B.ttf";

@@ -222,7 +222,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         try {
             jsonObject = new JSONObject(response);
             String respMessage = jsonObject.getString("responseMessage");
-            String respCode = jsonObject.getString("responseCode");
+            String respCode = jsonObject.getString(Constants.responseCcode);
             if (respCode.equalsIgnoreCase("200")) {
                 if (type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK)) {
                     reportWiseData(jsonObject,type);

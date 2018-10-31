@@ -215,11 +215,11 @@ public class DomesticActivity extends BaseActivity {
     private void chipSelector(int position) {
 
 
-
+        AppSettings.hideKeyboard(this);
         productId = chipListModel.get(position).getChipTitleId();
         setProductId(productId);
 
-
+        tvDeliveryMan.setText("");
         getAvailableCYL(); /* Check available Cylinder */
         selectedProductName = chipListModel.get(position).getChipTitle();
         setSelectedProductName(selectedProductName);
@@ -346,7 +346,7 @@ public class DomesticActivity extends BaseActivity {
     private void getEmployeeDetails(String selectedDeliveryMan, int id) {
         RuntimeExceptionDao<DomesticDeliveryDB, Integer> domesticDB = getHelper().getDomesticRuntimeExceptionDao();
         try {
-            List<DomesticDeliveryDB> employeeObj = domesticDB.queryBuilder().orderBy("trip_number",false).where().eq("employee_id",id).query();
+            List<DomesticDeliveryDB> employeeObj = domesticDB.queryBuilder().orderBy("trip_number",false).where().eq("employee_id",id).and().eq("product_id",getProductId()).query();
             String[] splitNameValue = selectedDeliveryMan.split(":");
             String deliveryManKEY = splitNameValue[0];
             String DeliveryManVALUE = splitNameValue[1];

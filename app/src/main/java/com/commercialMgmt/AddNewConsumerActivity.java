@@ -301,6 +301,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 jsonObject.put("ModeOfEntry","Mobile");
                 jsonObject.put("IsActive","Y");
 
+
                 parentJsonObj.put("objCommercialPartyMst",jsonObject);
                 AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
 
@@ -318,6 +319,8 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
         return uniqueId_AddConsumer;
     }
+
+
 
     private void setupToolbar() {
 
@@ -346,6 +349,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
                 saveConsumerToLocalDB();
 
+            if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
                 Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 hideProgressDialog();
                 finish();
