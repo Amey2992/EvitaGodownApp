@@ -950,6 +950,9 @@ public class VolleySingleton {
                             notifySuccessListener(type, response);
 
                         Log.d(TAG, "in onRespose response ==> " + response);
+                        Log.e(TAG, "in onRespose response ==> " + response);
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.commercialMgmt.models.CommercialProductModel;
+import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.ProductDB;
 import com.infosolutions.evita.R;
@@ -300,7 +301,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 jsonObject.put("ModeOfEntry","Mobile");
                 jsonObject.put("IsActive","Y");
 
-
                 parentJsonObj.put("objCommercialPartyMst",jsonObject);
                 AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
 
@@ -319,8 +319,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         return uniqueId_AddConsumer;
     }
 
-
-
     private void setupToolbar() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -335,14 +333,19 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
-        hideProgressDialog();
-        //responseMessage = "Success", IsAuthenticate = true, responseCode = 200
+       // hideProgressDialog();
+        // responseMessage = "Success", IsAuthenticate = true, responseCode = 200
 
         try {
             JSONObject objectResult = new JSONObject(response);
 
             String responseMsg = objectResult.optString("responseMessage");
             if (objectResult.optString("responseCode").equalsIgnoreCase("200")) {
+
+                // Save consumer Data to local DB
+
+                saveConsumerToLocalDB();
+
                 Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 hideProgressDialog();
                 finish();
@@ -353,8 +356,32 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
             e.printStackTrace();
         }
 
-
        // Toast.makeText(getApplicationContext(),"Consumer Added Successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveConsumerToLocalDB() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(AddNewConsumerActivity.this);
+        RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getComConsumerRTExceptionDao();
+
+        ConsumerModel comdb = new ConsumerModel();
+
+        int discount=Integer.parseInt(com_consumer_discount.getText().toString());
+
+        comdb.consumer_no="";
+        comdb.consumer_name=com_consumer_name.getText().toString();
+        comdb.mobile_no=com_mobile_number.getText().toString();
+        comdb.address = com_consumer_address.getText().toString();
+        comdb.email_id= com_consumer_email_id.getText().toString();
+        comdb.product_name= com_product_name.getText().toString();
+        comdb.discount=discount ;
+        comdb.pan_card=com_consumer_PAN_No.getText().toString() ;
+        comdb.gstin = com_consumer_GSTIN.getText().toString();
+        comdb.credit_cylinder = 0;
+        comdb.user_id=UserId;
+        comdb.amount_credit_cylinder= 0;
+
+        consumerDB.create(comdb);
+
     }
 
     @Override

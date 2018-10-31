@@ -517,6 +517,7 @@ public class DomesticActivity extends BaseActivity {
 
            //new
             String uniqueId = Integer.toString(getGoDownId()) + Integer.toString(getDeliveryManId()) + fresh_trip_no + currentDateTime()+getProductId  ();
+
             DomesticDeliveryDB domesticDeliveryDB = new DomesticDeliveryDB(1, getDeliveryManId(), fresh_trip_no, getProductId(), getDateTime(), getApplicationUserId(), fresh_full,
                     0 , 0 , 0 , 0 , 0, getDateTime(),
                     0,0, "MOBILE", "INSERT", "N", getGoDownId(), getDeviceId(),getDate(),false,true,false,uniqueId);
