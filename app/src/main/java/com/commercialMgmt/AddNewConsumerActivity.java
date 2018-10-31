@@ -333,7 +333,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
-       // hideProgressDialog();
+       hideProgressDialog();
         // responseMessage = "Success", IsAuthenticate = true, responseCode = 200
 
         try {
@@ -359,6 +359,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
        // Toast.makeText(getApplicationContext(),"Consumer Added Successfully",Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("LongLogTag")
     private void saveConsumerToLocalDB() {
         DatabaseHelper databaseHelper = new DatabaseHelper(AddNewConsumerActivity.this);
         RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getComConsumerRTExceptionDao();
@@ -381,6 +382,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         comdb.amount_credit_cylinder= 0;
 
         consumerDB.create(comdb);
+        Log.e("Consumer adding : ......",consumerDB.toString() );
 
     }
 
