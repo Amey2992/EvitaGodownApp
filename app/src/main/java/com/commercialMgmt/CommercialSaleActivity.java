@@ -84,6 +84,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private Double BPCLrate;
 
     private String selectedDeliveryManId;
+    private ConsumerModel selectedConsumer;
 
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
@@ -154,13 +155,15 @@ public class CommercialSaleActivity extends AppCompatActivity {
                     dialog.bindOnSpinerListener(new OnSpinerItemClick() {
                         @Override
                         public void onClick(String consumer, int i) {
+
+                            selectedConsumer = consumerDBList.get(i);
                             String CossumerName=consumer;
                             et_consumer_name.setText(CossumerName);
 
                            // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
                             Log.e("discount",String.valueOf(discount));
-                            et_discount.setText(String.valueOf(discount));
+                            //et_discount.setText(String.valueOf(discount));
                         }
                     });
                 }
@@ -215,6 +218,13 @@ public class CommercialSaleActivity extends AppCompatActivity {
             BPCLrate= productDBList.get(position).bpcl_rate;
 
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
+
+
+            if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
+                et_discount.setText(Integer.toString(selectedConsumer.discount));
+            }else{
+                et_discount.setText("0");
+            }
 
         }
     });
