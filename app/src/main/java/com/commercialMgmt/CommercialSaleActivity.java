@@ -164,6 +164,14 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //  Item Click listener
+
+
+
+
+
+
     }
 
     /*private void getData(String s) {
@@ -216,10 +224,19 @@ public class CommercialSaleActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             productId = productDBList.get(position).product_id;
             Log.e("Item Position ",String.valueOf(productId));
-
+                getBPCLRate(productId);
         }
     });
 }
+
+    private void getBPCLRate(int productId) {
+        Double []product_rate ;
+        product_rate = new Double[productDBList.size()];
+        for(int i = 0; i < productDBList.size(); i++){
+            product_rate[i] = productDBList.get(i).bpcl_rate;
+            Log.e("BPCL RATE....",String.valueOf(product_rate[i]));
+        }
+    }
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {

@@ -52,7 +52,6 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock);
 
-
         Intent intent = getIntent();
         requestType =intent.getStringExtra("reportName");
         headerTitle = intent.getStringExtra("header");
