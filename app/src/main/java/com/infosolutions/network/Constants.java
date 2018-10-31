@@ -60,7 +60,7 @@ public class Constants {
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     //private static final String TESTER_AGS = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
-    public static final  String EVITA_API_URL = BHIVANDI_GAS_SERVICE;
+    public static final  String EVITA_API_URL = PROD_URL;
 
     public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
 
@@ -70,7 +70,7 @@ public class Constants {
     production
     * */
 
-   /* public static final String dbname = "EVITA_PROD";
+    public static final String dbname = "EVITA_PROD";
     public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
@@ -81,13 +81,12 @@ public class Constants {
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
-*/
     /*
     Godown_Ags
     * */
 
-/*
-    public static final String dbname = "GODOWN_AGS";
+    /*public static final String dbname = "GODOWN_AGS";
+    public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String COMMERCIAL_DELIVERY_COUNT = "http://103.31.144.174:81/Purchase/GetCreditCommCyl";
@@ -96,14 +95,13 @@ public class Constants {
     public static final String POST_STOCKS_URL = "http://103.31.144.174:81/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:81/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
-    public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
-*/
+    public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";*/
 
     /*
     tester
     * */
 
-    public static final String dbname = "TESTER_AGS";
+    /*public static final String dbname = "TESTER_AGS";
     public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
@@ -114,7 +112,7 @@ public class Constants {
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174:82/Purchase/GetAndrPurchaseERV";
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
-
+*/
 
     public static String LOGIN_API_VALUE = "userAuth";
     public static String SYNC_ANDROID_DATA_VALUE = "syncAndriodData";
