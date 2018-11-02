@@ -37,8 +37,11 @@ import com.infosolutions.database.VehicleDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.VolleySingleton;
+import com.infosolutions.service.GetCommercialConsumerService;
+import com.infosolutions.service.GetConsumerService;
 import com.infosolutions.ui.MainActivity;
 import com.infosolutions.ui.owner.OwnerDashboardActivity;
+import com.infosolutions.ui.user.tvdetails.TVDetailsActivity;
 import com.infosolutions.utils.AppSettings;
 import com.infosolutions.utils.Constant;
 import com.infosolutions.utils.GlobalVariables.LOGINKEY;
@@ -248,12 +251,19 @@ public class LoginActivity extends BaseActivity {
 
                 setUSER_TYPE(USER_TYPE);
 
-                if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_USER)) {
+               /* if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_USER)) {
                     userTypeMode(objectESS);
                 } else if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
                     String ownerType = objectESS.optString("OWNER_DATA");
                     ownerTypeMode(ownerType);
+                }*/
+                if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
+                    String ownerType = objectESS.optString("OWNER_DATA");
+                    ownerTypeMode(ownerType);
+                }else{
+                    userTypeMode(objectESS);
                 }
+
                 String str = PreferencesHelper.getInstance().getStringValue("login_type","");
                 clearPreviousData();
                 syncData();
@@ -431,21 +441,11 @@ public class LoginActivity extends BaseActivity {
                     int user_id = jsonResult.optInt("user_id");
                     PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
 
-                    final JSONObject Object =  jsonResult;
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            fillCommercialConsumerDB(Object);
-                            fillCommercialProductsDB(Object);
-                        }
-                    }).start();
-                    /*AsyncTask.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            //TODO your background code
+                    fillCommercialProductsDB(jsonResult);
+                    Intent intent = new Intent(this, GetCommercialConsumerService.class);
+                    startService(intent);
+                    //fillCommercialConsumerDB(jsonResult);
 
-                        }
-                    });*/
 
                     String NENUS_LIST = jsonResult.optString("menus");
 
@@ -459,27 +459,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void fillCommercialConsumerDB(JSONObject jsonObject) {
-        JSONArray arrayPRODUCT = jsonObject.optJSONArray("consumerDetails");
-        RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getConsumerModelExceptionDao();
-        try {
-            consumerDB.deleteBuilder().delete();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        consumerDetailsList = new ArrayList<>();
-        for (int product = 0; product < arrayPRODUCT.length(); product++) {
-            JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
-           /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
-            String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
-            String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
-            String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
-*/
-            ConsumerModel consumerModel = new ConsumerModel(1,objectProduct);
-            consumerDetailsList.add(consumerModel);
-        }
-        consumerDB.create(consumerDetailsList);
-    }
 
     @Override
     public void onFailure(VolleySingleton.CallType type, VolleyError error) {

@@ -22,7 +22,7 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
-import com.infosolutions.network.Constants;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -87,6 +87,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
     private String selectedDeliveryManId;
     private ConsumerModel selectedConsumer;
+    boolean isCommercialConsumerServiceRunning;
 
     private int min = 10;
     private int max = 110;
@@ -101,6 +102,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commercial_sale);
 
+        isCommercialConsumerServiceRunning = AppSettings.getInstance(this).isCommercialConsumerServiceRunning;
         ButterKnife.bind(this);
         setupToolbar();
         et_bpcl_rate.setFocusable(false);
@@ -165,10 +167,17 @@ public class CommercialSaleActivity extends AppCompatActivity {
             consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
+        if(isCommercialConsumerServiceRunning){
+            et_consumer_name.setEnabled(false);
+        }else{
+            et_consumer_name.setEnabled(true);
+        }
         et_consumer_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final SpinnerDialog dialog = new SpinnerDialog(CommercialSaleActivity.this, consumerListItems, "Select Consumer");
+
                 if(consumerListItems.size()>0)
                 {
                     dialog.showSpinerDialog();
@@ -189,15 +198,19 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
+
 
     public void setSelectedDeliveryManId(String selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
     }
 
-    private void getProducts()
-        {
-    spinItems = new ArrayList<>();
+
+    private void getProducts() {
+
+        spinItems = new ArrayList<>();
 
     RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
     productDBList = comProductDB.queryForAll();
@@ -236,14 +249,16 @@ public class CommercialSaleActivity extends AppCompatActivity {
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
 
 
-            if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
-                et_discount.setText(Integer.toString(selectedConsumer.discount));
-            }else{
-                et_discount.setText("0");
+                if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
+                    et_discount.setText(Integer.toString(selectedConsumer.discount));
+                }else{
+                    et_discount.setText("0");
+                }
+
             }
-        }
-    });
-}
+        });
+    }
+
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
@@ -284,5 +299,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
+
     }
+
 }
