@@ -125,6 +125,7 @@
                     android:fontFamily="sans-serif-condensed"
                     android:text="Log In As Deliveryman"
                     android:textAllCaps="false"
+                    android:visibility="gone"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold" />

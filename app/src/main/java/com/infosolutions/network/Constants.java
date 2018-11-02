@@ -64,8 +64,6 @@ public class Constants {
 
     public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
 
-
-
     /*
     production
     * */
@@ -102,7 +100,8 @@ public class Constants {
     tester
     * */
 
-    /*public static final String dbname = "TESTER_AGS";
+/*
+    public static final String dbname = "TESTER_AGS";
     public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String get_url = "http://103.31.144.174:82/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174:82/Purchase/SaveDomesticDeliveryAndrA";
@@ -134,7 +133,6 @@ public class Constants {
     public static String CONSUMER_BROADCAST = "consumer_broadcast";
 
 
-
     /**
      * saveWithSharedPreferences KEY is used to save SharedPreference Value based KEY
      *
@@ -152,11 +150,11 @@ public class Constants {
 
     /**
      * getSharedPrefWithKEY is used to fetch stored SharedPreference Value against @param sharedPrefKey
-     *
      * @param context
      * @param sharedPrefKey
      * @return String resultModule
      */
+
     public static String getSharedPrefWithKEY(Context context, String sharedPrefKey) {
 
         SharedPreferences sharedPref = context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
@@ -176,10 +174,8 @@ public class Constants {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-
         return simpleDateFormat.format(date);
     }
-
 */
 
     public static String currentDateTime() {

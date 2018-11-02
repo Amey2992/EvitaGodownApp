@@ -363,7 +363,6 @@ public class LoginActivity extends BaseActivity {
             }
 
 
-
             AppSettings.getInstance(this).updateDatabase(this);
             hideProgressDialog();
             bottomGodownSheetType();
@@ -447,7 +446,6 @@ public class LoginActivity extends BaseActivity {
 
                         }
                     });*/
-
 
                     String NENUS_LIST = jsonResult.optString("menus");
 
@@ -564,7 +562,6 @@ public class LoginActivity extends BaseActivity {
 
         setGO_DOWN_ARRAY_LIST(ESS_MST_GODOWN);
 
-
         /******************************************************************************************/
 
         RuntimeExceptionDao<EmployeeDB, Integer> employeeDB = getHelper().getEmployeeRTExceptionDao();
@@ -650,7 +647,6 @@ public class LoginActivity extends BaseActivity {
         setOffline_module_list(PRODUCT_LIST);
         saveWithSharedPreferences(this, Constants.KEY_USER_TYPE, getUSER_TYPE());
 
-
     }
 
     void fillCommercialProductsDB(JSONObject jsonObject){
@@ -672,8 +668,6 @@ public class LoginActivity extends BaseActivity {
             CommercialProductModel commercialProductModel = new CommercialProductModel(objectProduct);
             productDB.create(commercialProductModel);
         }
-
-
     }
 
     private void clearTablesData() {
@@ -708,7 +702,6 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-
     private void storeCommercialCredit(JSONArray ess_commercial_delivery_credit) throws JSONException {
 
         RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> ccCreditDB = getHelper().getCommercialCreditExceptionDao();
@@ -731,7 +724,6 @@ public class LoginActivity extends BaseActivity {
             //ccCreditDB.create(new CommercialDeliveryCreditDB(PRODUCT_ID, DELIVERY_ID, CREDIT_GIVEN, GODOWN_ID, DATE_TIME));
         }
     }
-
 
     private void bottomGodownSheetType() {
 

@@ -267,7 +267,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 showProgressDialog();
                 //isValidMail(com_consumer_email_id.getText().toString());
 
-
                     saveConsumerDetails();
             }
         });

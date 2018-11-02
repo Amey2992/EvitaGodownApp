@@ -22,11 +22,13 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
+import com.infosolutions.network.Constants;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +88,10 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private String selectedDeliveryManId;
     private ConsumerModel selectedConsumer;
 
+    private int min = 10;
+    private int max = 110;
+    private String uniqueId_AddConsumer;
+
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
@@ -102,7 +108,24 @@ public class CommercialSaleActivity extends AppCompatActivity {
         disabledFocusFromET();
         getProducts();
         getConsumer();
+        uniqueID();
+        saveCommercialSaleBtn();
 
+    }
+
+    private void saveCommercialSaleBtn() {
+
+    }
+
+    private String uniqueID() {
+
+        int random = new Random().nextInt((max - min) + 1) + min;
+        Log.e("random number", Integer.toString(random));
+        String randomNumber = Integer.toString(random);
+
+        uniqueId_AddConsumer=randomNumber+Constants.currentDateTime();
+
+        return uniqueId_AddConsumer;
     }
 
     private void disabledFocusFromET() {
@@ -169,10 +192,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
 
     public void setSelectedDeliveryManId(String selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
@@ -225,11 +245,9 @@ public class CommercialSaleActivity extends AppCompatActivity {
             }else{
                 et_discount.setText("0");
             }
-
         }
     });
 }
-
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
@@ -270,7 +288,5 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
-
     }
-
 }
