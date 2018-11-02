@@ -165,13 +165,10 @@ public class CommercialSaleActivity extends AppCompatActivity {
             consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
-
         et_consumer_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final SpinnerDialog dialog = new SpinnerDialog(CommercialSaleActivity.this, consumerListItems, "Select Consumer");
-
                 if(consumerListItems.size()>0)
                 {
                     dialog.showSpinerDialog();
@@ -198,9 +195,8 @@ public class CommercialSaleActivity extends AppCompatActivity {
         this.selectedDeliveryManId = selectedDeliveryManId;
     }
 
-
-    private void getProducts() {
-
+    private void getProducts()
+        {
     spinItems = new ArrayList<>();
 
     RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
