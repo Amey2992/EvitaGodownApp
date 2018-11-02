@@ -22,6 +22,7 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
+import com.infosolutions.utils.AppSettings;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
@@ -85,6 +86,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
     private String selectedDeliveryManId;
     private ConsumerModel selectedConsumer;
+    boolean isCommercialConsumerServiceRunning;
 
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
@@ -95,6 +97,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.commercial_sale);
 
+        isCommercialConsumerServiceRunning = AppSettings.getInstance(this).isCommercialConsumerServiceRunning;
         ButterKnife.bind(this);
         setupToolbar();
         et_bpcl_rate.setFocusable(false);
@@ -142,7 +145,11 @@ public class CommercialSaleActivity extends AppCompatActivity {
             consumerListItems.add(consumerDBList.get(i).consumer_name);
         }
 
-
+        if(isCommercialConsumerServiceRunning){
+            et_consumer_name.setEnabled(false);
+        }else{
+            et_consumer_name.setEnabled(true);
+        }
         et_consumer_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,7 +167,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
                             String CossumerName=consumer;
                             et_consumer_name.setText(CossumerName);
 
-                           // productId = productDBList.get(position).product_id;
+                            // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
                             Log.e("discount",String.valueOf(discount));
                             //et_discount.setText(String.valueOf(discount));
@@ -181,54 +188,54 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
     private void getProducts() {
 
-    spinItems = new ArrayList<>();
+        spinItems = new ArrayList<>();
 
-    RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
-    productDBList = comProductDB.queryForAll();
-    int productSize = productDBList.size();
+        RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
+        productDBList = comProductDB.queryForAll();
+        int productSize = productDBList.size();
 
-    //----------------------------------------------------------------------------------
-    //  product poaitions
+        //----------------------------------------------------------------------------------
+        //  product poaitions
 
-    productArr = new int[productDBList.size()];
+        productArr = new int[productDBList.size()];
         for(int i = 0; i < productDBList.size(); i++){
-        productArr[i] = productDBList.get(i).product_id;
-        Log.e("Products position....",String.valueOf(productArr[i]));
-    }
+            productArr[i] = productDBList.get(i).product_id;
+            Log.e("Products position....",String.valueOf(productArr[i]));
+        }
 
-    //------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------
 
         spinItems.clear();
 
         if (productSize > 0) {
-        for (CommercialProductModel item : productDBList)
-            spinItems.add(item.product_name);
-    }
+            for (CommercialProductModel item : productDBList)
+                spinItems.add(item.product_name);
+        }
 
-    //spinItems.add(0,default_str);
+        //spinItems.add(0,default_str);
 
-    spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
+        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         com_product_name.setAdapter(spinAdapter);
 
         com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            productId = productDBList.get(position).product_id;
-            BPCLrate= productDBList.get(position).bpcl_rate;
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                productId = productDBList.get(position).product_id;
+                BPCLrate= productDBList.get(position).bpcl_rate;
 
-            et_bpcl_rate.setText(String.valueOf(BPCLrate));
+                et_bpcl_rate.setText(String.valueOf(BPCLrate));
 
 
-            if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
-                et_discount.setText(Integer.toString(selectedConsumer.discount));
-            }else{
-                et_discount.setText("0");
+                if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
+                    et_discount.setText(Integer.toString(selectedConsumer.discount));
+                }else{
+                    et_discount.setText("0");
+                }
+
             }
-
-        }
-    });
-}
+        });
+    }
 
 
     private DatabaseHelper getHelper() {

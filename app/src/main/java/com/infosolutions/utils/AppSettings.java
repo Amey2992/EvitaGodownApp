@@ -74,6 +74,7 @@ public class AppSettings {
     private String CHANNEL_ID = "1001";
     private boolean firstTime;
     public boolean isServiceRunning;
+    public boolean isCommercialConsumerServiceRunning;
 
     private AppSettings() {
     }
@@ -128,6 +129,10 @@ public class AppSettings {
 
     public void getConsumerDetails(Context context) {
         VolleySingleton.getInstance(context.getApplicationContext()).getConsumerDetails(VolleySingleton.CallType.CONSUMER_DETAILS, Constants.GET_CONSUMER_DETAILS);
+    }
+
+    public void getCommercialConsumerDetails(Context context) {
+        VolleySingleton.getInstance(context.getApplicationContext()).getCommercialConsumerDetails(VolleySingleton.CallType.COMMERCIAL_CONSUMER_DETAILS, Constants.COMMERCIAL_GET_CONSUMER_DETAILS);
     }
 
     public void getStocks(Context context, JSONObject jsonObject) {

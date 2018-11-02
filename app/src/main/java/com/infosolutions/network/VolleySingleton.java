@@ -67,6 +67,7 @@ public class VolleySingleton {
         UPDATE_LOCAL_DATA,
         COMMERCIAL_DELIVERY_COUNT,
         CONSUMER_DETAILS,
+        COMMERCIAL_CONSUMER_DETAILS,
         GET_STOCKS,
         POST_STOCKS,
         ERV_PURCHASE,
@@ -463,6 +464,31 @@ public class VolleySingleton {
     }
 
     public void getConsumerDetails(final CallType type, final String url){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+    }
+
+
+    public void getCommercialConsumerDetails(final CallType type, final String url){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
