@@ -248,12 +248,19 @@ public class LoginActivity extends BaseActivity {
 
                 setUSER_TYPE(USER_TYPE);
 
-                if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_USER)) {
+               /* if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_USER)) {
                     userTypeMode(objectESS);
                 } else if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
                     String ownerType = objectESS.optString("OWNER_DATA");
                     ownerTypeMode(ownerType);
+                }*/
+                if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
+                    String ownerType = objectESS.optString("OWNER_DATA");
+                    ownerTypeMode(ownerType);
+                }else{
+                    userTypeMode(objectESS);
                 }
+
                 String str = PreferencesHelper.getInstance().getStringValue("login_type","");
                 clearPreviousData();
                 syncData();
