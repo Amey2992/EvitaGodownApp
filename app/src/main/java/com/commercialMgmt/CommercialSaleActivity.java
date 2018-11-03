@@ -1,8 +1,10 @@
 package com.commercialMgmt;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,12 +24,17 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
+import com.infosolutions.network.Constants;
 import com.infosolutions.utils.AppSettings;
+import com.infosolutions.utils.Constant;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +95,10 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private ConsumerModel selectedConsumer;
     boolean isCommercialConsumerServiceRunning;
 
+    private int min = 10;
+    private int max = 110;
+    private String uniqueId_AddConsumer;
+
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
@@ -103,10 +114,80 @@ public class CommercialSaleActivity extends AppCompatActivity {
         et_bpcl_rate.setFocusable(false);
 
         disabledFocusFromET();
-        getProducts();
+
         getConsumer();
+        getProducts();
+
+        saveCommercialSaleBtn();
 
     }
+
+    private void saveCommercialSaleBtn() {
+        btnSaveComDelivery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveConfirmation();
+            }
+        });
+    }
+
+
+    private void saveConfirmation() {
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Add Consumer");
+        alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showProgressDialog();
+                //isValidMail(com_consumer_email_id.getText().toString());
+
+                saveCommercialSale();
+            }
+        });
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.show();
+
+    }
+
+    private void saveCommercialSale() {
+
+        JSONObject parentJsonObj = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            jsonObject.put("DATETIME",Constants.getDateTime());
+            jsonObject.put("CONSUMER_NAME",et_consumer_name.getText().toString());
+            jsonObject.put("PRODUCT_ID",productId);
+            jsonObject.put("CHALAN",et_chalan.getText().toString());
+            jsonObject.put("BPCL_RATE",et_bpcl_rate.getText().toString());
+            jsonObject.put("DISCOUNT",et_discount);
+            jsonObject.put("SELLING_PRICE",et_selling_price);
+            jsonObject.put("FULL_CYL",et_full_cyl);
+            jsonObject.put("EMPTY_CYL",et_empty_cyl);
+            jsonObject.put("CREDIT_CYL",et_credit_cyl);
+            jsonObject.put("TOTAL_AMT",et_total_amt);
+            jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
+            jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
+
+
+            parentJsonObj.put("objCommercialSale",jsonObject);
+            AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private void disabledFocusFromET() {
         et_consumer_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -167,7 +248,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
                             String CossumerName=consumer;
                             et_consumer_name.setText(CossumerName);
 
-                            // productId = productDBList.get(position).product_id;
+                           // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
                             Log.e("discount",String.valueOf(discount));
                             //et_discount.setText(String.valueOf(discount));
@@ -190,41 +271,41 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         spinItems = new ArrayList<>();
 
-        RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
-        productDBList = comProductDB.queryForAll();
-        int productSize = productDBList.size();
+    RuntimeExceptionDao<CommercialProductModel, Integer> comProductDB = getHelper().getComProductRTExceptionDao();
+    productDBList = comProductDB.queryForAll();
+    int productSize = productDBList.size();
 
-        //----------------------------------------------------------------------------------
-        //  product poaitions
+    //----------------------------------------------------------------------------------
+    //  product poaitions
 
-        productArr = new int[productDBList.size()];
+    productArr = new int[productDBList.size()];
         for(int i = 0; i < productDBList.size(); i++){
-            productArr[i] = productDBList.get(i).product_id;
-            Log.e("Products position....",String.valueOf(productArr[i]));
-        }
+        productArr[i] = productDBList.get(i).product_id;
+        Log.e("Products position....",String.valueOf(productArr[i]));
+    }
 
-        //------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------
 
         spinItems.clear();
 
         if (productSize > 0) {
-            for (CommercialProductModel item : productDBList)
-                spinItems.add(item.product_name);
-        }
+        for (CommercialProductModel item : productDBList)
+            spinItems.add(item.product_name);
+    }
 
-        //spinItems.add(0,default_str);
+    //spinItems.add(0,default_str);
 
-        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
+    spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         com_product_name.setAdapter(spinAdapter);
 
         com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                productId = productDBList.get(position).product_id;
-                BPCLrate= productDBList.get(position).bpcl_rate;
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            productId = productDBList.get(position).product_id;
+            BPCLrate= productDBList.get(position).bpcl_rate;
 
-                et_bpcl_rate.setText(String.valueOf(BPCLrate));
+            et_bpcl_rate.setText(String.valueOf(BPCLrate));
 
 
                 if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
