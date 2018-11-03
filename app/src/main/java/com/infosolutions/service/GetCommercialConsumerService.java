@@ -134,15 +134,17 @@ public class GetCommercialConsumerService extends IntentService implements Respo
                 e.printStackTrace();
             }
             consumerDetailsList = new ArrayList<>();
-            for (int product = 0; product < arrayPRODUCT.length(); product++) {
-                JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
+            if(arrayPRODUCT != null) {
+                for (int product = 0; product < arrayPRODUCT.length(); product++) {
+                    JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
            /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
             String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
             String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
             String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
 */
-                ConsumerModel consumerModel = new ConsumerModel(1,objectProduct);
-                consumerDetailsList.add(consumerModel);
+                    ConsumerModel consumerModel = new ConsumerModel(1, objectProduct);
+                    consumerDetailsList.add(consumerModel);
+                }
             }
             consumerDB.create(consumerDetailsList);
         }
