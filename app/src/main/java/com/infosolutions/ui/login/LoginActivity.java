@@ -637,15 +637,17 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        for (int product = 0; product < arrayPRODUCT.length(); product++) {
-            JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
+        if(arrayPRODUCT != null) {
+            for (int product = 0; product < arrayPRODUCT.length(); product++) {
+                JSONObject objectProduct = arrayPRODUCT.optJSONObject(product);
            /* int PRODUCT_CODE = Integer.parseInt(objectProduct.optString("PRODUCT_CODE"));
             String PRODUCT_CATEGORY = objectProduct.optString("ID_PRODUCT_CATEGORY");
             String PRODUCT_DESCRIPTION = objectProduct.optString("DESCRIPTION");
             String UNIT_MEASUREMENT = objectProduct.optString("UNIT_OF_MEASUREMENT");
 */
-            CommercialProductModel commercialProductModel = new CommercialProductModel(objectProduct);
-            productDB.create(commercialProductModel);
+                CommercialProductModel commercialProductModel = new CommercialProductModel(objectProduct);
+                productDB.create(commercialProductModel);
+            }
         }
     }
 

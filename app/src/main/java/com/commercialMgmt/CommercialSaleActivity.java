@@ -257,7 +257,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final SpinnerDialog dialog = new SpinnerDialog(CommercialSaleActivity.this, consumerListItems, "Select Consumer");
+                final SpinnerDialog dialog = new SpinnerDialog( CommercialSaleActivity.this, consumerListItems, "Select Consumer");
 
                 if(consumerListItems.size()>0)
                 {
@@ -266,7 +266,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
                         @Override
                         public void onClick(String consumer, int i) {
 
-                            selectedConsumer = consumerDBList.get(i);
+                              selectedConsumer = consumerDBList.get(i);
                             String CossumerName=consumer;
                             et_consumer_name.setText(CossumerName);
 
