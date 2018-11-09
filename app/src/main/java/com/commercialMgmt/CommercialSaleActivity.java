@@ -119,7 +119,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         getConsumer();
         getProducts();
 
-        saveCommercialSaleBtn();
+        //saveCommercialSaleBtn();
 
     }
 
@@ -198,7 +198,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
             jsonObject.put("TOTAL_AMT",et_total_amt);
             jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
             jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
-
 
             parentJsonObj.put("objCommercialSale",jsonObject);
             AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
@@ -279,8 +278,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -329,17 +326,14 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
 
-
                 if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
                     et_discount.setText(Integer.toString(selectedConsumer.discount));
                 }else{
                     et_discount.setText("0");
                 }
-
             }
         });
     }
-
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
@@ -372,7 +366,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Commercial Delivery");
@@ -380,7 +373,5 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
-
     }
-
 }

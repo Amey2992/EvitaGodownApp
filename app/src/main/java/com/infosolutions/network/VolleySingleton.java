@@ -136,8 +136,6 @@ public class VolleySingleton {
     }
 
 
-
-
     public void networkRequestAPI(final CallType type, final String url, final String userId, final String password ) {
         StringRequest request = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
