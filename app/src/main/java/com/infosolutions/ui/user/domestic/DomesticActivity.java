@@ -215,6 +215,7 @@ public class DomesticActivity extends BaseActivity {
     private void chipSelector(int position) {
 
 
+
         AppSettings.hideKeyboard(this);
         productId = chipListModel.get(position).getChipTitleId();
         setProductId(productId);

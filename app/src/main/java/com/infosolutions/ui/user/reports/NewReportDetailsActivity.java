@@ -180,7 +180,7 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
         try {
             jsonObject = new JSONObject(response);
             String respMessage = jsonObject.getString("responseMessage");
-            String respCode = jsonObject.optString("responseCode");
+            String respCode = jsonObject.optString("ResponseCode");
             if (respCode.equalsIgnoreCase("200")) {
                 if (type.equals(VolleySingleton.CallType.REPORT_DOMESTIC) || type.equals(VolleySingleton.CallType.REPORT_COMMERCIAL)) {
                     reportWiseData(jsonObject,type);
