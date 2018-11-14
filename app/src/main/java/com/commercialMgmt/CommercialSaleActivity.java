@@ -119,7 +119,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         getConsumer();
         getProducts();
 
-        //saveCommercialSaleBtn();
+        saveCommercialSaleBtn();
 
     }
 
@@ -165,7 +165,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
                     showProgressDialog();
                     //isValidMail(com_consumer_email_id.getText().toString());
 
-                   // saveCommercialSale();
+                    saveCommercialSale();
                 }
             });
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
@@ -199,6 +199,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
             jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
             jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
             jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
+            jsonObject.put("YY", Constants.getYear());
 
             parentJsonObj.put("objCommercialSale",jsonObject);
             AppSettings.getInstance(this).saveCommercialConsumerDelivery(this,parentJsonObj);
@@ -266,11 +267,11 @@ public class CommercialSaleActivity extends AppCompatActivity {
                         @Override
                         public void onClick(String consumer, int i) {
 
-                              selectedConsumer = consumerDBList.get(i);
+                            selectedConsumer = consumerDBList.get(i);
                             String CossumerName=consumer;
                             et_consumer_name.setText(CossumerName);
 
-                           // productId = productDBList.get(position).product_id;
+                            // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
                             Log.e("discount",String.valueOf(discount));
                             //et_discount.setText(String.valueOf(discount));
