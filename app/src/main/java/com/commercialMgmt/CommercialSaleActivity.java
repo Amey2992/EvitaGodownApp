@@ -186,18 +186,19 @@ public class CommercialSaleActivity extends AppCompatActivity {
         try {
 
             jsonObject.put("DATETIME",Constants.getDateTime());
-            jsonObject.put("CONSUMER_NAME",et_consumer_name.getText().toString());
-            jsonObject.put("PRODUCT_ID",productId);
-            jsonObject.put("CHALAN",et_chalan.getText().toString());
+            jsonObject.put("consumer_name",et_consumer_name.getText().toString());
+            jsonObject.put("IdProduct",productId);
+            jsonObject.put("ChallanNo",et_chalan.getText().toString());
             jsonObject.put("BPCL_RATE",et_bpcl_rate.getText().toString());
-            jsonObject.put("DISCOUNT",et_discount);
-            jsonObject.put("SELLING_PRICE",et_selling_price);
-            jsonObject.put("FULL_CYL",et_full_cyl);
-            jsonObject.put("EMPTY_CYL",et_empty_cyl);
+            jsonObject.put("Discount",et_discount);
+            jsonObject.put("SellingPrice",et_selling_price);
+            jsonObject.put("FullCylQty",et_full_cyl);
+            jsonObject.put("EmptyCylRec",et_empty_cyl);
             jsonObject.put("CREDIT_CYL",et_credit_cyl);
             jsonObject.put("TOTAL_AMT",et_total_amt);
             jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
             jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
+            jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
             jsonObject.put("YY", Constants.getYear());
 
             parentJsonObj.put("objCommercialSale",jsonObject);
