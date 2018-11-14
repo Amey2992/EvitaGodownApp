@@ -201,7 +201,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
             jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
 
             parentJsonObj.put("objCommercialSale",jsonObject);
-            AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
+            AppSettings.getInstance(this).saveCommercialConsumerDelivery(this,parentJsonObj);
         }
         catch (Exception e)
         {

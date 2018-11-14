@@ -80,6 +80,7 @@ public class Constants {
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
+    public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
 
     /*
     Godown_Ags
@@ -97,6 +98,7 @@ public class Constants {
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
+    public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
 */
     /*
     tester
@@ -115,6 +117,7 @@ public class Constants {
     public static final String LOGIN_URL = "http://103.31.144.174:82/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174:82/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174:82/Masters/GetAndrCommConsumer";
+    public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
 */
 
     public static String LOGIN_API_VALUE = "userAuth";

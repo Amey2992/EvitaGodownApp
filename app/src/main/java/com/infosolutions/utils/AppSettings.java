@@ -135,6 +135,10 @@ public class AppSettings {
         VolleySingleton.getInstance(context.getApplicationContext()).getCommercialConsumerDetails(VolleySingleton.CallType.COMMERCIAL_CONSUMER_DETAILS, Constants.COMMERCIAL_GET_CONSUMER_DETAILS);
     }
 
+    public void saveCommercialConsumerDelivery(Context context, JSONObject jsonObject) {
+        VolleySingleton.getInstance(context.getApplicationContext()).saveCommercialConsumerDelivery(VolleySingleton.CallType.COMMERCIAL_SAVE_CONSUMER_DELIVERY, Constants.COMMERCIAL_SAVE_CONSUMER_DELIVERY,jsonObject);
+    }
+
     public void getStocks(Context context, JSONObject jsonObject) {
         VolleySingleton.getInstance(context.getApplicationContext()).getStocksDetails(VolleySingleton.CallType.GET_STOCKS, Constants.GET_STOCKS_URL,jsonObject);
     }
@@ -146,6 +150,7 @@ public class AppSettings {
     // made by sachin
     public void saveCommercialConsumer(Context context, JSONObject jsonObject){
         VolleySingleton.getInstance(context.getApplicationContext()).postConsumerDetails(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, Constants.SAVE_CONSUMER_DETAILS,jsonObject);
+
     }
 
 

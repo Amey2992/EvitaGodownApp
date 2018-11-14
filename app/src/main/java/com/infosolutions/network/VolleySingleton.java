@@ -72,7 +72,7 @@ public class VolleySingleton {
         POST_STOCKS,
         ERV_PURCHASE,
         SYNC_OTHERS,
-        POST_COMMERCIAL_CONSUMER
+        COMMERCIAL_SAVE_CONSUMER_DELIVERY, POST_COMMERCIAL_CONSUMER
 
     }
 
@@ -509,6 +509,31 @@ public class VolleySingleton {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         addToRequestQueue(jsonObjectRequest);
     }
+
+    public void saveCommercialConsumerDelivery(final CallType type, final String url, JSONObject jsonObject){
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+    }
+
 
     public void getStocksDetails(final CallType type, final String url, JSONObject jsonObject){
         Log.d("getStock",jsonObject.toString());
