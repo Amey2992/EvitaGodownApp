@@ -381,7 +381,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 lost_textview = convertView.findViewById(R.id.lost_textview);
                 lost_textview_value = convertView.findViewById(R.id.lost_textview_value);
 
-
                 return_full_textview = convertView.findViewById(R.id.return_full_textview);
                 return_full_textview_value = convertView.findViewById(R.id.return_full_textview_value);
 

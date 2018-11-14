@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.ConsumerModel;
@@ -118,7 +119,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         getConsumer();
         getProducts();
 
-        saveCommercialSaleBtn();
+        //saveCommercialSaleBtn();
 
     }
 
@@ -126,7 +127,28 @@ public class CommercialSaleActivity extends AppCompatActivity {
         btnSaveComDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveConfirmation();
+                if (et_consumer_name.getText().toString().equalsIgnoreCase("")) {
+                    Toast.makeText(getApplicationContext(),"Consumer Not Selected",Toast.LENGTH_SHORT).show();
+                }
+                else if (com_product_name.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Product Not Selected",Toast.LENGTH_SHORT).show();
+                }
+                else if (et_bpcl_rate.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Enter Product Rate",Toast.LENGTH_SHORT).show();
+                }
+                else if (et_chalan.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Enter Chalan Number",Toast.LENGTH_SHORT).show();
+                }
+                else if (et_full_cyl.getText().toString().equalsIgnoreCase(""))
+                {
+                   // et_full_cyl.setText("0");
+                }
+                else {
+                    saveConfirmation();
+                }
             }
         });
     }
@@ -135,24 +157,24 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private void saveConfirmation() {
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Add Consumer");
-        alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                showProgressDialog();
-                //isValidMail(com_consumer_email_id.getText().toString());
+            alertDialog.setTitle("Add Consumer");
+            alertDialog.setMessage(getResources().getString(R.string.proceed_msg));
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    showProgressDialog();
+                    //isValidMail(com_consumer_email_id.getText().toString());
 
-                saveCommercialSale();
-            }
-        });
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        alertDialog.show();
+                   // saveCommercialSale();
+                }
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
+            alertDialog.show();
 
     }
 
@@ -177,7 +199,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
             jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
             jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
             jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
-
 
             parentJsonObj.put("objCommercialSale",jsonObject);
             AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
@@ -258,8 +279,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -308,17 +327,14 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
 
-
                 if(selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)){
                     et_discount.setText(Integer.toString(selectedConsumer.discount));
                 }else{
                     et_discount.setText("0");
                 }
-
             }
         });
     }
-
 
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
@@ -351,7 +367,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText("Commercial Delivery");
@@ -359,7 +374,5 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
-
     }
-
 }
