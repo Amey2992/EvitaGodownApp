@@ -41,6 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
+import khangtran.preferenceshelper.PreferencesHelper;
 
 import static java.lang.Integer.parseInt;
 
@@ -91,6 +92,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
     private ArrayList<String> consumerListItems;
     private ArrayAdapter<String> commercialAdapter;
     private Double BPCLrate;
+    private int userId;
 
     private String selectedDeliveryManId;
     private ConsumerModel selectedConsumer;
@@ -110,6 +112,7 @@ public class CommercialSaleActivity extends AppCompatActivity {
         setContentView(R.layout.commercial_sale);
 
         isCommercialConsumerServiceRunning = AppSettings.getInstance(this).isCommercialConsumerServiceRunning;
+        userId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
         ButterKnife.bind(this);
         setupToolbar();
         et_bpcl_rate.setFocusable(false);
@@ -121,6 +124,12 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         saveCommercialSaleBtn();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppSettings.hideKeyboard(this);
     }
 
     private void saveCommercialSaleBtn() {
@@ -185,24 +194,25 @@ public class CommercialSaleActivity extends AppCompatActivity {
 
         try {
 
-            jsonObject.put("DATETIME",Constants.getDateTime());
-            jsonObject.put("consumer_name",et_consumer_name.getText().toString());
+            jsonObject.put("DeliveredBy", userId);
+            //jsonObject.put("DATETIME",Constants.getDateTime());
+            jsonObject.put("ConsumerName",et_consumer_name.getText().toString());
             jsonObject.put("IdProduct",productId);
             jsonObject.put("ChallanNo",et_chalan.getText().toString());
-            jsonObject.put("BPCL_RATE",et_bpcl_rate.getText().toString());
+            jsonObject.put("MRP",et_bpcl_rate.getText().toString());
             jsonObject.put("Discount",et_discount);
             jsonObject.put("SellingPrice",et_selling_price);
             jsonObject.put("FullCylQty",et_full_cyl);
             jsonObject.put("EmptyCylRec",et_empty_cyl);
-            jsonObject.put("CREDIT_CYL",et_credit_cyl);
-            jsonObject.put("TOTAL_AMT",et_total_amt);
-            jsonObject.put("TOTAL_CREDIT_CYL",et_total_credit_cyl);
-            jsonObject.put("TOTAL_CREDIT_AMT",et_total_credit_amt);
+            jsonObject.put("TotalAmount",et_total_amt);
+            jsonObject.put("CashAmount",et_total_amt);
+            jsonObject.put("TotalPendingEmptyCyl",et_total_credit_cyl);
+            jsonObject.put("TotalCreditAmount",et_total_credit_amt);
             jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
-            jsonObject.put("YY", Constants.getYear());
+            jsonObject.put("YY", AppSettings.getYear());
 
             parentJsonObj.put("objCommercialSale",jsonObject);
-            AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
+            AppSettings.getInstance(this).saveCommercialSale(this,parentJsonObj);
         }
         catch (Exception e)
         {

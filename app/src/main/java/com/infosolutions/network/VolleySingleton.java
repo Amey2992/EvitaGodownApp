@@ -72,7 +72,8 @@ public class VolleySingleton {
         POST_STOCKS,
         ERV_PURCHASE,
         SYNC_OTHERS,
-        POST_COMMERCIAL_CONSUMER
+        POST_COMMERCIAL_CONSUMER,
+        POST_COMMERCIAL_SALE
 
     }
 
