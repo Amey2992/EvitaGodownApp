@@ -153,9 +153,9 @@ public class AppSettings {
 
     }
 
-    public void saveCommercialSale(Context context, JSONObject jsonObject){
-        VolleySingleton.getInstance(context.getApplicationContext()).postConsumerDetails(VolleySingleton.CallType.POST_COMMERCIAL_SALE, Constants.SAVE_COMMERCIAL_SALE,jsonObject);
-    }
+  /*  public void saveCommercialSale(Context context, JSONObject jsonObject){
+        VolleySingleton.getInstance(context.getApplicationContext()).postConsumerDetails(VolleySingleton.CallType.POST_COMMERCIAL_SALE, Constants.COMMERCIAL_SAVE_CONSUMER_DELIVERY,jsonObject);
+    }*/
 
     public void manualSyncAndroidDataToServer(Context context, JSONObject jsonObject) {
         VolleySingleton.getInstance(context.getApplicationContext()).test_syncAndroidData(VolleySingleton.CallType.SYNC_LOCAL_DATA, Constants.post_url, jsonObject);
@@ -688,6 +688,8 @@ public class AppSettings {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+
 
     public static String getYear() {
 
