@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.ConsumerModel;
+import com.commercialMgmt.models.UserAssignedCylinderModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
 import com.infosolutions.evita.R;
@@ -68,10 +71,14 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     EditText et_full_cyl;
     @BindView(R.id.et_empty_cyl)
     EditText et_empty_cyl;
+    @BindView(R.id.et_sv_cyl)
+    EditText et_sv_cyl;
     @BindView(R.id.et_credit_cyl)
     EditText et_credit_cyl;
     @BindView(R.id.et_total_amt)
     EditText et_total_amt;
+    @BindView(R.id.et_cash_amt)
+    EditText et_cash_amt;
     @BindView(R.id.et_total_credit_cyl)
     EditText et_total_credit_cyl;
     @BindView(R.id.et_total_credit_amt)
@@ -113,6 +120,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     private Double MRP,Discount,Selling_price,Total_Amt,Cash_Amt,Total_credit_amt;
     private int full_cyl,empty_cyl,total_pending_cyl,id_comm_party;
 
+    // Variables For Calculations
+    private Double calSellingPrice,calTotalAmt;
+
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
@@ -127,15 +137,45 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         setupToolbar();
         et_bpcl_rate.setFocusable(false);
 
-        disabledFocusFromET();
+        userId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
+        Log.e("UserID..",String.valueOf(userId));
 
+        disabledFocusFromET();
         getConsumer();
         getProducts();
         saveCommercialSaleBtn();
+        Calculation();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_SAVE_CONSUMER_DELIVERY, this);
 
+        // To fetch assigned cylinder model
+        List<UserAssignedCylinderModel> listUserAssignedCylinderModelList = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryForAll();
+        System.out.println(listUserAssignedCylinderModelList);
 
+    }
 
+    private void Calculation() {
+
+        et_discount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Double calMRP,calDiscount;
+                calMRP=Double.valueOf(et_bpcl_rate.getText().toString());
+                calDiscount=Double.valueOf(et_discount.getText().toString());
+                calSellingPrice=calMRP+calDiscount;
+                et_selling_price.setText(String.valueOf(calSellingPrice));
+                Log.e("selling price_@@@@@",et_selling_price.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -181,10 +221,6 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
     private void getETValues() {
 
-       /* private String consumer_name,Chalan;
-        private Double MRP,Discount,Selling_price,Total_Amt,Cash_Amt,Total_credit_amt;
-        private int full_cyl,empty_cyl,total_pending_cyl,id_comm_party;
-*/
         consumer_name=et_consumer_name.getText().toString();
         Chalan=et_chalan.getText().toString();
         MRP=Double.valueOf(et_bpcl_rate.getText().toString());
