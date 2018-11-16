@@ -112,7 +112,6 @@ public class CommercialSaleActivity extends AppCompatActivity {
         setContentView(R.layout.commercial_sale);
 
         isCommercialConsumerServiceRunning = AppSettings.getInstance(this).isCommercialConsumerServiceRunning;
-        userId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
         ButterKnife.bind(this);
         setupToolbar();
         et_bpcl_rate.setFocusable(false);
