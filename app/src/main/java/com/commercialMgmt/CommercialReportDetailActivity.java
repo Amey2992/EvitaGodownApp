@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -93,6 +94,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             @Override
             public boolean onQueryTextChange(String newText) {
                 String text = newText.toLowerCase(Locale.getDefault());
+                if(adapter != null && !TextUtils.isEmpty(text))
                 adapter.filter(text);
             return false;
             }
