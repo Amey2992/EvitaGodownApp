@@ -110,6 +110,7 @@
                     android:layout_marginBottom="@dimen/appbar_padding_top"
                     android:textAppearance="?android:textAppearanceMedium"
                     android:textStyle="bold"
+
                     android:layout_gravity="center"
                     android:background="@drawable/custom_btn"
                     android:layout_marginTop="@dimen/fab_margin"/>

@@ -9,6 +9,7 @@ import android.util.Log;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.CommercialStockModel;
 import com.commercialMgmt.models.ConsumerModel;
+import com.commercialMgmt.models.UserAssignedCylinderModel;
 import com.infosolutions.evita.R;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -92,6 +93,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	private RuntimeExceptionDao<CommercialStockModel, Integer>
 			commercialStockModelRuntimeExceptionDao = null;
 
+	private RuntimeExceptionDao<UserAssignedCylinderModel, Integer>
+			userAssignedCylinderModelRuntimeExceptionDao = null;
+
+
 	/*private RuntimeExceptionDao<CommercialConsumerModel, Integer>
 			commercialConsumerModelRuntimeExceptionDao = null;
 */
@@ -119,6 +124,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.createTable(connectionSource, ConsumerModel.class);
 			TableUtils.createTable(connectionSource, CommercialProductModel.class);
 			TableUtils.createTable(connectionSource, CommercialStockModel.class);
+			TableUtils.createTable(connectionSource, UserAssignedCylinderModel.class);
 			//TableUtils.createTable(connectionSource, CommercialConsumerModel.class);
 
 		} catch (SQLException e) {
@@ -170,6 +176,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			TableUtils.dropTable(connectionSource, ConsumerModel.class,true);
 			TableUtils.dropTable(connectionSource, CommercialProductModel.class,true);
 			TableUtils.dropTable(connectionSource, CommercialStockModel.class,true);
+			TableUtils.dropTable(connectionSource, UserAssignedCylinderModel.class,true);
 			//TableUtils.dropTable(connectionSource, CommercialConsumerModel.class,true);
 
 			onCreate(sqliteDatabase, connectionSource);
@@ -424,6 +431,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 			commercialStockModelRuntimeExceptionDao = getRuntimeExceptionDao(CommercialStockModel.class);
 		}
 		return commercialStockModelRuntimeExceptionDao;
+	}
+
+	public RuntimeExceptionDao<UserAssignedCylinderModel, Integer> getUserAssignedCylinderModelRuntimeExceptionDao() {
+
+		if (userAssignedCylinderModelRuntimeExceptionDao == null) {
+			userAssignedCylinderModelRuntimeExceptionDao = getRuntimeExceptionDao(UserAssignedCylinderModel.class);
+		}
+		return userAssignedCylinderModelRuntimeExceptionDao;
 	}
 
 	/*public RuntimeExceptionDao<CommercialConsumerModel, Integer> getCommercialConsumerModelExceptionDao() {

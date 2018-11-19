@@ -153,12 +153,12 @@ public class AppSettings {
 
     }
 
+  /*  public void saveCommercialSale(Context context, JSONObject jsonObject){
+        VolleySingleton.getInstance(context.getApplicationContext()).postConsumerDetails(VolleySingleton.CallType.POST_COMMERCIAL_SALE, Constants.COMMERCIAL_SAVE_CONSUMER_DELIVERY,jsonObject);
+    }*/
 
     public void manualSyncAndroidDataToServer(Context context, JSONObject jsonObject) {
-
-
         VolleySingleton.getInstance(context.getApplicationContext()).test_syncAndroidData(VolleySingleton.CallType.SYNC_LOCAL_DATA, Constants.post_url, jsonObject);
-
     }
 
 
@@ -687,6 +687,26 @@ public class AppSettings {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         }
+    }
+
+
+
+    public static String getYear() {
+
+        SimpleDateFormat simpleDateFormat = null;
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+            date = formatter.parse(new Date().toString());
+            simpleDateFormat = new SimpleDateFormat("yy");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+        return simpleDateFormat.format(date);
+
+
     }
 
     private int random = 0;

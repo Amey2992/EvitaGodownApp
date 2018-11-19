@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.commercialMgmt.models.CommercialProductModel;
 import com.commercialMgmt.models.ConsumerModel;
+import com.commercialMgmt.models.UserAssignedCylinderModel;
 import com.google.gson.JsonObject;
 import com.infosolutions.core.BaseActivity;
 import com.infosolutions.core.EvitaApplication;
@@ -442,6 +443,7 @@ public class LoginActivity extends BaseActivity {
                     PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
 
                     fillCommercialProductsDB(jsonResult);
+                    fillUserAssignedCylinders(jsonResult);
                     Intent intent = new Intent(this, GetCommercialConsumerService.class);
                     startService(intent);
                     //fillCommercialConsumerDB(jsonResult);
@@ -625,6 +627,30 @@ public class LoginActivity extends BaseActivity {
         String PRODUCT_LIST = objectESS.optString("productDetails");
         setOffline_module_list(PRODUCT_LIST);
         saveWithSharedPreferences(this, Constants.KEY_USER_TYPE, getUSER_TYPE());
+
+    }
+
+    void fillUserAssignedCylinders(JSONObject jsonObject){
+        JSONArray arrayPRODUCT = jsonObject.optJSONArray("quantity");
+        RuntimeExceptionDao<UserAssignedCylinderModel, Integer> assignedCylinderDB = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao();
+        try {
+            assignedCylinderDB.deleteBuilder().delete();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        ArrayList<UserAssignedCylinderModel> cylinderModels = new ArrayList<>();
+        if(arrayPRODUCT != null) {
+            for (int i = 0; i < arrayPRODUCT.length(); i++) {
+                JSONObject objectProduct = arrayPRODUCT.optJSONObject(i);
+                UserAssignedCylinderModel model = new UserAssignedCylinderModel(objectProduct);
+                cylinderModels.add(model);
+
+            }
+            assignedCylinderDB.create(cylinderModels);
+
+        }
 
     }
 
