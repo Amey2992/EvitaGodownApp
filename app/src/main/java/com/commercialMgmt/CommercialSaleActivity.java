@@ -123,12 +123,13 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     private int max = 110;
     private String uniqueId_AddConsumer;
 
-    private String consumer_name,Chalan;
-    private Double MRP=0.0,Discount=0.0,Selling_price=0.0,Total_Amt=0.0,Cash_Amt=0.0,Total_credit_amt=0.0;
-    private int full_cyl=0,empty_cyl=0,total_pending_cyl=0,id_comm_party=0,sv=0;
+    private String consumer_name, Chalan;
+    private Double MRP = 0.0, Discount = 0.0, Selling_price = 0.0, Total_Amt = 0.0, Cash_Amt = 0.0, Total_credit_amt = 0.0;
+    private int full_cyl = 0, empty_cyl = 0, total_pending_cyl = 0, id_comm_party = 0, sv = 0;
 
     // Variables For Calculations
-    private Double calSellingPrice=0.0,calTotalAmt=0.0;
+    private Double calSellingPrice = 0.0, calTotalAmt = 0.0;
+    private int assignedCylinderQty;
 
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
@@ -144,12 +145,10 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         setupToolbar();
 
 
-
-
         disabledViews();
 
-        userId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
-        Log.e("UserID..",String.valueOf(userId));
+        userId = PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID, 0);
+        Log.e("UserID..", String.valueOf(userId));
 
         disabledFocusFromET();
         getConsumer();
@@ -197,126 +196,128 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Double calMRP;
                 Double calDiscount = 0.0;
-                calMRP=Double.valueOf(et_bpcl_rate.getText().toString());
+                calMRP = Double.valueOf(et_bpcl_rate.getText().toString());
 
-                if(!TextUtils.isEmpty(et_discount.getText())) {
+                if (!TextUtils.isEmpty(et_discount.getText())) {
                     calDiscount = Double.valueOf(et_discount.getText().toString());
-                    calSellingPrice=calMRP-calDiscount;
-                    if (calDiscount>=calMRP)
-                    {
-                       et_discount.setError("You can't enter discount more than MRP");
-                       et_discount.setText("0");
+                    calSellingPrice = calMRP - calDiscount;
+                    if (calDiscount >= calMRP) {
+                        et_discount.setError("You can't enter discount more than MRP");
+                        et_discount.setText("0");
                         et_selling_price.setText(String.valueOf(calMRP));
-                    }
-                    else {
+                    } else {
                         et_selling_price.setText(String.valueOf(calSellingPrice));
                     }
                 }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
 
 
-       // Calculation on change full cyl edittext
+        // Calculation on change full cyl edittext
 
-      et_full_cyl.addTextChangedListener(new TextWatcher() {
-          @Override
-          public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        et_full_cyl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-          }
+            }
 
-          @Override
-          public void onTextChanged(CharSequence s, int start, int before, int count) {
-              if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
-              {
-                  full_cyl=0;
-                  empty_cyl=0;
-                  sv=0;
-                  et_credit_cyl.setText("0");
-              }
-              calculateTotalAmt();
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            // Credit amt calculattion without calculation
-              Double balancedCreditAmt=0.0;
-              Double totalCreditAmt=0.0,totalAmt=0.0,cashAmt=0.0;
-
-              if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
-                      && !TextUtils.isEmpty(et_total_amt.getText().toString()) )
-              {
-                  totalCreditAmt=Double.valueOf(et_total_credit_amt.getText().toString());
-                  totalAmt=Double.valueOf(et_total_amt.getText().toString());
-                  balancedCreditAmt=totalCreditAmt+totalAmt;
-                  et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
-
-              }
-              else
-              {
-                  et_balanced_credit_amt.setText("0");
-              }
-
-            // credit cylinder calculation
-            calculateCreditCylinder();
-
-          }
-
-          @Override
-          public void afterTextChanged(Editable s) {
-                
-          }
-      });
-
-
-      // calculation on change empty edittext
-            et_empty_cyl.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
-                    {
-                        full_cyl=0;
-                        empty_cyl=0;
-                        sv=0;
-                        et_credit_cyl.setText("0");
+                if (!TextUtils.isEmpty(et_full_cyl.getText().toString())) {
+                    if (Integer.parseInt(et_full_cyl.getText().toString()) > assignedCylinderQty) {
+                        et_full_cyl.setError("Enter valid cylinder qty");
+                        et_full_cyl.setText("0");
                     }
-                    calculateCreditCylinder();
                 }
 
-                @Override
-                public void afterTextChanged(Editable s) {
 
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                    full_cyl = 0;
+                    empty_cyl = 0;
+                    sv = 0;
+                    et_credit_cyl.setText("0");
                 }
-            });
+                calculateTotalAmt();
+
+                // Credit amt calculattion without calculation
+                Double balancedCreditAmt = 0.0;
+                Double totalCreditAmt = 0.0, totalAmt = 0.0, cashAmt = 0.0;
+
+                if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
+                        && !TextUtils.isEmpty(et_total_amt.getText().toString())) {
+                    totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
+                    totalAmt = Double.valueOf(et_total_amt.getText().toString());
+                    balancedCreditAmt = totalCreditAmt + totalAmt;
+                    et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
+
+                } else {
+                    et_balanced_credit_amt.setText("0");
+                }
+
+                // credit cylinder calculation
+                calculateCreditCylinder();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        // calculation on change empty edittext
+        et_empty_cyl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                    full_cyl = 0;
+                    empty_cyl = 0;
+                    sv = 0;
+                    et_credit_cyl.setText("0");
+                }
+                calculateCreditCylinder();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         // calculations on change sv edittext
-            et_sv_cyl.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        et_sv_cyl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                    full_cyl = 0;
+                    empty_cyl = 0;
+                    sv = 0;
+                    et_credit_cyl.setText("0");
                 }
+                calculateCreditCylinder();
+            }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
-                    {
-                        full_cyl=0;
-                        empty_cyl=0;
-                        sv=0;
-                        et_credit_cyl.setText("0");
-                    }
-                    calculateCreditCylinder();
-                }
+            @Override
+            public void afterTextChanged(Editable s) {
 
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
+            }
+        });
 
         // calculations for cash amt based
 
@@ -338,37 +339,30 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         });
 
 
-
-
     }
 
     private void calcaulateCreditAmt() {
-        Double balancedCreditAmt=0.0;
-        Double totalCreditAmt=0.0,totalAmt=0.0,cashAmt=0.0;
+        Double balancedCreditAmt = 0.0;
+        Double totalCreditAmt = 0.0, totalAmt = 0.0, cashAmt = 0.0;
 
 
-
-              if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
+        if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
                 && !TextUtils.isEmpty(et_total_amt.getText().toString())
-                && !TextUtils.isEmpty(et_cash_amt.getText().toString()))
-                   {
-                       totalCreditAmt=Double.valueOf(et_total_credit_amt.getText().toString());
-                       totalAmt=Double.valueOf(et_total_amt.getText().toString());
-                       cashAmt=Double.valueOf(et_cash_amt.getText().toString());
-                       balancedCreditAmt=(totalCreditAmt+totalAmt)-cashAmt;
-                       if (cashAmt<=(totalCreditAmt+totalAmt))
-                       {
-                           et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
-                       }
-                       else
-                       {
-                           et_cash_amt.setError("enter valid cash amt");
-                       }
-                    }
-                 else{
-                  et_balanced_credit_amt.setText("0");
-              }
-
+                && !TextUtils.isEmpty(et_cash_amt.getText().toString())) {
+            totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
+            totalAmt = Double.valueOf(et_total_amt.getText().toString());
+            cashAmt = Double.valueOf(et_cash_amt.getText().toString());
+            balancedCreditAmt = (totalCreditAmt + totalAmt) - cashAmt;
+            if (cashAmt <= (totalCreditAmt + totalAmt)) {
+                et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
+            } else {
+                et_cash_amt.setError("enter valid cash amt");
+            }
+        } else {
+            totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
+            totalAmt = Double.valueOf(et_total_amt.getText().toString());
+            et_balanced_credit_amt.setText(String.valueOf(totalCreditAmt + totalAmt));
+        }
 
     }
 
@@ -466,17 +460,17 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 {
                     Toast.makeText(getApplicationContext(),"Product Not Selected",Toast.LENGTH_SHORT).show();
                 }
-                else if (et_bpcl_rate.getText().toString().equalsIgnoreCase(""))
-                {
-                    Toast.makeText(getApplicationContext(),"Enter Product Rate",Toast.LENGTH_SHORT).show();
-                }
                 else if (et_chalan.getText().toString().equalsIgnoreCase(""))
                 {
                     Toast.makeText(getApplicationContext(),"Enter Chalan Number",Toast.LENGTH_SHORT).show();
                 }
                 else if (et_full_cyl.getText().toString().equalsIgnoreCase(""))
                 {
-                   // et_full_cyl.setText("0");
+                    Toast.makeText(getApplicationContext(),"Enter Full Cylinder",Toast.LENGTH_SHORT).show();
+                }
+                else if (et_cash_amt.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Enter Cash Amt",Toast.LENGTH_SHORT).show();
                 }
                 else {
                     saveConfirmation();
@@ -508,7 +502,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             Cash_Amt = Double.valueOf(et_cash_amt.getText().toString());
         }
         if(!TextUtils.isEmpty(et_total_credit_amt.getText())) {
-            Total_credit_amt = Double.valueOf(et_total_credit_amt.getText().toString());
+            Total_credit_amt = Double.valueOf(et_balanced_credit_amt.getText().toString());
         }
         if(!TextUtils.isEmpty(et_full_cyl.getText())) {
             full_cyl = Integer.parseInt(et_full_cyl.getText().toString());
@@ -708,7 +702,14 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
             try {
                 UserAssignedCylinderModel userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
-                 assigned_cylinder.setText("Assigned Cylinders: "+Integer.toString(userAssignedCylinderModel.Qty));
+                if(userAssignedCylinderModel != null) {
+                    assignedCylinderQty = userAssignedCylinderModel.Qty;
+                    assigned_cylinder.setVisibility(View.VISIBLE);
+                    assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(userAssignedCylinderModel.Qty));
+                }else{
+                    assignedCylinderQty = 0;
+                    assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(assignedCylinderQty));
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
