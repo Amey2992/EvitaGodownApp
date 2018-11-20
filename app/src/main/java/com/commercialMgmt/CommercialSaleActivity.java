@@ -136,9 +136,11 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         isCommercialConsumerServiceRunning = AppSettings.getInstance(this).isCommercialConsumerServiceRunning;
         ButterKnife.bind(this);
         setupToolbar();
-        et_bpcl_rate.setFocusable(false);
-        et_selling_price.setFocusable(false);
-        et_credit_cyl.setFocusable(false);
+
+
+
+
+        disabledViews();
 
         userId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
         Log.e("UserID..",String.valueOf(userId));
@@ -154,6 +156,24 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         List<UserAssignedCylinderModel> listUserAssignedCylinderModelList = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryForAll();
         System.out.println(listUserAssignedCylinderModelList);
 
+    }
+
+    private void disabledViews() {
+        et_full_cyl.setEnabled(false);
+        et_empty_cyl.setEnabled(false);
+        et_sv_cyl.setEnabled(false);
+
+        et_bpcl_rate.setEnabled(false);
+        et_selling_price.setEnabled(false);
+        et_credit_cyl.setEnabled(false);
+        et_total_amt.setEnabled(false);
+        et_total_credit_cyl.setEnabled(false);
+    }
+
+    private void enabledViews() {
+        et_full_cyl.setEnabled(true);
+        et_empty_cyl.setEnabled(true);
+        et_sv_cyl.setEnabled(true);
     }
 
     private void Calculation() {
@@ -203,12 +223,14 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
           public void onTextChanged(CharSequence s, int start, int before, int count) {
               if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
               {
-                  et_full_cyl.setText("0");
-                  et_empty_cyl.setText("0");
-                  et_sv_cyl.setText("0");
+                  full_cyl=0;
+                  empty_cyl=0;
+                  sv=0;
                   et_credit_cyl.setText("0");
               }
+              calculateTotalAmt();
             calculateCreditCylinder();
+
           }
 
           @Override
@@ -228,9 +250,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
                     {
-                        et_full_cyl.setText("0");
-                        et_empty_cyl.setText("0");
-                        et_sv_cyl.setText("0");
+                        full_cyl=0;
+                        empty_cyl=0;
+                        sv=0;
                         et_credit_cyl.setText("0");
                     }
                     calculateCreditCylinder();
@@ -253,9 +275,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (et_full_cyl.getText().toString().equalsIgnoreCase("0"))
                     {
-                        et_full_cyl.setText("0");
-                        et_empty_cyl.setText("0");
-                        et_sv_cyl.setText("0");
+                        full_cyl=0;
+                        empty_cyl=0;
+                        sv=0;
                         et_credit_cyl.setText("0");
                     }
                     calculateCreditCylinder();
@@ -267,61 +289,91 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 }
             });
 
+        // calculations for Total amt based on full cyl
+
+
+
+
+    }
+
+    private void calculateTotalAmt() {
+        Double TotalAmt=0.0;
+
+        if (!TextUtils.isEmpty(et_selling_price.getText().toString()) && !TextUtils.isEmpty(et_full_cyl.getText().toString()))
+        {
+            TotalAmt=Double.valueOf(et_selling_price.getText().toString())*Double.valueOf(et_full_cyl.getText().toString());
+            et_total_amt.setText(String.valueOf(TotalAmt));
+        }
+        else
+        {
+            et_total_amt.setText("0");
+        }
+
     }
 
     private void calculateCreditCylinder() {
         int creditCyl=0;
         if(!TextUtils.isEmpty(et_full_cyl.getText())) {
             full_cyl = Integer.parseInt(et_full_cyl.getText().toString()) + selectedConsumer.credit_cylinder;
-    /*        int finalcount = Integer.parseInt(et_empty_cyl.getText().toString()) - Integer.parseInt(et_sv_cyl.getText().toString());
-            if(full_cyl <= finalcount ){
-                //et_empty_cyl.setText(Integer.toString(empty_cyl));
-            }else{
-                et_empty_cyl.setText("0");
-                et_empty_cyl.setError("enter valid");
-            }*/
+
         }else{
             full_cyl = selectedConsumer.credit_cylinder ;
         }
         if(!TextUtils.isEmpty(et_empty_cyl.getText())) {
             empty_cyl = Integer.parseInt(et_empty_cyl.getText().toString());
-            //int finalcount = full_cyl - Integer.parseInt(et_sv_cyl.getText().toString());
-            int finalcount = Integer.parseInt(et_credit_cyl.getText().toString());
-            if(empty_cyl <= finalcount ){
-                //et_empty_cyl.setText(Integer.toString(empty_cyl));
-            }else{
-                et_empty_cyl.setText("0");
-                et_empty_cyl.setError("enter valid");
+            if(!TextUtils.isEmpty(et_sv_cyl.getText().toString())) {
+                int finalcount = full_cyl - Integer.parseInt(et_sv_cyl.getText().toString());
+                //int finalcount = Integer.parseInt(et_credit_cyl.getText().toString());
+                if (empty_cyl <= finalcount) {
+                    //et_empty_cyl.setText(Integer.toString(empty_cyl));
+                } else {
+                    if (et_sv_cyl.getText().toString().equalsIgnoreCase("0"))
+                    {
+                        //code
+                    }
+                    else {
+                        et_sv_cyl.setText("0");
+                        et_sv_cyl.setError("enter valid sv cyl");
+                    }
+                }
             }
+
         }else{
             empty_cyl = 0;
         }
 
         if(!TextUtils.isEmpty(et_sv_cyl.getText()) ) {
+
             sv = Integer.parseInt(et_sv_cyl.getText().toString());
-            //int finalcount = full_cyl - Integer.parseInt(et_empty_cyl.getText().toString());
-            int finalcount = Integer.parseInt(et_credit_cyl.getText().toString());
-            if(sv <= finalcount ){
-                //et_empty_cyl.setText(Integer.toString(empty_cyl));
-            }else{
-                et_sv_cyl.setText("0");
-                et_sv_cyl.setError("enter valid");
+            if(!TextUtils.isEmpty(et_empty_cyl.getText().toString())) {
+                int finalcount = full_cyl - Integer.parseInt(et_empty_cyl.getText().toString());
+                //int finalcount = Integer.parseInt(et_credit_cyl.getText().toString());
+                if (sv <= finalcount) {
+                    //et_empty_cyl.setText(Integer.toString(empty_cyl));
+                } else {
+                    if (et_empty_cyl.getText().toString().equalsIgnoreCase("0"))
+                    {
+                        //
+                    }
+                    else {
+                        et_empty_cyl.setText("0");
+                        et_empty_cyl.setError("enter valid empty cyl");
+                    }
+                }
             }
+
         }else{
             sv = 0;
         }
-
         creditCyl=full_cyl-empty_cyl-sv;
         et_credit_cyl.setText(Integer.toString(creditCyl));
-
     }
-
 
     @Override
     protected void onResume() {
         super.onResume();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        AppSettings.hideKeyboard(this);
+        //AppSettings.hideKeyboard(this);
     }
 
     private void saveCommercialSaleBtn() {
@@ -518,7 +570,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                             String CossumerName=consumer;
                             AppSettings.hideKeyboard(CommercialSaleActivity.this);
                             et_consumer_name.setText(CossumerName);
-
+                            et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
+                            enabledViews();
 
                             // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);

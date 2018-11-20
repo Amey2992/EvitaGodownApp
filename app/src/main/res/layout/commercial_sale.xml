@@ -133,7 +133,27 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_total_credit_cyl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <EditText
+                    android:id="@+id/et_total_credit_cyl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/email"
+                    android:hint="Total Credit Cyl"
+                    android:enabled="true"
+                    android:maxLength="3"
+                    android:drawablePadding="@dimen/activity_vertical_margin"
+                    android:inputType="number"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_full_cyl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -250,24 +270,6 @@
             </android.support.design.widget.TextInputLayout>
 
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_total_credit_cyl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <EditText
-                android:id="@+id/et_total_credit_cyl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/email"
-                android:hint="Total Credit Cyl"
-                android:enabled="true"
-                android:maxLength="3"
-                android:drawablePadding="@dimen/activity_vertical_margin"
-                android:inputType="number"/>
-
-        </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
@@ -317,7 +319,7 @@
         android:textStyle="bold"
         android:textAppearance="?android:textAppearanceMedium"
         android:textAllCaps="true"
-        android:text="Add New Consumer" />
+        android:text="Submit" />
 
 
 </RelativeLayout>
