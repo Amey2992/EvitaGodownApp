@@ -95,9 +95,9 @@ public class TruckSendOwnFragment extends Fragment {
         USER_ID = parseInt(getSharedPrefWithKEY(getContext(), Constants.KEY_USER_ID));
         setGodownId(Integer.parseInt(Constants.getSharedPrefWithKEY(getContext(), Constants.KEY_GODOWN)));
         ButterKnife.bind(getActivity());
-        initUI(rootView);
-        truckDeliveryActivity = ((TruckDeliveryActivity) getActivity());
 
+        truckDeliveryActivity = ((TruckDeliveryActivity) getActivity());
+        initUI(rootView);
         return rootView;
     }
 

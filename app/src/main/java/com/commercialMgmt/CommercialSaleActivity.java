@@ -44,6 +44,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -92,6 +93,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     EditText et_balanced_credit_amt;
     @BindView(R.id.btnSaveComDelivery)
     Button btnSaveComDelivery;
+
+    @BindView(R.id.assigned_cylinder)
+    TextView assigned_cylinder;
 
     private int productId;
 
@@ -692,8 +696,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
     //spinItems.add(0,default_str);
 
-    spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
-        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinItems);
+        //spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         com_product_name.setAdapter(spinAdapter);
 
         com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -702,6 +706,12 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             productId = productDBList.get(position).product_id;
             BPCLrate= productDBList.get(position).bpcl_rate;
 
+            try {
+                UserAssignedCylinderModel userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
+                 assigned_cylinder.setText("Assigned Cylinders: "+Integer.toString(userAssignedCylinderModel.Qty));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
                    if (!TextUtils.isEmpty(et_consumer_name.getText())) {
                        if (selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)) {
