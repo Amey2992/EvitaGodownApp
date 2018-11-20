@@ -117,6 +117,12 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
 
         // String responseCode = jsonObject.optString("responseCode");
         JSONArray jsonArray = jsonObject.optJSONArray("Table");
+        if(lstERVOWNModel != null && lstERVOWNModel.size() > 0){
+            lstERVOWNModel.clear();
+        }
+        if(lstERVPCOModel != null && lstERVPCOModel.size() > 0){
+            lstERVPCOModel.clear();
+        }
         if (type.equals(VolleySingleton.CallType.ERV_PURCHASE)) {
             if(jsonArray != null && jsonArray.length() > 0){
                 for(int i = 0; i < jsonArray.length(); i++){
@@ -200,7 +206,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
 
     @Override
     protected void onPause() {
-        AppSettings.hideKeyboard(this);
+        //AppSettings.hideKeyboard(this);
         super.onPause();
 
     }
