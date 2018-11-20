@@ -88,6 +88,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     AutoCompleteTextView com_product_name;
     @BindView(R.id.et_consumer_name)
     EditText et_consumer_name;
+    @BindView(R.id.et_balanced_credit_amt)
+    EditText et_balanced_credit_amt;
     @BindView(R.id.btnSaveComDelivery)
     Button btnSaveComDelivery;
 
@@ -168,6 +170,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         et_credit_cyl.setEnabled(false);
         et_total_amt.setEnabled(false);
         et_total_credit_cyl.setEnabled(false);
+        et_total_credit_amt.setEnabled(false);
+        et_balanced_credit_amt.setEnabled(false);
     }
 
     private void enabledViews() {
@@ -229,15 +233,36 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                   et_credit_cyl.setText("0");
               }
               calculateTotalAmt();
+
+            // Credit amt calculattion without calculation
+              Double balancedCreditAmt=0.0;
+              Double totalCreditAmt=0.0,totalAmt=0.0,cashAmt=0.0;
+
+              if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
+                      && !TextUtils.isEmpty(et_total_amt.getText().toString()) )
+              {
+                  totalCreditAmt=Double.valueOf(et_total_credit_amt.getText().toString());
+                  totalAmt=Double.valueOf(et_total_amt.getText().toString());
+                  balancedCreditAmt=totalCreditAmt+totalAmt;
+                  et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
+
+              }
+              else
+              {
+                  et_balanced_credit_amt.setText("0");
+              }
+
+            // credit cylinder calculation
             calculateCreditCylinder();
 
           }
 
           @Override
           public void afterTextChanged(Editable s) {
-
+                
           }
       });
+
 
       // calculation on change empty edittext
             et_empty_cyl.addTextChangedListener(new TextWatcher() {
@@ -289,9 +314,56 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 }
             });
 
-        // calculations for Total amt based on full cyl
+        // calculations for cash amt based
+
+        et_cash_amt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calcaulateCreditAmt();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
+
+
+    }
+
+    private void calcaulateCreditAmt() {
+        Double balancedCreditAmt=0.0;
+        Double totalCreditAmt=0.0,totalAmt=0.0,cashAmt=0.0;
+
+
+
+              if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
+                && !TextUtils.isEmpty(et_total_amt.getText().toString())
+                && !TextUtils.isEmpty(et_cash_amt.getText().toString()))
+                   {
+                       totalCreditAmt=Double.valueOf(et_total_credit_amt.getText().toString());
+                       totalAmt=Double.valueOf(et_total_amt.getText().toString());
+                       cashAmt=Double.valueOf(et_cash_amt.getText().toString());
+                       balancedCreditAmt=(totalCreditAmt+totalAmt)-cashAmt;
+                       if (cashAmt<=(totalCreditAmt+totalAmt))
+                       {
+                           et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
+                       }
+                       else
+                       {
+                           et_cash_amt.setError("enter valid cash amt");
+                       }
+                    }
+                 else{
+                  et_balanced_credit_amt.setText("0");
+              }
 
 
     }
@@ -571,6 +643,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                             AppSettings.hideKeyboard(CommercialSaleActivity.this);
                             et_consumer_name.setText(CossumerName);
                             et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
+                            et_total_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
                             enabledViews();
 
                             // productId = productDBList.get(position).product_id;
