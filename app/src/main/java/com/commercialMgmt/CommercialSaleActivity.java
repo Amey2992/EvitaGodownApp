@@ -129,7 +129,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
     // Variables For Calculations
     private Double calSellingPrice = 0.0, calTotalAmt = 0.0;
-    private int assignedCylinderQty;
+    private int assignedCylinderQty , availableStock=0;
+    private UserAssignedCylinderModel userAssignedCylinderModel;
 
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
@@ -158,8 +159,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_SAVE_CONSUMER_DELIVERY, this);
 
         // To fetch assigned cylinder model
-        List<UserAssignedCylinderModel> listUserAssignedCylinderModelList = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryForAll();
-        System.out.println(listUserAssignedCylinderModelList);
+
 
     }
 
@@ -229,6 +229,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (!TextUtils.isEmpty(et_full_cyl.getText().toString())) {
+                    availableStock=assignedCylinderQty-Integer.parseInt(et_full_cyl.getText().toString());
+                    userAssignedCylinderModel.Qty = availableStock;
                     if (Integer.parseInt(et_full_cyl.getText().toString()) > assignedCylinderQty) {
                         et_full_cyl.setError("Enter valid cylinder qty");
                         et_full_cyl.setText("0");
@@ -364,6 +366,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             et_balanced_credit_amt.setText(String.valueOf(totalCreditAmt + totalAmt));
         }
 
+        Double d = new Double(et_balanced_credit_amt.getText().toString());
+        selectedConsumer.amount_credit_cylinder = d.intValue();
+
     }
 
     private void calculateTotalAmt() {
@@ -437,6 +442,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         }
         creditCyl=full_cyl-empty_cyl-sv;
         et_credit_cyl.setText(Integer.toString(creditCyl));
+        selectedConsumer.credit_cylinder = creditCyl;
     }
 
     @Override
@@ -463,14 +469,17 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 else if (et_chalan.getText().toString().equalsIgnoreCase(""))
                 {
                     Toast.makeText(getApplicationContext(),"Enter Chalan Number",Toast.LENGTH_SHORT).show();
+                    et_chalan.requestFocus();
                 }
                 else if (et_full_cyl.getText().toString().equalsIgnoreCase(""))
                 {
                     Toast.makeText(getApplicationContext(),"Enter Full Cylinder",Toast.LENGTH_SHORT).show();
+                    et_full_cyl.requestFocus();
                 }
                 else if (et_cash_amt.getText().toString().equalsIgnoreCase(""))
                 {
                     Toast.makeText(getApplicationContext(),"Enter Cash Amt",Toast.LENGTH_SHORT).show();
+                    et_cash_amt.requestFocus();
                 }
                 else {
                     saveConfirmation();
@@ -568,6 +577,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             jsonObject.put("YY", AppSettings.getYear());
             jsonObject.put("ModeOfEntry", "Mobile");
 
+            //jsonObject.put("availableStock", "availableStock");
+
 
             parentJsonObj.put("objCommercialSale",jsonObject);
             AppSettings.getInstance(this).saveCommercialConsumerDelivery(this,parentJsonObj);
@@ -614,7 +625,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         consumerArr = new String[consumerDBList.size()];
         for(int i = 0; i < consumerDBList.size(); i++){
 
-            consumerListItems.add(consumerDBList.get(i).consumer_name);
+            consumerListItems.add(consumerDBList.get(i).consumer_name + " : "+ consumerDBList.get(i).consumer_no);
         }
 
         if(isCommercialConsumerServiceRunning){
@@ -642,6 +653,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                             et_consumer_name.setText(CossumerName);
                             et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                             et_total_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
+                            et_balanced_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
                             enabledViews();
 
                             // productId = productDBList.get(position).product_id;
@@ -701,7 +713,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             BPCLrate= productDBList.get(position).bpcl_rate;
 
             try {
-                UserAssignedCylinderModel userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
+                userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
                 if(userAssignedCylinderModel != null) {
                     assignedCylinderQty = userAssignedCylinderModel.Qty;
                     assigned_cylinder.setVisibility(View.VISIBLE);
@@ -776,6 +788,10 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             String responseMsg = objectResult.optString("responseMessage");
 
             if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
+                getHelper().getConsumerModelExceptionDao().update(selectedConsumer);
+                getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().update(userAssignedCylinderModel);
+
+
                 Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
                 //saveConsumerToLocalDB();
                 hideProgressDialog();
