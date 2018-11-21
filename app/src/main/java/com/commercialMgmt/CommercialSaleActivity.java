@@ -32,6 +32,7 @@ import com.commercialMgmt.models.ConsumerModel;
 import com.commercialMgmt.models.UserAssignedCylinderModel;
 import com.infosolutions.customviews.EvitaProgressDialog;
 import com.infosolutions.database.DatabaseHelper;
+import com.infosolutions.database.DomesticDeliveryDB;
 import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.ResponseListener;
@@ -40,6 +41,7 @@ import com.infosolutions.utils.AppSettings;
 import com.infosolutions.utils.Constant;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.UpdateBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -122,6 +124,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     private int min = 10;
     private int max = 110;
     private String uniqueId_AddConsumer;
+    int creditCyl=0;
 
     private String consumer_name, Chalan;
     private Double MRP = 0.0, Discount = 0.0, Selling_price = 0.0, Total_Amt = 0.0, Cash_Amt = 0.0, Total_credit_amt = 0.0;
@@ -228,9 +231,11 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if (!TextUtils.isEmpty(et_full_cyl.getText().toString())) {
+                if (!TextUtils.isEmpty(et_full_cyl.getText().toString()) ) {
                     availableStock=assignedCylinderQty-Integer.parseInt(et_full_cyl.getText().toString());
-                    userAssignedCylinderModel.Qty = availableStock;
+                    /*if(userAssignedCylinderModel != null) {
+                        userAssignedCylinderModel.Qty = availableStock;
+                    }*/
                     if (Integer.parseInt(et_full_cyl.getText().toString()) > assignedCylinderQty) {
                         et_full_cyl.setError("Enter valid cylinder qty");
                         et_full_cyl.setText("0");
@@ -358,6 +363,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             if (cashAmt <= (totalCreditAmt + totalAmt)) {
                 et_balanced_credit_amt.setText(String.valueOf(balancedCreditAmt));
             } else {
+                et_cash_amt.setText("");
                 et_cash_amt.setError("enter valid cash amt");
             }
         } else {
@@ -366,9 +372,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             et_balanced_credit_amt.setText(String.valueOf(totalCreditAmt + totalAmt));
         }
 
-        Double d = new Double(et_balanced_credit_amt.getText().toString());
-        selectedConsumer.amount_credit_cylinder = d.intValue();
-
+        /*Double d = new Double(et_balanced_credit_amt.getText().toString());
+        selectedConsumer.amount_credit_cylinder = d.intValue();*/
     }
 
     private void calculateTotalAmt() {
@@ -387,14 +392,14 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     }
 
     private void calculateCreditCylinder() {
-        int creditCyl=0;
-        if(!TextUtils.isEmpty(et_full_cyl.getText())) {
+
+        if(!TextUtils.isEmpty(et_full_cyl.getText().toString())) {
             full_cyl = Integer.parseInt(et_full_cyl.getText().toString()) + selectedConsumer.credit_cylinder;
 
         }else{
             full_cyl = selectedConsumer.credit_cylinder ;
         }
-        if(!TextUtils.isEmpty(et_empty_cyl.getText())) {
+        if(!TextUtils.isEmpty(et_empty_cyl.getText().toString())) {
             empty_cyl = Integer.parseInt(et_empty_cyl.getText().toString());
             if(!TextUtils.isEmpty(et_sv_cyl.getText().toString())) {
                 int finalcount = full_cyl - Integer.parseInt(et_sv_cyl.getText().toString());
@@ -442,7 +447,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         }
         creditCyl=full_cyl-empty_cyl-sv;
         et_credit_cyl.setText(Integer.toString(creditCyl));
-        selectedConsumer.credit_cylinder = creditCyl;
+       // selectedConsumer.credit_cylinder = creditCyl;
     }
 
     @Override
@@ -654,7 +659,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                             et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                             et_total_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
                             et_balanced_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
-                            enabledViews();
+
 
                             // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
@@ -711,8 +716,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             productId = productDBList.get(position).product_id;
             BPCLrate= productDBList.get(position).bpcl_rate;
-
+            enabledViews();
             try {
+
                 userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
                 if(userAssignedCylinderModel != null) {
                     assignedCylinderQty = userAssignedCylinderModel.Qty;
@@ -788,8 +794,26 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             String responseMsg = objectResult.optString("responseMessage");
 
             if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
-                getHelper().getConsumerModelExceptionDao().update(selectedConsumer);
-                getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().update(userAssignedCylinderModel);
+                try {
+                    UpdateBuilder<ConsumerModel, Integer> updateBuilder;
+                    UpdateBuilder<UserAssignedCylinderModel, Integer> updateBuilder1;
+                    updateBuilder =  getHelper().getConsumerModelExceptionDao().updateBuilder();
+                    updateBuilder.where().eq("ConsumerID",selectedConsumer.ConsumerID);
+                    Double d = new Double(et_balanced_credit_amt.getText().toString());
+                    updateBuilder.updateColumnValue("credit_cylinder",creditCyl);
+                    updateBuilder.updateColumnValue("amount_credit_cylinder",d.intValue());
+                    updateBuilder.update();
+
+                    updateBuilder1 = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().updateBuilder();
+                    updateBuilder1.where().eq("PRODUCT_ID",userAssignedCylinderModel.PRODUCT_ID);
+                    updateBuilder1.updateColumnValue("Qty",availableStock);
+                    updateBuilder1.update();
+
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
 
 
                 Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
