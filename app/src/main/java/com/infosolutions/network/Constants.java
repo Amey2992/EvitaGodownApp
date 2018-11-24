@@ -119,7 +119,6 @@ public class Constants {
 */
 
 
-
     public static String LOGIN_API_VALUE = "userAuth";
     public static String SYNC_ANDROID_DATA_VALUE = "syncAndriodData";
     public static String GODOWN_CODE = "godown_code";

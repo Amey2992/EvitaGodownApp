@@ -2,10 +2,14 @@ package com.commercialMgmt;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +17,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +44,7 @@ import com.infosolutions.evita.R;
 import com.infosolutions.network.Constants;
 import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
+import com.infosolutions.service.GetCommercialConsumerService;
 import com.infosolutions.utils.AppSettings;
 import com.infosolutions.utils.Constant;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -135,6 +143,11 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
     private int assignedCylinderQty , availableStock=0;
     private UserAssignedCylinderModel userAssignedCylinderModel;
 
+
+    @BindView(R.id.progress_bar_container)
+    RelativeLayout progress_bar_container;
+
+
     public String getSelectedDeliveryManId() {
         return selectedDeliveryManId;
     }
@@ -161,10 +174,20 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         Calculation();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_SAVE_CONSUMER_DELIVERY, this);
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver,
+                new IntentFilter(Constants.CONSUMER_BROADCAST));
         // To fetch assigned cylinder model
 
 
     }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            progress_bar_container.setVisibility(View.GONE);
+
+        }
+    };
 
     private void disabledViews() {
         et_full_cyl.setEnabled(false);
@@ -609,16 +632,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
 
     private void getConsumer() {
         consumerListItems= new ArrayList<>();
@@ -773,6 +787,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         }
     }
 
+
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
@@ -782,6 +797,43 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_module, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_transfer:
+                progress_bar_container.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(this, GetCommercialConsumerService.class);
+                startService(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+            Log.d("loginType:",Constants.LOGIN_DELIVERYMAN);
+            MenuItem item = menu.findItem(R.id.action_transfer).setVisible(true);
+            menu.findItem(R.id.action_setting).setVisible(false);
+            menu.findItem(R.id.action_logout).setVisible(false);
+            menu.findItem(R.id.action_list_view).setVisible(false);
+            item.setIcon(R.drawable.consumer_refresh_icon);
+
+        return true;
+    }
+
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
@@ -804,10 +856,12 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                     updateBuilder.updateColumnValue("amount_credit_cylinder",d.intValue());
                     updateBuilder.update();
 
-                    updateBuilder1 = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().updateBuilder();
-                    updateBuilder1.where().eq("PRODUCT_ID",userAssignedCylinderModel.PRODUCT_ID);
-                    updateBuilder1.updateColumnValue("Qty",availableStock);
-                    updateBuilder1.update();
+                    if(userAssignedCylinderModel != null) {
+                        updateBuilder1 = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().updateBuilder();
+                        updateBuilder1.where().eq("PRODUCT_ID", userAssignedCylinderModel.PRODUCT_ID);
+                        updateBuilder1.updateColumnValue("Qty", availableStock);
+                        updateBuilder1.update();
+                    }
 
 
                 } catch (SQLException e) {
