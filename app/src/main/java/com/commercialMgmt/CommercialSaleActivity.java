@@ -148,7 +148,6 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         ButterKnife.bind(this);
         setupToolbar();
 
-
         disabledViews();
 
         userId = PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID, 0);
@@ -160,9 +159,6 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         saveCommercialSaleBtn();
         Calculation();
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.COMMERCIAL_SAVE_CONSUMER_DELIVERY, this);
-
-        // To fetch assigned cylinder model
-
 
     }
 
@@ -344,8 +340,6 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
             }
         });
-
-
     }
 
     private void calcaulateCreditAmt() {
