@@ -71,7 +71,7 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
     public JSONObject localJSON_DATA;
     private JSONObject jsonObjectSyncAndroidDataToServer;
     File backupDB;
-TextView appVersion;
+    TextView appVersion;
 
     @Inject
     EventBus eventBus;
