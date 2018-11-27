@@ -155,8 +155,8 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
         //spinItems.add(0,default_str);
 
-        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinItems);
-        spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinItems);
+        //spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         com_product_name.setAdapter(spinAdapter);
 
         com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -32,6 +32,7 @@ import com.infosolutions.network.Constants;
 import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.reports.NewReportDetailsActivity;
+import com.infosolutions.utils.AppSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -166,6 +167,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
                 if (groupPosition != previousGroup)
                     reportsListView.collapseGroup(previousGroup);
                 previousGroup = groupPosition;
+                AppSettings.hideKeyboard(CommercialReportDetailActivity.this);
             }
         });
 
