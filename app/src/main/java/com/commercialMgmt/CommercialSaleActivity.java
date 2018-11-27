@@ -146,6 +146,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
     @BindView(R.id.progress_bar_container)
     RelativeLayout progress_bar_container;
+    private int sv_cyl = 0;
 
 
     public String getSelectedDeliveryManId() {
@@ -553,7 +554,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         if(!TextUtils.isEmpty(et_total_credit_cyl.getText())) {
             total_pending_cyl = Integer.parseInt(et_total_credit_cyl.getText().toString());
         }
-
+        if(!TextUtils.isEmpty(et_sv_cyl.getText())) {
+            sv_cyl = Integer.parseInt(et_sv_cyl.getText().toString());
+        }
 
     }
 
@@ -607,6 +610,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             jsonObject.put("IdCommParty",selectedConsumer.ConsumerID);
             jsonObject.put("YY", AppSettings.getYear());
             jsonObject.put("ModeOfEntry", "Mobile");
+            jsonObject.put("sv", sv_cyl);
 
             //jsonObject.put("availableStock", "availableStock");
 

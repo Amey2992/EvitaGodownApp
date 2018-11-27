@@ -32,6 +32,7 @@ import com.infosolutions.network.Constants;
 import com.infosolutions.network.ResponseListener;
 import com.infosolutions.network.VolleySingleton;
 import com.infosolutions.ui.user.reports.NewReportDetailsActivity;
+import com.infosolutions.utils.AppSettings;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,8 +95,9 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             @Override
             public boolean onQueryTextChange(String newText) {
                 String text = newText.toLowerCase(Locale.getDefault());
-                if(adapter != null && !TextUtils.isEmpty(text))
-                adapter.filter(text);
+                if(adapter != null && text != null) {
+                    adapter.filter(text);
+                }
             return false;
             }
         });
@@ -165,6 +167,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
                 if (groupPosition != previousGroup)
                     reportsListView.collapseGroup(previousGroup);
                 previousGroup = groupPosition;
+                AppSettings.hideKeyboard(CommercialReportDetailActivity.this);
             }
         });
 
@@ -493,7 +496,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
                 payment_mode_textview_value.setText(childModel.PaymentMode);
 
                 payment_status_textview.setText("Payment Status: ");
-                payment_status_textview_value.setText(childModel.PaymentStatus);
+                payment_status_textview_value.setText(childModel.PaymentStatus.trim());
 
                 challan_textview.setText("Challan No: ");
                 challan_textview_value.setText(childModel.ChallanNo);
