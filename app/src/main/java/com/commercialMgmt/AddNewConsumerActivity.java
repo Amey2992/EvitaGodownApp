@@ -42,6 +42,7 @@ import com.infosolutions.database.*;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -346,7 +347,13 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
                 if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
-                    //saveConsumerToLocalDB();
+                    JSONArray jsonArray = objectResult.optJSONArray("objCommercialPartyMst");
+                    if(jsonArray != null) {
+                        JSONObject jsonObject = jsonArray.optJSONObject(0);
+                        if (jsonObject != null) {
+                            saveConsumerToLocalDB(new ConsumerModel(1, jsonObject));
+                        }
+                    }
                     hideProgressDialog();
                     finish();
                 }
@@ -362,11 +369,11 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
     }
 
     @SuppressLint("LongLogTag")
-    private void saveConsumerToLocalDB() {
+    private void saveConsumerToLocalDB(ConsumerModel consumerModel) {
         DatabaseHelper databaseHelper = new DatabaseHelper(AddNewConsumerActivity.this);
         RuntimeExceptionDao<ConsumerModel, Integer> consumerDB = getHelper().getComConsumerRTExceptionDao();
 
-        ConsumerModel comdb = new ConsumerModel();
+        /*ConsumerModel comdb = new ConsumerModel();
 
         int discount=Integer.parseInt(com_consumer_discount.getText().toString());
 
@@ -380,16 +387,11 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         comdb.pan_card=com_consumer_PAN_No.getText().toString() ;
         comdb.gstin = com_consumer_GSTIN.getText().toString();
         comdb.credit_cylinder = 0;
-        comdb.user_id=UserId;
-        comdb.amount_credit_cylinder= 0;
+        //comdb.user_id=UserId;
+        comdb.amount_credit_cylinder= 0;*/
 
-        consumerDB.create(comdb);
-        try {
-            List<ConsumerModel> lstModel = getHelper().getComConsumerRTExceptionDao().queryBuilder().where().eq("consumer_name",com_consumer_name.getText().toString()).query();
-            System.out.println(lstModel);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        consumerDB.create(consumerModel);
+
 
     }
 
