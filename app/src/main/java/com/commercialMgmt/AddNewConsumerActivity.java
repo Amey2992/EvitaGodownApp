@@ -303,6 +303,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
 
                 parentJsonObj.put("objCommercialPartyMst",jsonObject);
+                Log.e("consumer Data",parentJsonObj.toString());
                 AppSettings.getInstance(this).saveCommercialConsumer(this,parentJsonObj);
 
             } catch (JSONException e) {

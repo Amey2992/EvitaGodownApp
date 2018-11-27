@@ -164,7 +164,6 @@ public class LoginActivity extends BaseActivity {
 
         focusOnView(scrollView, editTextUsername);
 
-
         btnCommercialLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,8 +187,6 @@ public class LoginActivity extends BaseActivity {
                         showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.no_network_available));
                     }
                 }
-
-
             }
         });
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -353,7 +350,8 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
 
-        } else if (type.equals(VolleySingleton.CallType.UPDATE_LOCAL_DATA)) {
+        }
+        else if (type.equals(VolleySingleton.CallType.UPDATE_LOCAL_DATA)) {
 
 
             RuntimeExceptionDao<DomesticDeliveryDB, Integer> daoDatabase =
@@ -377,7 +375,9 @@ public class LoginActivity extends BaseActivity {
             AppSettings.getInstance(this).updateDatabase(this);
             hideProgressDialog();
             bottomGodownSheetType();
-        }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
+        }
+
+        else if(type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)){
             RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
                     getHelper().getCommercialCreditExceptionDao();
 
@@ -763,14 +763,13 @@ public class LoginActivity extends BaseActivity {
             }
         }
 
-
         builder.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 position = position - 1;
                 String selectedGodown = mapLinked.get(position);
-                String[] leftRight = selectedGodown.split(":");
 
+                String[] leftRight = selectedGodown.split(":");
                 PreferencesHelper.getInstance().setValue(KEY_GODOWN_NAME, leftRight[0]);
                 PreferencesHelper.getInstance().setValue(KEY_GODOWN, leftRight[1]);
 

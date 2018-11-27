@@ -347,7 +347,8 @@ public class DomesticActivity extends BaseActivity {
     private void getEmployeeDetails(String selectedDeliveryMan, int id) {
         RuntimeExceptionDao<DomesticDeliveryDB, Integer> domesticDB = getHelper().getDomesticRuntimeExceptionDao();
         try {
-            List<DomesticDeliveryDB> employeeObj = domesticDB.queryBuilder().orderBy("trip_number",false).where().eq("employee_id",id).and().eq("product_id",getProductId()).query();
+            List<DomesticDeliveryDB> employeeObj = domesticDB.queryBuilder().orderBy("trip_number",false)
+                    .where().eq("employee_id",id).and().eq("product_id",getProductId()).query();
             String[] splitNameValue = selectedDeliveryMan.split(":");
             String deliveryManKEY = splitNameValue[0];
             String DeliveryManVALUE = splitNameValue[1];
@@ -507,21 +508,19 @@ public class DomesticActivity extends BaseActivity {
 
         try {
 
-
             DatabaseHelper databaseHelper = new DatabaseHelper(DomesticActivity.this);
 
             /*if(!databaseHelper.CheckIsDataAlreadyInDBorNot(getDate()))
             {*/
             RuntimeExceptionDao<DomesticDeliveryDB, Integer> domesticDB = getHelper().getDomesticRuntimeExceptionDao();
 
-
-
            //new
             String uniqueId = Integer.toString(getGoDownId()) + Integer.toString(getDeliveryManId()) + fresh_trip_no + currentDateTime()+getProductId  ();
 
             DomesticDeliveryDB domesticDeliveryDB = new DomesticDeliveryDB(1, getDeliveryManId(), fresh_trip_no, getProductId(), getDateTime(), getApplicationUserId(), fresh_full,
                     0 , 0 , 0 , 0 , 0, getDateTime(),
-                    0,0, "MOBILE", "INSERT", "N", getGoDownId(), getDeviceId(),getDate(),false,true,false,uniqueId);
+                    0,0, "MOBILE", "INSERT", "N", getGoDownId(),
+                    getDeviceId(),getDate(),false,true,false,uniqueId);
             domesticDB.create(domesticDeliveryDB);
             saveWithSharedPreferences(getApplicationContext(), KEY_DOMESTIC_FULL_CYLINDER, String.valueOf(fresh_full));
 
@@ -729,8 +728,6 @@ public class DomesticActivity extends BaseActivity {
                     getGoDownId()).and().eq("given_by", getApplicationUserId()).and().eq("given_date" , getDate());
 
 
-
-
             updateBuilder.updateColumnValue("empty_received", getTextFromET(input_empty_cylinder));
             updateBuilder.updateColumnValue("sv_field", getTextFromET(input_return_sv));
             updateBuilder.updateColumnValue("dbc_field", getTextFromET(input_return_dbc));
@@ -784,8 +781,6 @@ public class DomesticActivity extends BaseActivity {
             updateBuilder.where().eq("trip_number", domesticDeliveryDB.trip_number).and().eq("product_id",
                     domesticDeliveryDB.product_id).and().eq("employee_id", domesticDeliveryDB.employee_id).and().eq("godown_Id",
                     domesticDeliveryDB.godown_Id).and().eq("given_by", domesticDeliveryDB.given_by).and().eq("given_date" , getDate());
-
-
 
 
             updateBuilder.updateColumnValue("empty_received", getTextFromET(input_empty_cylinder));
@@ -902,12 +897,11 @@ public class DomesticActivity extends BaseActivity {
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
 
-
         try {
             JSONObject objectResult = new JSONObject(response);
             if (objectResult.has("responseCode") && objectResult.getString("responseCode").equalsIgnoreCase("200")){
                 JSONArray productArray = objectResult.optJSONArray("productArray");
-                String CLOSING_FULL =    productArray.optJSONObject(0).getString("CLOSING_FULL");
+                String CLOSING_FULL =    productArray.optJSONObject(0).optString("CLOSING_FULL");
 
                 layout_cylinder.setVisibility(View.VISIBLE);
                 TOTAL_AVAILABLE_CYL = Integer.parseInt(CLOSING_FULL);
@@ -920,7 +914,6 @@ public class DomesticActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
     }
     @Override
@@ -977,7 +970,6 @@ public class DomesticActivity extends BaseActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
 
     }
 

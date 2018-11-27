@@ -337,6 +337,7 @@ public class VolleySingleton {
      * @param type
      * @param url
      * */
+     /*
     public void syncAndroidData(final CallType type, final String url, final JSONObject jsonSyncData) {
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -389,7 +390,7 @@ public class VolleySingleton {
                 }
             }
 
-         /*   @Override
+         *//*   @Override
             public String getBodyContentType() {
                 return "application/x-www-form-urlencoded; charset="
                         + getParamsEncoding();
@@ -404,7 +405,7 @@ public class VolleySingleton {
                 }
                 return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
 
-            }*/
+            }*//*
         };
 
         request.setShouldCache(false);
@@ -413,7 +414,7 @@ public class VolleySingleton {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         addToRequestQueue(request);
-    }
+    }*/
 
     public void getCommercialDeliveryCount(final CallType type, final String url){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {

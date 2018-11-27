@@ -259,8 +259,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                     /*if(userAssignedCylinderModel != null) {
                         userAssignedCylinderModel.Qty = availableStock;
                     }*/
-                    if (Integer.parseInt(et_full_cyl.getText().toString()) > assignedCylinderQty) {
-                        et_full_cyl.setError("Enter valid cylinder qty");
+                    if (Integer.parseInt(et_full_cyl.getText().toString()) > (assignedCylinderQty+selectedConsumer.credit_cylinder))
+                    {
+                        et_full_cyl.setError("Please Assigned Cylinder First Then Enter Qty");
                         et_full_cyl.setText("0");
                     }
                 }
@@ -440,8 +441,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                     }
                 }
             }
+            }
 
-        }else{
+        else{
             empty_cyl = 0;
         }
 
@@ -472,6 +474,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         et_credit_cyl.setText(Integer.toString(creditCyl));
        // selectedConsumer.credit_cylinder = creditCyl;
     }
+
 
     @Override
     protected void onResume() {
@@ -609,6 +612,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
 
             parentJsonObj.put("objCommercialSale",jsonObject);
+            Log.e("final JSON",parentJsonObj.toString());
             AppSettings.getInstance(this).saveCommercialConsumerDelivery(this,parentJsonObj);
         }
         catch (Exception e)

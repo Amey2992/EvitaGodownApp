@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity {
     private static final int RECORD_REQUEST_CODE = 3367;
     private static final int RQ_DEVICE_STATE = 3360;
     boolean doubleBackToExitPressedOnce = false;
+
     @Inject
     EventBus eventBus;
     Timer mtimer;
@@ -89,6 +90,8 @@ public class MainActivity extends BaseActivity {
     private List<ModuleModel> listModel = new ArrayList<>();
     private String view_type;
     private DatabaseHelper databaseHelper;
+
+    // auto sync timer
     private android.content.BroadcastReceiver listener = new BroadcastReceiver() {
         @Override
         public void onReceive( Context context, Intent intent ) {
@@ -130,7 +133,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-
+                goToNextActivity(view, position);
             }
         }));
 
@@ -316,7 +319,9 @@ public class MainActivity extends BaseActivity {
     private void permission() {
 
         if (!GlobalVariables.permissionsEnabled(MainActivity.this, new String[]{permission.WRITE_EXTERNAL_STORAGE})) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECORD_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]
+                    {
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECORD_REQUEST_CODE);
         }
 
     }
@@ -526,6 +531,7 @@ public class MainActivity extends BaseActivity {
             eventDataSyncToServer.setDataSynced(false);
             eventBus.post(eventDataSyncToServer);
         } else if (type.equals(VolleySingleton.CallType.COMMERCIAL_DELIVERY_COUNT)) {
+
             RuntimeExceptionDao<CommercialDeliveryCreditDB, Integer> daoDatabase =
                     getHelper().getCommercialCreditExceptionDao();
 
@@ -535,7 +541,6 @@ public class MainActivity extends BaseActivity {
                 e.printStackTrace();
             }
 
-
             JSONArray jsonArray = jsonResult.optJSONArray("Table");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.optJSONObject(i);
@@ -543,10 +548,8 @@ public class MainActivity extends BaseActivity {
                 daoDatabase.createOrUpdate(commercialDeliveryCreditDB);
             }
 
-
             AppSettings.getInstance(this).updateLocalFromServer(this);
         }
-
     }
 
     private void serverFailResponse(VolleyError error) {
@@ -626,12 +629,8 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
         }
-
     }
-
-
 
 }
 
