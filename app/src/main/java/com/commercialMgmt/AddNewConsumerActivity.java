@@ -346,7 +346,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
                 if (objectResult.optString(Constants.responseCcode).equalsIgnoreCase("200")) {
                     Toast.makeText(this, responseMsg, Toast.LENGTH_SHORT).show();
-                    saveConsumerToLocalDB();
+                    //saveConsumerToLocalDB();
                     hideProgressDialog();
                     finish();
                 }

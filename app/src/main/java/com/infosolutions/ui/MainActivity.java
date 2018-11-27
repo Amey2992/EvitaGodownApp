@@ -93,7 +93,9 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onReceive( Context context, Intent intent ) {
             stopTimer();
-            startTimer();
+            if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+                startTimer();
+            }
 
         }
     };
@@ -133,7 +135,11 @@ public class MainActivity extends BaseActivity {
         }));
 
 
-        startTimer();
+        if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
+            startTimer();
+        }else{
+            stopTimer();
+        }
         permission();
         eventBus.register(this);
 
@@ -415,7 +421,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+        public boolean onPrepareOptionsMenu(Menu menu) {
 
         login_type = PreferencesHelper.getInstance().getStringValue(Constants.LOGIN_TYPE,"");
         if(login_type.equalsIgnoreCase(Constants.LOGIN_GODOWNKEEPER)) {
