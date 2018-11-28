@@ -260,15 +260,16 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                     /*if(userAssignedCylinderModel != null) {
                         userAssignedCylinderModel.Qty = availableStock;
                     }*/
-                    if (Integer.parseInt(et_full_cyl.getText().toString()) > (assignedCylinderQty+selectedConsumer.credit_cylinder))
-                    {
-                        et_full_cyl.setError("Please Assigned Cylinder First Then Enter Qty");
-                        et_full_cyl.setText("0");
+                    if(selectedConsumer!=null) {
+                        if (Integer.parseInt(et_full_cyl.getText().toString()) > (assignedCylinderQty + selectedConsumer.credit_cylinder)) {
+                            et_full_cyl.setError("Please Assigned Cylinder First Then Enter Qty");
+                            et_full_cyl.setText("");
+                        }
                     }
                 }
 
 
-                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("")) {
                     full_cyl = 0;
                     empty_cyl = 0;
                     sv = 0;
@@ -312,7 +313,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("")) {
                     full_cyl = 0;
                     empty_cyl = 0;
                     sv = 0;
@@ -336,7 +337,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (et_full_cyl.getText().toString().equalsIgnoreCase("0")) {
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("")) {
                     full_cyl = 0;
                     empty_cyl = 0;
                     sv = 0;
@@ -674,10 +675,22 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                         @Override
                         public void onClick(String consumer, int i) {
 
+
                             selectedConsumer = consumerDBList.get(i);
                             String CossumerName=consumer;
                             AppSettings.hideKeyboard(CommercialSaleActivity.this);
                             et_consumer_name.setText(CossumerName);
+
+                            if (com_product_name.getText().toString()!=null && !com_product_name.getText().toString().equalsIgnoreCase("")) {
+                                if (assignedCylinderQty!=0 && assignedCylinderQty>0) {
+                                    enabledViews();
+                                }
+                                else if( selectedConsumer.credit_cylinder>0 && String.valueOf(selectedConsumer.credit_cylinder)!=null)
+                                {
+                                    et_empty_cyl.setEnabled(true);
+                                }
+                            }
+
                             et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                             et_total_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
                             et_balanced_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
@@ -738,14 +751,30 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             productId = productDBList.get(position).product_id;
             BPCLrate= productDBList.get(position).bpcl_rate;
-            enabledViews();
+
             try {
 
                 userAssignedCylinderModel = getHelper().getUserAssignedCylinderModelRuntimeExceptionDao().queryBuilder().where().eq("PRODUCT_ID",productId).queryForFirst();
                 if(userAssignedCylinderModel != null) {
                     assignedCylinderQty = userAssignedCylinderModel.Qty;
+
+
+                        if (et_consumer_name.getText().toString() != null && !et_consumer_name.getText().toString().equalsIgnoreCase("")) {
+                            if (assignedCylinderQty!=0 && assignedCylinderQty>0) {
+                                enabledViews();
+                            }
+                            else if(selectedConsumer.credit_cylinder!=0 && selectedConsumer.credit_cylinder>0)
+                            {
+                                et_empty_cyl.setEnabled(true);
+                            }
+                        }
+
+
+
                     assigned_cylinder.setVisibility(View.VISIBLE);
                     assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(userAssignedCylinderModel.Qty));
+
+
                 }else{
                     assignedCylinderQty = 0;
                     assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(assignedCylinderQty));
@@ -881,6 +910,10 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 //saveConsumerToLocalDB();
                 hideProgressDialog();
                 finish();
+            }
+            else
+            {
+                Toast.makeText(CommercialSaleActivity.this,"Error Occured",Toast.LENGTH_SHORT);
             }
 
         }
