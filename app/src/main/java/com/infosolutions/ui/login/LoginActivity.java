@@ -480,6 +480,9 @@ public class LoginActivity extends BaseActivity {
             editor.clear();
             editor.commit();
 
+            Intent intent = new Intent(this, GetConsumerService.class);
+            startService(intent);
+
             //Amey
             clearTablesData();
 
