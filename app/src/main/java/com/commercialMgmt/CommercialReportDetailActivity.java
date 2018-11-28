@@ -330,7 +330,8 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         private TextView closing_textview_value;
         private TextView opening_textview;
         private TextView opening_textview_value;
-
+        private TextView sv_cyl_textview, sv_cyl_textview_value;
+        private TextView consumer_sv_cyl_textview, consumer_sv_cyl_textview_value;
 
 
         private ArrayList<CommercialConsumerStockReport> arraylist=null;
@@ -424,6 +425,12 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             mrp_textview = convertView.findViewById(R.id.mrp_textview);
             mrp_textview_value = convertView.findViewById(R.id.mrp_textview_value);
 
+            sv_cyl_textview = convertView.findViewById(R.id.sv_cyl_textview);
+            sv_cyl_textview_value = convertView.findViewById(R.id.sv_cyl_textview_value);
+
+            consumer_sv_cyl_textview = convertView.findViewById(R.id.consumer_sv_cyl_textview);
+            consumer_sv_cyl_textview_value = convertView.findViewById(R.id.consumer_sv_cyl_textview_value);
+
             discount_textview = convertView.findViewById(R.id.discount_textview);
             discount_textview_value = convertView.findViewById(R.id.discount_textview_value);
 
@@ -443,10 +450,15 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             credit_amount_textview_value = convertView.findViewById(R.id.credit_amount_textview_value);
 
             payment_mode_textview = convertView.findViewById(R.id.payment_mode_textview);
+            payment_mode_textview.setVisibility(View.GONE);
             payment_mode_textview_value = convertView.findViewById(R.id.payment_mode_textview_value);
+            payment_mode_textview_value.setVisibility(View.GONE);
+
 
             payment_status_textview = convertView.findViewById(R.id.payment_status_textview);
+            payment_status_textview.setVisibility(View.GONE);
             payment_status_textview_value = convertView.findViewById(R.id.payment_status_textview_value);
+            payment_status_textview_value.setVisibility(View.GONE);
 
             challan_textview = convertView.findViewById(R.id.challan_textview);
             challan_textview_value = convertView.findViewById(R.id.challan_textview_value);
@@ -477,11 +489,6 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
                 discount_textview.setText("Discount: ");
                 discount_textview_value.setText(Integer.toString(childModel.Discount));
 
-                fullcyl_textview.setText("FullCyl: ");
-                fullcyl_textview_value.setText(Integer.toString(childModel.FullCyl));
-
-                emptycyl_textview.setText("EmptyCyl: ");
-                emptycyl_textview_value.setText(Integer.toString(childModel.EmptyCyl));
 
                 creditcyl_textview.setText("CredityCyl: ");
                 creditcyl_textview_value.setText(Integer.toString(childModel.CreditCyl));
@@ -501,11 +508,22 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
                 challan_textview.setText("Challan No: ");
                 challan_textview_value.setText(childModel.ChallanNo);
 
+                consumer_sv_cyl_textview.setText("SV: ");
+                consumer_sv_cyl_textview_value.setText(Integer.toString(childModel.sv));
+
             }else if (this.type.equalsIgnoreCase(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK.toString())) {
 
                 stockcontainer.setVisibility(View.VISIBLE);
                 consumerContainer.setVisibility(View.GONE);
 
+                fullcyl_textview.setText("FullCyl: ");
+                fullcyl_textview_value.setText(Integer.toString(childModel.FullCyl));
+
+                emptycyl_textview.setText("EmptyCyl: ");
+                emptycyl_textview_value.setText(Integer.toString(childModel.EmptyCyl));
+
+                sv_cyl_textview.setText("SV: ");
+                sv_cyl_textview_value.setText(Integer.toString(childModel.sv));
 
 
                 credit_textview.setText("Credit: ");

@@ -71,6 +71,11 @@ public class CommercialConsumerStockReport implements Serializable {
     @DatabaseField
     public int Opening;
 
+    @DatabaseField
+    public int sv;
+
+
+
 
     public CommercialConsumerStockReport(){}
 
@@ -85,19 +90,21 @@ public class CommercialConsumerStockReport implements Serializable {
                 BPCLRate = jsonObject.optInt("BPCLRate");
                 MRP = jsonObject.optInt("MRP");
                 Discount = jsonObject.optInt("Discount");
-                FullCyl = jsonObject.optInt("FullCyl");
-                EmptyCyl = jsonObject.optInt("EmptyCyl");
                 CreditCyl = jsonObject.optInt("CreditCyl");
                 Amount = jsonObject.optInt("Amount");
                 CreditAmount = jsonObject.optInt("CreditAmount");
                 PaymentMode = jsonObject.optString("PaymentMode");
                 PaymentStatus = jsonObject.optString("PaymentStatus");
                 ChallanNo = jsonObject.optString("ChallanNo");
+                sv = jsonObject.optInt("sv");
 
             }else if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_STOCK)){
                 Credit = jsonObject.optInt("Credit");
                 Closing = jsonObject.optInt("Closing");
                 Opening = jsonObject.optInt("Opening");
+                FullCyl = jsonObject.optInt("FullCyl");
+                EmptyCyl = jsonObject.optInt("EmptyCyl");
+                sv = jsonObject.optInt("sv");
             }
         }
     }
