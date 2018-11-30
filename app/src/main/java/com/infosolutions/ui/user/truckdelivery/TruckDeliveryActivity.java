@@ -97,7 +97,6 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
     }
 
 
-
     private void setupViewPager(ViewPager viewPager) {
         TruckDeliveryActivity.Adapter adapter = new TruckDeliveryActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new TruckReceiveFragment(), "Received");
@@ -131,7 +130,6 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
                     String PCO_Vehical_No  = jsonArray.optJSONObject(i).optString("PCO_Vehical_No");
                     int Vehical_Id  = jsonArray.optJSONObject(i).optInt("vehicleId");
 
-
                     if(!TextUtils.isEmpty(Vehicle_No)){
                         lstERVOWNModel.add(ervno);
                     }else {
@@ -149,9 +147,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
                         }
                         hashProduct.put(ervno,lstPurchaseProduct);
                     }
-
                 }
-
                 isShowPopup = true;
             }
         }
@@ -184,14 +180,11 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
             mFragmentTitleList.add(title);
         }
 
-
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

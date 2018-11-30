@@ -122,10 +122,12 @@ public class TVDetailsActivity extends BaseActivity {
         }
         ButterKnife.bind(this);
         setupToolbar();
+
         setupProductType();
         submitBtnClickHandler();
         getCylinderButtonHandler();
         getDataButtonHandler();
+
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.CONSUMER_DETAILS, this);
         input_number_of_cylinders.setEnabled(false);
         consumer_name.setEnabled(false);
@@ -180,8 +182,6 @@ public class TVDetailsActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
 
     private void getCylinderCount(String consumer_id){
@@ -201,7 +201,6 @@ public class TVDetailsActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
 
 
     @Override
@@ -261,9 +260,7 @@ public class TVDetailsActivity extends BaseActivity {
             }
         });
 
-
     }
-
 
 
     private void saveTOLocalDB(String consumerNo, int cylinderCount){
@@ -274,7 +271,6 @@ public class TVDetailsActivity extends BaseActivity {
 
         showToast(getResources().getString(R.string.saved_success_msg));
     }
-
 
 
     private void setupProductType() {
@@ -332,7 +328,6 @@ public class TVDetailsActivity extends BaseActivity {
 
             }
         }));
-
     }
 
     private void viewTVDetails() {
@@ -374,7 +369,6 @@ public class TVDetailsActivity extends BaseActivity {
         try {
             JSONObject objectResult = new JSONObject(response);
 
-
             if (objectResult.has("responseCode") && objectResult.optString("responseCode").equalsIgnoreCase("200")){
                 JSONArray productArray = objectResult.getJSONArray("productArray");
                 String CLOSING_FULL =    productArray.getJSONObject(0).optString("CLOSING_FULL");
@@ -404,6 +398,8 @@ public class TVDetailsActivity extends BaseActivity {
         void onLongClick(View view, int position);
     }
 
+
+    // not getting this code
     public  class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
@@ -445,8 +441,6 @@ public class TVDetailsActivity extends BaseActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
-
     }
 
     @Override
@@ -461,8 +455,6 @@ public class TVDetailsActivity extends BaseActivity {
     }
 
 
-
-
     private void getAvailableCYL(){
 
         VolleySingleton.getInstance(getApplicationContext()).
@@ -471,9 +463,6 @@ public class TVDetailsActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).
                 apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL,
                         EVITA_API_URL, String.valueOf(getSelectedCylinderTYPE()), String.valueOf(getGoDownId()));
-
     }
-
-
 
 }

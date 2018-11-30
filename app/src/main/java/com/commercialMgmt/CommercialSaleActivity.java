@@ -9,11 +9,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -69,6 +71,9 @@ import static java.lang.Integer.parseInt;
 
 public class CommercialSaleActivity extends AppCompatActivity implements ResponseListener {
 
+
+    @BindView(R.id.input_layout_full_cyl)
+    TextInputLayout input_layout_full_cyl;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
     @BindView(R.id.et_chalan)
@@ -202,12 +207,17 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         et_total_credit_cyl.setEnabled(false);
         et_total_credit_amt.setEnabled(false);
         et_balanced_credit_amt.setEnabled(false);
+        et_full_cyl.clearFocus();
+
+
     }
 
     private void enabledViews() {
         et_full_cyl.setEnabled(true);
         et_empty_cyl.setEnabled(true);
         et_sv_cyl.setEnabled(true);
+        input_layout_full_cyl.setHintAnimationEnabled(true);
+
     }
 
     private void Calculation() {
@@ -681,26 +691,34 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                             AppSettings.hideKeyboard(CommercialSaleActivity.this);
                             et_consumer_name.setText(CossumerName);
 
-                            if (com_product_name.getText().toString()!=null && !com_product_name.getText().toString().equalsIgnoreCase("")) {
-                                if (assignedCylinderQty!=0 && assignedCylinderQty>0) {
+                            if (com_product_name.getText().toString()!=null &&
+                                    !com_product_name.getText().toString().equalsIgnoreCase("")) {
+                                if ( assignedCylinderQty>0) {
                                     enabledViews();
                                 }
-                                else if( selectedConsumer.credit_cylinder>0 && String.valueOf(selectedConsumer.credit_cylinder)!=null)
+                                else if( selectedConsumer.credit_cylinder>0 )
                                 {
                                     et_empty_cyl.setEnabled(true);
+                                    et_full_cyl.setEnabled(false);
+                                    et_sv_cyl.setEnabled(false);
+                                }
+                                else
+                                {
+                                    disabledViews();
                                 }
                             }
+                            else
+                            {
+                                disabledViews();
+                            }
 
-                            et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                             et_total_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
                             et_balanced_credit_amt.setText(Integer.toString(selectedConsumer.amount_credit_cylinder));
 
-
                             // productId = productDBList.get(position).product_id;
                             Double discount= Double.valueOf(consumerDBList.get(i).discount);
-                            Log.e("discount",String.valueOf(discount));
-                            Log.e("Selected Consumer Id....",String.valueOf(selectedConsumer.ConsumerID));
-                            //et_discount.setText(String.valueOf(discount));
+                            Log.e("creditsssss::",selectedConsumer.product_name+"--:--"+selectedConsumer.credit_cylinder);
+
                         }
                     });
                 }
@@ -708,11 +726,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         });
     }
 
-
     public void setSelectedDeliveryManId(String selectedDeliveryManId) {
         this.selectedDeliveryManId = selectedDeliveryManId;
     }
-
 
     private void getProducts() {
 
@@ -749,6 +765,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         com_product_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
             productId = productDBList.get(position).product_id;
             BPCLrate= productDBList.get(position).bpcl_rate;
 
@@ -760,24 +778,35 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
 
                         if (et_consumer_name.getText().toString() != null && !et_consumer_name.getText().toString().equalsIgnoreCase("")) {
-                            if (assignedCylinderQty!=0 && assignedCylinderQty>0) {
+                            if ( assignedCylinderQty>0) {
                                 enabledViews();
                             }
-                            else if(selectedConsumer.credit_cylinder!=0 && selectedConsumer.credit_cylinder>0)
+                            else if( selectedConsumer.credit_cylinder>0)
                             {
                                 et_empty_cyl.setEnabled(true);
+                                et_full_cyl.setEnabled(false);
+                                et_sv_cyl.setEnabled(false);
+                            }
+                            else
+                            {
+                                disabledViews();
                             }
                         }
-
-
+                        else
+                        {
+                            disabledViews();
+                        }
 
                     assigned_cylinder.setVisibility(View.VISIBLE);
                     assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(userAssignedCylinderModel.Qty));
 
 
                 }else{
-                    assignedCylinderQty = 0;
-                    assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(assignedCylinderQty));
+                    /*assignedCylinderQty = 0;
+                    assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(assignedCylinderQty));*/
+
+                    assigned_cylinder.setVisibility(View.GONE);
+                    disabledViews();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -785,10 +814,15 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             et_bpcl_rate.setText(String.valueOf(BPCLrate));
                    if (!TextUtils.isEmpty(et_consumer_name.getText())) {
                        if (selectedConsumer.product_name.equalsIgnoreCase(productDBList.get(position).product_name)) {
+
                            et_discount.setText(Integer.toString(selectedConsumer.discount));
+                           et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                        } else {
+                           et_total_credit_cyl.setText("0");
                            et_discount.setText("0");
                        }
+
+
                    }
             }
         });

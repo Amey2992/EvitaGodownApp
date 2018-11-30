@@ -34,7 +34,6 @@
         </android.support.v7.widget.Toolbar>
 
 
-
         <RelativeLayout
             android:id="@+id/host_layout"
             android:layout_width="match_parent"

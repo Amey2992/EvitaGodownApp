@@ -112,7 +112,6 @@ public class CommercialActivity extends BaseActivity {
     @BindView(R.id.cyl_count)
     CountAnimationTextView cyl_count;
 
-
     private DatabaseHelper databaseHelper = null;
     private List<ChipModel> chipListModel = new ArrayList<>();
     private String productCategory;
@@ -142,11 +141,9 @@ public class CommercialActivity extends BaseActivity {
         ButterKnife.bind(this);
         setupToolbar();
 
-
         random = new Random().nextInt((max - min) + 1) + min;
         Log.e("random number", Integer.toString(random));
         randomNumber = Integer.toString(random);
-
 
     }
 
@@ -197,6 +194,7 @@ public class CommercialActivity extends BaseActivity {
                         layout_return.setVisibility(View.VISIBLE);
                         initReturnLayout();
                         requestFocus(input_empty_cylinder);
+                        input_empty_cylinder.selectAll();
                         break;
                 }
             }
@@ -243,14 +241,12 @@ public class CommercialActivity extends BaseActivity {
         }
     }
 
-
     private void chipSelectionView() {
 
         final ChipSelectionAdapter chipAdapter = new ChipSelectionAdapter(this, chipListModel);
         recycler_view_chip.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         recycler_view_chip.setItemAnimator(new DefaultItemAnimator());
         recycler_view_chip.setAdapter(chipAdapter);
-
 
         recycler_view_chip.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recycler_view_chip, new ClickListener() {
             @Override
@@ -268,7 +264,6 @@ public class CommercialActivity extends BaseActivity {
 
             }
         }));
-
     }
 
 
@@ -291,7 +286,6 @@ public class CommercialActivity extends BaseActivity {
                         }
                     }
 
-
                     commercialCreditDB = getHelper().getCommercialCreditExceptionDao();
                     List<CommercialDeliveryCreditDB> commercialList = commercialCreditDB.queryForAll();
                     for (CommercialDeliveryCreditDB cn : commercialList) {
@@ -300,7 +294,6 @@ public class CommercialActivity extends BaseActivity {
                             listNames.add(log);
                         }
                     }
-
 
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(),
@@ -324,7 +317,6 @@ public class CommercialActivity extends BaseActivity {
                             Log.e(deliveryManKEY, DeliveryManVALUE);
                             setSelectedDeliveryManId(parseInt(deliveryManKEY));
 
-
                             //Amey
                             try {
                                 List<CommercialDeliveryCreditDB> commercialDeliveryCreditDB = commercialCreditDB.queryBuilder().where().eq("delivery_id", Integer.parseInt(deliveryManKEY)).and().eq("product_id", getPRODUCT_CODE()).and().eq("godown_id", getGoDownId()).query();
@@ -338,17 +330,13 @@ public class CommercialActivity extends BaseActivity {
                             } catch (java.sql.SQLException e) {
                                 e.printStackTrace();
                             }
-
-
                             switchView();
-
                         }
                     });
                 }
             }
         });
     }
-
 
     private void initFreshLayout() {
 
@@ -358,7 +346,6 @@ public class CommercialActivity extends BaseActivity {
         clearAllFields();
         btnSubmit.setText("Submit Fresh Trip");
         btnSubmit.setVisibility(View.VISIBLE);
-
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -691,8 +678,6 @@ public class CommercialActivity extends BaseActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
-
     }
 
     @Override
@@ -715,8 +700,9 @@ public class CommercialActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext()).
                 apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL,
                         EVITA_API_URL, String.valueOf(getPRODUCT_CODE()), String.valueOf(getGoDownId()));
+        }
 
-    }
+
     @Override
     protected void onPause() {
         AppSettings.hideKeyboard(this);

@@ -1,6 +1,7 @@
 package com.commercialMgmt;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -48,6 +51,8 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 import khangtran.preferenceshelper.PreferencesHelper;
 import com.infosolutions.network.*;
 
@@ -60,6 +65,8 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
     EditText com_consumer_name;
     @BindView(R.id.et_mobile_number)
     EditText com_mobile_number;
+    @BindView(R.id.et_state)
+    EditText et_state;
     @BindView(R.id.et_address)
     EditText com_consumer_address;
     @BindView(R.id.et_email_id)
@@ -91,9 +98,14 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
     private String default_str = "Select Product";
     private ArrayList<String> spinItems;
     private ArrayAdapter<String> spinAdapter;
+    private  ArrayList<String> state ;
+
 
     private int[] productArr;
     private List<CommercialProductModel> productDBList;
+    private String[] State={"Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka",
+            "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Orissa", "Puducherry", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+            "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"};
 
     @SuppressLint("LongLogTag")
     @Override
@@ -105,6 +117,8 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         ButterKnife.bind(this);
 
         com_consumer_discount.setText("0");
+        disabledFocusFromET();
+        fillState();
 
         UserId=PreferencesHelper.getInstance().getIntValue(Constants.LOGIN_DELIVERYMAN_ID,0);
 
@@ -114,6 +128,43 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, this);
     }
 
+
+    private void disabledFocusFromET() {
+        et_state.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus)
+                {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(et_state.getWindowToken(), 0);
+                }
+            }
+        });
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void fillState() {
+       state=new ArrayList<>();
+        for (int i=0;i<State.length;i++)
+        {
+            state.add(State[i]);
+        }
+
+        et_state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SpinnerDialog dialog = new SpinnerDialog( AddNewConsumerActivity.this, state, "Select State");
+
+                dialog.showSpinerDialog();
+                dialog.bindOnSpinerListener(new OnSpinerItemClick() {
+                    @Override
+                    public void onClick(String state, int i) {
+                        et_state.setText(state);
+                    }
+                });
+            }
+        });
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
