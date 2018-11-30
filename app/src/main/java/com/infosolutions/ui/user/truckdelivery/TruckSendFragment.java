@@ -85,6 +85,7 @@ public class TruckSendFragment extends Fragment {
     TruckSendOwnFragment truckSendOwnFragment;
     TruckSendPcoFragment truckSendPcoFragment;
     android.widget.RelativeLayout fragment_own_container,fragment_pco_container;
+    public boolean isFromHome = true;
 
     public String getLoad_type() {
         return load_type;
@@ -149,6 +150,11 @@ public class TruckSendFragment extends Fragment {
         fragment_pco_container = view.findViewById(R.id.fragment_pco_container);
         fragment_pco_container.setVisibility(View.GONE);
         truckSendOwnFragment = new TruckSendOwnFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("isFromHomeScreen", true);
+        truckSendOwnFragment.setArguments(args);
+
+
         truckSendPcoFragment = new TruckSendPcoFragment();
 
         //transaction.add(fragment_own_container.getId(), truckSendOwnFragment ).commit();

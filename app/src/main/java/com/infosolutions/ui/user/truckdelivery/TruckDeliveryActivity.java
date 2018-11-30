@@ -42,6 +42,7 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
     public HashMap<String,List<PurchaseERVProduct>> hashProduct = new HashMap<>();
     public static boolean isShowPopup = false;
     private LocalBroadcastManager localBroadcastManager;
+    private TruckSendFragment truckSendFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,6 +85,9 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
             @Override
             public void onPageSelected(int position) {
                 if(position == 1){
+                     if(truckSendFragment != null ){
+                         truckSendFragment.isFromHome = false;
+                     }
                     Intent localIntent = new Intent("showDialog");
                     localBroadcastManager.sendBroadcast(localIntent);
                 }
@@ -100,7 +104,8 @@ public class TruckDeliveryActivity extends AppCompatActivity implements Response
     private void setupViewPager(ViewPager viewPager) {
         TruckDeliveryActivity.Adapter adapter = new TruckDeliveryActivity.Adapter(getSupportFragmentManager());
         adapter.addFragment(new TruckReceiveFragment(), "Received");
-        adapter.addFragment(new TruckSendFragment(), "Send");
+        truckSendFragment = new TruckSendFragment();
+        adapter.addFragment(truckSendFragment, "Send");
         viewPager.setAdapter(adapter);
     }
 

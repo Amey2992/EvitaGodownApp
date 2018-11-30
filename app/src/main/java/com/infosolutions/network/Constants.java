@@ -60,7 +60,7 @@ public class Constants {
     private static final String godown_ags = "http://103.31.144.174:8080/GODOWN_AGS/User";
     //private static final String TESTER_AGS = "http://103.31.144.174:8080/TESTER_AGS/User";
     private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
-    public static final  String EVITA_API_URL = PROD_URL;
+    public static final  String EVITA_API_URL = godown_ags;
 
     public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
 
@@ -68,7 +68,7 @@ public class Constants {
     production
     * */
 
-    public static final String dbname = "EVITA_PROD";
+    /*public static final String dbname = "EVITA_PROD";
     public static final String GET_ALL_REPORT = "http://103.31.144.174/Reports/GetAndrReportAll";
     public static final String get_url = "http://103.31.144.174/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
     public static final String post_url = "http://103.31.144.174/Purchase/SaveDomesticDeliveryAndrA";
@@ -81,13 +81,13 @@ public class Constants {
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
     public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
-
+*/
 
     /*
     Godown_Ags
     * */
 
-    /*public static final String dbname = "GODOWN_AGS";
+    public static final String dbname = "GODOWN_AGS";
     public static final String GET_ALL_REPORT = "http://103.31.144.174:81/Reports/GetAndrReportAll";
     public static final String post_url = "http://103.31.144.174:81/Purchase/SaveDomesticDeliveryAndrA";
     public static final String get_url = "http://103.31.144.174:81/masters/GetAndrEmp"; //"http://103.31.144.174/masters/GetAndrEmp";
@@ -99,7 +99,8 @@ public class Constants {
     public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
-    public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";*/
+    public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
+
     /*
     tester
     * */
