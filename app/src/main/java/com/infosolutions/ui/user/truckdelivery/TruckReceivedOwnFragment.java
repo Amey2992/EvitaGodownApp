@@ -120,7 +120,6 @@ public class TruckReceivedOwnFragment extends Fragment {
         tvSelectedTruck = view.findViewById(R.id.tvSelectedTruck);
         generateET = view.findViewById(R.id.generateBtn);
 
-
         chkOneWay = (CheckBox) view.findViewById(R.id.chkOneWay);
         chkOneWay.setChecked(false);
         chkOneWay.setOnClickListener(new View.OnClickListener() {
@@ -181,9 +180,7 @@ public class TruckReceivedOwnFragment extends Fragment {
             Toast.makeText(getContext(), "No Truck Available", Toast.LENGTH_SHORT).show();
         }
 
-
     }
-
 
     private void submitBtnClick() {
 
@@ -201,7 +198,6 @@ public class TruckReceivedOwnFragment extends Fragment {
                 final String invoice_number = etInvoiceNumber.getText().toString().trim();
                 //random number
                 String randomNumber = invoice_number + getGodownId() + AppSettings.currentDateTime()+ AppSettings.getInstance(getActivity()).getRandomNumber();
-
 
                 for (int j = 0 ; j < dynamicQuantity.size(); j++) {
                     String etText = "";

@@ -441,7 +441,6 @@ public class TruckReceiveFragment extends Fragment {
         }else {
                 listSpinItems.add(pos, selectedItem);
 
-
         }
 
     }

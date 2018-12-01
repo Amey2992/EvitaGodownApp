@@ -19,8 +19,6 @@
             android:paddingBottom="100dp"
             android:orientation="vertical">
 
-
-
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btnTruckNumber"
                 android:layout_width="match_parent"
@@ -102,7 +100,6 @@
                 android:layout_margin="5dp"
                 android:orientation="vertical" >
 
-
                 <Button
                     android:id="@+id/generateBtn"
                     android:layout_width="150sp"
@@ -113,14 +110,12 @@
                     android:background="@drawable/custom_btn"
                     android:text="Add Products" />
 
-
                 <LinearLayout
                     android:id="@+id/dynamic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:orientation="vertical">
-
 
                 </LinearLayout>
 
@@ -129,7 +124,6 @@
         </LinearLayout>
 
     </ScrollView>
-
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnSubmit"

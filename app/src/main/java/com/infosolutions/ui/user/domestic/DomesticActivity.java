@@ -151,18 +151,15 @@ public class DomesticActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_backspace);
         setProductModel();
-
 
 
         productSelectionChipView();
     }
 
     private void setProductModel() {
-
 
 
         RuntimeExceptionDao<ProductDB, Integer> productDB = getHelper().getProductRTExceptionDao();
@@ -178,19 +175,12 @@ public class DomesticActivity extends BaseActivity {
         }
 
 
-
-
         chipAdapter = new ChipSelectionAdapter(this, chipListModel);
         recycler_view_chip.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         recycler_view_chip.setItemAnimator(new DefaultItemAnimator());
         recycler_view_chip.setAdapter(chipAdapter);
 
-
-
     }
-
-
-
 
     private void productSelectionChipView() {
 
@@ -205,16 +195,10 @@ public class DomesticActivity extends BaseActivity {
             public void onLongClick(View view, int position) {
 
             }
-
         }));
-
     }
 
-
-
     private void chipSelector(int position) {
-
-
 
         AppSettings.hideKeyboard(this);
         productId = chipListModel.get(position).getChipTitleId();
@@ -224,8 +208,6 @@ public class DomesticActivity extends BaseActivity {
         getAvailableCYL(); /* Check available Cylinder */
         selectedProductName = chipListModel.get(position).getChipTitle();
         setSelectedProductName(selectedProductName);
-
-
 
         /* Hide All Layout */
         layout_return.setVisibility(View.GONE); layout_fresh.setVisibility(View.GONE);
@@ -241,10 +223,7 @@ public class DomesticActivity extends BaseActivity {
     }
 
 
-
-
     private void showSpinnerDialog() {
-
 
         btnDeliveryMan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,11 +247,9 @@ public class DomesticActivity extends BaseActivity {
                 }catch (Exception ex){
                     showErrorToast(DomesticActivity.this,"Error", "No data available");
                 }
-
             }
         });
     }
-
 
     private void showDeliverymanDialog(ArrayList<String> listNames) {
 
@@ -304,24 +281,20 @@ public class DomesticActivity extends BaseActivity {
 
         String dynamicIds = getGoDownId()+productId+deliveryManKEY;
 
-
         //String dynamicIds = selectedDeliveryMan+getSelectedProductName();
 
         KEY_DOMESTIC_TRIP_NO = KEY_DOMESTIC_TRIP_NO+dynamicIds;
         KEY_DOMESTIC_FULL_CYLINDER = KEY_DOMESTIC_FULL_CYLINDER+dynamicIds;
         KEY_LAYOUT_TYPE = KEY_LAYOUT_TYPE+dynamicIds;
 
-
         tvDeliveryMan.setText(DeliveryManVALUE/*+"\nAvailable Cyl- "+CREDIT_GIVEN.trim()*/);
         tvDeliveryMan.setAllCaps(true);
         tvDeliveryMan.setVisibility(View.VISIBLE);
-
 
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
         input_fresh_full_cylinder.requestFocus();
         input_empty_cylinder.requestFocus();
-
 
 
         if (getTripNumber() > 0)
@@ -359,13 +332,10 @@ public class DomesticActivity extends BaseActivity {
             tvDeliveryMan.setAllCaps(true);
             tvDeliveryMan.setVisibility(View.VISIBLE);
 
-
             InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
             input_fresh_full_cylinder.requestFocus();
             input_empty_cylinder.requestFocus();
-
-
 
             if(employeeObj != null && employeeObj.size() > 0) {
                 DomesticDeliveryDB domesticDeliveryDB = employeeObj.get(0);
@@ -376,7 +346,6 @@ public class DomesticActivity extends BaseActivity {
                     initFreshLayout(tripNumber + 1);
                 }
             }else{
-
 
                 initFreshLayout(1);
             }
@@ -484,6 +453,7 @@ public class DomesticActivity extends BaseActivity {
             date = (Date)formatter.parse(new Date().toString());
             simpleDateFormat= new SimpleDateFormat("yyyyMMdd");
         }catch (Exception ex){
+
             ex.printStackTrace();
         }
 
@@ -970,7 +940,6 @@ public class DomesticActivity extends BaseActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
     }
 
     @Override
@@ -982,9 +951,7 @@ public class DomesticActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
-
 
     private void getAvailableCYL(){
 
@@ -998,6 +965,5 @@ public class DomesticActivity extends BaseActivity {
     protected void onPause() {
         AppSettings.hideKeyboard(this);
         super.onPause();
-
     }
 }

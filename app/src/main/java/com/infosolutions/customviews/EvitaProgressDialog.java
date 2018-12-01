@@ -14,21 +14,20 @@ import com.infosolutions.evita.R;
 
 public class EvitaProgressDialog extends Dialog {
 
-        public EvitaProgressDialog(Context context) {
-            super(context);
-        }
-
-        @Override
-        public void show() {
-            super.show();
-            setContentView(R.layout.layout_evita_progress);
-        }
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        }
+    public EvitaProgressDialog(Context context) {
+        super(context);
     }
 
+    @Override
+    public void show() {
+        super.show();
+        setContentView(R.layout.layout_evita_progress);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+    }
+}

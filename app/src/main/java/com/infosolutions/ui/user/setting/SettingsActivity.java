@@ -76,11 +76,9 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
     @Inject
     EventBus eventBus;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -93,18 +91,15 @@ public class SettingsActivity extends BaseActivity implements ResponseListener {
         initID();
     }
 
-
     @Override
     public void injectDependency() {
         EvitaApplication.getEvitaComponents().inject(this);
     }
 
-
     @Override
     public int getLayoutId() {
         return R.layout.screen_setting;
     }
-
 
     private void initID() {
 

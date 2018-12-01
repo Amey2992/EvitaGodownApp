@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 import com.infosolutions.network.*;
 import com.infosolutions.core.*;
 import com.infosolutions.utils.AppSettings;
-import com.infosolutions.utils.Constant;
+//import com.infosolutions.utils.Constant;
 import com.infosolutions.database.*;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
@@ -116,6 +116,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
         ButterKnife.bind(this);
 
+
         com_consumer_discount.setText("0");
         disabledFocusFromET();
         fillState();
@@ -130,6 +131,9 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
 
     private void disabledFocusFromET() {
+
+
+
         et_state.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -150,6 +154,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
             state.add(State[i]);
         }
 
+
         et_state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +165,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                     @Override
                     public void onClick(String state, int i) {
                         et_state.setText(state);
+
                     }
                 });
             }
@@ -268,23 +274,15 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 else if (com_product_name.getText().toString().equalsIgnoreCase("")) {
                     Toast.makeText(getApplicationContext(),"Select Product",Toast.LENGTH_SHORT).show();
                 }
+                else if (et_state.getText().toString().equalsIgnoreCase(""))
+                {
+                    Toast.makeText(getApplicationContext(),"Select State",Toast.LENGTH_SHORT).show();
+                }
                 else
                 {
-
-                    saveConfirmation_consumer();/*
-                    int discount_edittext_value;
-                    if(TextUtils.isEmpty(com_consumer_discount.getText().toString())){
-                        com_consumer_discount.setText("0");
-
-
-                    }else{
-                        discount_edittext_value  = Integer.parseInt(com_consumer_discount.getText().toString());
-                    }*/
+                    saveConfirmation_consumer();
 
                 }
-
-
-
             }
         });
     }
@@ -352,7 +350,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 jsonObject.put("uniqueId",uniqueId());
                 jsonObject.put("ModeOfEntry","Mobile");
                 jsonObject.put("IsActive","Y");
-
+                jsonObject.put("State",et_state.getText().toString());
 
                 parentJsonObj.put("objCommercialPartyMst",jsonObject);
                 Log.e("consumer Data",parentJsonObj.toString());
@@ -409,7 +407,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                     hideProgressDialog();
                     finish();
                 }
-
         }
         catch (JSONException e)
         {

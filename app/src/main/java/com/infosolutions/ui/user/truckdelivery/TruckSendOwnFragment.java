@@ -194,6 +194,9 @@ public class TruckSendOwnFragment extends Fragment {
                 listTruckNumber.add(truckNum.vehicle_number);
             }
             /* show spinner dialog*/
+
+
+
             final SpinnerDialog dialog = new SpinnerDialog(getActivity(), listTruckNumber, getResources().getString(R.string.select_truck_no));
             dialog.showSpinerDialog();
             dialog.bindOnSpinerListener(new OnSpinerItemClick() {

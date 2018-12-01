@@ -169,9 +169,7 @@ public class MainActivity extends BaseActivity {
                             //Toast.makeText(MainActivity.this, getResources().getString(R.string.syncing_text), Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
-
             }
         };
 
@@ -188,7 +186,6 @@ public class MainActivity extends BaseActivity {
             mtimer.cancel();
         }
     }
-
 
     @Override
     public void injectDependency() {
@@ -253,14 +250,10 @@ public class MainActivity extends BaseActivity {
                         startActivity(next);
                         finish();
                     case 1:
-
                 }
             }
         });
-
-
     }
-
 
 
     @Override
@@ -280,14 +273,12 @@ public class MainActivity extends BaseActivity {
                 doubleBackToExitPressedOnce = false;
             }
         }, 2000);
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
+                           String permissions[], int[] grantResults) {
+            switch (requestCode) {
             case RECORD_REQUEST_CODE: {
 
                 if (grantResults.length == 0
@@ -302,7 +293,6 @@ public class MainActivity extends BaseActivity {
                 return;
             }
 
-
             case RQ_DEVICE_STATE: {
                 if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     showSnackBar(getString(R.string.permis_denied));
@@ -312,7 +302,6 @@ public class MainActivity extends BaseActivity {
 
                 return;
             }
-
         }
     }
 
@@ -321,7 +310,7 @@ public class MainActivity extends BaseActivity {
         if (!GlobalVariables.permissionsEnabled(MainActivity.this, new String[]{permission.WRITE_EXTERNAL_STORAGE})) {
             ActivityCompat.requestPermissions(this, new String[]
                     {
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECORD_REQUEST_CODE);
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, RECORD_REQUEST_CODE);
         }
 
     }
@@ -336,7 +325,6 @@ public class MainActivity extends BaseActivity {
         eventBus.unregister(this);
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(listener);
-
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -345,7 +333,6 @@ public class MainActivity extends BaseActivity {
             showSnackBar(getString(R.string.data_to_sync_server));
         }
     }
-
 
     private void goToNextActivity(View view, int position) {
 
@@ -373,7 +360,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), ReportListItemsActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
-        }else{
+        }
+        else{
             if (selectedModuleType.equalsIgnoreCase("7")) {
                 startActivity(new Intent(getApplicationContext(), AddNewConsumerActivity.class));
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -410,7 +398,6 @@ public class MainActivity extends BaseActivity {
 
     private void loadToolbar() {
 
-
             Toolbar toolbar = findViewById(R.id.toolbar);
             TextView mTitle = toolbar.findViewById(R.id.toolbar_title);
             mTitle.setText(R.string.godown);
@@ -421,8 +408,6 @@ public class MainActivity extends BaseActivity {
 
             //showToast(getPreferences(Constants.KEY_AGENCY_NAME));
             setSupportActionBar(toolbar);
-
-
     }
 
     @Override
@@ -451,7 +436,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(gridAdapter);
-
     }
 
     private void loadListView() {

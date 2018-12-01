@@ -35,7 +35,6 @@ public class ProductDB implements Serializable {
     @DatabaseField
     public String product_unit_measurement;
 
-
     @Override
     public String toString() {
         return "ProductDB{" +

@@ -237,7 +237,6 @@ public class CommercialActivity extends BaseActivity {
                 Log.d("CYLINDER_DESCRIPTION", CYLINDER_DESCRIPTION);
                 Log.d("PRODUCT_CATEGORY", PRODUCT_CATEGORY);
             }
-
         }
     }
 
@@ -412,7 +411,7 @@ public class CommercialActivity extends BaseActivity {
                     getDateTime(), 0,0, "MOBILE", "INSERT", "N",
                     getDeviceId(),uniqueId_Commercial);//,uniqueId_Commercial);
             commercialDB.create(commercialDeliveryDB);
-*/
+            */
             //old
             commercialDB.create(new CommercialDeliveryDB(1, getSelectedDeliveryManId(), getGoDownId(),
                     getPRODUCT_CODE(), getDateTime(), getApplicationUserId(), getTextFromET(input_fresh_full_cylinder),
