@@ -508,7 +508,6 @@ public class TruckSendPcoFragment extends Fragment {
                 if (dynamicList.length() > 0) {
                     id_product = dynamicList.substring(0, dynamicList.length() - 1);
                 }
-
 */
 
             }

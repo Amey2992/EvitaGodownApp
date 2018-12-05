@@ -157,7 +157,6 @@ public class ReportListItemsActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Wrong Selection", Toast.LENGTH_SHORT).show();
             }
-
     }
 
     private void loadData() {
@@ -169,12 +168,10 @@ public class ReportListItemsActivity extends AppCompatActivity {
         listModel.add(new StockReportModel("TV Details"));
     }
 
-
     private interface ClickListener {
         void onClick(View view, int position);
         void onLongClick(View view, int position);
     }
-
 
 
     private class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
@@ -218,11 +215,7 @@ public class ReportListItemsActivity extends AppCompatActivity {
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
 
         }
-
-
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

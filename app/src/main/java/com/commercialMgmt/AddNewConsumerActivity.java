@@ -58,7 +58,6 @@ import com.infosolutions.network.*;
 
 public class AddNewConsumerActivity extends AppCompatActivity implements ResponseListener{
 
-
     @BindView(R.id.scrollView)
     ScrollView scrollView;
     @BindView(R.id.et_consumer_name)
@@ -116,7 +115,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
         ButterKnife.bind(this);
 
-
         com_consumer_discount.setText("0");
         disabledFocusFromET();
         fillState();
@@ -129,10 +127,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.POST_COMMERCIAL_CONSUMER, this);
     }
 
-
     private void disabledFocusFromET() {
-
-
 
         et_state.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -370,7 +365,6 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
 
         return uniqueId_AddConsumer;
     }
-
 
 
     private void setupToolbar() {

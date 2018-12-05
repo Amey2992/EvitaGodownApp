@@ -354,7 +354,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
             }
 
 
-
             LinearLayout domesticcommercialcontainer = convertView.findViewById(R.id.domesticcommercialcontainer);
             LinearLayout trucksendcontainer = convertView.findViewById(R.id.trucksendcontainer);
             LinearLayout tvcontainer = convertView.findViewById(R.id.tvcontainer);
@@ -407,7 +406,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 lost_textview.setText("LOST : ");
                 lost_textview_value.setText(childModel.lost);
 
-
                 return_full_textview.setText("RETURN FULL : ");
                 return_full_textview_value.setText(childModel.return_full);
 
@@ -417,8 +415,8 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 empty_textview.setText("EMPTY : ");
                 empty_textview_value.setText(childModel.empty);
 
-
-            } else if(this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_SEND.toString()) || this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED.toString())) {
+            }
+            else if(this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_SEND.toString()) || this.type.equalsIgnoreCase(VolleySingleton.CallType.REPORT_TRUCK_RECEIVED.toString())) {
                 trucksendcontainer.setVisibility(View.VISIBLE);
 
                 TextView vehicle_no_textview = convertView.findViewById(R.id.vehicle_no_textview);
@@ -495,7 +493,6 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 TextView quantity_tv_textview = convertView.findViewById(R.id.quantity_tv_textview);
                 TextView quantity_tv_textview_value = convertView.findViewById(R.id.quantity_tv_textview_value);
 
-
                 description_tv_textview.setText("PRODUCT TYPE: ");
                 description_tv_textview_value.setText(childModel.description);
 
@@ -505,15 +502,10 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 quantity_tv_textview.setText("QUANTITY: ");
                 quantity_tv_textview_value.setText(childModel.quantity);
 
-
                 trucksendcontainer.setVisibility(View.GONE);
                 domesticcommercialcontainer.setVisibility(View.GONE);
 
             }
-
-
-
-
 
             return convertView;
         }
@@ -534,5 +526,4 @@ public class NewReportDetailsActivity extends AppCompatActivity implements Respo
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

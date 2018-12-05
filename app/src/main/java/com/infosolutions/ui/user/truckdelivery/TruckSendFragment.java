@@ -146,10 +146,12 @@ public class TruckSendFragment extends Fragment {
 
         showHideSegmentedButton();
         submitBtnClick();*/
+
         fragment_own_container = view.findViewById(R.id.fragment_own_container);
         fragment_pco_container = view.findViewById(R.id.fragment_pco_container);
         fragment_pco_container.setVisibility(View.GONE);
         truckSendOwnFragment = new TruckSendOwnFragment();
+
         Bundle args = new Bundle();
         args.putBoolean("isFromHomeScreen", true);
         truckSendOwnFragment.setArguments(args);
@@ -165,7 +167,7 @@ public class TruckSendFragment extends Fragment {
         showHideSegmentedButton();
     }
 
-    void initERVOWNAdapter(){
+/*    void initERVOWNAdapter(){
 
         List<String> ownItems = ((TruckDeliveryActivity)getActivity()).lstERVOWNModel;
         final SpinnerDialog dialog = new SpinnerDialog(getActivity(),new ArrayList<String>( ownItems), getResources().getString(R.string.select_erv_no));
@@ -196,8 +198,8 @@ public class TruckSendFragment extends Fragment {
                 autofillUI();
             }
         });
-    }
-
+    }*/
+/*
     void initERVPCOAdapter(){
         List<String> pcoItems = ((TruckDeliveryActivity)getActivity()).lstERVPCOModel;
         final SpinnerDialog dialog = new SpinnerDialog(getActivity(),new ArrayList<String>( pcoItems), getResources().getString(R.string.select_erv_no));
@@ -226,7 +228,7 @@ public class TruckSendFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     private void autofillUI(){
         /*if(!TextUtils.isEmpty(model.ERV_No)) {
@@ -291,6 +293,7 @@ public class TruckSendFragment extends Fragment {
     }
 
 
+/*
     private void showTruckList() {
 
 
@@ -300,12 +303,12 @@ public class TruckSendFragment extends Fragment {
 
         if (vehSize > 0) {
 
-            /* Adding truck numbers from database */
+             Adding truck numbers from database
             ArrayList<String> listTruckNumber = new ArrayList<>();
             for (VehicleDB truckNum : vehicleDB) {
                 listTruckNumber.add(truckNum.vehicle_number);
             }
-            /* show spinner dialog*/
+             show spinner dialog
             final SpinnerDialog dialog = new SpinnerDialog(getActivity(), listTruckNumber, getResources().getString(R.string.select_truck_no));
             dialog.showSpinerDialog();
             dialog.bindOnSpinerListener(new OnSpinerItemClick() {
@@ -330,7 +333,7 @@ public class TruckSendFragment extends Fragment {
 
 
     }
-
+*/
     private void loadDynamicProducts(PurchaseERVProduct purchaseERVProduct, boolean isAutofill){
         if(listSpinItems.contains(default_str)){
             Toast.makeText(getActivity(),"Please Enter valid Product Id",Toast.LENGTH_SHORT).show();
@@ -488,6 +491,10 @@ public class TruckSendFragment extends Fragment {
 
     }
 
+
+
+/*
+
     private void applyDynamicViews() {
 
         spinItems = new ArrayList<>();
@@ -518,9 +525,10 @@ public class TruckSendFragment extends Fragment {
 
 
     }
+*/
 
 
-    private void submitBtnClick() {
+    /*private void submitBtnClick() {
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -539,7 +547,7 @@ public class TruckSendFragment extends Fragment {
                     String et_defective = String.valueOf(dynamicDefective.get(j).getText());
 
 
-                    /*Added ZERO by default if validation is missed */
+                    *//*Added ZERO by default if validation is missed *//*
                     if (TextUtils.isEmpty(et_quantity)) {
                         et_quantity = "0";
                     }
@@ -654,7 +662,7 @@ public class TruckSendFragment extends Fragment {
                     return;
                 }
 
-/*
+*//*
                 String dynamicList = "";
                 for (int list = 0; list < arrayDynamicViews.size(); list++) {
                     dynamicList = dynamicList + arrayDynamicViews.get(list);
@@ -665,7 +673,7 @@ public class TruckSendFragment extends Fragment {
                     id_product = dynamicList.substring(0, dynamicList.length() - 1);
                 }
 
-*/
+*//*
 
             }
         });
@@ -707,9 +715,9 @@ public class TruckSendFragment extends Fragment {
         alertDialog.show();
 
     }
+*/
 
-
-    public String getSelected_vehicle_number() {
+    /*public String getSelected_vehicle_number() {
         return selected_vehicle_number;
     }
 
@@ -724,7 +732,7 @@ public class TruckSendFragment extends Fragment {
     public void setSelected_vehicle_id(int selected_vehicle_id) {
         this.selected_vehicle_id = selected_vehicle_id;
     }
-
+*/
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
             databaseHelper = OpenHelperManager.getHelper(getContext(), DatabaseHelper.class);

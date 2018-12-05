@@ -300,6 +300,7 @@ public class TruckSendOwnFragment extends Fragment {
                 }
             });
         }
+
         spinItemsCount++;
 
         final View viewToAdd = getActivity().getLayoutInflater().inflate(R.layout.dynamic_layout_truck_send, null);
