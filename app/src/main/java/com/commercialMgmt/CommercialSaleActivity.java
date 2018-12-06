@@ -860,7 +860,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                                 com_product_name.setText("");
                                 assigned_cylinder.setVisibility(View.GONE);
                                 disabledViews();
-                                Toast.makeText(CommercialSaleActivity.this, "Please Select Valid Product"
+                                Toast.makeText(CommercialSaleActivity.this, "Cylinder Not Assigened to deliveryman yet"
                                         , Toast.LENGTH_SHORT).show();
                             }
                         } else {
@@ -1009,7 +1009,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                 hideProgressDialog();
                 finish();
             } else {
-                Toast.makeText(CommercialSaleActivity.this, "Error Occured", Toast.LENGTH_SHORT);
+                Toast.makeText(CommercialSaleActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
             }
 
         } catch (JSONException e) {

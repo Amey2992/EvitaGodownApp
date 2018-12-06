@@ -483,12 +483,11 @@ public class TruckReceivedOwnFragment extends Fragment {
                                 }catch (Exception e ){
                                     listSpinItems.add(pos, selectedItem);
                                 }
+                            }else{
+                                listSpinItems.set(pos, selectedItem);
 
                             }
-
-
                         }
-
                     }
 
 
@@ -515,8 +514,6 @@ public class TruckReceivedOwnFragment extends Fragment {
                 dynamicLostCyl.add(etLost);
                 dynamicSpinner.add(spinner);
                 dynamicDefective.add((et_defective));
-
-
 
 
                 btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -663,7 +660,6 @@ public class TruckReceivedOwnFragment extends Fragment {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
         return simpleDateFormat.format(date);
     }
 }

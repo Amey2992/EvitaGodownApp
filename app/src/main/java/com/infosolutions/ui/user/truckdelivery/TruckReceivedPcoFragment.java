@@ -389,6 +389,9 @@ public class TruckReceivedPcoFragment extends Fragment{
                                     listSpinItems.add(pos, selectedItem);
                                 }
 
+                            }else{
+                                listSpinItems.set(pos, selectedItem);
+
                             }
 
 
