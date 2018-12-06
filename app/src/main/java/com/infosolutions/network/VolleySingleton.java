@@ -1061,6 +1061,47 @@ public class VolleySingleton {
         addToRequestQueue(request);
     }
 
+    public void new_apiAvailableCYL(final CallType type, final String url,
+                                final String productId, final String godown_code) {
+
+
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+
+            jsonObject.put(MODULE_KEY, "getAvilableCylinders");
+            jsonObject.put(PRODUCT_ID,Integer.parseInt(productId));
+            jsonObject.put(GODOWN_CODE,Integer.parseInt(godown_code));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                if (mResponseListener != null)
+                    notifySuccessListener(type, response.toString());
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (mResponseListener != null)
+                    notifyFailureListener(type, error);
+            }
+        });
+
+        jsonObjectRequest.setShouldCache(false);
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        addToRequestQueue(jsonObjectRequest);
+
+    }
+
 
 
 }

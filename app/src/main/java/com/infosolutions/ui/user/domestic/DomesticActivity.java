@@ -870,11 +870,12 @@ public class DomesticActivity extends BaseActivity {
         try {
             JSONObject objectResult = new JSONObject(response);
             if (objectResult.has("responseCode") && objectResult.getString("responseCode").equalsIgnoreCase("200")){
-                JSONArray productArray = objectResult.optJSONArray("productArray");
+                /*JSONArray productArray = objectResult.optJSONArray("productArray");
                 String CLOSING_FULL =    productArray.optJSONObject(0).optString("CLOSING_FULL");
-
+*/
+                int CLOSING_FULL = objectResult.optInt("CLOSING_FULL");
                 layout_cylinder.setVisibility(View.VISIBLE);
-                TOTAL_AVAILABLE_CYL = Integer.parseInt(CLOSING_FULL);
+                TOTAL_AVAILABLE_CYL = CLOSING_FULL;
                 cyl_count. setAnimationDuration(1000).countAnimation(0, TOTAL_AVAILABLE_CYL);
 
             }else {
@@ -958,7 +959,7 @@ public class DomesticActivity extends BaseActivity {
         VolleySingleton.getInstance(getApplicationContext())
                 .addResponseListener(VolleySingleton.CallType.GET_AVAILABLE_CYL, this);
         VolleySingleton.getInstance(getApplicationContext())
-                .apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL, EVITA_API_URL, productId, String.valueOf(getGoDownId()));
+                .new_apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL, Constants.GET_AVAILABLE_CYLINDERS, productId, String.valueOf(getGoDownId()));
     }
 
     @Override

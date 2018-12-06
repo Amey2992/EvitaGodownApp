@@ -84,6 +84,9 @@ public class CommercialConsumerStockReport implements Serializable {
             ProductId = jsonObject.optInt("ProductId");
             ProdName = jsonObject.optString("ProdName");
             date = jsonObject.optString("date");
+            FullCyl = jsonObject.optInt("FullCyl");
+            EmptyCyl = jsonObject.optInt("EmptyCyl");
+
             if(type.equals(VolleySingleton.CallType.COMMERCIAL_REPORT_CONSUMER)) {
                 ConsumerNo = jsonObject.optString("ConsumerNo");
                 ConsumerName = jsonObject.optString("ConsumerName");
@@ -102,8 +105,6 @@ public class CommercialConsumerStockReport implements Serializable {
                 Credit = jsonObject.optInt("Credit");
                 Closing = jsonObject.optInt("Closing");
                 Opening = jsonObject.optInt("Opening");
-                FullCyl = jsonObject.optInt("FullCyl");
-                EmptyCyl = jsonObject.optInt("EmptyCyl");
                 sv = jsonObject.optInt("sv");
             }
         }

@@ -332,7 +332,7 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
         private TextView opening_textview_value;
         private TextView sv_cyl_textview, sv_cyl_textview_value;
         private TextView consumer_sv_cyl_textview, consumer_sv_cyl_textview_value;
-
+        private TextView consumer_fullcyl_textview, consumer_fullcyl_textview_value, consumer_emptycyl_textview, consumer_emptycyl_textview_value;
 
         private ArrayList<CommercialConsumerStockReport> arraylist=null;
 
@@ -428,6 +428,13 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
             sv_cyl_textview = convertView.findViewById(R.id.sv_cyl_textview);
             sv_cyl_textview_value = convertView.findViewById(R.id.sv_cyl_textview_value);
 
+            consumer_fullcyl_textview = convertView.findViewById(R.id.consumer_fullcyl_textview);
+            consumer_fullcyl_textview_value = convertView.findViewById(R.id.consumer_fullcyl_textview_value );
+
+            consumer_emptycyl_textview = convertView.findViewById(R.id.consumer_emptycyl_textview);
+            consumer_emptycyl_textview_value = convertView.findViewById(R.id.consumer_emptycyl_textview_value);
+
+
             consumer_sv_cyl_textview = convertView.findViewById(R.id.consumer_sv_cyl_textview);
             consumer_sv_cyl_textview_value = convertView.findViewById(R.id.consumer_sv_cyl_textview_value);
 
@@ -507,6 +514,12 @@ public class CommercialReportDetailActivity extends AppCompatActivity implements
 
                 challan_textview.setText("Challan No: ");
                 challan_textview_value.setText(childModel.ChallanNo);
+
+                consumer_fullcyl_textview.setText("FullCyl: ");
+                consumer_fullcyl_textview_value.setText(Integer.toString(childModel.FullCyl));
+
+                consumer_emptycyl_textview.setText("EmptyCyl: ");
+                consumer_emptycyl_textview_value.setText(Integer.toString(childModel.EmptyCyl));
 
                 consumer_sv_cyl_textview.setText("SV: ");
                 consumer_sv_cyl_textview_value.setText(Integer.toString(childModel.sv));
