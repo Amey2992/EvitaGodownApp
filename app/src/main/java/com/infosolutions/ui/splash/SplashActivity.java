@@ -1,5 +1,6 @@
 package com.infosolutions.ui.splash;
 
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
@@ -65,6 +66,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        /*
+        ProgressDialog pd;
+        pd = ProgressDialog.show(this,"Please Wait...", "Loading Application..", false, true);
+        pd.setCanceledOnTouchOutside(false);*/
         //mJobScheduler = JobScheduler.getInstance(this);
         //scheduleJob();
     }
@@ -78,7 +83,7 @@ public class SplashActivity extends BaseActivity {
 
 
         //Fabric.with(this, new Crashlytics());
-        //setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash);
 
         broadcastIntent();
 
@@ -140,9 +145,11 @@ public class SplashActivity extends BaseActivity {
                 Log.e("local data content->", stringJsonContent);
                 savePreferences(PREF_SYNC_JSON_DATA, stringJsonContent);
 
+
                 Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
+
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         }, 3000);

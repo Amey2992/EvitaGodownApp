@@ -338,7 +338,7 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
                 jsonObject.put("Address1",com_consumer_address.getText().toString());
                 jsonObject.put("Email",com_consumer_email_id.getText().toString());
                 jsonObject.put("ProductID",productId);
-                jsonObject.put("Discount_price",Double.valueOf(com_consumer_discount.getText().toString()));
+                jsonObject.put("DisAmt",Double.valueOf(com_consumer_discount.getText().toString()));
                 jsonObject.put("PAN",com_consumer_PAN_No.getText().toString());
                 jsonObject.put("GSTIN",com_consumer_GSTIN.getText().toString());
                 jsonObject.put("OpeningDate",Constants.getDateTime());

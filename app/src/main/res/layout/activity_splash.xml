@@ -8,15 +8,15 @@
     tools:context="com.infosolutions.ui.splash.SplashActivity">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:elevation="@dimen/fab_margin"
-        android:scaleType="centerInside"
-        android:visibility="gone"
-        android:background="@drawable/splash_image"
-        android:id="@+id/imageView" />
+  <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_centerInParent="true"
+      android:elevation="@dimen/fab_margin"
+      android:scaleType="centerInside"
+      android:visibility="gone"
+      android:background="@drawable/splash_image"
+      android:id="@+id/imageView" />
 
 
 </RelativeLayout>
