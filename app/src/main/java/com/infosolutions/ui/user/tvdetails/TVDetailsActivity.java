@@ -309,7 +309,7 @@ public class TVDetailsActivity extends BaseActivity {
                 selectedCylinderTYPE = chipListModel.get(position).getChipTitleId();
                 setSelectedCylinderTYPE(selectedCylinderTYPE);
                 viewTV.setVisibility(View.GONE);
-                getAvailableCYL();
+                //getAvailableCYL();
                 input_number_of_cylinders.setText("");
                 consumer_name.setText("");
                 input_customerId.setText("");
@@ -453,7 +453,7 @@ public class TVDetailsActivity extends BaseActivity {
     }
 
 
-    private void getAvailableCYL(){
+   /* private void getAvailableCYL(){
 
         VolleySingleton.getInstance(getApplicationContext()).
                 addResponseListener(VolleySingleton.CallType.GET_AVAILABLE_CYL, this);
@@ -462,5 +462,5 @@ public class TVDetailsActivity extends BaseActivity {
                 apiAvailableCYL(VolleySingleton.CallType.GET_AVAILABLE_CYL,
                         EVITA_API_URL, String.valueOf(getSelectedCylinderTYPE()), String.valueOf(getGoDownId()));
     }
-
+*/
 }

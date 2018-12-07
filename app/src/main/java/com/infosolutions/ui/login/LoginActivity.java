@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity {
                 .addResponseListener(VolleySingleton.CallType.AGENCY_NAME, this);
 
         VolleySingleton.getInstance(getApplicationContext())
-                .apiGetAgencyName(VolleySingleton.CallType.AGENCY_NAME, Constants.EVITA_API_URL);
+                .apiGetAgencyName(VolleySingleton.CallType.AGENCY_NAME, Constants.AGENCY_NAME);
     }
 
     @Override
@@ -222,7 +222,7 @@ public class LoginActivity extends BaseActivity {
         try {
             JSONObject objectESS = new JSONObject(response);
             String responseMessage = objectESS.optString("responseMessage");
-            String responseCode = objectESS.optString("responseCode");
+            String responseCode = objectESS.optString("ResponseCode");
 
             if (objectESS.has("USERNAME")) {
 
@@ -400,8 +400,17 @@ public class LoginActivity extends BaseActivity {
             try {
 
                 if (response != null) {
+
                     JSONObject objectAgency = new JSONObject(response);
-                    JSONArray arrayDistributor = objectAgency.optJSONArray("ESS_MST_DISTRIBUTOR");
+
+                    String responseCode = jsonResult.optString("ResponseCode");
+                    responseMsg = jsonResult.optString("responseMessage");
+                    if (responseCode.equalsIgnoreCase("200")) {
+                        AGENCY_NAME= objectAgency.optString("Agency_Name");
+                        tvAgencyName.setText(AGENCY_NAME);
+
+                    }
+                    /*JSONArray arrayDistributor = objectAgency.optJSONArray("ESS_MST_DISTRIBUTOR");
                     AGENCY_NAME = arrayDistributor.optJSONObject(0).optString("AGENCY_NAME");
                     String status = arrayDistributor.optJSONObject(0).optString("STATUS");
                     if(!TextUtils.isEmpty(status) && status.trim().equalsIgnoreCase("approved")) {
@@ -410,14 +419,14 @@ public class LoginActivity extends BaseActivity {
                         tvAgencyName.setBackground(getResources().getDrawable(R.drawable.btn_white_background));
                     }else{
                         tvAgencyName.setVisibility(View.GONE);
-                    }
+                    }*/
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
-            String responseCode = jsonResult.optString("responseCode");
+            String responseCode = jsonResult.optString("ResponseCode");
             login_type = LOGIN_GODOWNKEEPER;
             saveLoginTypePreference(login_type);
             if(responseCode.equalsIgnoreCase("500")){
