@@ -136,7 +136,6 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 String stringJsonContent = fetchAllDataFromDB().toString();
                 Log.e("local data content->", stringJsonContent);
                 savePreferences(PREF_SYNC_JSON_DATA, stringJsonContent);
@@ -145,12 +144,9 @@ public class SplashActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-
             }
         }, 3000);
-
     }
-
 
     private void scheduleJob() {
 

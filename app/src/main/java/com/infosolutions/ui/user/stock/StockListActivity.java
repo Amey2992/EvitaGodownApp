@@ -93,7 +93,7 @@ public class StockListActivity extends BaseActivity {
 
         VolleySingleton.getInstance(getApplicationContext())
                 .apiGetStockReport(VolleySingleton.CallType.STOCK_REPORT,
-                        Constants.EVITA_API_URL, "GETSTOCKSNEW", getGODOWN_ID());
+                        Constants.STOCK_REPORT, "GETSTOCKSNEW", getGODOWN_ID());
     }
 
 
@@ -105,7 +105,7 @@ public class StockListActivity extends BaseActivity {
         try {
 
             JSONObject jsonObject = new JSONObject(response);
-            String responseCode = jsonObject.optString("responseCode");
+            String responseCode = jsonObject.optString("ResponseCode");
 
             if (responseCode.equalsIgnoreCase("200")) {
 
@@ -119,7 +119,8 @@ public class StockListActivity extends BaseActivity {
                 loadOtherStock(jsonObject.optString("OTHER_STOCKS"));
 
             } else {
-                RESP_MSG = jsonObject.optString("RESP_MSG");
+                //RESP_MSG = jsonObject.optString("RESP_MSG");
+                RESP_MSG = jsonObject.optString("responseMessage");
                 Toast.makeText(StockListActivity.this, RESP_MSG, Toast.LENGTH_SHORT).show();
             }
         }catch (Exception ex)
@@ -141,10 +142,7 @@ public class StockListActivity extends BaseActivity {
         Toast.makeText(StockListActivity.this,
                 R.string.server_not_responding,
                 Toast.LENGTH_SHORT).show();
-
     }
-
-
 
 
     private void setHeaderStock(String description, String credit,  String field, String lost,TableLayout... tableLayouts) {

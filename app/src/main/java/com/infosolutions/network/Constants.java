@@ -82,10 +82,10 @@ public class Constants {
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
     public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
-    public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
-    public static final  String GET_AVAILABLE_CYLINDERS="http://103.31.144.174/masters/GetAndrAvilableCylinders";
+    public static final String SAVE_CONSUMER_DETAILS="http://103.31.144.174/masters/SaveCommercialParty";
+    public static final String GET_AVAILABLE_CYLINDERS="http://103.31.144.174/masters/GetAndrAvilableCylinders";
     public static final String AGENCY_NAME="http://103.31.144.174/Masters/GetAndrPrimaryCompany";
-
+    public static final String STOCK_REPORT="http://103.31.144.174/Inventory/GetAndrGodownWiseStocks";
     /*
     Godown_Ags
     * */
@@ -107,7 +107,8 @@ public class Constants {
     public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174:81/CommercialMng/SaveAndrCommercial";
     public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174:81/masters/SaveCommercialParty";
     public static final  String GET_AVAILABLE_CYLINDERS="http://103.31.144.174:81/masters/GetAndrAvilableCylinders";
-public static final String AGENCY_NAME="http://103.31.144.174:81/Masters/GetAndrPrimaryCompany";
+    public static final String AGENCY_NAME="http://103.31.144.174:81/Masters/GetAndrPrimaryCompany";
+    public static final String STOCK_REPORT="http://103.31.144.174:81/Inventory/GetAndrGodownWiseStocks";
 */
 
 
@@ -134,6 +135,7 @@ public static final String AGENCY_NAME="http://103.31.144.174:81/Masters/GetAndr
     public static final  String SAVE_CONSUMER_DETAILS="http://103.31.144.174:82/masters/SaveCommercialParty";
     public static final  String GET_AVAILABLE_CYLINDERS="http://103.31.144.174:82/masters/GetAndrAvilableCylinders";
     public static final String AGENCY_NAME="http://103.31.144.174:82/Masters/GetAndrPrimaryCompany";
+    public static final String STOCK_REPORT="http://103.31.144.174:82/Inventory/GetAndrGodownWiseStocks";
     */
 
 

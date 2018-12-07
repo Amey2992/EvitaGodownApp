@@ -112,6 +112,7 @@ public class TruckSendPcoFragment extends Fragment {
         generateET = view.findViewById(R.id.generateBtn);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         etEnterTruckNo = view.findViewById(R.id.etEnterTruckNo);
+        etEnterTruckNo.setEnabled(false);
         etErvNumber = view.findViewById(R.id.etErvNumber);
         etErvNumber.setEnabled(false);
         myLinearLay = view.findViewById(R.id.dynamic);
