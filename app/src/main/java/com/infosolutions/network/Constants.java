@@ -78,7 +78,7 @@ public class Constants {
     public static final String GET_STOCKS_URL = "http://103.31.144.174/Purchase/GetStockDetials";
     public static final String POST_STOCKS_URL = "http://103.31.144.174/Purchase/SaveTransfer";
     public static final String GET_PURCHASE_ERV = "http://103.31.144.174/Purchase/GetAndrPurchaseERV";
-    public static final String LOGIN_URL = "http://103.31.144.174/Login/LoginForCommDelMan";
+    public static final String LOGIN_URL = "http://103.31.144.174/login/validateLogin";
     public static final String COMMERCIAL_REPORTS = "http://103.31.144.174/Purchase/GetAndrReport";
     public static final String COMMERCIAL_GET_CONSUMER_DETAILS = "http://103.31.144.174/Masters/GetAndrCommConsumer";
     public static final String COMMERCIAL_SAVE_CONSUMER_DELIVERY = "http://103.31.144.174/CommercialMng/SaveAndrCommercial";
@@ -156,6 +156,8 @@ public class Constants {
     public static String JSON_DATA_KEY = "jsonData";
     public static String RESET_TIMER_BROADCAST = "reset_timer_broadcast";
     public static String CONSUMER_BROADCAST = "consumer_broadcast";
+    public static String godown_keeper = "Godown Keeper";
+    public static String commercial_deliveryman = "Commercial DeliveryMan";
 
 
     /**

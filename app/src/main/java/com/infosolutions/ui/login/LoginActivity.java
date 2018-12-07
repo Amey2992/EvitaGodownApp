@@ -205,7 +205,7 @@ public class LoginActivity extends BaseActivity {
 
                         VolleySingleton.getInstance(getApplicationContext()).addResponseListener(VolleySingleton.CallType.USER_LOGIN, LoginActivity.this);
                         VolleySingleton.getInstance(getApplicationContext())
-                                .apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.EVITA_API_URL, getTextString(editTextUsername),
+                                .apiCallLoginValidation(VolleySingleton.CallType.USER_LOGIN, Constants.LOGIN_URL, getTextString(editTextUsername),
                                         getTextString(editTextPassword), "Android");
                     } else {
                         showErrorToast(LoginActivity.this, "Error", getResources().getString(R.string.no_network_available));
@@ -323,6 +323,8 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        String usertype = jsonResult.optString("USERTYPE");
+
 
 
         if (type.equals(VolleySingleton.CallType.SYNC_LOCAL_DATA)) {
@@ -426,45 +428,50 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
         } else if (type.equals(VolleySingleton.CallType.USER_LOGIN)) {
-            String responseCode = jsonResult.optString("ResponseCode");
-            login_type = LOGIN_GODOWNKEEPER;
-            saveLoginTypePreference(login_type);
-            if(responseCode.equalsIgnoreCase("500")){
-                hideProgressDialog();
-
-            }
-            serverSuccessResponse(response);
-
-
-        }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
-            try {
-                String responseCode = jsonResult.optString(Constants.responseCcode);
-                login_type = LOGIN_DELIVERYMAN;
+            if(!TextUtils.isEmpty(usertype) && usertype.equalsIgnoreCase(Constants.godown_keeper)){
+                String responseCode = jsonResult.optString("ResponseCode");
+                login_type = LOGIN_GODOWNKEEPER;
                 saveLoginTypePreference(login_type);
                 if(responseCode.equalsIgnoreCase("500")){
                     hideProgressDialog();
-                    serverSuccessResponse(response);
+
                 }
-                else {
-                    int user_id = jsonResult.optInt("user_id");
-                    PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
+                serverSuccessResponse(response);
 
-                    fillCommercialProductsDB(jsonResult);
-                    fillUserAssignedCylinders(jsonResult);
-                    Intent intent = new Intent(this, GetCommercialConsumerService.class);
-                    startService(intent);
-                    //fillCommercialConsumerDB(jsonResult);
+            }else if(!TextUtils.isEmpty(usertype) && usertype.equalsIgnoreCase(Constants.commercial_deliveryman)){
+                try {
+                    String responseCode = jsonResult.optString(Constants.responseCcode);
+                    login_type = LOGIN_DELIVERYMAN;
+                    saveLoginTypePreference(login_type);
+                    if(responseCode.equalsIgnoreCase("500")){
+                        hideProgressDialog();
+                        serverSuccessResponse(response);
+                    }
+                    else {
+                        int user_id = jsonResult.optInt("user_id");
+                        PreferencesHelper.getInstance().setValue(Constants.LOGIN_DELIVERYMAN_ID, user_id);
+
+                        fillCommercialProductsDB(jsonResult);
+                        fillUserAssignedCylinders(jsonResult);
+                        Intent intent = new Intent(this, GetCommercialConsumerService.class);
+                        startService(intent);
+                        //fillCommercialConsumerDB(jsonResult);
 
 
-                    String NENUS_LIST = jsonResult.optString("menus");
+                        String NENUS_LIST = jsonResult.optString("menus");
 
-                    setOffline_module_list(NENUS_LIST);
-                    hideProgressDialog();
-                    openHomeScreen();
+                        setOffline_module_list(NENUS_LIST);
+                        hideProgressDialog();
+                        openHomeScreen();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+
+        }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
+
         }
     }
 

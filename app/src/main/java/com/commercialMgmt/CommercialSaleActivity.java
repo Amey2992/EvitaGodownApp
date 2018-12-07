@@ -190,6 +190,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
         @Override
         public void onReceive(Context context, Intent intent) {
             progress_bar_container.setVisibility(View.GONE);
+            getConsumer();
 
         }
     };
