@@ -176,19 +176,19 @@ public class OwnerDashboardActivity extends
 
 
             if (objectOpening.has("OPENING_STOCKS_COMBINED")){
-                openingLayout(tableOpening, new JSONArray(objectOpening.getString("OPENING_STOCKS_COMBINED")));
+                openingLayout(tableOpening, new JSONArray(objectOpening.optString("OPENING_STOCKS_COMBINED")));
             }
 
             if (objectOpening.has("DOMESTIC_DELIVERY_STOCKS_COMBINED")){
-                domesticLayout(tableDomestic, new JSONArray(objectOpening.getString("DOMESTIC_DELIVERY_STOCKS_COMBINED")));
+                domesticLayout(tableDomestic, new JSONArray(objectOpening.optString("DOMESTIC_DELIVERY_STOCKS_COMBINED")));
             }
 
             if (objectOpening.has("COMMERCIAL_DELIVERY_STOCKS_COMBINED")){
-                commercialLayout(tableCommercial, new JSONArray(objectOpening.getString("COMMERCIAL_DELIVERY_STOCKS_COMBINED")));
+                commercialLayout(tableCommercial, new JSONArray(objectOpening.optString("COMMERCIAL_DELIVERY_STOCKS_COMBINED")));
             }
 
             if (objectOpening.has("RECEVING_STOCKS_COMBINED")){
-                receiveLayout(tableReceive, new JSONArray(objectOpening.getString("RECEVING_STOCKS_COMBINED")));
+                receiveLayout(tableReceive, new JSONArray(objectOpening.optString("RECEVING_STOCKS_COMBINED")));
             }else {
                 TextView textViewError = findViewById(R.id.tvErrorReceive);
                 textViewError.setText("No data for Receive stock");
@@ -196,19 +196,19 @@ public class OwnerDashboardActivity extends
             }
 
             if (objectOpening.has("SENDING_STOCKS_COMBINED")) {
-                sendingLayout(tableSend, new JSONArray(objectOpening.getString("SENDING_STOCKS_COMBINED")));
+                sendingLayout(tableSend, new JSONArray(objectOpening.optString("SENDING_STOCKS_COMBINED")));
             }
 
             if (objectOpening.has("TV_COMBINED")){
-                tvDetailLayout(tableTvDetails, new JSONArray(objectOpening.getString("TV_COMBINED")));
+                tvDetailLayout(tableTvDetails, new JSONArray(objectOpening.optString("TV_COMBINED")));
             }
 
             if (objectOpening.has("CLOSING_STOCKS_COMBINED")){
-                closingLayout(tableClosing, new JSONArray(objectOpening.getString("CLOSING_STOCKS_COMBINED")));
+                closingLayout(tableClosing, new JSONArray(objectOpening.optString("CLOSING_STOCKS_COMBINED")));
             }
 
             if (objectOpening.has("OTHER_STOCKS_COMBINED")){
-                otherLayout(tableOther, new JSONArray(objectOpening.getString("OTHER_STOCKS_COMBINED")));
+                otherLayout(tableOther, new JSONArray(objectOpening.optString("OTHER_STOCKS_COMBINED")));
             }
 
 
@@ -233,10 +233,10 @@ public class OwnerDashboardActivity extends
             for (int i=0; i<arrayOpening.length(); i++){
 
                 JSONObject openingItem = arrayOpening.optJSONObject(i);
-                String DESCRIPTION = openingItem.getString("DESCRIPTION");
-                String OPENING_FULL = openingItem.getString("OPENING_FULL");
-                String OPENING_EMPTY = openingItem.getString("OPENING_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
+                String DESCRIPTION = openingItem.optString("DESCRIPTION");
+                String OPENING_FULL = openingItem.optString("OPENING_FULL");
+                String OPENING_EMPTY = openingItem.optString("OPENING_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
 
                 createLayout(tableLayout, DESCRIPTION, OPENING_FULL, OPENING_EMPTY, DEFECTIVE,"","","");
             }
@@ -250,10 +250,10 @@ public class OwnerDashboardActivity extends
             for (int i=0; i<arrayDomestic.length(); i++){
                 JSONObject openingItem = arrayDomestic.optJSONObject(i);
 
-                String Description = openingItem.getString("DESCRIPTION");
-                String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
-                String DELIVERY_EMPTY = openingItem.getString("DELIVERY_EMPTY");
-                String SV = openingItem.getString("SV");
+                String Description = openingItem.optString("DESCRIPTION");
+                String DELIVERY_FULL = openingItem.optString("DELIVERY_FULL");
+                String DELIVERY_EMPTY = openingItem.optString("DELIVERY_EMPTY");
+                String SV = openingItem.optString("SV");
                 /* create table view*/
 
                 createLayout(tableLayout, Description, DELIVERY_FULL, DELIVERY_EMPTY, SV, "", "","");
@@ -269,10 +269,10 @@ public class OwnerDashboardActivity extends
             for (int i=0; i<arrayCommercial.length(); i++){
                 JSONObject openingItem = arrayCommercial.optJSONObject(i);
 
-                String Description = openingItem.getString("DESCRIPTION");
-                String DELIVERY_FULL = openingItem.getString("DELIVERY_FULL");
-                String DELIVERY_EMPTY = openingItem.getString("DELIVERY_EMPTY");
-                String SV = openingItem.getString("SV");
+                String Description = openingItem.optString("DESCRIPTION");
+                String DELIVERY_FULL = openingItem.optString("DELIVERY_FULL");
+                String DELIVERY_EMPTY = openingItem.optString("DELIVERY_EMPTY");
+                String SV = openingItem.optString("SV");
 
                 /* create table view*/
 
@@ -288,9 +288,9 @@ public class OwnerDashboardActivity extends
             for (int i=0; i<arrayReceive.length(); i++){
                 JSONObject openingItem = arrayReceive.optJSONObject(i);
 
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String SOUND = openingItem.getString("SOUND");
-                String LOST_TRUCK_RECEVING = openingItem.getString("LOST_TRUCK_RECEVING");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String SOUND = openingItem.optString("SOUND");
+                String LOST_TRUCK_RECEVING = openingItem.optString("LOST_TRUCK_RECEVING");
 
                 createLayout(tableLayout, PRODUCT_NAME, SOUND, LOST_TRUCK_RECEVING,"","","","");
             }
@@ -304,9 +304,9 @@ public class OwnerDashboardActivity extends
 
             for (int i=0; i<arraySend.length(); i++){
                 JSONObject openingItem = arraySend.optJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String SOUND = openingItem.getString("SOUND");
-                String DEFECTIVE = openingItem.getString("TRUCK_DEFECTIVE");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String SOUND = openingItem.optString("SOUND");
+                String DEFECTIVE = openingItem.optString("TRUCK_DEFECTIVE");
 
                 createLayout(tableLayout, PRODUCT_NAME, SOUND, DEFECTIVE,"","","","");
             }
@@ -319,8 +319,8 @@ public class OwnerDashboardActivity extends
             Log.e("TV Details", arrayTVDetails.toString());
             for (int i=0; i<arrayTVDetails.length(); i++){
                 JSONObject openingItem = arrayTVDetails.optJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String CYLINDER = openingItem.getString("CYLINDER");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String CYLINDER = openingItem.optString("CYLINDER");
 
                 createLayout(tableLayout, PRODUCT_NAME,CYLINDER,"", "","","","");
             }
@@ -339,11 +339,11 @@ public class OwnerDashboardActivity extends
 
             for (int i=0; i<arrayClosing.length(); i++){
                 JSONObject openingItem = arrayClosing.optJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
 
-                String CLOSING_FULL = openingItem.getString("CLOSING_FULL");
-                String CLOSING_EMPTY = openingItem.getString("CLOSING_EMPTY");
-                String DEFECTIVE = openingItem.getString("DEFECTIVE");
+                String CLOSING_FULL = openingItem.optString("CLOSING_FULL");
+                String CLOSING_EMPTY = openingItem.optString("CLOSING_EMPTY");
+                String DEFECTIVE = openingItem.optString("DEFECTIVE");
 
                 createLayout(tableLayout, PRODUCT_NAME,CLOSING_FULL,CLOSING_EMPTY, DEFECTIVE,"","","");
             }
@@ -359,10 +359,10 @@ public class OwnerDashboardActivity extends
 
             for (int i=0; i<arrayOther.length(); i++){
                 JSONObject openingItem = arrayOther.optJSONObject(i);
-                String PRODUCT_NAME = openingItem.getString("DESCRIPTION");
-                String CREDIT = openingItem.getString("CREDIT");
-                String ON_FIELD = openingItem.getString("ON_FIELD");
-                String LOST_DELIVERY_CYLINDERS = openingItem.getString("LOST_DELIVERY_CYLINDERS");
+                String PRODUCT_NAME = openingItem.optString("DESCRIPTION");
+                String CREDIT = openingItem.optString("CREDIT");
+                String ON_FIELD = openingItem.optString("ON_FIELD");
+                String LOST_DELIVERY_CYLINDERS = openingItem.optString("LOST_DELIVERY_CYLINDERS");
 
                 createLayout(tableLayout, PRODUCT_NAME, CREDIT, ON_FIELD, LOST_DELIVERY_CYLINDERS,"","","");
             }

@@ -254,8 +254,7 @@ public class LoginActivity extends BaseActivity {
                     ownerTypeMode(ownerType);
                 }*/
                 if (USER_TYPE.equalsIgnoreCase(LOGINKEY.TYPE_OWNER)) {
-                    String ownerType = objectESS.optString("OWNER_DATA");
-                    ownerTypeMode(ownerType);
+
                 }else{
                     userTypeMode(objectESS);
                 }
@@ -311,10 +310,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onSuccess(VolleySingleton.CallType type, String response) {
+
         Log.e(TAG, response);
 
 
-            String responseMsg = "";
+        String responseMsg = "";
         //progress_bar.setVisibility(View.GONE);
         JSONObject jsonResult = null;
         try {
@@ -324,14 +324,13 @@ public class LoginActivity extends BaseActivity {
         }
 
         String usertype = jsonResult.optString("USERTYPE");
-
-
+        responseMsg = jsonResult.optString("responseMessage");
 
         if (type.equals(VolleySingleton.CallType.SYNC_LOCAL_DATA)) {
 
             try {
                 String responseCode = jsonResult.optString("responseCode");
-                responseMsg = jsonResult.optString("responseMessage");
+
                 if (jsonResult.optString("responseCode").equalsIgnoreCase("200")) {
                     AppSettings.getInstance(this).getCommercialDeliveryCreditCount(this);
                     //AppSettings.getInstance(this).updateLocalFromServer(this);
@@ -467,10 +466,18 @@ public class LoginActivity extends BaseActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }else if(!TextUtils.isEmpty(usertype) && usertype.equalsIgnoreCase(Constants.owner)){
+                hideProgressDialog();
+                String ownerType = jsonResult.optString("OWNER_DATA");
+                ownerTypeMode(ownerType);
+            }else{
+                String responseCode = jsonResult.optString(Constants.responseCcode);
+                if(responseCode.equalsIgnoreCase("500")){
+                    hideProgressDialog();
+                    showErrorToast(LoginActivity.this, "Error", responseMsg);
+                }
             }
 
-
-        }else if (type.equals(VolleySingleton.CallType.USER_COMMERCIAL_LOGIN)) {
 
         }
     }
