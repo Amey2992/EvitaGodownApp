@@ -568,7 +568,7 @@ public class OwnerDashboardActivity extends
         progressBar.setVisibility(View.VISIBLE);
         VolleySingleton.getInstance(getApplicationContext())
                 .ownerReport(VolleySingleton.CallType.OWNER_REPORT,
-                Constants.EVITA_API_URL, module_type);
+                Constants.OWNER_DETAIL_REPORT, module_type);
     }
 
     @Override

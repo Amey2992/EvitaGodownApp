@@ -246,6 +246,10 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                         et_selling_price.setText(String.valueOf(calSellingPrice));
                     }
                 }
+                else
+                {
+                    et_selling_price.setText(String.valueOf(calMRP));
+                }
             }
 
             @Override
@@ -887,7 +891,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                         et_total_credit_cyl.setText(Integer.toString(selectedConsumer.credit_cylinder));
                     } else {
                         et_total_credit_cyl.setText("0");
-                        et_discount.setText("0");
+                       // et_discount.setText("0");
                     }
                 }
             }

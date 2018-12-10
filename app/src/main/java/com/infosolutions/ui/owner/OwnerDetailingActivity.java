@@ -76,9 +76,9 @@ public class OwnerDetailingActivity extends AppCompatActivity {
 
         JSONObject objectDetailing = new JSONObject(resp);
 
-        if (objectDetailing.has("OPENING_STOCKS_GODOWN_WISE")){
+        if (objectDetailing.has("OPENING_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("OPENING_STOCKS_GODOWN_WISE").length() > 0){
 
-            JSONArray openingArray = objectDetailing.getJSONArray("OPENING_STOCKS_GODOWN_WISE");
+            JSONArray openingArray = objectDetailing.optJSONArray("OPENING_STOCKS_GODOWN_WISE");
             int arrayLength = openingArray.length();
             if (arrayLength>0){
 
@@ -87,7 +87,7 @@ public class OwnerDetailingActivity extends AppCompatActivity {
 
                     if (openingArray.optJSONObject(i).has("valueArray") && openingArray.optJSONObject(i).has("DISPLAY_NAME")){
                         JSONArray openArray = openingArray.optJSONObject(i).optJSONArray("valueArray");
-                        String godownTitle = openingArray.optJSONObject(i).getString("DISPLAY_NAME");
+                        String godownTitle = openingArray.optJSONObject(i).optString("DISPLAY_NAME");
                         createOpeningLayout(godownTitle, openArray);
                     }else {
                         Toast.makeText(this, "No result found", Toast.LENGTH_SHORT).show();
@@ -97,8 +97,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
             }else {showError();}
 
 
-        }else if (objectDetailing.has("OTHER_STOCKS_GODOWN_WISE")){
-            JSONArray arrayDetailing = objectDetailing.getJSONArray("OTHER_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("OTHER_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("OTHER_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arrayDetailing = objectDetailing.optJSONArray("OTHER_STOCKS_GODOWN_WISE");
             int arrayLength = arrayDetailing.length();
             if (arrayLength>0){
                 for (int i=0; i<arrayLength; i++)
@@ -115,8 +115,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("RECEVING_STOCKS_GODOWN_WISE")){
-            JSONArray arrayReceive = objectDetailing.getJSONArray("RECEVING_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("RECEVING_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("RECEVING_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arrayReceive = objectDetailing.optJSONArray("RECEVING_STOCKS_GODOWN_WISE");
             int arraylength = arrayReceive.length();
 
             if (arraylength>0){
@@ -134,8 +134,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("DOMESTIC_DELIVERY_STOCKS_GODOWN_WISE") && objectDetailing != null){
-            JSONArray arrayDomestic = objectDetailing.getJSONArray("DOMESTIC_DELIVERY_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("DOMESTIC_DELIVERY_STOCKS_GODOWN_WISE") && objectDetailing != null && objectDetailing.optJSONArray("DOMESTIC_DELIVERY_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arrayDomestic = objectDetailing.optJSONArray("DOMESTIC_DELIVERY_STOCKS_GODOWN_WISE");
             int arrayLength =arrayDomestic.length();
             if (arrayLength>0){
                 for (int i=0; i<arrayLength; i++)
@@ -151,8 +151,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("COMMERCIAL_DELIVERY_STOCKS_GODOWN_WISE")){
-            JSONArray arrayCommercial = objectDetailing.getJSONArray("COMMERCIAL_DELIVERY_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("COMMERCIAL_DELIVERY_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("COMMERCIAL_DELIVERY_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arrayCommercial = objectDetailing.optJSONArray("COMMERCIAL_DELIVERY_STOCKS_GODOWN_WISE");
             int arrayLength = arrayCommercial.length();
 
             if (arrayLength>0){
@@ -170,8 +170,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("SENDING_STOCKS_GODOWN_WISE")){
-            JSONArray arraySending = objectDetailing.getJSONArray("SENDING_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("SENDING_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("SENDING_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arraySending = objectDetailing.optJSONArray("SENDING_STOCKS_GODOWN_WISE");
             int arrayLength = arraySending.length();
 
             if (arrayLength>0){
@@ -188,8 +188,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("CLOSING_STOCKS_GODOWN_WISE")){
-            JSONArray arrayClosing = objectDetailing.getJSONArray("CLOSING_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("CLOSING_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("CLOSING_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray arrayClosing = objectDetailing.optJSONArray("CLOSING_STOCKS_GODOWN_WISE");
             int arrayLength = arrayClosing.length();
 
             if (arrayLength>0){
@@ -206,8 +206,8 @@ public class OwnerDetailingActivity extends AppCompatActivity {
                 }
             }else {showError();}
 
-        }else if (objectDetailing.has("TV_STOCKS_GODOWN_WISE")){
-            JSONArray jsonArrayTV = objectDetailing.getJSONArray("TV_STOCKS_GODOWN_WISE");
+        }else if (objectDetailing.has("TV_STOCKS_GODOWN_WISE") && objectDetailing.optJSONArray("TV_STOCKS_GODOWN_WISE").length() > 0){
+            JSONArray jsonArrayTV = objectDetailing.optJSONArray("TV_STOCKS_GODOWN_WISE");
             int arrayLength = jsonArrayTV.length();
 
             if (arrayLength>0){

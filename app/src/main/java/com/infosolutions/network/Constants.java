@@ -61,8 +61,7 @@ public class Constants {
     //private static final String TESTER_AGS = "http://103.31.144.174:8080/TESTER_AGS/User";
     //private static final String PROD_URL = "http://103.31.144.174:8080/EVITA_PROD/User";
     private static final String PROD_URL = "http://103.31.144.174/login/validateLogin";
-    public static final  String EVITA_API_URL = BHIVANDI_GAS_SERVICE;
-
+    public static final  String EVITA_API_URL = PROD_URL;
 
     /*
     production
@@ -87,7 +86,7 @@ public class Constants {
     public static final String GET_AVAILABLE_CYLINDERS="http://103.31.144.174/masters/GetAndrAvilableCylinders";
     public static final String AGENCY_NAME="http://103.31.144.174/Masters/GetAndrPrimaryCompany";
     public static final String STOCK_REPORT="http://103.31.144.174/Inventory/GetAndrGodownWiseStocks";
-
+    public static final String OWNER_DETAIL_REPORT = "http://103.31.144.174/Inventory/GetAndrOwnerReports";
 
 
     /*
@@ -113,6 +112,7 @@ public class Constants {
     public static final  String GET_AVAILABLE_CYLINDERS="http://103.31.144.174:81/masters/GetAndrAvilableCylinders";
     public static final String AGENCY_NAME="http://103.31.144.174:81/Masters/GetAndrPrimaryCompany";
     public static final String STOCK_REPORT="http://103.31.144.174:81/Inventory/GetAndrGodownWiseStocks";
+    public static final String OWNER_DETAIL_REPORT = "http://103.31.144.174:81/Inventory/GetAndrOwnerReports";
 */
 
 
@@ -139,6 +139,7 @@ public class Constants {
     public static final  String GET_AVAILABLE_CYLINDERS="http://103.31.144.174:82/masters/GetAndrAvilableCylinders";
     public static final String AGENCY_NAME="http://103.31.144.174:82/Masters/GetAndrPrimaryCompany";
     public static final String STOCK_REPORT="http://103.31.144.174:82/Inventory/GetAndrGodownWiseStocks";
+    public static final String OWNER_DETAIL_REPORT = "http://103.31.144.174:82/Inventory/GetAndrOwnerReports";
 */
 
     public static String LOGIN_API_VALUE = "userAuth";
