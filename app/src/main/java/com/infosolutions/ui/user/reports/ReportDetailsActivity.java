@@ -97,6 +97,7 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
         {
             progressBar.setVisibility(View.VISIBLE);
 
+/*
             if (headerTitle.equalsIgnoreCase("Domestic")){
 
                 VolleySingleton.getInstance(getApplicationContext()).
@@ -128,10 +129,8 @@ public class ReportDetailsActivity extends AppCompatActivity implements Response
                                 Constants.EVITA_API_URL, getRequestType(), getGODOWN_ID());
             }
 
+*/
 
-            Log.e("Evita api url: ", Constants.EVITA_API_URL);
-            Log.e("Request type: ", getRequestType());
-            Log.e("Godown ID: ", getGODOWN_ID());
 
         }else {
             Toast.makeText(getApplicationContext(), R.string.no_network_available, Toast.LENGTH_SHORT).show();

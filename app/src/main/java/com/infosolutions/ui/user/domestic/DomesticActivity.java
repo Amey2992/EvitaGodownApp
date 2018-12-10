@@ -59,7 +59,7 @@ import butterknife.ButterKnife;
 import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
 import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
-import static com.infosolutions.network.Constants.EVITA_API_URL;
+
 import static com.infosolutions.network.Constants.MODULE_AVAILABLE_CYL;
 import static com.infosolutions.network.Constants.PRODUCT_ID;
 import static com.infosolutions.network.Constants.getSharedPrefWithKEY;
