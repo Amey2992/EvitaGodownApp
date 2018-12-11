@@ -55,6 +55,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -410,8 +411,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
 
         if (!TextUtils.isEmpty(et_total_credit_amt.getText().toString())
                 && !TextUtils.isEmpty(et_total_amt.getText().toString())
-                && !TextUtils.isEmpty(et_cash_amt.getText().toString())
-                ) {
+                && !TextUtils.isEmpty(et_cash_amt.getText().toString()) )
+        {
             totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
             totalAmt = Double.valueOf(et_total_amt.getText().toString());
             cashAmt = Double.valueOf(et_cash_amt.getText().toString());
@@ -424,12 +425,25 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             }
         } else {
             if (et_total_amt.getText().toString() != null && et_total_credit_amt.getText().toString() != null
-                    && et_cash_amt.getText().toString() != null) {
+                    && et_cash_amt.getText().toString() != null
+                    && !TextUtils.isEmpty(et_total_amt.getText())) {
                 //et_total_amt.setText("0");
                 totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
                 totalAmt = Double.valueOf(et_total_amt.getText().toString());
                 et_balanced_credit_amt.setText(String.valueOf(totalCreditAmt + totalAmt));
             }
+            else if(et_total_amt.getText().toString().equalsIgnoreCase("") &&
+                    !TextUtils.isEmpty(et_cash_amt.getText()))
+            {
+                totalCreditAmt = Double.valueOf(et_total_credit_amt.getText().toString());
+                totalAmt = 0.0;
+                Double cash=Double.valueOf(et_cash_amt.getText().toString());
+                et_balanced_credit_amt.setText(String.valueOf( (totalCreditAmt + totalAmt)-cash));
+            }else
+            {
+                et_balanced_credit_amt.setText(et_total_credit_amt.getText().toString());
+            }
+
         }
 
         /*Double d = new Double(et_balanced_credit_amt.getText().toString());
@@ -454,7 +468,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             full_cyl = Integer.parseInt(et_full_cyl.getText().toString()) + selectedConsumer.credit_cylinder;
 
         } else {
-            full_cyl = selectedConsumer.credit_cylinder;
+            full_cyl =  selectedConsumer.credit_cylinder;
         }
         if (!TextUtils.isEmpty(et_empty_cyl.getText().toString())) {
             empty_cyl = Integer.parseInt(et_empty_cyl.getText().toString());
@@ -644,7 +658,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             jsonObject.put("MRP", MRP);
             jsonObject.put("Discount", Discount);
             jsonObject.put("SellingPrice", Selling_price);
-            jsonObject.put("FullCylQty", full_cyl);
+            jsonObject.put("FullCylQty", et_full_cyl.getText().toString());
             jsonObject.put("EmptyCylRec", empty_cyl);
             jsonObject.put("TotalAmount", Total_Amt);
             jsonObject.put("CashAmount", Cash_Amt);
@@ -829,6 +843,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                                 assignedCylinderQty = userAssignedCylinderModel.Qty;
                                 assigned_cylinder.setVisibility(View.VISIBLE);
                                 assigned_cylinder.setText("Assigned Cylinders: " + Integer.toString(userAssignedCylinderModel.Qty));
+                                availableStock = userAssignedCylinderModel.Qty;
                                 et_empty_cyl.setEnabled(true);
                                 et_full_cyl.setEnabled(true);
                             }
