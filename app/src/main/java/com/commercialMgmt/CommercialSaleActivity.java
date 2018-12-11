@@ -367,6 +367,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (et_full_cyl.getText().toString().equalsIgnoreCase("")) {
+                    et_cash_amt.setText("");
                     full_cyl = 0;
                     empty_cyl = 0;
                     sv = 0;
@@ -393,6 +394,11 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 calcaulateCreditAmt();
+                if (et_full_cyl.getText().toString().equalsIgnoreCase("")
+                        && !et_sv_cyl.getText().toString().equalsIgnoreCase(""))
+                {
+                   et_sv_cyl.setText("");
+                }
             }
 
             @Override
@@ -559,6 +565,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                                 int totalAmt= new Double(et_total_amt.getText().toString()).intValue();
                                 int cashAmt= new Double(et_cash_amt.getText().toString()).intValue();
                                 if (et_full_cyl.getText().toString().equalsIgnoreCase(et_empty_cyl.getText().toString()) && totalAmt == cashAmt) {
+
                                     saveConfirmation();
                                 } else {
                                     Toast.makeText(CommercialSaleActivity.this, "Please take full cash or Full cyl equals empty cyl", Toast.LENGTH_SHORT).show();
