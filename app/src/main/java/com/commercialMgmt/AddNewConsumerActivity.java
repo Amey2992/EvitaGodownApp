@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -80,6 +81,8 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
     EditText com_consumer_GSTIN;
     @BindView(R.id.btnAddNewConsumer)
     Button btn_addConsumer;
+    @BindView(R.id.progress_bar_container)
+    RelativeLayout progress_bar_container;
 
 
     private EvitaProgressDialog dialog;
@@ -309,10 +312,11 @@ public class AddNewConsumerActivity extends AppCompatActivity implements Respons
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "SAVE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showProgressDialog();
+                //showProgressDialog();
                 //isValidMail(com_consumer_email_id.getText().toString());
-
+                progress_bar_container.setVisibility(View.VISIBLE);
                     saveConsumerDetails();
+                progress_bar_container.setVisibility(View.GONE);
             }
         });
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener() {

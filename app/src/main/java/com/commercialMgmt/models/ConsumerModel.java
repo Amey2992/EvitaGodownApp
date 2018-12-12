@@ -17,7 +17,7 @@ public class ConsumerModel implements Serializable {
     public String consumer_no;
 
     @DatabaseField
-    public int ConsumerID;
+    public String LedgerCode;
 
     @DatabaseField
     public String consumer_name;
@@ -58,7 +58,7 @@ public class ConsumerModel implements Serializable {
         if(jsonObject != null){
             this.id = id;
             consumer_no = jsonObject.optString("consumer_no");
-            ConsumerID = jsonObject.optInt("ConsumerID");
+            LedgerCode = jsonObject.optString("LedgerCode");
             consumer_name = jsonObject.optString("consumer_name");
             mobile_no = jsonObject.optString("mobile_no");
             address = jsonObject.optString("address");

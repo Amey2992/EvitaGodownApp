@@ -635,8 +635,8 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                showProgressDialog();
-
+                //showProgressDialog();
+                progress_bar_container.setVisibility(View.VISIBLE);
                 saveCommercialSale();
             }
         });
@@ -671,7 +671,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             jsonObject.put("CashAmount", Cash_Amt);
             jsonObject.put("TotalPendingEmptyCyl", total_pending_cyl);
             jsonObject.put("TotalCreditAmount", Total_credit_amt);
-            jsonObject.put("IdCommParty", selectedConsumer.ConsumerID);
+            jsonObject.put("LedgerCode", selectedConsumer.LedgerCode);
             jsonObject.put("YY", AppSettings.getYear());
             jsonObject.put("ModeOfEntry", "Mobile");
             jsonObject.put("sv", sv_cyl);
@@ -679,6 +679,9 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
             parentJsonObj.put("objCommercialSale", jsonObject);
             Log.e("final JSON", parentJsonObj.toString());
             AppSettings.getInstance(this).saveCommercialConsumerDelivery(this, parentJsonObj);
+
+            progress_bar_container.setVisibility(View.GONE);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1012,7 +1015,7 @@ public class CommercialSaleActivity extends AppCompatActivity implements Respons
                     UpdateBuilder<ConsumerModel, Integer> updateBuilder;
                     UpdateBuilder<UserAssignedCylinderModel, Integer> updateBuilder1;
                     updateBuilder = getHelper().getConsumerModelExceptionDao().updateBuilder();
-                    updateBuilder.where().eq("ConsumerID", selectedConsumer.ConsumerID);
+                    updateBuilder.where().eq("LedgerCode", selectedConsumer.LedgerCode);
                     Double d = new Double(et_balanced_credit_amt.getText().toString());
                     updateBuilder.updateColumnValue("credit_cylinder", creditCyl);
                     updateBuilder.updateColumnValue("amount_credit_cylinder", d.intValue());
